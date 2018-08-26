@@ -120,18 +120,27 @@ describe "TripDispatcher class" do
       @dispatcher =  RideShare::TripDispatcher.new(USER_TEST_FILE,
                                                    TRIP_TEST_FILE,
                                                    DRIVER_TEST_FILE)
+      @passenger_id = @dispatcher.passengers.first.id
     end
 
     it "creates a trip with a driver & passenger and start_time" do
       trip_count = @dispatcher.trips.length
 
-      @dispatcher.request_trip(@dispatcher.passengers.first.id)
+      @dispatcher.request_trip(@passenger_id)
 
       expect(@dispatcher.trips.length).must_equal trip_count + 1
       expect(@dispatcher.trips.last.passenger).must_be_instance_of RideShare::User
       expect(@dispatcher.trips.last.driver).must_be_instance_of RideShare::Driver
       expect(@dispatcher.trips.last.start_time).wont_be_nil
       expect(@dispatcher.trips.last.end_time).must_be_nil
+    end
+
+    it "raises an error if there are no available drivers" do
+      @dispatcher.drivers.each do |driver|
+        driver.status = :UNAVAILABLE
+      end
+
+      expect { @dispatcher.request_trip(@passenger_id) }.must_raise StandardError
     end
   end
 end

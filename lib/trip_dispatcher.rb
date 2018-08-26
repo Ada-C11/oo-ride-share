@@ -90,7 +90,7 @@ module RideShare
         driver.status == :AVAILABLE && user_id != driver.id
       end
 
-      raise Error, "No Available Drivers" if available_driver.nil?
+      raise StandardError, "No Available Drivers" if available_driver.nil?
 
       available_driver.status = :UNAVAILABLE
 
