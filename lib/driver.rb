@@ -1,6 +1,6 @@
 
 module RideShare
-  class Driver < User
+  class Driver < RideShare::User
     attr_reader :vehicle_id, :driven_trips, :status
 
     def initialize(input)
@@ -27,6 +27,10 @@ module RideShare
         total + trip.rating
       end
       return driven_trips.length.zero? ? 0.0 : total_ratings.to_f / driven_trips.length
+    end
+
+    def net_expenditures
+      return super - total_revenue
     end
 
     def total_revenue
