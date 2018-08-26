@@ -6,7 +6,7 @@ module RideShare
     def initialize(input)
       super(input)
 
-      raise ArgumentError, "Vin must be 11 characters long" if input[:vin].length != 11
+      raise ArgumentError, "Vin must be 17 characters long" if input[:vin].length != 17
 
       @vin = input[:vin]
 
