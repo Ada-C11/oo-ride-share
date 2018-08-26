@@ -1,4 +1,3 @@
-require 'csv'
 
 module RideShare
   class Trip
@@ -20,6 +19,10 @@ module RideShare
           raise ArgumentError, "Times must be subtractable and convertable to integers" unless time.respond_to? method
         end
       end
+    end
+
+    def duration
+      return end_time - start_time
     end
 
     def inspect
