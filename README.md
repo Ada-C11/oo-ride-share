@@ -228,6 +228,7 @@ You should use this information to:
 -   Were the trip lists for the driver and user updated?
 -   Was the driver who was selected `AVAILABLE`?
 -   What happens if you try to request a trip when there are no `AVAILABLE` drivers?
+-   Drivers cannot drive themselves.
 
 #### Interaction with Waves 1 & 2
 
