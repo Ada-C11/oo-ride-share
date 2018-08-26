@@ -247,7 +247,7 @@ In other words, we should assign the driver to **the available driver who has ne
 Modify `TripDispatcher#request_trip` to use the following rules to select a `Driver`:
 - The `Driver` must have a status of `AVAILABLE`
 - The `Driver` must not have any in-progress trips (end time of `nil`)
-- From the `Driver`s that remain, select the one whose most recent trip ended the longest time ago
+- From the `Driver`s that remain, select the one who has never driven or whose most recent trip ended the longest time ago
 
 For example, if we have three drivers, each with two trips:
 
