@@ -15,8 +15,10 @@ module RideShare
       if @rating > 5 || @rating < 1
         raise ArgumentError.new("Invalid rating #{@rating}")
       end
-      [:-, :to_i].each do |method|
-        raise ArgumentError unless @start_time.respond_to? method
+      [@start_time, @end_time].each do |time|
+        [:-, :to_i].each do |method|
+          raise ArgumentError, "Times must be subtractable and convertable to integers" unless time.respond_to? method
+        end
       end
     end
 
