@@ -66,10 +66,11 @@ describe "User class" do
 
       # Adding another trip
         @user.add_trip(RideShare::Trip.new(id: 8, driver: nil, passenger: @user,
-                                   start_time: Time.parse("2016-08-14"),
-                                   end_time: Time.parse("2016-08-15"),
-                                   cost: 15,
-                                   rating: 1))
+                                           start_time: Time.parse("2016-08-14"),
+                                           end_time: Time.parse("2016-08-15"),
+                                           cost: 15,
+                                           rating: 1))
+
         expect(@user.net_expenditures).must_equal 20
       end
 
@@ -82,7 +83,7 @@ describe "User class" do
       it "does not count incomplete trips" do
         net_expenditures = @user.net_expenditures
         @user.add_trip(RideShare::Trip.new(id: 8, driver: nil, passenger: @user,
-                                   start_time: Time.parse("2016-08-14")))
+                                           start_time: Time.parse("2016-08-14")))
 
         expect(@user.net_expenditures).must_be_close_to net_expenditures, 0.01
       end
@@ -105,12 +106,20 @@ describe "User class" do
                                          end_time: Time.parse("2016-08-14 10:59:59 -0700"),
                                          cost: 15,
                                          rating: 1))
+
       expect(@user.total_time_spent).must_equal 24 * 60 * 60 + 60 * 20
     end
 
     it "will return 0 for a user without trips" do
       new_user = RideShare::User.new(id: 1, name: "Smithy", phone: "353-533-5334")
       expect(new_user.total_time_spent).must_equal 0
+    end
+
+    it "does not count incomplete trips" do
+      total_time = @user.total_time_spent
+      @user.add_trip(RideShare::Trip.new(id: 18, driver: nil, passenger: @user,
+                                         start_time: Time.parse("2016-08-14 10:39:59 -0700")))
+      expect(@user.total_time_spent).must_equal total_time
     end
   end
 end
