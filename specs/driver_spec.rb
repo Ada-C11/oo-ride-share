@@ -49,11 +49,11 @@ describe "Driver class" do
       @driver = RideShare::Driver.new(id: 3, name: "Lovelace",
                                       vin: "12345678912345678",
                                       status: :AVAILABLE)
-      @trip = RideShare::Trip.new(id: 8, driver: @driver, passenger: pass, start_date: "2016-08-08", rating: 5)
+      @trip = RideShare::Trip.new(id: 8, driver: @driver, passenger: pass, start_time: Time.parse("2016-08-08"), rating: 5)
     end
 
     it "throws an argument error if trip is not provided" do
-      expect{ @driver.add_drive(1) }.must_raise ArgumentError
+      expect{ @driver.add_driven_trip(1) }.must_raise ArgumentError
     end
 
     it "increases the trip count by one" do
@@ -66,8 +66,8 @@ describe "Driver class" do
   describe "average_rating method" do
     before do
       @driver = RideShare::Driver.new(id: 54, name: "Rogers Bartell IV", vin: "1C9EVBRM0YBC564DZ")
-      trip = RideShare::Trip.new(id: 8, driver: @driver, passenger: nil, date: "2016-08-08", rating: 5)
-      @driver.add_trip(trip)
+      trip = RideShare::Trip.new(id: 8, driver: @driver, passenger: nil, start_time: Time.parse("2016-08-08"), rating: 5)
+      @driver.add_driven_trip(trip)
     end
 
     it "returns a float" do
