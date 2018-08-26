@@ -142,5 +142,29 @@ describe "TripDispatcher class" do
 
       expect { @dispatcher.request_trip(@passenger_id) }.must_raise StandardError
     end
+
+    it "picks an available driver" do
+      @dispatcher.drivers.each do |driver|
+        driver.status = :UNAVAILABLE
+      end
+      @dispatcher.drivers.last.status = :AVAILABLE
+      driver_id = @dispatcher.drivers.last.id
+
+      trip = @dispatcher.request_trip(@passenger_id)
+
+      expect(trip.driver.id).must_equal driver_id
+    end
+
+    it "doesn't allow drivers to drive themselves" do
+      @dispatcher.drivers.each do |driver|
+        driver.status = :UNAVAILABLE
+      end
+      @dispatcher.drivers.last.status = :AVAILABLE
+      driver_id = @dispatcher.drivers.last.id
+
+      expect do
+        @dispatcher.request_trip(driver_id)
+      end.must_raise StandardError
+    end
   end
 end

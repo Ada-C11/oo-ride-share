@@ -78,6 +78,14 @@ describe "User class" do
 
         expect(new_user.net_expenditures).must_equal 0
       end
+
+      it "does not count incomplete trips" do
+        net_expenditures = @user.net_expenditures
+        @user.add_trip(RideShare::Trip.new(id: 8, driver: nil, passenger: @user,
+                                   start_time: Time.parse("2016-08-14")))
+
+        expect(@user.net_expenditures).must_be_close_to net_expenditures, 0.01
+      end
     end
   end
 
