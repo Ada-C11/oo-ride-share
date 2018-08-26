@@ -28,5 +28,11 @@ module RideShare
       end
       return driven_trips.length.zero? ? 0.0 : total_ratings.to_f / driven_trips.length
     end
+
+    def total_revenue
+      return @driven_trips.reduce(0.0) do |sum, trip|
+        sum + (trip.cost - 1.65) * 0.8
+      end
+    end
   end
 end
