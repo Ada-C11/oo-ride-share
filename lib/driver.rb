@@ -6,13 +6,13 @@ module RideShare
     def initialize(input)
       super(input)
 
-      raise ArgumentError, "Vin must be 17 characters long" if input[:vin].length != 17
-      raise ArgumentError, "Status should be available or unavailable" unless [:AVAILABLE, :UNAVAILABLE].include? input[:status]
-
-      @vin = input[:vin]
       @status = input[:status]
       @status ||= :AVAILABLE
+      @vin = input[:vin]
       @driven_trips = []
+
+      raise ArgumentError, "Vin must be 17 characters long" if input[:vin].length != 17
+      raise ArgumentError, "Status should be available or unavailable" unless [:AVAILABLE, :UNAVAILABLE].include? @status
     end
 
     def add_driven_trip(trip)
