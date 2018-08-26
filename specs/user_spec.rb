@@ -42,6 +42,7 @@ describe "User class" do
       trip = RideShare::Trip.new(id: 8, driver: nil, passenger: @user,
                                  start_time: Time.parse("2016-08-08"),
                                  end_time: Time.parse("2016-08-09"),
+                                 cost: 5,
                                  rating: 5)
 
       @user.add_trip(trip)
@@ -56,6 +57,27 @@ describe "User class" do
     it "all Trips must have the same passenger's user id" do
       @user.trips.each do |trip|
         expect(trip.passenger.id).must_equal 9
+      end
+    end
+
+    describe "total_expenditures" do
+
+      it "allows us to calculate total expenditures" do
+        expect(@user.net_expenditures).must_equal 5
+
+      # Adding another trip
+        @user.add_trip(RideShare::Trip.new(id: 8, driver: nil, passenger: @user,
+                                   start_time: Time.parse("2016-08-14"),
+                                   end_time: Time.parse("2016-08-15"),
+                                   cost: 15,
+                                   rating: 1))
+        expect(@user.net_expenditures).must_equal 20
+      end
+
+      it "also works for users with no trips" do
+        new_user = RideShare::User.new(id: 1, name: "Smithy", phone: "353-533-5334")
+
+        expect(new_user.net_expenditures).must_equal 0
       end
     end
   end
