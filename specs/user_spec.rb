@@ -1,12 +1,11 @@
 require_relative 'spec_helper'
 
 describe "User class" do
+  before do
+    @user = RideShare::User.new(id: 1, name: "Smithy", phone: "353-533-5334")
+  end
 
   describe "User instantiation" do
-    before do
-      @user = RideShare::User.new(id: 1, name: "Smithy", phone: "353-533-5334")
-    end
-
     it "is an instance of User" do
       expect(@user).must_be_kind_of RideShare::User
     end
@@ -79,6 +78,31 @@ describe "User class" do
 
         expect(new_user.net_expenditures).must_equal 0
       end
+    end
+  end
+
+  describe "total_time_spent" do
+    it "will calculate the total duration of all trips" do
+      @user.add_trip(RideShare::Trip.new(id: 8, driver: nil, passenger: @user,
+                                         start_time: Time.parse("2016-08-14"),
+                                         end_time: Time.parse("2016-08-15"),
+                                         cost: 15,
+                                         rating: 1))
+
+      # 1 day = 24 hours which is 60 minutes each of which is 60 sec
+      expect(@user.total_time_spent).must_equal 24 * 60 * 60
+
+      @user.add_trip(RideShare::Trip.new(id: 8, driver: nil, passenger: @user,
+                                         start_time: Time.parse("2016-08-14 10:39:59 -0700"),
+                                         end_time: Time.parse("2016-08-14 10:59:59 -0700"),
+                                         cost: 15,
+                                         rating: 1))
+      expect(@user.total_time_spent).must_equal 24 * 60 * 60 + 60 * 20
+    end
+
+    it "will return 0 for a user without trips" do
+      new_user = RideShare::User.new(id: 1, name: "Smithy", phone: "353-533-5334")
+      expect(new_user.total_time_spent).must_equal 0
     end
   end
 end
