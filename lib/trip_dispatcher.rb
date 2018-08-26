@@ -29,6 +29,19 @@ module RideShare
       return users
     end
 
+    def load_drivers(filename)
+      drivers = []
+
+      CSV.read(filename, headers: true).each do |line|
+        input_data = {}
+        id = line['id'].to_i
+        passenger = self.find_passenger(id)
+        driver = Driver.new(id: passenger.id, name: passenger.name,
+                            phone: passenger.phone, trips: passenger.trips)
+
+      end
+    end
+
 
     def load_trips(filename)
       trips = []
