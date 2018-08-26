@@ -157,7 +157,7 @@ We will do this by creating a `Driver` class which inherits from `User`.  A `Dri
 
 **Attribute**|**Description**
 -----|-----
-vehicle\_identification|The driver's Vehicle Identification Number (VIN Number), Each vehicle identification number should be a specific length of 17 to ensure it is a valid vehicle identification number
+vehicle_id|The driver's Vehicle Identification Number (VIN Number), Each vehicle identification number should be a specific length of 17 to ensure it is a valid vehicle identification number
 driven_trips | A list of trips the user has acted as a driver for.
 status|Indicating availability, a driver's availability should be either `:AVAILABLE` or `:UNAVAILABLE`
 
@@ -182,7 +182,7 @@ Update the `TripDispatcher` class to add or update the following Methods:
 
 **Method**|**Description**
 -----|-----
-load_drivers|Load the Drivers from the `support/drivers.csv` file and return a collection of `Driver` instances
+load_drivers|Load the Drivers from the `support/drivers.csv` file and return a collection of `Driver` instances, note that **drivers can be passengers too!** Replace the instance of `User` in the `passengers` array with a cooresponding instance of `Driver`
 find_driver |This method takes an `id` number and returns the corresponding `Driver` instance.
 load_trips|This method should be updated to add a corresponding `Driver` to the trip instance.
 
@@ -193,7 +193,7 @@ After each trip has a reference to its `Driver` and TripDispatcher can load a li
 **Method**|**Description**
 -----|-----
 average_rating  |  This method sums up the ratings from all a Driver's trips and returns the average
-add_trip  |  This method adds a trip to the driver's collection of trips
+add_driven_trip  |  This method adds a trip to the driver's collection of trips
 total_revenue  |  This method calculates that driver's total revenue across all their trips. Each driver gets 80% of the trip cost after a fee of $1.65 per trip is subtracted.
 net_expenditures|This method will **override** the cooresponding method in `User` and take the total amount a driver has spent as a passenger and subtract the amount they have earned as a driver (see above).  If the number is negative the driver will earn money.
 
