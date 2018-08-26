@@ -1,14 +1,14 @@
 
 module RideShare
   class Driver < User
-    attr_reader :vin, :driven_trips
+    attr_reader :vehicle_id, :driven_trips, :status
 
     def initialize(input)
       super(input)
 
       @status = input[:status]
       @status ||= :AVAILABLE
-      @vin = input[:vin]
+      @vehicle_id = input[:vin]
       @driven_trips = []
 
       raise ArgumentError, "Vin must be 17 characters long" if input[:vin].length != 17
