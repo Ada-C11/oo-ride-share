@@ -99,6 +99,8 @@ module RideShare
       trips << trip
       passenger.add_trip(trip)
       available_driver.add_driven_trip(trip)
+
+      return trip
     end
 
     def inspect

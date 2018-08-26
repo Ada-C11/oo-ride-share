@@ -19,13 +19,13 @@ module RideShare
 
     def net_expenditures
       return trips.reduce(0) do |total, trip|
-        total + trip.cost
+        trip.cost.nil? ? total : total + trip.cost
       end
     end
 
     def total_time_spent
       return trips.reduce(0) do |total, trip|
-        total + trip.duration
+        trip.end_time.nil? ? total : total + trip.duration
       end
     end
   end

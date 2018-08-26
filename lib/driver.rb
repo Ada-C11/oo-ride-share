@@ -24,18 +24,24 @@ module RideShare
     end
 
     def average_rating
-      total_ratings = driven_trips.reduce(0) do |total, trip|
+      total_ratings = driven_trips.select{ |trip| !trip.end_time.nil? }.reduce(0) do |total, trip|
         total + trip.rating
       end
-      return driven_trips.length.zero? ? 0.0 : total_ratings.to_f / driven_trips.length
+      return completed_trips.zero? ? 0.0 : total_ratings.to_f / completed_trips
     end
 
     def net_expenditures
       return super - total_revenue
     end
 
+    def completed_trips
+      return driven_trips.reduce(0) do |total, trip|
+        trip.end_time.nil? ? total : total + 1
+      end
+    end
+
     def total_revenue
-      return @driven_trips.reduce(0.0) do |sum, trip|
+      return @driven_trips.select{ |trip| !trip.end_time.nil? }.reduce(0.0) do |sum, trip|
         sum + (trip.cost - 1.65) * 0.8
       end
     end
