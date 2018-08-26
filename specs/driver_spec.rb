@@ -5,11 +5,16 @@ describe "Driver class" do
     before do
       @driver = RideShare::Driver.new(id: 1, name: "George",
                                       vin: "33133313331333133",
-                                      phone: '111-111-1111')
+                                      phone: '111-111-1111',
+                                      status: :AVAILABLE)
     end
 
     it "is an instance of Driver" do
       expect(@driver).must_be_kind_of RideShare::Driver
+    end
+
+    it "is an instance of User" do
+      expect(@driver).must_be_kind_of RideShare::User
     end
 
     it "throws an argument error with a bad ID value" do
@@ -22,8 +27,8 @@ describe "Driver class" do
     end
 
     it "sets trips to an empty array if not provided" do
-      expect(@driver.trips).must_be_kind_of Array
-      expect(@driver.trips.length).must_equal 0
+      expect(@driver.driven_trips).must_be_kind_of Array
+      expect(@driver.driven_trips.length).must_equal 0
     end
 
     it "is set up for specific attributes and data types" do
