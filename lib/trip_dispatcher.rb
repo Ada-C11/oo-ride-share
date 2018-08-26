@@ -87,7 +87,7 @@ module RideShare
       passenger = find_passenger(user_id)
 
       available_driver = drivers.find do |driver|
-        driver.status == :AVAILABLE
+        driver.status == :AVAILABLE && user_id != driver.id
       end
 
       raise Error, "No Available Drivers" if available_driver.nil?
@@ -96,8 +96,9 @@ module RideShare
 
       trip = Trip.new(passenger: passenger, start_time: Time.now,
                       driver: available_driver)
+      trips << trip
       passenger.add_trip(trip)
-      driver.add_driven_trip(trip)
+      available_driver.add_driven_trip(trip)
     end
 
     def inspect
