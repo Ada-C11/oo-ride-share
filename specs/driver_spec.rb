@@ -49,7 +49,7 @@ describe "Driver class" do
       @driver = RideShare::Driver.new(id: 3, name: "Lovelace",
                                       vin: "12345678912345678",
                                       status: :AVAILABLE)
-      @trip = RideShare::Trip.new(id: 8, driver: @driver, passenger: pass, date: "2016-08-08", rating: 5)
+      @trip = RideShare::Trip.new(id: 8, driver: @driver, passenger: pass, start_date: "2016-08-08", rating: 5)
     end
 
     it "throws an argument error if trip is not provided" do
