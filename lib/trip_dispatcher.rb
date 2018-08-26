@@ -76,8 +76,11 @@ module RideShare
     end
 
     def find_passenger(id)
-      check_id(id)
-      return @passengers.find { |passenger| passenger.id == id }
+      return find(id, @passengers)
+    end
+
+    def find_driver(id)
+      return find(id, @drivers)
     end
 
     def inspect
@@ -87,10 +90,16 @@ module RideShare
               #{passengers.count} passengers>"
     end
 
+
     private
 
     def check_id(id)
       raise ArgumentError, "ID cannot be blank or less than zero. (got #{id})" if id.nil? || id <= 0
+    end
+
+    def find(id, array)
+      check_id(id)
+      return array.find { |user| user.id == id }
     end
   end
 end
