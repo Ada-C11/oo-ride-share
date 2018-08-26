@@ -66,7 +66,9 @@ describe "Driver class" do
   describe "average_rating method" do
     before do
       @driver = RideShare::Driver.new(id: 54, name: "Rogers Bartell IV", vin: "1C9EVBRM0YBC564DZ")
-      trip = RideShare::Trip.new(id: 8, driver: @driver, passenger: nil, start_time: Time.parse("2016-08-08"), rating: 5)
+      trip = RideShare::Trip.new(id: 8, driver: @driver, passenger: nil,
+                                 start_time: Time.parse("2016-08-08"),
+                                 rating: 5, cost: 5)
       @driver.add_driven_trip(trip)
     end
 
@@ -84,5 +86,28 @@ describe "Driver class" do
       driver = RideShare::Driver.new(id: 54, name: "Rogers Bartell IV", vin: "1C9EVBRM0YBC564DZ")
       expect(driver.average_rating).must_equal 0
     end
+  end
+  describe "total_revenue" do
+    before do
+      @driver = RideShare::Driver.new(id: 54, name: "Rogers Bartell IV", vin: "1C9EVBRM0YBC564DZ")
+      trip = RideShare::Trip.new(id: 8, driver: @driver, passenger: nil,
+                                 start_time: Time.parse("2016-08-08"),
+                                 rating: 5, cost: 5)
+      @driver.add_driven_trip(trip)
+    end
+
+    it "returns a float" do
+      expect(@driver.total_revenue).must_be_kind_of Float
+    end
+
+    it "returns 0 if there are no trips" do
+      driver = RideShare::Driver.new(id: 54, name: "Rogers Bartell IV", vin: "1C9EVBRM0YBC564DZ")
+      expect(driver.total_revenue).must_equal 0
+    end
+
+    it "calculates total revenue correctly" do
+      expect(@driver.total_revenue).must_be_close_to (5 - 1.65) * 0.8, 0.01
+    end
+
   end
 end
