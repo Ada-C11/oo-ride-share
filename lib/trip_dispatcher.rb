@@ -83,6 +83,23 @@ module RideShare
       return find(id, @drivers)
     end
 
+    def request_trip(user_id)
+      passenger = find_passenger(user_id)
+
+      available_driver = drivers.find do |driver|
+        driver.status == :AVAILABLE
+      end
+
+      raise Error, "No Available Drivers" if available_driver.nil?
+
+      available_driver.status = :UNAVAILABLE
+
+      trip = Trip.new(passenger: passenger, start_time: Time.now,
+                      driver: available_driver)
+      passenger.add_trip(trip)
+      driver.add_driven_trip(trip)
+    end
+
     def inspect
       return "#<#{self.class.name}:0x#{self.object_id.to_s(16)} \
               #{trips.count} trips, \

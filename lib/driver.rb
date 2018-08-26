@@ -1,7 +1,8 @@
 
 module RideShare
   class Driver < RideShare::User
-    attr_reader :vehicle_id, :driven_trips, :status
+    attr_reader :vehicle_id, :driven_trips
+    attr_accessor :status
 
     def initialize(input)
       super(input)
