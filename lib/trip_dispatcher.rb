@@ -9,8 +9,10 @@ module RideShare
     attr_reader :drivers, :passengers, :trips
 
     def initialize(user_file = 'support/users.csv',
-                   trip_file = 'support/trips.csv')
+                   trip_file = 'support/trips.csv',
+                   driver_file = 'support/drivers.csv')
       @passengers = load_users(user_file)
+      @drivers = load_drivers(driver_file)
       @trips = load_trips(trip_file)
     end
 
@@ -33,13 +35,15 @@ module RideShare
       drivers = []
 
       CSV.read(filename, headers: true).each do |line|
-        input_data = {}
         id = line['id'].to_i
-        passenger = self.find_passenger(id)
+        passenger = find_passenger(id)
         driver = Driver.new(id: passenger.id, name: passenger.name,
-                            phone: passenger.phone, trips: passenger.trips)
+                            phone: passenger.phone_number, trips: passenger.trips,
+                            vin: line['vin'], status: line['status'].to_sym)
+        drivers << driver
 
       end
+      return drivers
     end
 
 
@@ -50,10 +54,12 @@ module RideShare
 
       trip_data.each do |raw_trip|
         passenger = find_passenger(raw_trip[:passenger_id].to_i)
+        driver = find_driver(raw_trip[:driver_id].to_i)
 
         parsed_trip = {
           id: raw_trip[:id].to_i,
           passenger: passenger,
+          driver: driver,
           start_time: Time.parse(raw_trip[:start_time]),
           end_time: Time.parse(raw_trip[:end_time]),
           cost: raw_trip[:cost].to_f,
@@ -62,6 +68,7 @@ module RideShare
 
         trip = Trip.new(parsed_trip)
         passenger.add_trip(trip)
+        driver.add_driven_trip(trip)
         trips << trip
       end
 
