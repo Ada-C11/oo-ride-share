@@ -193,7 +193,7 @@ After each trip has a reference to its `Driver` and TripDispatcher can load a li
 **Method**|**Description**
 -----|-----
 average_rating  |  This method sums up the ratings from all a Driver's trips and returns the average
-add_driven_trip  |  This method adds a trip to the driver's collection of trips
+add_driven_trip  |  This method adds a trip to the driver's collection of trips for which they have acted as a driver
 total_revenue  |  This method calculates that driver's total revenue across all their trips. Each driver gets 80% of the trip cost after a fee of $1.65 per trip is subtracted.
 net_expenditures|This method will **override** the cooresponding method in `User` and take the total amount a driver has spent as a passenger and subtract the amount they have earned as a driver (see above).  If the number is negative the driver will earn money.
 
