@@ -86,25 +86,7 @@ module RideShare
     def request_trip(user_id)
       passenger = find_passenger(user_id)
 
-      available_drivers = drivers.select do |driver|
-        driver.status == :AVAILABLE && driver.id != user_id
-      end
-
-      raise StandardError, "No Available Drivers" if available_drivers.empty?
-
-      driver = available_drivers.find do |current_driver|
-        current_driver.driven_trips.length == 0 # never driven
-      end
-
-      now = Time.now
-
-      if driver.nil?
-        driver = available_drivers.max_by do |current_driver|
-          now - current_driver.driven_trips.end_time
-        end
-      end
-
-
+      driver = assign_driver(user_id)
       driver.status = :UNAVAILABLE
 
       trip = Trip.new(passenger: passenger, start_time: Time.now,
@@ -133,6 +115,28 @@ module RideShare
     def find(id, array)
       check_id(id)
       return array.find { |user| user.id == id }
+    end
+
+    def assign_driver(passenger_id)
+      available_drivers = drivers.select do |driver|
+        driver.status == :AVAILABLE && driver.id != passenger_id
+      end
+
+      raise StandardError, "No Available Drivers" if available_drivers.empty?
+
+      driver = available_drivers.find do |current_driver|
+        current_driver.driven_trips.length.zero? # never driven
+      end
+
+      now = Time.now
+
+      if driver.nil?
+        driver = available_drivers.max_by do |current_driver|
+          now - current_driver.driven_trips.end_time
+        end
+      end
+
+      return driver
     end
   end
 end
