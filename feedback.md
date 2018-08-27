@@ -6,7 +6,7 @@ Feature|Feedback
 **Baseline** |
 Used Git Regularly|
 Answer comprehension questions |
-**Wave 1**|
+**Wave 1** |
 Appropriate use of Ruby's `Date`|
 `Trip` has a helper method to calculate duration|
 `Passenger` has a method to calculate total cost of all trips|
