@@ -63,125 +63,106 @@ describe "Driver class" do
       end
     end
 
-    describe "average_rating method" do
-      before do
-        trip = RideShare::Trip.new(id: 8, driver: @driver, passenger: nil,
-          start_time: Time.parse("2016-08-08"),
-          end_time: Time.parse("2016-08-09"),
-          rating: 5, cost: 5)
-          @driver.add_driven_trip(trip)
-        end
+  describe "average_rating method" do
+    before do
+      @driver = RideShare::Driver.new(id: 54, name: "Rogers Bartell IV",
+                                    vin: "1C9EVBRM0YBC564DZ")
+      trip = RideShare::Trip.new(id: 8, driver: @driver, passenger: nil,
+                               date: Time.parse("2016-08-08"), rating: 5)
+      @driver.add_trip(trip)
+    end
 
-        it "returns a float" do
-          expect(@driver.average_rating).must_be_kind_of Float
-        end
-
-        it "returns a float within range of 1.0 to 5.0" do
-          average = @driver.average_rating
-          expect(average).must_be :>=, 1.0
-          expect(average).must_be :<=, 5.0
-        end
-
-        it "returns zero if no trips" do
-          driver = RideShare::Driver.new(id: 54, name: "Rogers Bartell IV", vin: "1C9EVBRM0YBC564DZ")
-          expect(driver.average_rating).must_equal 0
-        end
-
-        it "doesn't include incomplete trips" do
-          trip = RideShare::Trip.new(id: 14, driver: @driver, passenger: nil,
-                                     start_time: Time.parse("2016-08-08"))
+    it "returns a float" do
+      expect(@driver.average_rating).must_be_kind_of Float
+    end
 
 
-          avg_rating = @driver.average_rating
 
-          @driver.add_driven_trip(trip)
-          expect(@driver.average_rating).must_be_close_to avg_rating, 0.01
-        end
-      end
 
-      describe "total_revenue" do
-        before do
-          trip = RideShare::Trip.new(id: 8, driver: @driver, passenger: nil,
+  describe "total_revenue" do
+    before do
+      trip = RideShare::Trip.new(id: 8, driver: @driver, passenger: nil,
                                      start_time: Time.parse("2016-08-08"),
                                      end_time: Time.parse('2016-08-09'),
                                      rating: 5, cost: 5)
-          @driver.add_driven_trip(trip)
-        end
+      @driver.add_driven_trip(trip)
+    end
 
-        it "returns a float" do
-          expect(@driver.total_revenue).must_be_kind_of Float
-        end
+    it "returns a float" do
+      expect(@driver.total_revenue).must_be_kind_of Float
+    end
 
-        it "returns 0 if there are no trips" do
-          driver = RideShare::Driver.new(id: 54, name: "Rogers Bartell IV", vin: "1C9EVBRM0YBC564DZ")
-          expect(driver.total_revenue).must_equal 0
-        end
+    it "returns 0 if there are no trips" do
+      driver = RideShare::Driver.new(id: 54, name: "Rogers Bartell IV", vin: "1C9EVBRM0YBC564DZ")
+      expect(driver.total_revenue).must_equal 0
+    end
 
-        it "calculates total revenue correctly" do
-          expect(@driver.total_revenue).must_be_close_to (5 - 1.65) * 0.8, 0.01
+    it "calculates total revenue correctly" do
+      expect(@driver.total_revenue).must_be_close_to (5 - 1.65) * 0.8, 0.01
 
-          @driver.add_driven_trip(RideShare::Trip.new(id: 47, driver: @driver, passenger: nil,
-                                                      start_time: Time.parse('2016-08-08'),
-                                                      end_time: Time.parse('2016-08-09'),
-                                                      rating: 5, cost: 15))
+      @driver.add_driven_trip(RideShare::Trip.new(id: 47, driver: @driver, passenger: nil,
+                                                  start_time: Time.parse('2016-08-08'),
+                                                  end_time: Time.parse('2016-08-09'),
+                                                  rating: 5, cost: 15))
 
-          expect(@driver.total_revenue).must_be_close_to (5 - 1.65 + 15 - 1.65) * 0.8, 0.01
-        end
+      expect(@driver.total_revenue).must_be_close_to (5 - 1.65 + 15 - 1.65) * 0.8, 0.01
+    end
 
-        it "does not include incomplete trips" do
-          trip = RideShare::Trip.new(id: 14, driver: @driver, passenger: nil,
-            start_time: Time.parse("2016-08-08"))
+    it "does not include incomplete trips" do
+      trip = RideShare::Trip.new(id: 14, driver: @driver, passenger: nil,
+        start_time: Time.parse("2016-08-08"))
 
-          total_revenue = @driver.total_revenue
+      total_revenue = @driver.total_revenue
 
-          @driver.add_driven_trip(trip)
-          expect(@driver.total_revenue).must_be_close_to total_revenue, 0.01
-        end
-      end
-
-      describe "net_expenditures" do
-        before do
-          @driver = RideShare::Driver.new(id: 54, name: "Rogers Bartell IV",
-                                          vin: "1C9EVBRM0YBC564DZ",
-                                          phone: '111-111-1111',
-                                          status: :AVAILABLE)
-
-          passenger_trip = RideShare::Trip.new(id: 8, driver: nil, passenger: @driver,
-                                                 start_time: Time.parse("2016-08-08"),
-                                                 rating: 5, cost: 5)
-
-          driven_trip = RideShare::Trip.new(id: 3, driver: @driver, passenger: nil,
-                                              start_time: Time.parse("2016-08-09"),
-                                              end_time: Time.parse("2016-08-10"),
-                                              rating: 3, cost: 15)
-
-          @driver.add_trip(passenger_trip)
-          @driver.add_driven_trip(driven_trip)
-        end
-
-        it "calculates the proper net expenditures" do
-          expect(@driver.net_expenditures).must_be_close_to 5 - (15 - 1.65) * 0.8, 0.01
-        end
-
-        it "calculates 0 for a driver with no trips as a passenger or driver" do
-          driver = RideShare::Driver.new(id: 54, name: "Rogers Bartell IV",
-                                          vin: "1C9EVBRM0YBC564DZ",
-                                          phone: '111-111-1111',
-                                          status: :AVAILABLE)
-          expect(driver.net_expenditures).must_be_close_to 0.0, 0.01
-        end
-        it "does not include incomplete trips" do
-          trip = RideShare::Trip.new(id: 14, driver: nil, passenger: @driver,
-                                     start_time: Time.parse("2016-08-08"))
-
-          net_expenditures = @driver.net_expenditures
-
-          @driver.add_trip(trip)
-          expect(@driver.net_expenditures).must_be_close_to net_expenditures, 0.01
-          trip = RideShare::Trip.new(id: 14, driver: @driver, passenger: nil,
-                                     start_time: Time.parse("2016-08-08"))
-          @driver.add_driven_trip(trip)
-          expect(@driver.net_expenditures).must_be_close_to net_expenditures, 0.01
-        end
-      end
+      @driver.add_driven_trip(trip)
+      expect(@driver.total_revenue).must_be_close_to total_revenue, 0.01
+    end
   end
+
+  describe "net_expenditures" do
+    before do
+      @driver = RideShare::Driver.new(id: 54, name: "Rogers Bartell IV",
+                                      vin: "1C9EVBRM0YBC564DZ",
+                                      phone: '111-111-1111',
+                                      status: :AVAILABLE)
+
+      passenger_trip = RideShare::Trip.new(id: 8, driver: nil, passenger: @driver,
+                                           start_time: Time.parse("2016-08-08"),
+                                           rating: 5, cost: 5)
+
+      driven_trip = RideShare::Trip.new(id: 3, driver: @driver, passenger: nil,
+                                        start_time: Time.parse("2016-08-09"),
+                                        end_time: Time.parse("2016-08-10"),
+                                        rating: 3, cost: 15)
+
+      @driver.add_trip(passenger_trip)
+      @driver.add_driven_trip(driven_trip)
+    end
+
+    it "calculates the proper net expenditures" do
+      expect(@driver.net_expenditures).must_be_close_to 5 - (15 - 1.65) * 0.8, 0.01
+    end
+
+    it "calculates 0 for a driver with no trips as a passenger or driver" do
+      driver = RideShare::Driver.new(id: 54, name: "Rogers Bartell IV",
+                                     vin: "1C9EVBRM0YBC564DZ",
+                                     phone: '111-111-1111',
+                                    status: :AVAILABLE)
+      expect(driver.net_expenditures).must_be_close_to 0.0, 0.01
+    end
+
+    it "does not include incomplete trips" do
+      trip = RideShare::Trip.new(id: 14, driver: nil, passenger: @driver,
+                                 start_time: Time.parse("2016-08-08"))
+
+      net_expenditures = @driver.net_expenditures
+
+      @driver.add_trip(trip)
+      expect(@driver.net_expenditures).must_be_close_to net_expenditures, 0.01
+      trip = RideShare::Trip.new(id: 14, driver: @driver, passenger: nil,
+                                 start_time: Time.parse("2016-08-08"))
+      @driver.add_driven_trip(trip)
+      expect(@driver.net_expenditures).must_be_close_to net_expenditures, 0.01
+    end
+  end
+end
