@@ -14,8 +14,8 @@ Complete tests for new behavior|
 **Wave 2** |
 `Driver` inherits from `User`|
 `Driver` has `add_driven_trip` method|
-`Driver` has methdo to calculate average rating|
-`Driver` has methdo to calculate net expenditures and it uses `super`|
+`Driver` has method to calculate average rating|
+`Driver` has method to calculate net expenditures and it uses `super`|
 `Driver` has a method to calculate total revenue|
 **Wave 3** |
 `TripDispatcher` has a new method to create trips|
