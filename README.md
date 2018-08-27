@@ -216,10 +216,10 @@ You should use this information to:
 
 -   Create a new instance of `Trip`
 -   Modify this selected driver using a new helper method in `Driver`:
-  -  Add the new trip to the collection of trips for that `Driver`
-  -  Set the driver's status to `:UNAVAILABLE`
+    -  Add the new trip to the collection of trips for that `Driver`
+    -  Set the driver's status to `:UNAVAILABLE`
 -   Modify the passenger for the trip using a new helper method in `User`
-  - Add the new trip to the collection of trips for the passenger in `User`
+    - Add the new trip to the collection of trips for the passenger in `User`
 -   Add the new trip to the collection of all `Trip`s in `TripDispatcher`
 -   Return the newly created trip
 
