@@ -123,7 +123,7 @@ To start this project, take some time to get familiar with the code. Do the foll
 
 Create a diagram that describes how each of these classes and methods (messages) interact with one another as well as with the CSV files.
 
-**Exercise:** Look at this requirement in Wave 1: "For a given user, calculate their total expenditure for all trips. Spend some time writing pseudocode for this.
+**Exercise:** Look at this requirement in Wave 1: "For a given user, calculate their total expenditure for all trips". Spend some time writing pseudocode for this.
 
 ### Wave 1
 
