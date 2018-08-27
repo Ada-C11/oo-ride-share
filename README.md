@@ -137,10 +137,7 @@ Currently our implementation saves the start and end time of each trip as a stri
 1.  Modify `TripDispatcher#load_trips` to store the `start_time` and `end_time` as `Time` instances
 1.  Add a check in `Trip#initialize` that raises an `ArgumentError` if the end time is before the start time, **and a corresponding test**
 1.  Add an instance method to the `Trip` class to calculate the _duration_ of the trip in seconds, **and a corresponding test**
-<<<<<<< HEAD
 
-=======
->>>>>>> fc7eef59e479bafe51ce1b7ff9955a1c62b40f47
 **Hint:** If you're hitting a `NoMethodError` for `Time.parse`, be aware that you need to `require 'time'` in order for it to work.
 
 #### 1.2: User Aggregate Statistics
