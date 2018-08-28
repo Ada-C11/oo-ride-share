@@ -18,6 +18,10 @@ module RideShare
       [:-, :to_i].each do |method|
         raise ArgumentError, "Times must be subtractable and convertable to integers" unless @start_time.respond_to? method
       end
+
+      unless end_time.nil? || end_time >= start_time
+        raise ArgumentError, "End time must be after start time"
+      end
     end
 
     def duration
