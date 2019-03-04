@@ -1,5 +1,6 @@
 require_relative 'csv_record'
 
+# Parent CsvRecord to Passenger class
 module RideShare
   class Passenger < CsvRecord
     attr_reader :name, :phone_number, :trips
