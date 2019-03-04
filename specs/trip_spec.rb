@@ -1,9 +1,9 @@
-require_relative 'spec_helper'
+require_relative "spec_helper"
 
 describe "Trip class" do
   describe "initialize" do
     before do
-      start_time = Time.parse('2015-05-20T12:14:00+00:00')
+      start_time = Time.parse("2015-05-20T12:14:00+00:00")
       end_time = start_time + 25 * 60 # 25 minutes
       @trip_data = {
         id: 8,
@@ -13,7 +13,7 @@ describe "Trip class" do
         start_time: start_time.to_s,
         end_time: end_time.to_s,
         cost: 23.45,
-        rating: 3
+        rating: 3,
       }
       @trip = RideShare::Trip.new(@trip_data)
     end
@@ -38,6 +38,10 @@ describe "Trip class" do
           RideShare::Trip.new(@trip_data)
         end.must_raise ArgumentError
       end
+    end
+
+    it "parses a time string into a time instance" do
+      expect(start_time).must_be_instance_of Time
     end
   end
 end
