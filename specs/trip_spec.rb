@@ -1,10 +1,10 @@
-require_relative 'spec_helper'
+require_relative "spec_helper"
 
 describe "Trip class" do
   describe "initialize" do
     before do
-      start_time = Time.parse('2015-05-20T12:14:00+00:00')
-      end_time = start_time + 25 * 60 # 25 minutes
+      start_time = "2015-05-20T12:14:00+00:00"
+      end_time = "2018-05-25 12:25:00 -0700"
       @trip_data = {
         id: 8,
         passenger: RideShare::Passenger.new(id: 1,
@@ -13,7 +13,7 @@ describe "Trip class" do
         start_time: start_time.to_s,
         end_time: end_time.to_s,
         cost: 23.45,
-        rating: 3
+        rating: 3,
       }
       @trip = RideShare::Trip.new(@trip_data)
     end
@@ -37,6 +37,30 @@ describe "Trip class" do
         expect do
           RideShare::Trip.new(@trip_data)
         end.must_raise ArgumentError
+      end
+    end
+
+    it "converts start and end time string to objects" do
+      expect(@trip.start_time).must_be_kind_of Time
+      expect(@trip.end_time).must_be_kind_of Time
+    end
+
+    it "raises if end time is earlier than start time" do
+      start_time = "2015-05-20T12:14:00+00:00"
+      end_time = "2013-05-25 12:25:00 -0700"
+      @trip_data = {
+        id: 8,
+        passenger: RideShare::Passenger.new(id: 1,
+                                            name: "Ada",
+                                            phone_number: "412-432-7640"),
+        start_time: start_time.to_s,
+        end_time: end_time.to_s,
+        cost: 23.45,
+        rating: 3,
+      }
+
+      expect do
+        RideShare::Trip.new(@trip_data).must_raise ArgumentError
       end
     end
   end
