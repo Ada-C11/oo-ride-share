@@ -67,4 +67,38 @@ describe "Passenger class" do
       end
     end
   end
+
+  describe "net expenditures" do
+    it " will return the total amount of money that passenger has spent on trips" do
+      @passenger = RideShare::Passenger.new(
+        id: 9,
+        name: "Merl Glover III",
+        phone_number: "1-602-620-2330 x3723",
+        trips: []
+        )
+      trip = RideShare::Trip.new(
+        id: 8,
+        passenger: @passenger,
+        start_time: "2016-08-08",
+        end_time: "2016-08-09",
+        rating: 5, 
+        cost: 20
+        )
+
+      trip_2 = RideShare::Trip.new(
+        id: 9,
+        passenger: @passenger,
+        start_time: "2016-08-11",
+        end_time: "2016-08-12",
+        rating: 5, 
+        cost: 10
+      )
+
+      @passenger.add_trip(trip)
+      @passenger.add_trip(trip_2)
+      
+      expect(@passenger.net_expenditure).must_equal 30
+    end
+  end
+
 end
