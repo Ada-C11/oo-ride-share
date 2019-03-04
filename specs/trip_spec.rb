@@ -40,8 +40,21 @@ describe "Trip class" do
       end
     end
 
-    it "parses a time string into a time instance" do
-      expect(start_time).must_be_instance_of Time
+    it "raises an error if the end time is before the start time" do
+      start_time = Time.parse("2015-05-20T12:14:00+00:00")
+      end_time = Time.parse("2015-04-20T12:14:00+00:00")
+      @trip_data = {
+        id: 8,
+        passenger: RideShare::Passenger.new(id: 1,
+                                            name: "Ada",
+                                            phone_number: "412-432-7640"),
+        start_time: start_time.to_s,
+        end_time: end_time.to_s,
+        cost: 23.45,
+        rating: 3,
+      }
+      @trip = RideShare::Trip.new(@trip_data)
+      expect(@trip).must_raise ArgumentError
     end
   end
 end
