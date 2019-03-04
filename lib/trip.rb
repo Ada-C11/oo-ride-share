@@ -1,4 +1,5 @@
 require "csv"
+require "time"
 
 require_relative "csv_record"
 
@@ -44,6 +45,10 @@ module RideShare
     def connect(passenger)
       @passenger = passenger
       passenger.add_trip(self)
+    end
+
+    def trip_duration
+      return (end_time - start_time)
     end
 
     private

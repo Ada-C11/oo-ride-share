@@ -63,5 +63,23 @@ describe "Trip class" do
         RideShare::Trip.new(@trip_data).must_raise ArgumentError
       end
     end
+
+    it "returns duration between trip start and end" do
+      start_time = "2018-05-25 11:00:00 -0700"
+      end_time = "2018-05-25 12:00:00 -0700"
+      @trip_data = {
+        id: 8,
+        passenger: RideShare::Passenger.new(id: 1,
+                                            name: "Ada",
+                                            phone_number: "412-432-7640"),
+        start_time: start_time.to_s,
+        end_time: end_time.to_s,
+        cost: 23.45,
+        rating: 3,
+      }
+
+      trip = RideShare::Trip.new(@trip_data)
+      expect(trip.trip_duration).must_equal 3600
+    end
   end
 end
