@@ -39,5 +39,26 @@ describe "Trip class" do
         end.must_raise ArgumentError
       end
     end
+
+    it "ensures start time is an instance of Time" do
+      expect(@trip.start_time).must_be_kind_of Time
+    end
+
+    it "ensures end time is an instance of Time" do
+      expect(@trip.end_time).must_be_kind_of Time
+    end 
+
+    it "calculates the duration of the trip in seconds" do
+      expect(@trip.duration).must_equal 1500
+    end
+
+
+    it "ensures start time is after end time" do
+       @trip_data[:start_time], @trip_data[:end_time] = @trip_data[:end_time], @trip_data[:start_time]
+        expect {RideShare::Trip.new(@trip_data)}.must_raise ArgumentError
+    end
+      
+      #expect {Card.new(0, :diamonds)}.must_raise ArgumentError
+
   end
 end
