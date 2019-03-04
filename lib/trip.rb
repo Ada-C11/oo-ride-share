@@ -49,6 +49,11 @@ module RideShare
       passenger.add_trip(self)
     end
 
+    def find_duration
+      trip_duration = (end_time - start_time)
+      return trip_duration
+    end
+
     private
     
     def self.from_csv(record)
