@@ -71,9 +71,9 @@ describe "Trip class" do
       }
       @trip = RideShare::Trip.new(@trip_data)
     end
-    
-    it 'calculates correct duration' do
-      expect(trip.duration).must_equal 25 * 60
+
+    it "calculates correct duration" do
+      expect(@trip.calculate_duration).must_equal 25 * 60
     end
   end
 end
