@@ -65,7 +65,11 @@ describe "Trip class" do
   describe "Duration calculator" do
     before do
       start_time = Time.parse("2018-12-17 16:09:21 -0800")
+      # , Time.parse("2019-01-24 21:36:19 -0800"), Time.parse("2018-12-30 10:38:40 -0800")]
       end_time = Time.parse("2018-12-17 16:42:21 -0800")
+      # , Time.parse("2019-01-24 22:21:36 -0800"), Times.parse("2018-12-30 11:36:12 -0800")]
+      duration_in_seconds = 1980
+      # , 2700, 3480]
 
       @trip_data = {
         id: 8,
@@ -82,7 +86,9 @@ describe "Trip class" do
     end
 
     it "Calculates the trip duration in seconds" do
+      # start_times.each_with_index do |start_time, i|
       expect(@test_ride.duration).must_be_close_to 1980
+      # end
     end
   end
 end
