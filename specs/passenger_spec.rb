@@ -96,6 +96,46 @@ describe "Passenger class" do
     end
     it "returns the correct total cost" do
       expect(@passenger.net_expenditures(9)).must_equal 340
+      expect { (@passenger.net_expenditures(10)) }.must_raise ArgumentError
+    end
+  end
+
+  describe "#total_time_spent" do
+    before do
+      @passenger = RideShare::Passenger.new(
+        id: 9,
+        name: "Merl Glover III",
+        phone_number: "1-602-620-2330 x3723",
+        trips: [],
+      )
+
+      trip = RideShare::Trip.new(
+        id: 8,
+        passenger: @passenger,
+        start_time: "2019-01-09 21:16:51 -0800",
+        end_time: "2019-01-09 22:14:39 -0800",
+        rating: 5,
+        cost: 110,
+      )
+      @passenger.add_trip(trip)
+      trip = RideShare::Trip.new(
+        id: 9,
+        passenger: @passenger,
+        start_time: "2019-01-25 11:05:28 -0800",
+        end_time: "2019-01-25 11:35:35 -0800",
+        rating: 5,
+        cost: 230,
+      )
+
+      @passenger.add_trip(trip)
+    end
+
+    it "returns correct time spent" do
+      time_duration1 = Time.parse("2019-01-09 22:14:39 -0800") - Time.parse("2019-01-09 21:16:51 -0800")
+      time_duration2 = Time.parse("2019-01-25 11:35:35 -0800") - Time.parse("2019-01-25 11:05:28 -0800")
+      total_duration_trips = time_duration1 + time_duration2
+      expect(@passenger.total_time_spent(9)).must_equal total_duration_trips
+      expect { (@passenger.total_time_spent(10)) }.must_raise ArgumentError
     end
   end
 end
