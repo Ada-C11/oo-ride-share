@@ -59,6 +59,7 @@ describe "Trip class" do
       end
     end
   end
+
   describe "calculates duration" do
     before do
       start_time = Time.parse("2015-05-20T12:14:00+00:00")
@@ -79,6 +80,42 @@ describe "Trip class" do
 
     it "calculates correct duration" do
       expect(@trip.calculate_duration).must_equal 25 * 60
+    end
+  end
+
+  describe "calculates total revenue" do
+    before do
+      # TODO: you'll need to add a driver at some point here.
+      @driver = RideShare::Driver.new(id: 1,
+        name: "Valentine",
+        vin: "DF5S6HFG365HGDCVG",
+        status: :AVAILABLE)
+      trip1 = RideShare::Trip.new(
+        id: 8,
+        passenger_id: 8,
+        driver_id: 1,
+        start_time: "2015-05-20T12:14:00+00:00",
+        end_time: "2015-05-20T12:24:00+00:00", # 10 minutes
+        cost: 25,
+        rating: 5,
+      )
+      trip2 = RideShare::Trip.new(
+        id: 8,
+        passenger_id: 12,
+        driver_id: 1,
+        start_time: "2015-05-20T12:14:00+00:00",
+        end_time: "2015-05-20T12:20:00+00:00", # 6 minutes
+        cost: 35,
+        rating: 5,
+      )
+
+      @driver.add_trip(trip1)
+      @driver.add_trip(trip2)
+    end
+    
+    it "calculates total revenue" do
+      total_revenue = @driver.total_revenue
+      expect(total_revenue).must_equal 60
     end
   end
 end
