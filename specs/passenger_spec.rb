@@ -48,8 +48,8 @@ describe "Passenger class" do
       trip1 = RideShare::Trip.new(
         id: 8,
         passenger: @passenger,
-        start_time: "2016-08-08",
-        end_time: "2016-08-09",
+        start_time: "2016-08-09 00:03:00",
+        end_time: "2016-08-09 00:03:36",
         rating: 5,
         cost: 20
         )
@@ -57,8 +57,8 @@ describe "Passenger class" do
       trip2 = RideShare::Trip.new(
         id: 10,
         passenger: @passenger,
-        start_time: "2016-08-09",
-        end_time: "2016-08-09",
+        start_time: "2016-08-09 00:03:05",
+        end_time: "2016-08-09 00:03:55",
         rating: 5,
         cost: 30
       )
@@ -84,7 +84,7 @@ describe "Passenger class" do
     end
     
     it "calculates total time spent per passenger" do
-        expect(@passenger.total_time_spent).must_be_kind_of String
+        expect(@passenger.total_time_spent).must_equal "Merl Glover III has spent 86.0 minutes in rides"
     end
 
   end
