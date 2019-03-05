@@ -43,27 +43,25 @@ describe "Trip class" do
 
   ## mapping out possible test for time duration
   ## maybe not as dry as it could be but breaking this out seems good for now
+  ## can we test incomplete trips??
 
-  # describe "duration" do
+  describe "duration" do
+    before do
+      start_time = Time.parse("2015-05-20T12:14:00+00:00")
+      end_time = start_time + 25 * 60 # 25 minutes
+      @trip_data = {
+        id: 8,
+        passenger: RideShare::Passenger.new(id: 1, name: "Ada", phone_number: "412-432-7640"),
+        start_time: start_time.to_s,
+        end_time: end_time.to_s,
+        cost: 23.45,
+        rating: 3,
+      }
+      @trip = RideShare::Trip.new(@trip_data)
+    end
 
-  #   before do
-  #     start_time = Time.parse('2015-05-20T12:14:00+00:00')
-  #     end_time = start_time + 25 * 60 # 25 minutes
-  #     @trip_data = {
-  #       id: 8,
-  #       passenger: RideShare::User.new(id: 1, name: "Ada", phone: "412-432-7640"),
-  #       start_time: start_time,
-  #       end_time: end_time,
-  #       cost: 23.45,
-  #       rating: 3
-  #     }
-  #     @trip = RideShare::Trip.new(@trip_data)
-  #   end
-
-  #   it "totals the duration of trip in seconds" do
-  #     expect(@duration_secs).must_equal 1500
-  #   end
-
-  # end
-
+    it "totals the duration of trip in seconds" do
+      expect(@trip.duration).must_equal "1500"
+    end
+  end
 end

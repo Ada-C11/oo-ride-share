@@ -5,7 +5,7 @@ require_relative "csv_record"
 
 module RideShare
   class Trip < CsvRecord
-    attr_reader :id, :passenger, :passenger_id, :start_time, :end_time, :cost, :rating
+    attr_reader :id, :passenger, :passenger_id, :start_time, :end_time, :cost, :rating, :duration
 
     def initialize(id:,
                    passenger: nil, passenger_id: nil,
@@ -25,7 +25,7 @@ module RideShare
       @end_time = Time.parse(end_time)
       @cost = cost
       @rating = rating
-      @duration_secs = (end_time.to_i) - (start_time.to_i)
+      @duration = duration_secs(start_time, end_time)
 
       # Add a check in Trip#initialize that raises an ArgumentError if the end
       # time is before the start time, and a corresponding test
@@ -49,6 +49,11 @@ module RideShare
     def connect(passenger)
       @passenger = passenger
       passenger.add_trip(self)
+    end
+
+    def duration_secs(start_time, end_time)
+      duration = (@end_time) - (@start_time)
+      return duration.to_i.to_s
     end
 
     private
