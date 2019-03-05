@@ -78,16 +78,16 @@ describe "Passenger class" do
       trip1 = RideShare::Trip.new(
         id: 8,
         passenger: @passenger,
-        start_time: "2016-08-08",
-        end_time: "2016-08-09",
+        start_time: "2015-05-20T12:14:00+00:00"
+        end_time: "2015-05-20T12:24:00+00:00" # 10 minutes
         cost: 25,
         rating: 5,
       )
       trip2 = RideShare::Trip.new(
         id: 8,
         passenger: @passenger,
-        start_time: "2016-08-08",
-        end_time: "2016-08-09",
+        start_time: "2015-05-20T12:14:00+00:00"
+        end_time: "2015-05-20T12:20:00+00:00" # 6 minutes
         cost: 35,
         rating: 5,
       )
@@ -95,8 +95,44 @@ describe "Passenger class" do
       @passenger.add_trip(trip1)
       @passenger.add_trip(trip2)
     end
+
     it "will calculate the total amount of money a passenger spent" do
-      expect(@passenger.net_expenditures).must_equal 60
-    end
+     expect(@passenger.net_expenditures).must_equal 60
+   end 
   end
+
+  describe "total time spent" do
+    before do
+      # TODO: you'll need to add a driver at some point here.
+      @passenger = RideShare::Passenger.new(
+        id: 9,
+        name: "Merl Glover III",
+        phone_number: "1-602-620-2330 x3723",
+        trips: [],
+      )
+      trip1 = RideShare::Trip.new(
+        id: 8,
+        passenger: @passenger,
+        start_time: "2015-05-20T12:14:00+00:00"
+        end_time: "2015-05-20T12:24:00+00:00" # 10 minutes
+        cost: 25,
+        rating: 5,
+      )
+      trip2 = RideShare::Trip.new(
+        id: 8,
+        passenger: @passenger,
+        start_time: "2015-05-20T12:14:00+00:00"
+        end_time: "2015-05-20T12:20:00+00:00" # 6 minutes
+        cost: 35,
+        rating: 5,
+      )
+
+      @passenger.add_trip(trip1)
+      @passenger.add_trip(trip2)
+    end
+
+    it "will calculate total time spent" do
+      total_time = @passenger.total_time_spent
+      expect(total_time).must_equal 16 * 60
+    end
 end
