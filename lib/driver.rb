@@ -1,4 +1,4 @@
-require_relative 'csv_record'
+require_relative "csv_record"
 
 module RideShare
   class Driver < CsvRecord
@@ -16,6 +16,15 @@ module RideShare
         raise ArgumentError, "Invalid status"
       end
       @trips = trips || []
+    end
+
+    def self.from_csv(record)
+      return self.new(
+               id: record[:id],
+               name: record[:name],
+               vin: record[:vin],
+               status: record[:status].to_sym,
+             )
     end
   end
 end
