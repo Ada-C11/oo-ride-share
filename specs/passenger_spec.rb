@@ -47,14 +47,9 @@ describe "Passenger class" do
         passenger: @passenger,
         start_time: "2016-08-08",
         end_time: "2016-08-09",
-<<<<<<< HEAD
         rating: 5,
+        cost: 20
       )
-=======
-        cost: 20,
-        rating: 5
-        )
->>>>>>> c9127b2e62c663b3ee002be394640d737791c61c
 
       trip2 = RideShare::Trip.new(
           id: 8,
@@ -91,33 +86,7 @@ describe "Passenger class" do
 
     #   expect(total_trip).must_equal 0
     # end
-  end
-
-  describe "total time spent" do
-    before do
-      @passenger = RideShare::Passenger.new(
-        id: 9,
-        name: "Bob Smith",
-        phone_number: "1-206-620-2330",
-        trips: [],
-      )
-      trip = RideShare::Trip.new(
-        id: 8,
-        passenger: @passenger,
-        start_time: "2016-08-08",
-        end_time: "2016-08-09",
-        rating: 5,
-      )
-      trip2 = RideShare::Trip.new(
-        id: 9,
-        passenger: @passenger,
-        start_time: "2016-08-10",
-        end_time: "2016-08-11",
-        rating: 5,
-      )
-      @passenger.add_trip(trip)
-      @passenger.add_trip(trip2)
-    end
+    # end
 
     it "total amount of time passenger has spent on trips" do
       expect(@passenger.total_time_spent).must_equal 172800
