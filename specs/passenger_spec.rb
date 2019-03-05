@@ -1,7 +1,6 @@
-require_relative 'spec_helper'
+require_relative "spec_helper"
 
 describe "Passenger class" do
-
   describe "Passenger instantiation" do
     before do
       @passenger = RideShare::Passenger.new(id: 1, name: "Smithy", phone_number: "353-533-5334")
@@ -34,7 +33,6 @@ describe "Passenger class" do
     end
   end
 
-
   describe "trips property" do
     before do
       # TODO: you'll need to add a driver at some point here.
@@ -42,24 +40,26 @@ describe "Passenger class" do
         id: 9,
         name: "Merl Glover III",
         phone_number: "1-602-620-2330 x3723",
-        trips: []
-        )
+        trips: [],
+      )
       trip = RideShare::Trip.new(
+        driver: 1,
         id: 8,
         passenger: @passenger,
-        start_time:  "2015-05-20T12:14:00+00:00",
+        start_time: "2015-05-20T12:14:00+00:00",
         end_time: "2015-05-20T12:25:00+00:00",
         rating: 5,
-        cost: 25
-        )
+        cost: 25,
+      )
       trip_2 = RideShare::Trip.new(
+        driver: 3,
         id: 10,
         passenger: @passenger,
         start_time: "2016-05-20T13:14:00+00:00",
         end_time: "2016-05-20T14:14:00+00:00",
         rating: 5,
-        cost: 45
-        )
+        cost: 45,
+      )
 
       @passenger.add_trip(trip)
       @passenger.add_trip(trip_2)
@@ -68,8 +68,8 @@ describe "Passenger class" do
         id: 9,
         name: "Merl Glover III",
         phone_number: "1-602-620-2330 x3723",
-        trips: []
-        )
+        trips: [],
+      )
     end
 
     it "calculates total cost of all trips" do
