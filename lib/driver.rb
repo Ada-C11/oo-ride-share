@@ -27,7 +27,6 @@ module RideShare
                status: record[:status]
              )
     end
-
     
   end
 end
