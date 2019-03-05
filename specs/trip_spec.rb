@@ -44,5 +44,9 @@ describe "Trip class" do
     it "start_time should be of Time class" do
       expect(@trip.start_time).must_be_instance_of Time
     end
+
+    it "end_time should be of Time class" do
+      expect(@trip.end_time).must_be_instance_of Time
+    end
   end
 end
