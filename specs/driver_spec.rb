@@ -25,7 +25,7 @@ describe "Driver class" do
     end
 
     it "is either :AVAILABLE or :UNAVAILABLE" do
-      expect(RideShare::Driver.new(id: 100, name: "George", vin: "12345678901234567", status: :SLEEPING).must_raise ArgumentError
+      expect { RideShare::Driver.new(id: 100, name: "George", vin: "12345678901234567", status: :SLEEPING) }.must_raise ArgumentError
     end
 
     it "has a default status of :AVAILABLE" do
@@ -49,7 +49,7 @@ describe "Driver class" do
     end
   end
 
-  describe "add_trip method" do
+  xdescribe "add_trip method" do
     before do
       pass = RideShare::Passenger.new(
         id: 1,
