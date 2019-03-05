@@ -66,12 +66,6 @@ describe "Passenger class" do
       @passenger.add_trip(trip1)
     end
     
-    puts @passenger.total_time_spent
-
-    # it "calculates total time spent per passenger" do
-    #     expect(@passenger.total_time_spent)
-    # end
-
     it "each item in array is a Trip instance" do
       @passenger.trips.each do |trip|
         expect(trip).must_be_kind_of RideShare::Trip
@@ -88,5 +82,10 @@ describe "Passenger class" do
       cost = @passenger.trips.map{|trip| trip.cost}.sum
       expect(cost).must_equal 50
     end
+    
+    it "calculates total time spent per passenger" do
+        expect(@passenger.total_time_spent).must_be_kind_of String
+    end
+
   end
 end
