@@ -15,6 +15,11 @@ module RideShare
     def add_trip(trip)
       @trips << trip
     end
+    
+    def total_time_spent
+      @trips.
+      return total_amount_of_time
+    end
 
     private
 
