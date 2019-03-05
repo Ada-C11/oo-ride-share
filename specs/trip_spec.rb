@@ -39,6 +39,18 @@ describe "Trip class" do
         end.must_raise ArgumentError
       end
     end
+
+    it "raises an error if end time occurs before start time" do
+      
+      start_time = Time.parse("2015-05-20T12:14:20+00:00")
+      end_time = Time.parse("2015-05-20T12:14:00+00:00")
+
+      duration = start_time - end_time
+
+      if duration.negative?
+        expect(@duration).must_raise ArgumentError
+      end
+    end
   end
 
   ## mapping out possible test for time duration
