@@ -16,6 +16,14 @@ module RideShare
       unless status == :AVAILABLE ||  status == :UNAVAILABLE
         raise ArgumentError, "Invalid status provided"
       end
+      
+      unless vin.length == 17
+        raise ArgumentError, "Vin number must be 17 characters"
+      end  
+    end
+
+    def add_trip(trip)
+      @trips << trip
     end
 
     def self.from_csv(record)
