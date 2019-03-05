@@ -1,13 +1,13 @@
-require_relative 'spec_helper'
+require_relative "spec_helper"
 
-xdescribe "Driver class" do
+describe "Driver class" do
   describe "Driver instantiation" do
     before do
       @driver = RideShare::Driver.new(
         id: 54,
         name: "Test Driver",
         vin: "12345678901234567",
-        status: :AVAILABLE
+        status: :AVAILABLE,
       )
     end
 
@@ -45,17 +45,17 @@ xdescribe "Driver class" do
     end
   end
 
-  describe "add_trip method" do
+  xdescribe "add_trip method" do
     before do
       pass = RideShare::Passenger.new(
         id: 1,
         name: "Test Passenger",
-        phone_number: "412-432-7640"
+        phone_number: "412-432-7640",
       )
       @driver = RideShare::Driver.new(
         id: 3,
         name: "Test Driver",
-        vin: "12345678912345678"
+        vin: "12345678912345678",
       )
       @trip = RideShare::Trip.new(
         id: 8,
@@ -63,7 +63,7 @@ xdescribe "Driver class" do
         passenger: pass,
         start_time: "2016-08-08",
         end_time: "2018-08-09",
-        rating: 5
+        rating: 5,
       )
     end
 
@@ -78,12 +78,12 @@ xdescribe "Driver class" do
     end
   end
 
-  describe "average_rating method" do
+  xdescribe "average_rating method" do
     before do
       @driver = RideShare::Driver.new(
         id: 54,
         name: "Rogers Bartell IV",
-        vin: "1C9EVBRM0YBC564DZ"
+        vin: "1C9EVBRM0YBC564DZ",
       )
       trip = RideShare::Trip.new(
         id: 8,
@@ -91,7 +91,7 @@ xdescribe "Driver class" do
         passenger_id: 3,
         start_time: "2016-08-08",
         end_time: "2016-08-08",
-        rating: 5
+        rating: 5,
       )
       @driver.add_trip(trip)
     end
@@ -110,7 +110,7 @@ xdescribe "Driver class" do
       driver = RideShare::Driver.new(
         id: 54,
         name: "Rogers Bartell IV",
-        vin: "1C9EVBRM0YBC564DZ"
+        vin: "1C9EVBRM0YBC564DZ",
       )
       expect(driver.average_rating).must_equal 0
     end
@@ -122,7 +122,7 @@ xdescribe "Driver class" do
         passenger_id: 3,
         start_time: "2016-08-08",
         end_time: "2016-08-09",
-        rating: 1
+        rating: 1,
       )
       @driver.add_trip(trip2)
 
@@ -130,11 +130,11 @@ xdescribe "Driver class" do
     end
   end
 
-  describe "total_revenue" do
+  xdescribe "total_revenue" do
     # You add tests for the total_revenue method
   end
 
-  describe "net_expenditures" do
+  xdescribe "net_expenditures" do
     # You add tests for the net_expenditures method
   end
 end
