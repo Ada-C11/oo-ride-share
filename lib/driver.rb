@@ -32,12 +32,17 @@ module RideShare
     end
 
     def total_revenue
-      total_revenue = trips.reduce(0) {|total, trip| total += trip.cost}
+      total_revenue = trips.reduce(0) { |total, trip| total += trip.cost }
       net_revenue = (total_revenue.to_f - (trips.length * 1.65)) * 0.8
       return net_revenue.round(2)
     end
 
     private
+
+    def assign_trip(trip)
+      status == :UNAVAILABLE
+      add_trip(trip)
+    end
 
     def self.from_csv(record)
       return self.new(

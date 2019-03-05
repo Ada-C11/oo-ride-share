@@ -132,11 +132,11 @@ describe "TripDispatcher class" do
 
       it "is an instance of Trip" do
         test_dispatcher = build_test_dispatcher
-        expect(test_dispatcher.request_trip).must_be_instance_of RideShare::Trip
+        expect(test_dispatcher.request_trip(1)).must_be_instance_of RideShare::Trip
       end
       it "updates trip lists for driver and passenger" do
         test_dispatcher = build_test_dispatcher
-        new_trip = test_dispatcher.request_trip
+        new_trip = test_dispatcher.request_trip(1)
 
         expect(new_trip.passenger.trips).must_include new_trip
         expect(new_trip.driver.trips).must_include new_trip
@@ -146,14 +146,14 @@ describe "TripDispatcher class" do
         test_dispatcher = build_test_dispatcher
 
         available_drivers = test_dispatcher.drivers.select { |driver| driver.status == :AVAILABLE }
-        new_trip = test_dispatcher.request_trip
+        new_trip = test_dispatcher.request_trip(1)
 
         expect(available_drivers).must_include new_trip.driver
       end
 
       it "will change an assigned driver's status to :UNAVAILABLE" do
         test_dispatcher = build_test_dispatcher
-        new_trip = test_dispatcher.request_trip
+        new_trip = test_dispatcher.request_trip(1)
 
         expect(new_trip.driver.status).must_equal :UNAVAILABLE
       end
@@ -166,29 +166,29 @@ describe "TripDispatcher class" do
 
         # exhaust all available drivers
         available_drivers.length.times do |time|
-          new_trip = test_dispatcher.request_trip
+          new_trip = test_dispatcher.request_trip(1)
         end
 
-        expect(test_dispatcher.request_trip).must_be_nil
+        expect(test_dispatcher.request_trip(1)).must_be_nil
       end
 
       it "returns nil for unfinished trip's end time" do
         test_dispatcher = build_test_dispatcher
-        new_trip = test_dispatcher.request_trip
+        new_trip = test_dispatcher.request_trip(1)
 
         expect(new_trip.end_time).must_be_nil
       end
 
       it "returns nil for unfinished trip's cost" do
         test_dispatcher = build_test_dispatcher
-        new_trip = test_dispatcher.request_trip
+        new_trip = test_dispatcher.request_trip(1)
 
         expect(new_trip.cost).must_be_nil
       end
 
       it "returns nil for unfinished trip's rating" do
         test_dispatcher = build_test_dispatcher
-        new_trip = test_dispatcher.request_trip
+        new_trip = test_dispatcher.request_trip(1)
 
         expect(new_trip.rating).must_be_nil
       end
