@@ -98,19 +98,19 @@ describe "Passenger class" do
       expect(@passenger.net_expenditures).must_equal 90
     end
 
-    #   it "should return 0 if passenger has no trip" do
-    #     @passenger = RideShare::Passenger.new(
-    #       id: 9,
-    #       name: "Merl Glover III",
-    #       phone_number: "1-602-620-2330 x3723",
-    #       trips: [],
-    #     )
-    #     expect(@passenger.net_expenditures).must_equal 0
-    #   end
-    # end
-    # describe "Wave-1: Test Passenger#total_time_spent method" do
-    #   it "should return interger" do
-    #     expect(@passenger.total_time_spent).must_be_instance_of Integer
-    #   end
+    it "should return 0 if passenger has no trip" do
+      @passenger = RideShare::Passenger.new(
+        id: 9,
+        name: "Merl Glover III",
+        phone_number: "1-602-620-2330 x3723",
+        trips: [],
+      )
+      expect(@passenger.net_expenditures).must_equal 0
+    end
+  end
+  describe "Wave-1: Test Passenger#total_time_spent method" do
+    it "should return interger" do
+      expect(@passenger.total_time_spent).must_be_instance_of Integer
+    end
   end
 end
