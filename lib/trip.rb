@@ -5,9 +5,9 @@ require_relative "csv_record"
 
 module RideShare
   class Trip < CsvRecord
-    attr_reader :id, :passenger, :passenger_id, :start_time, :end_time, :cost, :rating
+    attr_reader :id, :passenger, :passenger_id, :start_time, :end_time, :cost, :rating, :driver
 
-    def initialize(id:,
+    def initialize(driver:, id:,
                    passenger: nil, passenger_id: nil,
                    start_time:, end_time:, cost: nil, rating:)
       super(id)
@@ -28,6 +28,7 @@ module RideShare
         raise ArgumentError, "End time is less than start time."
       end
 
+      @driver = driver
       @start_time = start_time
       @end_time = end_time
       @cost = cost
