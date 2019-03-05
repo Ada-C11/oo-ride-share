@@ -21,7 +21,7 @@ module RideShare
     end
 
     def net_expenditures
-      return @trips.map{|trip| trip[:cost]}.sum
+      return @trips.map{|trip| trip.cost}.sum
     end
       #return the total amount of money that passenger has spent on their trips
 
