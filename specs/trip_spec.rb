@@ -49,4 +49,17 @@ describe "Trip class" do
       end.must_raise ArgumentError
     end
   end
+
+  describe "duration" do
+    it "calculates duration of trip in seconds" do
+      @trip_data[:start_time] = "2015-04-20T12:14:00+00:00"
+      @trip_data[:end_time] = "2015-04-20T12:14:30+00:00"
+
+      new_trip = RideShare::Trip.new(@trip_data)
+
+      expect do
+        new_trip.duration
+      end.must_equal 30
+    end
+  end
 end
