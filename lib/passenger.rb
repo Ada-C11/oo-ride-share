@@ -23,7 +23,9 @@ module RideShare
 
     def total_time_spent
       total_time = trips.reduce(0) {|total, trip| total += trip.calculate_duration}
+      return total_time
     end
+    
     private
 
     def self.from_csv(record)
