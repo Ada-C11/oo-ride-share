@@ -67,4 +67,71 @@ describe "Passenger class" do
       end
     end
   end
+
+  describe "method net_expenditure" do
+    before do
+      @passenger = RideShare::Passenger.new(
+        id: 9,
+        name: "Wendy Leonelli",
+        phone_number: "1-602-620-2330 x3723",
+        trips: []
+        )
+      trip_one = RideShare::Trip.new(
+        id: 8,
+        passenger: @passenger,
+        start_time: "2016-08-08",
+        end_time: "2016-08-09",
+        cost: 20,
+        rating: 5
+        )
+      trip_two = RideShare::Trip.new(
+        id: 10,
+        passenger: @passenger,
+        start_time: "2016-09-09",
+        end_time: "2016-09-10",
+        cost: 40,
+        rating: 4
+      )
+
+      @passenger.add_trip(trip_one)
+      @passenger.add_trip(trip_two)
+    end
+    it "returns total costs of a passenger's trips" do
+      expect(@passenger.net_expenditures).must_equal 60
+    end
+  end
+
+  describe "method total_time_spent" do
+    before do
+      @passenger = RideShare::Passenger.new(
+        id: 9,
+        name: "Jack Unbehend",
+        phone_number: "1-206-735-2910 x345",
+        trips: []
+        )
+      trip_one = RideShare::Trip.new(
+        id: 8,
+        passenger: @passenger,
+        start_time: (Time.parse('2015-05-20T12:14:00+00:00')).to_s,
+        end_time: (Time.parse('2015-05-20T12:14:00+00:00') + 20 * 60).to_s,
+        cost: 20,
+        rating: 5
+        )
+      trip_two = RideShare::Trip.new(
+        id: 10,
+        passenger: @passenger,
+        start_time: (Time.parse('2016-05-20T12:14:00+00:00')).to_s,
+        end_time: (Time.parse('2016-05-20T12:14:00+00:00') + 30 * 60).to_s,
+        cost: 40,
+        rating: 4
+      )
+
+      @passenger.add_trip(trip_one)
+      @passenger.add_trip(trip_two)
+    end
+
+    it "returns total time spent on all trips" do
+      expect(@passenger.total_time_spent).must_equal 3000
+    end
+  end
 end
