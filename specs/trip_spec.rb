@@ -13,7 +13,12 @@ describe "Trip class" do
         start_time: start_time.to_s,
         end_time: end_time.to_s,
         cost: 23.45,
-        rating: 3,
+        rating: 3, driver: RideShare::Driver.new(
+          id: 54,
+          name: "Test Driver",
+          vin: "12345678901234567",
+          status: :AVAILABLE,
+        ),
       }
       @trip = RideShare::Trip.new(@trip_data)
     end
@@ -56,7 +61,12 @@ describe "Trip class" do
         start_time: start_time.to_s,
         end_time: end_time.to_s,
         cost: 23.45,
-        rating: 3,
+        rating: 3, driver: RideShare::Driver.new(
+          id: 54,
+          name: "Test Driver",
+          vin: "12345678901234567",
+          status: :AVAILABLE,
+        ),
       }
 
       expect do
@@ -75,7 +85,12 @@ describe "Trip class" do
         start_time: start_time.to_s,
         end_time: end_time.to_s,
         cost: 23.45,
-        rating: 3,
+        rating: 3, driver: RideShare::Driver.new(
+          id: 54,
+          name: "Test Driver",
+          vin: "12345678901234567",
+          status: :AVAILABLE,
+        ),
       }
 
       trip = RideShare::Trip.new(@trip_data)
