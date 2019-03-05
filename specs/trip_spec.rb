@@ -3,8 +3,9 @@ require_relative "spec_helper"
 describe "Trip class" do
   describe "initialize" do
     before do
+      @duration = 25 * 60 # 25 minutes
       start_time = Time.parse("2015-05-20T12:14:00+00:00")
-      end_time = start_time + 25 * 60 # 25 minutes
+      end_time = start_time + @duration
       @trip_data = {
         id: 8,
         passenger: RideShare::Passenger.new(id: 1,
@@ -19,16 +20,17 @@ describe "Trip class" do
     end
 
     it "raises an error if start time is after end time" do
+      start_time = Time.parse('2015-05-20T12:14:00+00:00')
+      end_time = start_time - @duration
+      @trip_data[:start_time] = start_time.to_s
+      @trip_data[:end_time] = end_time.to_s
       expect do
-        RideShare::Trip.new(id: 1, start_time: "2018-12-27 05:38:08 -0800", end_time: "2018-12-27 03:38:08 -0800", rating: 5,
-                            passenger_id: 4)
+        RideShare::Trip.new(@trip_data)
       end.must_raise ArgumentError
     end
 
     it "calculates trip duration" do
-      new_ride = RideShare::Trip.new(id: 1, start_time: "2018-12-27 03:38:08 -0800", end_time: "2018-12-27 03:38:09 -0800", rating: 5,
-                                     passenger_id: 4)
-      expect(new_ride.calculate_trip_time).must_equal 1
+      expect(@trip.calculate_trip_time).must_equal @duration
     end
 
     it "is an instance of Trip" do
