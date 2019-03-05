@@ -120,11 +120,28 @@ Before you start writing code, you and your partner should use the above techniq
 
 #### Code Details
 
-- Why doesn't `Passenger` or `Trip` need an `attr_reader` for `id`?
-- Why does the version of `from_csv` in `CsvRecord` raise a `NotImplementedError`? What does this mean? Why don't we hit that when we run the code?
+- Why doesn't `Passenger` or `Trip` need an `attr_reader` for `id`? 
+    Because they both inherit the attr_reader methods from CsvRecord
+
+- Why does `from_csv` in `CsvRecord` raise a `NotImplementedError`? What does this mean? Why don't we hit that when we run the code?
+    It raises this error because we have not yet implemented this method yet!
+
+    This is a private method so it is not accessible outside of the CsvRecord class. Hence, it's not accessible by the test file. (We think.)
+
 - Why is `from_csv` a private method?
+    We don't want other classes to be able to access it. 
+    
+    We suspect this is because we'll want CsvRecord to be able to pull information from a csv file but then not rely on accessing the csv file and instead storing / manipulating the information within the program.
+
 - How does `CsvRecord.load_all` know what CSV file to open? 
+    self.load_all takes parameters for the file path (full_path), directory or file_name. It then builds a path to the CSV file using build_path(directory, file_name).
+
 - When you call `Passenger.load_all`, what happens? What methods are called in what order?
+    1) The .load_all method is called on the Passenger class. This method is inherited from the CsvRecord class.
+    2) This method checks if the full path is given and if not, it uses the build_path method to generate the file path.
+    3) Next, the CSV gem uses .read to ingest the data from the csv file.
+    4)  The .map function iterates over each line (row) of the csv file, stores it in an array and then puts that array into a larger array. (Essentially, the .map function makes an array of arrays from the csv file.)
+    5) The array of arrays is returned.
 
 #### Using the Library
 
