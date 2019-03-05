@@ -21,7 +21,7 @@ module RideShare
       end
 
       @start_time = Time.parse(start_time)
-      @end_time = end_time
+      @end_time = Time.parse(end_time)
       @cost = cost
       @rating = rating
 
