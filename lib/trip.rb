@@ -1,36 +1,35 @@
-require 'csv'
+require "csv"
 
-require_relative 'csv_record'
+require_relative "csv_record"
 
 module RideShare
   class Trip < CsvRecord
     attr_reader :id, :passenger, :passenger_id, :start_time, :end_time, :cost, :rating
 
     def initialize(id:,
-      passenger: nil, passenger_id: nil,
-      start_time:, end_time:, cost: nil, rating:)
+                   passenger: nil, passenger_id: nil,
+                   start_time:, end_time:, cost: nil, rating:)
       super(id)
 
       if passenger
         @passenger = passenger
         @passenger_id = passenger.id
-
       elsif passenger_id
         @passenger_id = passenger_id
-
       else
-        raise ArgumentError, 'Passenger or passenger_id is required'
+        raise ArgumentError, "Passenger or passenger_id is required"
       end
 
       @start_time = Time.parse(start_time)
       @end_time = Time.parse(end_time)
       @cost = cost
       @rating = rating
+      @duration_secs = (end_time.to_i) - (start_time.to_i)
 
-      # Add a check in Trip#initialize that raises an ArgumentError if the end 
+      # Add a check in Trip#initialize that raises an ArgumentError if the end
       # time is before the start time, and a corresponding test
       if start_time > end_time
-        raise ArgumentError.new("Invalid") 
+        raise ArgumentError.new("Invalid")
       end
 
       if @rating > 5 || @rating < 1
@@ -52,16 +51,16 @@ module RideShare
     end
 
     private
-    
+
     def self.from_csv(record)
       return self.new(
-        id: record[:id],
-        passenger_id: record[:passenger_id],
-        start_time: record[:start_time],
-        end_time: record[:end_time],
-        cost: record[:cost],
-        rating: record[:rating]
-        )
+               id: record[:id],
+               passenger_id: record[:passenger_id],
+               start_time: record[:start_time],
+               end_time: record[:end_time],
+               cost: record[:cost],
+               rating: record[:rating],
+             )
     end
   end
 end
