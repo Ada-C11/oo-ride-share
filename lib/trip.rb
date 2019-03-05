@@ -61,5 +61,10 @@ module RideShare
                rating: record[:rating],
              )
     end
+
+    def duration
+      second = @end_time - @start_time
+      return second
+    end
   end
 end
