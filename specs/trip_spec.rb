@@ -71,7 +71,7 @@ describe "Trip class" do
     end
   end
 
-  describe "trip#duration" do
+  describe "Trip#duration" do
     it "returns a integer" do
       expect(@trip.duration).must_be_instance_of Integer
     end
