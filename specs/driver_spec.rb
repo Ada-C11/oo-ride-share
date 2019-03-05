@@ -4,7 +4,7 @@ describe "Driver class" do
   describe "Driver instantiation" do
     before do
       @driver = RideShare::Driver.new(
-        id: 54,
+        id: 3,
         name: "Test Driver",
         vin: "12345678901234567",
         status: :AVAILABLE,
@@ -63,6 +63,7 @@ describe "Driver class" do
         passenger: pass,
         start_time: "2016-08-08",
         end_time: "2018-08-09",
+        cost: 5,
         rating: 5,
       )
     end
@@ -91,6 +92,7 @@ describe "Driver class" do
         passenger_id: 3,
         start_time: "2016-08-08",
         end_time: "2016-08-08",
+        cost: 5,
         rating: 5,
       )
       @driver.add_trip(trip)
@@ -122,16 +124,17 @@ describe "Driver class" do
         passenger_id: 3,
         start_time: "2016-08-08",
         end_time: "2016-08-09",
+        cost: 5,
         rating: 1,
       )
       @driver.add_trip(trip2)
 
       expect(@driver.average_rating).must_be_close_to (5.0 + 1.0) / 2.0, 0.01
     end
-  end
 
-  describe "total_revenue" do
-    # You add tests for the total_revenue method
+    it "calculates total revenue" do
+      expect(@driver.total_revenue).must_be_close_to 8.04
+    end
   end
 
   describe "net_expenditures" do
