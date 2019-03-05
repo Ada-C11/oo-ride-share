@@ -23,7 +23,7 @@ module RideShare
       # 2018-08-05 08:58:00 -0700  example
       @start_time = Time.parse(start_time)
       @end_time = Time.parse(end_time)
-      raise ArgumentError if @end_time < @start_time
+      raise ArgumentError, "end time is before start time" if @end_time < @start_time
       @cost = cost
       @rating = rating
 

@@ -31,8 +31,9 @@ describe "Trip class" do
         cost: 23.45,
         rating: 3,
       }
-      trip = RideShare::Trip.new(@trip_data2)
-      expect(trip).must_raise ArgumentError
+      expect do
+        trip2 = RideShare::Trip.new(trip_data2)
+      end.must_raise ArgumentError
     end
 
     it "is an instance of Trip" do
