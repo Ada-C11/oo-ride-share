@@ -1,7 +1,6 @@
-require_relative 'spec_helper'
+require_relative "spec_helper"
 
 describe "Passenger class" do
-
   describe "Passenger instantiation" do
     before do
       @passenger = RideShare::Passenger.new(id: 1, name: "Smithy", phone_number: "353-533-5334")
@@ -34,27 +33,34 @@ describe "Passenger class" do
     end
   end
 
+  before do
+    # TODO: you'll need to add a driver at some point here.
+    @passenger = RideShare::Passenger.new(
+      id: 9,
+      name: "Merl Glover III",
+      phone_number: "1-602-620-2330 x3723",
+      trips: [],
+    )
+    trip = RideShare::Trip.new(
+      id: 8,
+      passenger: @passenger,
+      start_time: "2016-08-08",
+      end_time: "2016-08-09",
+      cost: 12.18,
+      rating: 5,
+    )
+    @passenger.add_trip(trip)
+    trip2 = RideShare::Trip.new(
+      id: 10,
+      passenger: @passenger,
+      start_time: "2016-08-10",
+      end_time: "2016-08-11",
+      cost: 24.99,
+      rating: 5,
+    )
+  end
 
   describe "trips property" do
-    before do
-      # TODO: you'll need to add a driver at some point here.
-      @passenger = RideShare::Passenger.new(
-        id: 9,
-        name: "Merl Glover III",
-        phone_number: "1-602-620-2330 x3723",
-        trips: []
-        )
-      trip = RideShare::Trip.new(
-        id: 8,
-        passenger: @passenger,
-        start_time: "2016-08-08",
-        end_time: "2016-08-09",
-        rating: 5
-        )
-
-      @passenger.add_trip(trip)
-    end
-
     it "each item in array is a Trip instance" do
       @passenger.trips.each do |trip|
         expect(trip).must_be_kind_of RideShare::Trip
@@ -66,5 +72,9 @@ describe "Passenger class" do
         expect(trip.passenger.id).must_equal 9
       end
     end
+  end
+
+  describe "net_expenditures" do
+    expect(@passenger.net_expenditures).must_equal 37.17
   end
 end
