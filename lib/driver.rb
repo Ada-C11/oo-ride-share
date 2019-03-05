@@ -5,7 +5,7 @@ require_relative "csv_record"
 
 module RideShare
   class Driver < CsvRecord
-    attr_reader  :name, :vin, :status, :trips
+    attr_reader :name, :vin, :status, :trips
 
     DRIVE_STATUS = [:AVAILABLE, :UNAVAILABLE]
 
@@ -13,6 +13,9 @@ module RideShare
       super(id)
       @name = name
       @vin = vin
+      if vin.length != 17 || nil
+        return raise ArgumentError, "Invalid VIN"
+      end
       @status = status
       if DRIVE_STATUS.include?(status) == false
         return raise ArgumentError, "Invalid Status"
@@ -36,13 +39,12 @@ module RideShare
     # private
 
     def self.from_csv(record)
-        return new(
-                 id: record[:id],
-                 name: record[:name],
-                 vin: record[:vin],
-                 status: record[:status],
-               )
-      end
+      return new(
+               id: record[:id],
+               name: record[:name],
+               vin: record[:vin],
+               status: record[:status],
+             )
     end
+  end
 end
-
