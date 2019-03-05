@@ -1,6 +1,8 @@
 require "csv"
 require "awesome_print"
+require "time"
 require_relative "csv_record"
+require_relative "../specs/spec_helper"
 
 module RideShare
   class Trip < CsvRecord
@@ -22,6 +24,13 @@ module RideShare
 
       @start_time = Time.parse(start_time)
       @end_time = Time.parse(end_time)
+<<<<<<< HEAD
+
+      if @end_time.to_i < @start_time.to_i
+        raise ArgumentError, "end time is before start time"
+      end
+=======
+>>>>>>> 1b59fa7187024f4d54843afdc97eb4bd836785fe
       @cost = cost
       @rating = rating
 
