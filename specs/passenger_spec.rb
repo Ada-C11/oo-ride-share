@@ -57,10 +57,15 @@ describe "Passenger class" do
     it "will return the total amount of money a passenger has spent on their trips" do
       # #arrange
       net_expenditures = @passenger.net_expenditures
-
       # #assert
       expect(net_expenditures).must_equal 10
     end
+
+    it "will return the total amount of time spent on trips by one passenger" do
+      total_time = @passenger.total_time_spent
+      expect(total_time).must_equal 24 * 60 * 60
+    end
+
     it "each item in array is a Trip instance" do
       @passenger.trips.each do |trip|
         expect(trip).must_be_kind_of RideShare::Trip

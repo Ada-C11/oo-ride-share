@@ -21,13 +21,28 @@ module RideShare
     def net_expenditures
       # total_cost = @trips.inject { |sum, trip| sum + trip.cost }
       # puts "total_cost"
-      sum = 0
-      total_cost = @trips.each do |trip|
-        sum += trip.cost
+      if trips == []
+        return "This passenger has taken no trips."
+      else
+        sum = 0
+        @trips.each do |trip|
+          sum += trip.cost
+        end
+        total_cost = sum
+        return total_cost
       end
-      total_cost = sum
+    end
 
-      return total_cost
+    def total_time_spent
+      if trips == []
+        return "This passenger has taken no trips."
+      else
+        total_time = 0
+        @trips.each do |trip|
+          total_time += trip.duration_seconds
+        end
+        return total_time
+      end
     end
 
     private

@@ -43,13 +43,11 @@ module RideShare
     end
 
     def duration_seconds
-      hour_to_seconds = (@end_time.hour - @start_time.hour) * 60 * 60
-      minutes_to_seconds = (@end_time.min - @start_time.min) * 60
-      seconds = @end_time.sec - start_time.sec
-      total_duration_sec = hour_to_seconds + minutes_to_seconds + seconds
-      puts @end_time
-      puts @start_time
-      return total_duration_sec
+      # hour_to_seconds = (@end_time.hour - @start_time.hour) * 60 * 60
+      # minutes_to_seconds = (@end_time.min - @start_time.min) * 60
+      # seconds = @end_time.sec - start_time.sec
+      # total_duration_sec = hour_to_seconds + minutes_to_seconds + seconds
+      return @end_time - @start_time
     end
 
     def connect(passenger)
