@@ -1,38 +1,42 @@
-require 'csv'
-require 'time'
+require "csv"
+require "time"
 
-require_relative 'csv_record'
+require_relative "csv_record"
 
 module RideShare
   class Trip < CsvRecord
-    attr_reader :id, :passenger, :passenger_id, :start_time, :end_time, :cost, :rating
+    attr_reader :id, :passenger, :passenger_id, :start_time, :end_time, :cost, :rating, :driver, :driver_id
 
     def initialize(id:,
-      passenger: nil, passenger_id: nil,
-      start_time:, end_time:, cost: nil, rating:)
+                   passenger: nil, passenger_id: nil,
+                   start_time:, end_time:, cost: nil, rating:, driver: nil, driver_id: nil)
       super(id)
 
       if passenger
         @passenger = passenger
         @passenger_id = passenger.id
-
       elsif passenger_id
         @passenger_id = passenger_id
-
       else
-        raise ArgumentError, 'Passenger or passenger_id is required'
+        raise ArgumentError, "Passenger or passenger_id is required"
       end
 
       @start_time = Time.parse(start_time)
       @end_time = Time.parse(end_time)
       @cost = cost
       @rating = rating
+      @driver = driver
+      @driver_id = driver_id
 
       if @start_time > @end_time
         raise ArgumentError, "Invalid start time cannot be greater than end time"
       end
       if @rating > 5 || @rating < 1
         raise ArgumentError.new("Invalid rating #{@rating}")
+      end
+
+      if driver == nil && driver_id == nil
+        raise ArgumentError.new("Please enter either the driver name or driver id.")
       end
     end
 
@@ -55,16 +59,17 @@ module RideShare
     end
 
     private
-    
+
     def self.from_csv(record)
       return self.new(
-        id: record[:id],
-        passenger_id: record[:passenger_id],
-        start_time: record[:start_time],
-        end_time: record[:end_time],
-        cost: record[:cost],
-        rating: record[:rating]
-        )
+               id: record[:id],
+               passenger_id: record[:passenger_id],
+               start_time: record[:start_time],
+               end_time: record[:end_time],
+               cost: record[:cost],
+               rating: record[:rating],
+               driver_id: record[:driver_id],
+             )
     end
   end
 end

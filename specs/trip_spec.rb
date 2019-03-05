@@ -1,19 +1,20 @@
-require_relative 'spec_helper'
+require_relative "spec_helper"
 
 describe "Trip class" do
   describe "initialize" do
     before do
-      start_time = Time.parse('2015-05-20T12:14:00+00:00')
+      start_time = Time.parse("2015-05-20T12:14:00+00:00")
       end_time = start_time + 25 * 60 # 25 minutes
       @trip_data = {
         id: 8,
         passenger: RideShare::Passenger.new(id: 1,
-          name: "Ada",
-          phone_number: "412-432-7640"),
-          start_time: start_time.to_s,
-          end_time: end_time.to_s,
-          cost: 23.45,
-          rating: 3
+                                            name: "Ada",
+                                            phone_number: "412-432-7640"),
+        start_time: start_time.to_s,
+        end_time: end_time.to_s,
+        cost: 23.45,
+        rating: 3,
+        driver_id: 1,
       }
       @trip = RideShare::Trip.new(@trip_data)
     end
@@ -42,37 +43,39 @@ describe "Trip class" do
 
     it "raises an error if start time later than end time" do
       #Arrange
-      start_time = Time.parse('2015-05-20T12:14:00+00:00')
+      start_time = Time.parse("2015-05-20T12:14:00+00:00")
       end_time = start_time - 25 * 60 # 25 minutes
       @trip_d = {
         id: 8,
         passenger: RideShare::Passenger.new(id: 1,
-          name: "Ada",
-          phone_number: "412-432-7640"),
-          start_time: start_time.to_s,
-          end_time: end_time.to_s,
-          cost: 23.45,
-          rating: 3
+                                            name: "Ada",
+                                            phone_number: "412-432-7640"),
+        start_time: start_time.to_s,
+        end_time: end_time.to_s,
+        cost: 23.45,
+        rating: 3,
+        driver_id: 1,
       }
       expect {
-      @trip = RideShare::Trip.new(@trip_d)
+        @trip = RideShare::Trip.new(@trip_d)
       }.must_raise ArgumentError
     end
   end
 
   describe "calculate trip duration" do
     it "calculates the duration of trip in seconds" do
-      start_time = Time.parse('2015-05-20T12:14:00+00:00')
+      start_time = Time.parse("2015-05-20T12:14:00+00:00")
       end_time = start_time + 25 * 60 # 25 minutes
       @trip_data = {
         id: 8,
         passenger: RideShare::Passenger.new(id: 1,
-          name: "Ada",
-          phone_number: "412-432-7640"),
-          start_time: start_time.to_s,
-          end_time: end_time.to_s,
-          cost: 23.45,
-          rating: 3
+                                            name: "Ada",
+                                            phone_number: "412-432-7640"),
+        start_time: start_time.to_s,
+        end_time: end_time.to_s,
+        cost: 23.45,
+        rating: 3,
+        driver_id: 1,
       }
       @trip = RideShare::Trip.new(@trip_data)
       expect(@trip.find_duration).must_equal 1500
