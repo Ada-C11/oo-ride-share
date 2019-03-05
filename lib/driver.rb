@@ -3,7 +3,7 @@ require_relative "csv_record"
 module RideShare
   class Driver < CsvRecord
     
-    def initialize(id:, name:, vin:, status:, trips:) 
+    def initialize(id:, name:, vin:, status:, trips: []) 
       super(id)
       @name = name
       
@@ -15,6 +15,7 @@ module RideShare
       unless status == :AVAILABLE || status == :UNAVAILABLE
         raise ArgumentError, "Status must be :AVAILABLE or :UNAVAILABLE"
       end
+      @trips = trips 
     end
 
     private 
