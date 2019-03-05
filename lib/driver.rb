@@ -18,6 +18,21 @@ module RideShare
       @trips = trips || []
     end
 
+    def add_trip(trip)
+      @trips << trip
+    end
+
+    def average_rating
+      if trips.length == 0
+        return 0
+      else
+        average_rating = (trips.reduce(0) { |total, trip| total += trip.rating }.to_f) / trips.length
+        return average_rating.round(2)
+      end
+    end
+
+    private
+
     def self.from_csv(record)
       return self.new(
                id: record[:id],
