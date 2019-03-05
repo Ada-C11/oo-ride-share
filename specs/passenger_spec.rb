@@ -117,8 +117,17 @@ describe "Passenger class" do
       expect(@passenger.total_time_spent).must_be_instance_of Integer
     end
 
-    it "Should calculated the total time duration of all trips for passenger" do
+    it "Should calculated the correct total time duration of all trips for passenger" do
       expect(@passenger.total_time_spent).must_equal 4500
+    end
+    it "Should return 0 for passenger with no trip" do
+      @passenger = RideShare::Passenger.new(
+        id: 9,
+        name: "Merl Glover III",
+        phone_number: "1-602-620-2330 x3723",
+        trips: [],
+      )
+      expect(@passenger.total_time_spent).must_equal 0
     end
   end
 end
