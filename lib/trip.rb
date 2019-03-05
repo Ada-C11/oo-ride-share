@@ -1,31 +1,41 @@
-require 'csv'
+require "csv"
+require "time"
 
-require_relative 'csv_record'
+require_relative "csv_record"
 
 module RideShare
   class Trip < CsvRecord
     attr_reader :id, :passenger, :passenger_id, :start_time, :end_time, :cost, :rating
 
     def initialize(id:,
-      passenger: nil, passenger_id: nil,
-      start_time:, end_time:, cost: nil, rating:)
+                   passenger: nil, passenger_id: nil,
+                   start_time:, end_time:, cost: nil, rating:)
       super(id)
+
+      @start_time = Time.new(start_time)
+      @end_time = Time.new(end_time)
 
       if passenger
         @passenger = passenger
         @passenger_id = passenger.id
-
       elsif passenger_id
         @passenger_id = passenger_id
-
       else
-        raise ArgumentError, 'Passenger or passenger_id is required'
+        raise ArgumentError, "Passenger or passenger_id is required"
+      end
+
+      if @end_time < @start_time
+        raise ArgumentError, "End time is less than start time."
       end
 
       @start_time = start_time
       @end_time = end_time
       @cost = cost
       @rating = rating
+
+      # if end_time < start_time
+      #   raise ArgumentError, "End time is less than start time."
+      # end
 
       if @rating > 5 || @rating < 1
         raise ArgumentError.new("Invalid rating #{@rating}")
@@ -45,17 +55,24 @@ module RideShare
       passenger.add_trip(self)
     end
 
+    def duration_in_seconds
+      start_time = Time.parse(@start_time)
+      end_time = Time.parse(@end_time)
+      duration = (end_time - start_time)
+      return duration
+    end
+
     private
-    
+
     def self.from_csv(record)
       return self.new(
-        id: record[:id],
-        passenger_id: record[:passenger_id],
-        start_time: record[:start_time],
-        end_time: record[:end_time],
-        cost: record[:cost],
-        rating: record[:rating]
-        )
+               id: record[:id],
+               passenger_id: record[:passenger_id],
+               start_time: record[:start_time],
+               end_time: record[:end_time],
+               cost: record[:cost],
+               rating: record[:rating],
+             )
     end
   end
 end
