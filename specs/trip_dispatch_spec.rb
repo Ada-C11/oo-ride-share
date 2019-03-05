@@ -144,9 +144,32 @@ describe "TripDispatcher class" do
 
       it "only assigns available drivers" do
         test_dispatcher = build_test_dispatcher
+
+        available_drivers = test_dispatcher.drivers.select { |driver| driver.status == :AVAILABLE }
         new_trip = test_dispatcher.request_trip
 
-        expect(new_trip.driver.status).must_equal :AVAILABLE
+        expect(available_drivers).must_include new_trip.driver
+      end
+
+      it "will change an assigned driver's status to :UNAVAILABLE" do
+        test_dispatcher = build_test_dispatcher
+        new_trip = test_dispatcher.request_trip
+
+        expect(new_trip.driver.status).must_equal :UNAVAILABLE
+      end
+
+      it "will return nil if no drivers are available" do
+        test_dispatcher = build_test_dispatcher
+
+        # select all available drivers
+        available_drivers = test_dispatcher.drivers.select { |driver| driver.status == :AVAILABLE }
+
+        # exhaust all available drivers
+        available_drivers.length.times do |time|
+          new_trip = test_dispatcher.request_trip
+        end
+
+        expect(test_dispatcher.request_trip).must_be_nil
       end
     end
   end
