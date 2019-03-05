@@ -50,7 +50,7 @@ module RideShare
       "PassengerID=#{passenger&.id.inspect}>"
     end
 
-    def connect(passenger)
+    def connect(passenger, driver)
       @passenger = passenger
       passenger.add_trip(self)
       @driver = driver
@@ -71,6 +71,8 @@ module RideShare
                end_time: record[:end_time],
                cost: record[:cost],
                rating: record[:rating],
+               driver: record[:driver],
+               driver_id: record[:driver_id],
              )
     end
   end
