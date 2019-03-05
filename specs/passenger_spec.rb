@@ -60,6 +60,7 @@ describe "Passenger class" do
       )
 
       @passenger.add_trip(trip)
+      @passenger.add_trip(trip2)
     end
 
     it "each item in array is a Trip instance" do
