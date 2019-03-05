@@ -1,7 +1,6 @@
-require_relative 'spec_helper'
+require_relative "spec_helper"
 
 describe "Passenger class" do
-
   describe "Passenger instantiation" do
     before do
       @passenger = RideShare::Passenger.new(id: 1, name: "Smithy", phone_number: "353-533-5334")
@@ -34,7 +33,6 @@ describe "Passenger class" do
     end
   end
 
-
   describe "trips property" do
     before do
       # TODO: you'll need to add a driver at some point here.
@@ -42,15 +40,15 @@ describe "Passenger class" do
         id: 9,
         name: "Merl Glover III",
         phone_number: "1-602-620-2330 x3723",
-        trips: []
-        )
+        trips: [],
+      )
       trip = RideShare::Trip.new(
         id: 8,
         passenger: @passenger,
         start_time: "2016-08-08",
         end_time: "2016-08-09",
-        rating: 5
-        )
+        rating: 5,
+      )
 
       @passenger.add_trip(trip)
     end
@@ -65,6 +63,12 @@ describe "Passenger class" do
       @passenger.trips.each do |trip|
         expect(trip.passenger.id).must_equal 9
       end
+    end
+  end
+
+  describe "Wave-1: Test Passenger#net_expenditures method" do
+    it "Net-expeditures method should return an integer" do
+      expect(@passenger.net_expenditures).must_be_instance_of Integer
     end
   end
 end
