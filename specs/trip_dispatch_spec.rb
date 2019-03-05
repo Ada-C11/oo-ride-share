@@ -120,5 +120,20 @@ describe "TripDispatcher class" do
         end
       end
     end
+
+    describe "request trip" do
+      before do
+        def build_test_dispatcher
+          return RideShare::TripDispatcher.new(
+                    directory: TEST_DATA_DIRECTORY,
+                  )
+        end
+      end
+
+      it "is an instance of Trip" do
+        test_dispatcher = build_test_dispatcher
+        expect(test_dispatcher.request_trip).must_be_instance_of RideShare::Trip
+      end
+    end
   end
 end
