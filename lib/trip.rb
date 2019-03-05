@@ -22,10 +22,16 @@ module RideShare
         raise ArgumentError, 'Passenger or passenger_id is required'
       end
 
-      @start_time = start_time
-      @end_time = end_time
+      @start_time = Time.parse(start_time)
+      @end_time = Time.parse(end_time)
       @cost = cost
       @rating = rating
+
+      # Add a check in Trip#initialize that raises an ArgumentError if the end 
+      # time is before the start time, and a corresponding test
+      if start_time > end_time
+        raise ArgumentError.new("Invalid") 
+      end
 
       if @rating > 5 || @rating < 1
         raise ArgumentError.new("Invalid rating #{@rating}")
