@@ -48,5 +48,9 @@ describe "Trip class" do
     it "end_time should be of Time class" do
       expect(@trip.end_time).must_be_instance_of Time
     end
+
+    it "confirms time is correctly parsed" do
+      expect(@trip.start_time).must_equal Time.new(2015, 5, 20, 12, 14, 00, 00)
+    end
   end
 end
