@@ -1,7 +1,6 @@
-require_relative 'spec_helper'
+require_relative "spec_helper"
 
 describe "Passenger class" do
-
   describe "Passenger instantiation" do
     before do
       @passenger = RideShare::Passenger.new(id: 1, name: "Smithy", phone_number: "353-533-5334")
@@ -34,7 +33,6 @@ describe "Passenger class" do
     end
   end
 
-
   describe "trips property" do
     before do
       # TODO: you'll need to add a driver at some point here.
@@ -42,15 +40,15 @@ describe "Passenger class" do
         id: 9,
         name: "Merl Glover III",
         phone_number: "1-602-620-2330 x3723",
-        trips: []
-        )
+        trips: [],
+      )
       trip = RideShare::Trip.new(
         id: 8,
         passenger: @passenger,
         start_time: "2016-08-08",
         end_time: "2016-08-09",
-        rating: 5
-        )
+        rating: 5,
+      )
 
       @passenger.add_trip(trip)
     end
@@ -65,6 +63,98 @@ describe "Passenger class" do
       @passenger.trips.each do |trip|
         expect(trip.passenger.id).must_equal 9
       end
+    end
+  end
+
+  describe "net_expenditures method" do
+    it "calculates a passenger's trip costs" do
+      @passenger = RideShare::Passenger.new(
+        id: 9,
+        name: "Merl Glover III",
+        phone_number: "1-602-620-2330 x3723",
+        trips: [],
+      )
+      trip = RideShare::Trip.new(
+        id: 8,
+        passenger: @passenger,
+        start_time: "2016-08-08",
+        end_time: "2016-08-09",
+        cost: 5.50,
+        rating: 5,
+      )
+
+      @passenger.add_trip(trip)
+
+      trip = RideShare::Trip.new(
+        id: 10,
+        passenger: @passenger,
+        start_time: "2016-08-10",
+        end_time: "2016-08-11",
+        cost: 10.0,
+        rating: 5,
+      )
+      @passenger.add_trip(trip)
+
+      result = @passenger.net_expenditures
+      expect(result).must_equal 15.50
+    end
+
+    it "returns 0 if the passenger hasn't taken any trips" do
+      @passenger = RideShare::Passenger.new(
+        id: 9,
+        name: "Merl Glover III",
+        phone_number: "1-602-620-2330 x3723",
+        trips: [],
+      )
+
+      result = @passenger.net_expenditures
+      expect(result).must_equal 0
+    end
+  end
+
+  describe "total_time_spent method" do
+    it "calculates the total amount of time a passenger has spent on their trips" do
+      @passenger = RideShare::Passenger.new(
+        id: 9,
+        name: "Merl Glover III",
+        phone_number: "1-602-620-2330 x3723",
+        trips: [],
+      )
+      trip = RideShare::Trip.new(
+        id: 8,
+        passenger: @passenger,
+        start_time: "2016-08-08",
+        end_time: "2016-08-09",
+        cost: 5.50,
+        rating: 5,
+      )
+
+      @passenger.add_trip(trip)
+
+      trip = RideShare::Trip.new(
+        id: 10,
+        passenger: @passenger,
+        start_time: "2016-08-10",
+        end_time: "2016-08-11",
+        cost: 10.0,
+        rating: 5,
+      )
+      @passenger.add_trip(trip)
+
+      duration = @passenger.total_time_spent
+      expect(duration).must_equal 172800
+    end
+
+    it "returns 0 if a passenger has not taken any trips" do
+      @passenger = RideShare::Passenger.new(
+        id: 9,
+        name: "Merl Glover III",
+        phone_number: "1-602-620-2330 x3723",
+        trips: [],
+      )
+
+      duration = @passenger.total_time_spent
+      expect(duration).must_equal 0
     end
   end
 end
