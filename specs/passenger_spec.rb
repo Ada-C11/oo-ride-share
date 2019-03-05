@@ -48,15 +48,15 @@ describe "Passenger class" do
         start_time: "2016-08-08",
         end_time: "2016-08-09",
         rating: 5,
-        cost: 25.00,
+        cost: 25,
       )
       trip2 = RideShare::Trip.new(
-        id: 8,
+        id: 9,
         passenger: @passenger,
         start_time: "2017-08-08",
         end_time: "2017-08-09",
         rating: 5,
-        cost: 10.00,
+        cost: 10,
       )
 
       @passenger.add_trip(trip)
@@ -77,7 +77,8 @@ describe "Passenger class" do
     #CURRENTLY WORKING ON THIS TEST
     it "net_expenditure method returns the total amount of money that passenger has spent on their trips" do
       total = @passenger.net_expenditures
-      expect(total).must_equal 35.00
+      expect(total).must_equal 35
+      puts @trips
     end
   end
 end
