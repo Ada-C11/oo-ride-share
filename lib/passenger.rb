@@ -39,7 +39,7 @@ module RideShare
       end
       return total_trip
     end
-    
+
     private
 
     def self.from_csv(record)

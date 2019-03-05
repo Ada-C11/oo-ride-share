@@ -48,17 +48,17 @@ describe "Passenger class" do
         start_time: "2016-08-08",
         end_time: "2016-08-09",
         rating: 5,
-        cost: 20
+        cost: 20,
       )
 
       trip2 = RideShare::Trip.new(
-          id: 8,
-          passenger: @passenger,
-          start_time: "2016-08-10",
-          end_time: "2016-08-11",
-          cost: 20,
-          rating: 5
-        )
+        id: 8,
+        passenger: @passenger,
+        start_time: "2016-08-10",
+        end_time: "2016-08-11",
+        cost: 20,
+        rating: 5,
+      )
       @passenger.add_trip(trip)
       @passenger.add_trip(trip2)
     end
@@ -85,7 +85,7 @@ describe "Passenger class" do
         id: 10,
         name: "Merl Glover III",
         phone_number: "1-602-620-2330 x3723",
-        trips: nil
+        trips: nil,
       )
 
       expect(@passenger.net_expenditures).must_equal 0
@@ -93,6 +93,17 @@ describe "Passenger class" do
 
     it "total amount of time passenger has spent on trips" do
       expect(@passenger.total_time_spent).must_equal 172800
+    end
+
+    it "returns zero seconds for no trips" do
+      @passenger = RideShare::Passenger.new(
+        id: 10,
+        name: "Merl Glover III",
+        phone_number: "1-602-620-2330 x3723",
+        trips: nil,
+      )
+
+      expect(@passenger.total_time_spent).must_equal 0
     end
   end
 end
