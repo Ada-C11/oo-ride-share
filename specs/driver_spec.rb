@@ -11,6 +11,26 @@ describe "Driver class" do
       )
     end
 
+    it "sets the status to :AVAILABLE if no status is given at init" do
+      @driver = RideShare::Driver.new(
+        id: 54,
+        name: "Test Driver",
+        vin: "12345678901234567",
+      )
+      expect(@driver.status).must_equal :AVAILABLE
+    end
+
+    it "raises an error when a bad status is passed in init" do
+      expect {
+        @driver = RideShare::Driver.new(
+          id: 54,
+          name: "Test Driver",
+          vin: "12345678901234567",
+          status: :UNLOVED,
+        )
+      }.must_raise ArgumentError
+    end
+
     it "is an instance of Driver" do
       expect(@driver).must_be_kind_of RideShare::Driver
     end

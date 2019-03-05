@@ -22,7 +22,6 @@ module RideShare
 
     private
 
-    binding.pry
     def self.from_csv(record)
       return new(
                id: record[:id],
