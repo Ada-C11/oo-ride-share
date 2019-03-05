@@ -1,7 +1,6 @@
-require_relative 'spec_helper'
+require_relative "spec_helper"
 
 describe "Passenger class" do
-
   describe "Passenger instantiation" do
     before do
       @passenger = RideShare::Passenger.new(id: 1, name: "Smithy", phone_number: "353-533-5334")
@@ -34,7 +33,6 @@ describe "Passenger class" do
     end
   end
 
-
   describe "trips property" do
     before do
       # TODO: you'll need to add a driver at some point here.
@@ -42,16 +40,16 @@ describe "Passenger class" do
         id: 9,
         name: "Merl Glover III",
         phone_number: "1-602-620-2330 x3723",
-        trips: []
-        )
+        trips: [],
+      )
       trip = RideShare::Trip.new(
         id: 8,
         passenger: @passenger,
         start_time: "2016-08-08",
         end_time: "2016-08-09",
-        rating: 5
-        )
-
+        rating: 5,
+        cost: 15,
+      )
       @passenger.add_trip(trip)
     end
 
@@ -64,6 +62,34 @@ describe "Passenger class" do
     it "all Trips must have the same passenger's passenger id" do
       @passenger.trips.each do |trip|
         expect(trip.passenger.id).must_equal 9
+      end
+    end
+
+    it "calculates the total each passenger has spent on trips" do
+      trip_2 = RideShare::Trip.new(
+        id: 9,
+        passenger: @passenger,
+        start_time: "2016-08-09",
+        end_time: "2016-08-10",
+        rating: 5,
+        cost: 10,
+      )
+      @passenger.add_trip(trip_2)
+      total_cost = 0
+      @passenger.trips.each do |trip|
+        total_cost += trip.cost
+        expect(trip.passenger.net_expenditures).must_equal 25
+      end
+    end
+
+    it "calculates total time spent per passenger" do
+      total_time_spent = 0
+      @passenger.trips.each do |trip|
+        start_time_instance = Time.parse(trip.start_time)
+        end_time_instance = Time.parse(trip.end_time)
+        duration = end_time_instance - start_time_instance
+        total_time_spent += duration.to_i
+        expect(trip.passenger.net_expenditures).must_equal 86400
       end
     end
   end
