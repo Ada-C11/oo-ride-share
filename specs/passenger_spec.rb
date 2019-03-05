@@ -50,13 +50,22 @@ describe "Passenger class" do
         cost: 23.45,
         rating: 5,
       )
+      trip2 = RideShare::Trip.new(
+        id: 8,
+        passenger: @passenger,
+        start_time: "2018-05-25 11:50:00 -0700",
+        end_time: "2018-05-25 12:25:00 -0700",
+        cost: 35.67,
+        rating: 5,
+      )
+
       @passenger_two = RideShare::Passenger.new(
         id: 9,
         name: "Mudkip",
         phone_number: "1-602-620-3346 x3723",
         trips: [],
       )
-
+      @passenger.add_trip(trip2)
       @passenger.add_trip(trip)
     end
 
@@ -72,15 +81,6 @@ describe "Passenger class" do
       end
     end
     it "Returns the correct total amount that customer has spent" do
-      trip2 = RideShare::Trip.new(
-        id: 8,
-        passenger: @passenger,
-        start_time: "2018-05-25 11:50:00 -0700",
-        end_time: "22018-05-25 12:25:00 -0700",
-        cost: 35.67,
-        rating: 5,
-      )
-      @passenger.add_trip(trip2)
 
       # total_paid = @passenger.trips.sum { |trip| trip.cost }
       expect(@passenger.net_expenditures).must_equal 59.12
@@ -88,15 +88,6 @@ describe "Passenger class" do
     end
 
     it "Returns the total amount of time the passenger has spent on trips" do
-      trip2 = RideShare::Trip.new(
-        id: 8,
-        passenger: @passenger,
-        start_time: "2018-05-25 11:50:00 -0700",
-        end_time: "22018-05-25 12:25:00 -0700",
-        cost: 35.67,
-        rating: 5,
-      )
-      @passenger.add_trip(trip2)
       expect(@passenger_two.total_time_spent).must_equal 0
       expect(@passenger.total_time_spent).must_equal 3900
     end
