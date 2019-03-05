@@ -1,6 +1,4 @@
 require 'csv'
-require 'time'
-
 require_relative 'passenger'
 require_relative 'trip'
 
