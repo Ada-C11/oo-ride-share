@@ -4,7 +4,7 @@ module RideShare
   class Driver < CsvRecord
     attr_reader :id, :name, :vin, :status, :trips
 
-    def intialize(id, name, vin, status, trips)
+    def intialize(id:, name:, vin:, status:, trips: nil)
       super(id)
       @name = name
       raise ArgumentError, "vin must be 17 characters long" if vin.length != 17
