@@ -17,9 +17,8 @@ module RideShare
     end
 
     def net_expenditures
-      # return @trips.sum_by do |trip|
-      #          trip.cost
-      #        end
+      sum = 0
+      return sum
     end
 
     private
