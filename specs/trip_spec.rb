@@ -1,4 +1,5 @@
 require_relative 'spec_helper'
+require 'time'
 
 describe "Trip class" do
   describe "initialize" do
@@ -16,6 +17,24 @@ describe "Trip class" do
         rating: 3
       }
       @trip = RideShare::Trip.new(@trip_data)
+    end
+    
+    it "raises an error if the end time is before the start time" do
+      start_time = Time.parse('2015-05-20T12:14:00+00:00')
+      end_time = start_time - 25
+      @trip_info = {
+        id: 8,
+        passenger: RideShare::Passenger.new(id: 1,
+                                            name: "Ada",
+                                            phone_number: "412-432-7640"),
+        start_time: start_time.to_s,
+        end_time: end_time.to_s,
+        cost: 23.45,
+        rating: 3
+      }
+      expect do
+        RideShare::Trip.new(@trip_info)
+      end.must_raise ArgumentError
     end
 
     it "is an instance of Trip" do
