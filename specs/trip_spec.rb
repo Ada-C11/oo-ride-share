@@ -55,19 +55,25 @@ describe "Trip class" do
 
       expect { RideShare::Trip.new(@trip_data) }.must_raise ArgumentError
     end
+
+    describe "Wave 1: Update time" do
+      it "start_time should be of Time class" do
+        expect(@trip.start_time).must_be_instance_of Time
+      end
+
+      it "end_time should be of Time class" do
+        expect(@trip.end_time).must_be_instance_of Time
+      end
+
+      it "confirms time is correctly parsed" do
+        expect(@trip.start_time).must_equal Time.new(2015, 5, 20, 12, 14, 00, 00)
+      end
+    end
   end
 
-  describe "Wave 1: Update time" do
-    it "start_time should be of Time class" do
-      expect(@trip.start_time).must_be_instance_of Time
-    end
-
-    it "end_time should be of Time class" do
-      expect(@trip.end_time).must_be_instance_of Time
-    end
-
-    it "confirms time is correctly parsed" do
-      expect(@trip.start_time).must_equal Time.new(2015, 5, 20, 12, 14, 00, 00)
+  describe "trip#duration" do
+    it "returns a integer" do
+      expect(@trip.duration).must_be_instance_of Integer
     end
   end
 end
