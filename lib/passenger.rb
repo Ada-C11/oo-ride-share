@@ -15,6 +15,11 @@ module RideShare
     def add_trip(trip)
       @trips << trip
     end
+    
+    def total_time_spent 
+      total_minutes = (@trips.map{|trip| trip.duration}).sum
+        return "#{total_minutes} minutes"
+    end
 
     def net_expenditures
       if @trips.length == 0

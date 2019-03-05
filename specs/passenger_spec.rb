@@ -47,8 +47,8 @@ describe "Passenger class" do
       trip1 = RideShare::Trip.new(
         id: 8,
         passenger: @passenger,
-        start_time: "2016-08-08",
-        end_time: "2016-08-09",
+        start_time: "2016-08-09 00:03:00",
+        end_time: "2016-08-09 00:03:36",
         rating: 5,
         cost: 20
         )
@@ -56,15 +56,15 @@ describe "Passenger class" do
       trip2 = RideShare::Trip.new(
         id: 10,
         passenger: @passenger,
-        start_time: "2016-08-09",
-        end_time: "2016-08-09",
+        start_time: "2016-08-09 00:03:05",
+        end_time: "2016-08-09 00:03:55",
         rating: 5,
         cost: 30
       )
       @passenger.add_trip(trip2)
       @passenger.add_trip(trip1)
     end
-
+    
     it "each item in array is a Trip instance" do
       @passenger.trips.each do |trip|
         expect(trip).must_be_kind_of RideShare::Trip
@@ -90,5 +90,10 @@ describe "Passenger class" do
         )
       expect{(@passenger.net_expenditures)}.must_raise ArgumentError
     end
+    
+    it "calculates total time spent per passenger" do
+        expect(@passenger.total_time_spent).must_equal "86.0 minutes"
+    end
+
   end
 end
