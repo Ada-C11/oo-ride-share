@@ -4,7 +4,7 @@ module RideShare
   class Driver < CsvRecord
     attr_reader :id, :name, :vin, :status, :trips
 
-    def initialize(id:, name:, vin:, status: :AVAILABLE, trips: [])
+    def initialize(id:, name:, vin:, status: :AVAILABLE, trips: nil)
       super(id)
       @name = name
       if vin.length != 17
@@ -17,7 +17,7 @@ module RideShare
       else
         @status = status.to_sym
       end
-      @trips = trips
+      @trips = trips || []
     end
 
     def add_trip(trip)
