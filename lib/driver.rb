@@ -17,6 +17,7 @@ module RideShare
     end
 
     def add_trip
+        # @trips << trip
     end
 
     def avg_rating
@@ -27,6 +28,16 @@ module RideShare
 
     def net_expenditures
     end
-    
+
+    private
+
+    def self.from_csv(record)
+        return new(
+                 id: record[:id],
+                 name: record[:name],
+                 vin: record[:vin]
+                 status: record[:status],
+               )
+      end
 end
 
