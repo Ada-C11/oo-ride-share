@@ -22,8 +22,12 @@ module RideShare
       else
         raise ArgumentError, 'Passenger or passenger_id is required'
       end
+
       @start_time = Time.parse(start_time)
       @end_time = Time.parse(end_time)
+
+      raise ArgumentError, "End time starts before Start time." if @end_time < @start_time
+
       @cost = cost
       @rating = rating
 
