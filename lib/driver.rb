@@ -6,7 +6,8 @@ module RideShare
     attr_reader :name, :vin, :status, :trips
 
     STATUS = [:AVAILABLE, :UNAVAILABLE]
-    def initialize(id:, name:, vin:, status:, trips: nil)
+
+    def initialize(id:, name:, vin:, status: :AVAILABLE, trips: nil)
         super(id)
   
         @name = name
@@ -15,9 +16,13 @@ module RideShare
         @trips = trips || []
 
         if vin.length != 17
-            raise ArgumentError, "String is not 17 long."
+            raise ArgumentError, "Invalid vin #{vin}."
         end
-      end
+
+        unless STATUS.include?(status)
+            raise ArgumentError, "Invalid status #{status}."
+        end
+    end
 
       def self.from_csv(record)
         return new(

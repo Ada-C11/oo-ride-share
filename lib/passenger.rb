@@ -3,14 +3,16 @@ require "csv"
 
 module RideShare
   class Passenger < CsvRecord
-    attr_reader :name, :phone_number, :trips
+    attr_reader :name, :phone_number, :trips, :driver_id, :driver
 
-    def initialize(id:, name:, phone_number:, trips: nil)
+    def initialize(id:, name:, phone_number:, trips: nil, driver_id:, driver:)
       super(id)
 
       @name = name
       @phone_number = phone_number
       @trips = trips || []
+      @driver_id = driver_id
+      @driver = driver
     end
 
     def add_trip(trip)
