@@ -1,5 +1,4 @@
 require_relative 'spec_helper'
-require_relative '../lib/passenger.rb'
 
 describe "Passenger class" do
 
