@@ -18,7 +18,7 @@ module RideShare
     
     def total_time_spent 
       total_minutes = (@trips.map{|trip| trip.duration}).sum
-      return "#{self.name} has spent #{total_minutes} minutes in rides"
+      return "#{total_minutes} minutes"
     end
 
     def net_expenditures
