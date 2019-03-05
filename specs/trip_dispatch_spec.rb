@@ -171,6 +171,27 @@ describe "TripDispatcher class" do
 
         expect(test_dispatcher.request_trip).must_be_nil
       end
+
+      it "returns nil for unfinished trip's end time" do
+        test_dispatcher = build_test_dispatcher
+        new_trip = test_dispatcher.request_trip
+
+        expect(new_trip.end_time).must_be_nil
+      end
+
+      it "returns nil for unfinished trip's cost" do
+        test_dispatcher = build_test_dispatcher
+        new_trip = test_dispatcher.request_trip
+
+        expect(new_trip.cost).must_be_nil
+      end
+
+      it "returns nil for unfinished trip's rating" do
+        test_dispatcher = build_test_dispatcher
+        new_trip = test_dispatcher.request_trip
+
+        expect(new_trip.rating).must_be_nil
+      end
     end
   end
 end
