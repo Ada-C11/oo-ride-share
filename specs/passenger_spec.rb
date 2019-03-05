@@ -97,7 +97,7 @@ describe "Passenger class" do
       @passenger.add_trip(trip)
       @passenger.add_trip(trip_2)
       
-      expect(@passenger.net_expenditure).must_equal 30
+      expect(@passenger.net_expenditures).must_equal 30
     end
   end
 
