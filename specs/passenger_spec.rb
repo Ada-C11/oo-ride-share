@@ -58,6 +58,7 @@ describe "Passenger class" do
       cost: 24.99,
       rating: 5,
     )
+    @passenger.add_trip(trip2)
   end
 
   describe "trips property" do
