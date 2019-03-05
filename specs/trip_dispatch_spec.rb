@@ -141,6 +141,13 @@ describe "TripDispatcher class" do
         expect(new_trip.passenger.trips).must_include new_trip
         expect(new_trip.driver.trips).must_include new_trip
       end
+
+      it "only assigns available drivers" do
+        test_dispatcher = build_test_dispatcher
+        new_trip = test_dispatcher.request_trip
+
+        expect(new_trip.driver.status).must_equal :AVAILABLE
+      end
     end
   end
 end
