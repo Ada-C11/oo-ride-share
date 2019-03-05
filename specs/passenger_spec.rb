@@ -47,12 +47,46 @@ describe "Passenger class" do
       trip = RideShare::Trip.new(
         id: 8,
         passenger: @passenger,
-        start_time: "2016-08-08",
-        end_time: "2016-08-09",
-        rating: 5
+        start_time:  "2015-05-20T12:14:00+00:00",
+        end_time: "2015-05-20T12:25:00+00:00",
+        rating: 5,
+        cost: 25
+        )
+      trip_2 = RideShare::Trip.new(
+        id: 10,
+        passenger: @passenger,
+        start_time: "2016-05-20T13:14:00+00:00",
+        end_time: "2016-05-20T14:14:00+00:00",
+        rating: 5,
+        cost: 45
         )
 
       @passenger.add_trip(trip)
+      @passenger.add_trip(trip_2)
+
+      @passenger_2 = RideShare::Passenger.new(
+        id: 9,
+        name: "Merl Glover III",
+        phone_number: "1-602-620-2330 x3723",
+        trips: []
+        )
+    end
+
+    it "calculates total cost of all trips" do
+      total = @passenger.net_expenditures
+
+      expect(total).must_equal 70
+    end
+
+    it "calculates total time spent on all trips" do
+      total = @passenger.total_time_spent
+
+      expect(total).must_equal 4260.0
+    end
+
+    it "returns 0 if the passenger has no trips" do
+      total = @passenger_2.total_time_spent
+      expect(total).must_equal 0
     end
 
     it "each item in array is a Trip instance" do
