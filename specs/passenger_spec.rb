@@ -89,7 +89,9 @@ describe "Passenger class" do
         trips: nil
         )
       expect{(@passenger.net_expenditures)}.must_raise ArgumentError
+      expect{(@passenger.total_time_spent)}.must_raise ArgumentError  
     end
+    
     
     it "calculates total time spent per passenger" do
         expect(@passenger.total_time_spent).must_equal "86.0 minutes"

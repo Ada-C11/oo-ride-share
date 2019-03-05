@@ -17,6 +17,10 @@ module RideShare
     end
     
     def total_time_spent 
+      if @trips.length == 0
+        raise ArgumentError, "Passenger has no trips."
+      end
+      
       total_minutes = (@trips.map{|trip| trip.duration}).sum
         return "#{total_minutes} minutes"
     end
