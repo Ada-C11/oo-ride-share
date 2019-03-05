@@ -19,20 +19,22 @@ describe "Trip class" do
     end
 
     it "raises an ArgumentError if the end time is before the start time" do
-      start_time = "2015-05-20T12:14:00+00:00"
-      end_time = "2014-05-20T12:14:00+00:00"
-      trip_data2 = {
-        id: 8,
-        passenger: RideShare::Passenger.new(id: 1,
-                                            name: "Ada",
-                                            phone_number: "412-432-7640"),
-        start_time: start_time,
-        end_time: end_time,
-        cost: 23.45,
-        rating: 3,
-      }
+      # start_time = "2015-05-20T12:14:00+00:00"
+      # end_time = "2014-05-20T12:14:00+00:00"
+      # trip_data2 = {
+      #   id: 8,
+      #   passenger: RideShare::Passenger.new(id: 1,
+      #                                       name: "Ada",
+      #                                       phone_number: "412-432-7640"),
+      #   start_time: start_time.to_s,
+      #   end_time: end_time.to_s,
+      #   cost: 23.45,
+      #   rating: 3,
+      # }
+      @trip_data[:start_time] = "2015-05-20T12:14:00+00:00"
+      @trip_data[:end_time] = "2014-05-20T12:14:00+00:00"
       expect do
-        trip2 = RideShare::Trip.new(trip_data2)
+        trip2 = RideShare::Trip.new(@trip_data)
       end.must_raise ArgumentError
     end
 
