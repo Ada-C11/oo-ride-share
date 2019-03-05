@@ -125,14 +125,21 @@ describe "TripDispatcher class" do
       before do
         def build_test_dispatcher
           return RideShare::TripDispatcher.new(
-                    directory: TEST_DATA_DIRECTORY,
-                  )
+                   directory: TEST_DATA_DIRECTORY,
+                 )
         end
       end
 
       it "is an instance of Trip" do
         test_dispatcher = build_test_dispatcher
         expect(test_dispatcher.request_trip).must_be_instance_of RideShare::Trip
+      end
+      it "updates trip lists for driver and passenger" do
+        test_dispatcher = build_test_dispatcher
+        new_trip = test_dispatcher.request_trip
+
+        expect(new_trip.passenger.trips).must_include new_trip
+        expect(new_trip.driver.trips).must_include new_trip
       end
     end
   end

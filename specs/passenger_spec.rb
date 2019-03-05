@@ -135,7 +135,6 @@ describe "Passenger class" do
       @passenger.add_trip(trip1)
       @passenger.add_trip(trip2)
     end
-
     it "will calculate total time spent" do
       total_time = @passenger.total_time_spent
       expect(total_time).must_equal 16 * 60
