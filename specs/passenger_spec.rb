@@ -43,6 +43,29 @@ describe "Passenger class" do
     )
     trip = RideShare::Trip.new(
       id: 8,
+      cost: 30,
+      passenger: @passenger,
+      start_time: "2016-08-08",
+      end_time: "2016-08-09",
+      rating: 5,
+    )
+
+    @passenger.add_trip(trip)
+
+    trip = RideShare::Trip.new(
+      id: 8,
+      cost: 30,
+      passenger: @passenger,
+      start_time: "2016-08-08",
+      end_time: "2016-08-09",
+      rating: 5,
+    )
+
+    @passenger.add_trip(trip)
+
+    trip = RideShare::Trip.new(
+      id: 8,
+      cost: 30,
       passenger: @passenger,
       start_time: "2016-08-08",
       end_time: "2016-08-09",
@@ -69,6 +92,10 @@ describe "Passenger class" do
   describe "Wave-1: Test Passenger#net_expenditures method" do
     it "Net-expeditures method should return an integer" do
       expect(@passenger.net_expenditures).must_be_instance_of Integer
+    end
+
+    it "Should calculate correct cost of trips" do
+      expect(@passenger.net_expenditures).must_equal 90
     end
   end
 end
