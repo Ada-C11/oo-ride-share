@@ -1,9 +1,9 @@
-require_relative 'spec_helper'
+require_relative "spec_helper"
 
 describe "Trip class" do
   describe "initialize" do
     before do
-      start_time = Time.parse('2015-05-20T12:14:00+00:00')
+      start_time = Time.parse("2015-05-20T12:14:00+00:00")
       end_time = start_time + 25 * 60 # 25 minutes
       @trip_data = {
         id: 8,
@@ -13,15 +13,26 @@ describe "Trip class" do
         start_time: start_time.to_s,
         end_time: end_time.to_s,
         cost: 23.45,
-        rating: 3
+        rating: 3,
       }
       @trip = RideShare::Trip.new(@trip_data)
     end
 
-    it "raises ArgumentError if end time is before start time" do 
-      # start_time = Time.parse('2015-05-20T12:14:00+00:00')
+    it "raises ArgumentError if end time is before start time" do
+      start_time = Time.parse("2015-05-20T12:14:00+00:00")
+      end_time = start_time - 25 * 60 # 25 minutes
+      @trip_data = {
+        id: 8,
+        passenger: RideShare::Passenger.new(id: 1,
+                                            name: "Ada",
+                                            phone_number: "412-432-7640"),
+        start_time: start_time.to_s,
+        end_time: end_time.to_s,
+        cost: 23.45,
+        rating: 3,
+      }
       expect {
-        end_time = start_time - 25 * 60 # 25 minutes
+        RideShare::Trip.new(@trip_data)
       }.must_raise ArgumentError
     end
 
@@ -45,6 +56,24 @@ describe "Trip class" do
           RideShare::Trip.new(@trip_data)
         end.must_raise ArgumentError
       end
+    end
+  end
+  describe "Calculate duration of trip" do
+    it "calculates the duration of the trip" do
+      start_time = Time.parse("2015-05-20T12:14:00+00:00")
+      end_time = start_time + 1 * 60 # 1 minutes
+      @trip_data = {
+        id: 8,
+        passenger: RideShare::Passenger.new(id: 1,
+                                            name: "Ada",
+                                            phone_number: "412-432-7640"),
+        start_time: start_time.to_s,
+        end_time: end_time.to_s,
+        cost: 23.45,
+        rating: 3,
+      }
+      trip = RideShare::Trip.new(@trip_data)
+      expect trip.get_trip_duration.must_equal 60
     end
   end
 end
