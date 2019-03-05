@@ -1,29 +1,37 @@
-require 'csv'
+require "csv"
+require "time"
 
-require_relative 'csv_record'
+require_relative "csv_record"
 
 module RideShare
   class Trip < CsvRecord
     attr_reader :id, :passenger, :passenger_id, :start_time, :end_time, :cost, :rating
 
     def initialize(id:,
-      passenger: nil, passenger_id: nil,
-      start_time:, end_time:, cost: nil, rating:)
+                   passenger: nil, passenger_id: nil,
+                   start_time:, end_time:, cost: nil, rating:)
       super(id)
 
       if passenger
         @passenger = passenger
         @passenger_id = passenger.id
-
       elsif passenger_id
         @passenger_id = passenger_id
-
       else
-        raise ArgumentError, 'Passenger or passenger_id is required'
+        raise ArgumentError, "Passenger or passenger_id is required"
       end
 
+      # Converting strings into Time instances
+      start_time = Time.parse(start_time)
       @start_time = start_time
+
+      end_time = Time.parse(end_time)
       @end_time = end_time
+
+      if start_time > end_time
+        raise ArgumentError, "Invalid start-end times: #{start_time}, #{end_time}"
+      end
+
       @cost = cost
       @rating = rating
 
@@ -46,16 +54,16 @@ module RideShare
     end
 
     private
-    
+
     def self.from_csv(record)
       return self.new(
-        id: record[:id],
-        passenger_id: record[:passenger_id],
-        start_time: record[:start_time],
-        end_time: record[:end_time],
-        cost: record[:cost],
-        rating: record[:rating]
-        )
+               id: record[:id],
+               passenger_id: record[:passenger_id],
+               start_time: record[:start_time],
+               end_time: record[:end_time],
+               cost: record[:cost],
+               rating: record[:rating],
+             )
     end
   end
 end
