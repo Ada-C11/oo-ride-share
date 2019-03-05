@@ -1,4 +1,5 @@
 require 'csv'
+require 'time'
 
 require_relative 'csv_record'
 
@@ -22,13 +23,17 @@ module RideShare
         raise ArgumentError, 'Passenger or passenger_id is required'
       end
 
-      @start_time = start_time
-      @end_time = end_time
+      @start_time = Time.parse(start_time)
+      @end_time = Time.parse(end_time)
       @cost = cost
       @rating = rating
 
       if @rating > 5 || @rating < 1
         raise ArgumentError.new("Invalid rating #{@rating}")
+      end
+
+      if @end_time < @start_time
+        raise ArgumentError.new("End time cannot be before start time")
       end
     end
 
