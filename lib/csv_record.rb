@@ -6,6 +6,7 @@ module RideShare
 
     def initialize(id)
       self.class.validate_id(id)
+      #CsvRecord.validate_id(id)
       @id = id
     end
     
