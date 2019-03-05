@@ -21,7 +21,6 @@ module RideShare
         raise ArgumentError, "Passenger or passenger_id is required"
       end
 
-      # Converting strings into Time instances
       start_time = Time.parse(start_time)
       @start_time = start_time
 
@@ -29,7 +28,7 @@ module RideShare
       @end_time = end_time
 
       if start_time > end_time
-        raise ArgumentError, "Invalid start-end times: #{start_time}, #{end_time}"
+        raise ArgumentError.new("Invalid start-end times: #{start_time}, #{end_time}")
       end
 
       @cost = cost
