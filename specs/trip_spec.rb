@@ -73,6 +73,7 @@ describe "Trip class" do
     end
 
     it "totals the duration of trip in seconds" do
+      
       expect(@trip.duration).must_equal "1500"
     end
   end
