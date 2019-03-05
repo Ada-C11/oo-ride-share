@@ -1,7 +1,6 @@
-require_relative 'spec_helper'
+require_relative "spec_helper"
 
 describe "Passenger class" do
-
   describe "Passenger instantiation" do
     before do
       @passenger = RideShare::Passenger.new(id: 1, name: "Smithy", phone_number: "353-533-5334")
@@ -34,7 +33,6 @@ describe "Passenger class" do
     end
   end
 
-
   describe "trips property" do
     before do
       # TODO: you'll need to add a driver at some point here.
@@ -42,15 +40,15 @@ describe "Passenger class" do
         id: 9,
         name: "Merl Glover III",
         phone_number: "1-602-620-2330 x3723",
-        trips: []
-        )
+        trips: [],
+      )
       trip = RideShare::Trip.new(
         id: 8,
         passenger: @passenger,
         start_time: "2016-08-08",
         end_time: "2016-08-09",
-        rating: 5
-        )
+        rating: 5,
+      )
 
       @passenger.add_trip(trip)
     end
@@ -65,6 +63,37 @@ describe "Passenger class" do
       @passenger.trips.each do |trip|
         expect(trip.passenger.id).must_equal 9
       end
+    end
+  end
+
+  describe "total time spent" do
+    before do
+      @passenger = RideShare::Passenger.new(
+        id: 9,
+        name: "Bob Smith",
+        phone_number: "1-206-620-2330",
+        trips: [],
+      )
+      trip = RideShare::Trip.new(
+        id: 8,
+        passenger: @passenger,
+        start_time: "2016-08-08",
+        end_time: "2016-08-09",
+        rating: 5,
+      )
+      trip2 = RideShare::Trip.new(
+        id: 9,
+        passenger: @passenger,
+        start_time: "2016-08-10",
+        end_time: "2016-08-11",
+        rating: 5,
+      )
+      @passenger.add_trip(trip)
+      @passenger.add_trip(trip2)
+    end
+
+    it "total amount of time passenger has spent on trips" do
+      expect(@passenger.total_time_spent).must_equal 172800
     end
   end
 end
