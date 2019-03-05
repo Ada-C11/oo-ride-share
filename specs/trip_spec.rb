@@ -61,4 +61,28 @@ describe "Trip class" do
       end
     end
   end
+
+  describe "Duration calculator" do
+    before do
+      start_time = Time.parse("2018-12-17 16:09:21 -0800")
+      end_time = Time.parse("2018-12-17 16:42:21 -0800")
+
+      @trip_data = {
+        id: 8,
+        passenger: RideShare::Passenger.new(id: 1,
+                                            name: "Ada",
+                                            phone_number: "412-432-7640"),
+        start_time: start_time.to_s,
+        end_time: end_time.to_s,
+        cost: 23.45,
+        rating: 3,
+      }
+
+      @test_ride = RideShare::Trip.new(@trip_data)
+    end
+
+    it "Calculates the trip duration in seconds" do
+      expect(@test_ride.duration).must_be_close_to 1980
+    end
+  end
 end
