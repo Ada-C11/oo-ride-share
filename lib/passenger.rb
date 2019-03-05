@@ -10,10 +10,20 @@ module RideShare
       @name = name
       @phone_number = phone_number
       @trips = trips || []
+      @total_spent = 0
     end
 
     def add_trip(trip)
       @trips << trip
+    end
+
+    def net_expenditures
+      array = []
+      trips.each do |trip|
+        array << trip.cost
+      end
+      total = array.reduce(:+)
+      return total
     end
 
     private

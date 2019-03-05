@@ -42,15 +42,25 @@ describe "Passenger class" do
         phone_number: "1-602-620-2330 x3723",
         trips: [],
       )
-      trip = RideShare::Trip.new(
+      trip1 = RideShare::Trip.new(
+        id: 2,
+        passenger: @passenger,
+        start_time: "2016-08-08",
+        end_time: "2016-08-09",
+        rating: 5,
+        cost: 27,
+      )
+      trip2 = RideShare::Trip.new(
         id: 8,
         passenger: @passenger,
         start_time: "2016-08-08",
         end_time: "2016-08-09",
         rating: 5,
+        cost: 8,
       )
 
-      @passenger.add_trip(trip)
+      @passenger.add_trip(trip1)
+      @passenger.add_trip(trip2)
     end
 
     it "each item in array is a Trip instance" do
@@ -66,10 +76,7 @@ describe "Passenger class" do
     end
 
     it "returns the total amount of money that passenger has spent on their trips" do
-      # money_spent = @passenger.trips.map do |trip|
-      #   total_cost = trip.cost
-      # end
-      # puts money_spent
+      expect(@passenger.net_expenditures).must_equal 35
     end
   end
 end
