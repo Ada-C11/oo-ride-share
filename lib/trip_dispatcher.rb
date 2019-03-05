@@ -1,17 +1,19 @@
-require 'csv'
-require 'time'
+require "csv"
+require "time"
 
-require_relative 'passenger'
-require_relative 'trip'
+require_relative "passenger"
+require_relative "trip"
+require_relative "driver"
 
 module RideShare
   class TripDispatcher
     attr_reader :drivers, :passengers, :trips
 
-    def initialize(directory: './support')
+    def initialize(directory: "./support")
       @passengers = Passenger.load_all(directory: directory)
       @trips = Trip.load_all(directory: directory)
       connect_trips
+      @drivers = Driver.load_all(directory: directory)
     end
 
     def find_passenger(id)
