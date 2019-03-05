@@ -75,7 +75,6 @@ describe "Passenger class" do
       end
     end
 
-    #CURRENTLY WORKING ON THIS TEST
     it "net_expenditure method returns the total amount of money that passenger has spent on their trips" do
       total = @passenger.net_expenditures
       expect(total).must_equal 35
