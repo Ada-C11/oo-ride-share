@@ -1,6 +1,6 @@
 require_relative 'spec_helper'
 
-xdescribe "Driver class" do
+describe "Driver class" do
   describe "Driver instantiation" do
     before do
       @driver = RideShare::Driver.new(
@@ -22,6 +22,10 @@ xdescribe "Driver class" do
     it "throws an argument error with a bad VIN value" do
       expect { RideShare::Driver.new(id: 100, name: "George", vin: "") }.must_raise ArgumentError
       expect { RideShare::Driver.new(id: 100, name: "George", vin: "33133313331333133extranums") }.must_raise ArgumentError
+    end
+
+    it "is either :AVAILABLE or :UNAVAILABLE" do
+      expect(RideShare::Driver.new(id: 100, name: "George", vin: "12345678901234567", status: :SLEEPING).must_raise ArgumentError
     end
 
     it "has a default status of :AVAILABLE" do
