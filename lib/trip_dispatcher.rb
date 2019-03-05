@@ -1,5 +1,6 @@
 require 'csv'
 require 'time'
+require 'driver'
 
 require_relative 'passenger'
 require_relative 'trip'

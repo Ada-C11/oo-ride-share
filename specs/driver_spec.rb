@@ -15,35 +15,35 @@ describe "Driver class" do
       expect(@driver).must_be_kind_of RideShare::Driver
     end
 
-    #   it "throws an argument error with a bad VIN" do
-    #     expect { RideShare::Driver.new(id: 0, name: "George", vin: "33133313331333133") }.must_raise ArgumentError
-    #   end
+      it "throws an argument error with a bad VIN" do
+        expect { RideShare::Driver.new(id: 0, name: "George", vin: "33133313331333133") }.must_raise ArgumentError
+      end
 
-    #   it "throws an argument error with a bad VIN value" do
-    #     expect { RideShare::Driver.new(id: 100, name: "George", vin: "") }.must_raise ArgumentError
-    #     expect { RideShare::Driver.new(id: 100, name: "George", vin: "33133313331333133extranums") }.must_raise ArgumentError
-    #   end
+      it "throws an argument error with a bad VIN value" do
+        expect { RideShare::Driver.new(id: 100, name: "George", vin: "") }.must_raise ArgumentError
+        expect { RideShare::Driver.new(id: 100, name: "George", vin: "33133313331333133extranums") }.must_raise ArgumentError
+      end
 
-    #   it "has a default status of :AVAILABLE" do
-    #     expect(RideShare::Driver.new(id: 100, name: "George", vin: "12345678901234567").status).must_equal :AVAILABLE
-    #   end
+      it "has a default status of :AVAILABLE" do
+        expect(RideShare::Driver.new(id: 100, name: "George", vin: "12345678901234567").status).must_equal :AVAILABLE
+      end
 
-    #   it "sets driven trips to an empty array if not provided" do
-    #     expect(@driver.trips).must_be_kind_of Array
-    #     expect(@driver.trips.length).must_equal 0
-    #   end
+      it "sets driven trips to an empty array if not provided" do
+        expect(@driver.trips).must_be_kind_of Array
+        expect(@driver.trips.length).must_equal 0
+      end
 
-    #   it "is set up for specific attributes and data types" do
-    #     [:id, :name, :vin, :status, :trips].each do |prop|
-    #       expect(@driver).must_respond_to prop
-    #     end
+      it "is set up for specific attributes and data types" do
+        [:id, :name, :vin, :status, :trips].each do |prop|
+          expect(@driver).must_respond_to prop
+        end
 
-    #     expect(@driver.id).must_be_kind_of Integer
-    #     expect(@driver.name).must_be_kind_of String
-    #     expect(@driver.vin).must_be_kind_of String
-    #     expect(@driver.status).must_be_kind_of Symbol
-    #   end
-    # end
+        expect(@driver.id).must_be_kind_of Integer
+        expect(@driver.name).must_be_kind_of String
+        expect(@driver.vin).must_be_kind_of String
+        expect(@driver.status).must_be_kind_of Symbol
+      end
+    end
 
     # describe "add_trip method" do
     #   before do
@@ -137,5 +137,4 @@ describe "Driver class" do
     # describe "net_expenditures" do
     #   # You add tests for the net_expenditures method
     # end
-  end
 end

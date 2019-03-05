@@ -5,13 +5,18 @@ require_relative "csv_record"
 
 module RideShare
   class Driver < CsvRecord
-    attr_reader :id, :name, :vin, :status, :trips
+    attr_reader  :name, :vin, :status, :trips
 
-    def initialize(:id, :name, :vin, :status = :AVAILABLE)
+    DRIVE_STATUS = [:AVAILABLE, :UNAVAILABLE]
+
+    def initialize(id:, name:, vin:, status: :AVAILABLE, trips: nil)
       super(id)
       @name = name
       @vin = vin
-      @status = status.upcase
+      @status = status
+      if DRIVE_STATUS.include?(status) == false
+        return raise ArgumentError, "Invalid Status"
+      end
       @trips = trips || []
     end
 
@@ -34,9 +39,10 @@ module RideShare
         return new(
                  id: record[:id],
                  name: record[:name],
-                 vin: record[:vin]
+                 vin: record[:vin],
                  status: record[:status],
                )
       end
+    end
 end
 
