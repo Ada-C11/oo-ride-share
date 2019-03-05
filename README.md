@@ -165,7 +165,7 @@ Now that we have data for trip time stored in a more convenient way, we can do s
 
 Our program needs a data type to represent Drivers in our service.
 
-We will do this by creating a `Driver` class which inherits from `CsvReader`, similar to `Trip` and `Passenger`.  The constructor for `Driver` should take the following keyword arguments:
+We will do this by creating a `Driver` class which inherits from `CsvRecord`, similar to `Trip` and `Passenger`.  The constructor for `Driver` should take the following keyword arguments:
 
 | Attribute | Description                                      | Rules                                                                            |
 |-----------|--------------------------------------------------|----------------------------------------------------------------------------------|
