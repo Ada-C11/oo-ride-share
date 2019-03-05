@@ -152,6 +152,68 @@ Using the pry session we started above, how would you...
 - Print the ID of every trip taken by passenger 9
 - Print the ID of the trip that cost the most money
 
+[3] pry(main)> td.trips.length
+=> 600
+[4] pry(main)> td.trips[1].rating
+=> 4
+[5] pry(main)> td.trips[6].passenger.name
+=> "Melvin Gerlach DDS"
+[6] pry(main)> td.find_passenger(9).trips
+=> [#<RideShare::Trip:0x3fc5be121718 ID=20 PassengerID=9>,
+ #<RideShare::Trip:0x3fc5be595948 ID=296 PassengerID=9>]
+[7] pry(main)> td.find_passenger(9).trips.each do |trip|
+[7] pry(main)*   puts trip.id
+[7] pry(main)* end  
+20
+296
+
+[2] pry(main)> exit
+
+Elles-Air:oo-ride-share elle$ pry -r ./lib/trip_dispatcher.rb
+[1] pry(main)> td = RideShare::TripDispatcher.new
+=> #<RideShare::TripDispatcher:0x3fdadc5a5e00>
+[2] pry(main)> td.trips.length
+=> 600
+
+
+[3] pry(main)> all_trip_costs = []
+=> []
+[4] pry(main)> td.trips.each do |this_trip|
+[4] pry(main)*   all_trip_costs << this_trip.cost
+[4] pry(main)* end  
+=> [#<RideShare::Trip:0x3fdadc572a8c ID=1 PassengerID=54>,
+ #<RideShare::Trip:0x3fdadc572744 ID=2 PassengerID=107>,
+ #<RideShare::Trip:0x3fdadc572028 ID=3 PassengerID=66>,
+ #<RideShare::Trip:0x3fdadc5713bc ID=4 PassengerID=148>,
+ #<RideShare::Trip:0x3fdadc56ffd0 ID=5 PassengerID=105>,
+ #<RideShare::Trip:0x3fdadc56f9a4 ID=6 PassengerID=118>,
+ #<RideShare::Trip:0x3fdadc56ec70 ID=7 PassengerID=3>,
+ #<RideShare::Trip:0x3fdadc56db90 ID=8 PassengerID=129>,
+ ...
+ #<RideShare::Trip:0x3fdadc5540f0 ID=33 PassengerID=97>,
+ #<RideShare::Trip:0x3fdadc5538d0 ID=34 PassengerID=61>,
+ #<RideShare::Trip:0x3fdadc553600 ID=35 PassengerID=86>,
+ #<RideShare::Trip:0x3fdadc55340c ID=36 PassengerID=114>,
+[5] pry(main)> puts all_trip_costs
+10
+18
+20
+6
+11
+...
+24
+11
+22
+24
+9
+=> nil
+
+
+[7] pry(main)> all_trip_costs.max
+=> 30
+
+
+
 ## Implementation Requirements
 
 ### Wave 1: Extending Existing Classes
