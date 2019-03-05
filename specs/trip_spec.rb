@@ -115,7 +115,7 @@ describe "Trip class" do
     
     it "calculates total revenue" do
       total_revenue = @driver.total_revenue
-      expect(total_revenue).must_equal 60
+      expect(total_revenue).must_be_close_to (60 - 2 * 1.65) * 0.8
     end
   end
 end
