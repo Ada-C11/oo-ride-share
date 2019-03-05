@@ -41,12 +41,16 @@ describe "Passenger class" do
       phone_number: "1-602-620-2330 x3723",
       trips: [],
     )
+
+    start_time = Time.parse("2015-05-20T12:14:00+00:00")
+    end_time = start_time + 25 * 60 # 25 minutes
+
     trip = RideShare::Trip.new(
       id: 8,
       cost: 30,
       passenger: @passenger,
-      start_time: "2016-08-08",
-      end_time: "2016-08-09",
+      start_time: start_time.to_s,
+      end_time: end_time.to_s,
       rating: 5,
     )
 
@@ -56,8 +60,8 @@ describe "Passenger class" do
       id: 8,
       cost: 30,
       passenger: @passenger,
-      start_time: "2016-08-08",
-      end_time: "2016-08-09",
+      start_time: start_time.to_s,
+      end_time: end_time.to_s,
       rating: 5,
     )
 
@@ -67,8 +71,8 @@ describe "Passenger class" do
       id: 8,
       cost: 30,
       passenger: @passenger,
-      start_time: "2016-08-08",
-      end_time: "2016-08-09",
+      start_time: start_time.to_s,
+      end_time: end_time.to_s,
       rating: 5,
     )
 
@@ -96,6 +100,25 @@ describe "Passenger class" do
 
     it "Should calculate correct cost of trips" do
       expect(@passenger.net_expenditures).must_equal 90
+    end
+
+    it "should return 0 if passenger has no trip" do
+      @passenger = RideShare::Passenger.new(
+        id: 9,
+        name: "Merl Glover III",
+        phone_number: "1-602-620-2330 x3723",
+        trips: [],
+      )
+      expect(@passenger.net_expenditures).must_equal 0
+    end
+  end
+  describe "Wave-1: Test Passenger#total_time_spent method" do
+    it "should return interger" do
+      expect(@passenger.total_time_spent).must_be_instance_of Integer
+    end
+
+    it "Should calculated the total time duration of all trips for passenger" do
+      expect(@passenger.total_time_spent).must_equal 4500
     end
   end
 end
