@@ -25,6 +25,13 @@ module RideShare
     def add_trip(trip)
       @trips << trip
     end
+    
+    def average_rating
+      if @trips.count == 0
+        return 0
+      end
+      return (@trips.map{|trip| trip.rating}.sum).to_f/@trips.count
+    end
 
     def self.from_csv(record)
       return new(
