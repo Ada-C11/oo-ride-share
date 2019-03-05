@@ -9,7 +9,7 @@ module RideShare
 
       @name = name
       @phone_number = phone_number
-      @trips = trips || []
+      @trips = trips || [] # trips is set to empty array when nil
     end
 
     def add_trip(trip)
@@ -17,9 +17,12 @@ module RideShare
     end
 
     def net_expenditures
+      if @trips.length == 0
+        raise ArgumentError, "Passenger has no trips."
+      end
+
       return @trips.map{|trip| trip.cost}.sum
     end
-      #return the total amount of money that passenger has spent on their trips
 
     private
 

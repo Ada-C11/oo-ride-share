@@ -78,8 +78,17 @@ describe "Passenger class" do
     end
 
     it "returns the total amount spent by passenger" do
-      cost = @passenger.trips.map{|trip| trip.cost}.sum
-      expect(cost).must_equal 50
+      expect(@passenger.net_expenditures).must_equal 50
+    end
+
+    it "raises an error when the passenger has no trips" do
+      @passenger = RideShare::Passenger.new(
+        id: 20,
+        name: "Merl Glover",
+        phone_number: "1-602-620-2330 x3733",
+        trips: nil
+        )
+      expect{(@passenger.net_expenditures)}.must_raise ArgumentError
     end
   end
 end
