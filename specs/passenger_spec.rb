@@ -1,4 +1,5 @@
 require_relative 'spec_helper'
+require_relative '../lib/passenger.rb'
 
 describe "Passenger class" do
 
@@ -54,6 +55,12 @@ describe "Passenger class" do
 
       @passenger.add_trip(trip)
     end
+    
+    puts @passenger.total_time_spent
+
+    # it "calculates total time spent per passenger" do
+    #     expect(@passenger.total_time_spent)
+    # end
 
     it "each item in array is a Trip instance" do
       @passenger.trips.each do |trip|
