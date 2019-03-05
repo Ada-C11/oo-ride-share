@@ -7,6 +7,7 @@ describe "Trip class" do
       start_time = Time.parse("2015-05-20T12:14:00+00:00")
       end_time = start_time + 25 * 60 # 25 minutes
       @trip_data = {
+        driver: 1,
         id: 8,
         passenger: RideShare::Passenger.new(id: 1,
                                             name: "Ada",
@@ -23,6 +24,7 @@ describe "Trip class" do
       start_time = Time.parse("2015-05-20T12:14:00+00:00")
       end_time = Time.parse("2014-05-20T12:14:00+00:00")
       @trip_data = {
+        driver: 2,
         id: 8,
         passenger: RideShare::Passenger.new(id: 1,
                                             name: "Ada",
@@ -39,6 +41,7 @@ describe "Trip class" do
       start_time = Time.parse("2015-05-20T12:14:00+00:00")
       end_time = Time.parse("2015-05-20T12:14:21+00:00")
       @trip_data = {
+        driver: 3,
         id: 8,
         passenger: RideShare::Passenger.new(id: 1,
                                             name: "Ada",
