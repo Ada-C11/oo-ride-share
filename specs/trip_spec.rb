@@ -75,5 +75,9 @@ describe "Trip class" do
     it "returns a integer" do
       expect(@trip.duration).must_be_instance_of Integer
     end
+
+    it "returns second" do
+      expect(@trip.duration).must_equal 1500
+    end
   end
 end
