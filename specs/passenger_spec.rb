@@ -80,13 +80,16 @@ describe "Passenger class" do
       expect(total_trip).must_equal 40
     end
 
-    # it "returns zero for net_expenditure if passenger has no trips" do
-    #   total_trip = nil
-    #   total_trip = @passenger.net_expenditures
+    it "returns zero for net_expenditure if passenger has no trips" do
+      @passenger = RideShare::Passenger.new(
+        id: 10,
+        name: "Merl Glover III",
+        phone_number: "1-602-620-2330 x3723",
+        trips: nil
+      )
 
-    #   expect(total_trip).must_equal 0
-    # end
-    # end
+      expect(@passenger.net_expenditures).must_equal 0
+    end
 
     it "total amount of time passenger has spent on trips" do
       expect(@passenger.total_time_spent).must_equal 172800
