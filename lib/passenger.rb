@@ -20,17 +20,17 @@ module RideShare
     #will return the total amount of money
     # that passenger has spent on their trips
     def net_expenditures
-      total = 0
-      @trips each do |trip|
-        net_cost = trip.cost 
+      total_cost = 0
+      @trips.each do |trip|
+        total_cost += trip.cost
       end
-      return net_cost
+      return total_cost
     end
 
     # will return the total amount of time
     # that passenger has spent on their trips
-    def total_time_spent
-    end
+    # def total_time_spent
+    # end
 
     private
 
