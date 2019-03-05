@@ -1,6 +1,6 @@
 require "csv"
 require "time"
-require "pry"
+# require "pry"
 require_relative "csv_record"
 
 module RideShare
