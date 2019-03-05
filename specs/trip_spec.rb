@@ -37,6 +37,13 @@ describe "Trip class" do
       end.must_raise ArgumentError
     end
 
+    it "returns the trip duration in seconds" do
+      # start_time = Time.parse('2015-05-20T12:14:00+00:00')
+      # end_time = Time.parse("05:30")
+
+      expect(@trip.duration).must_equal 1500
+    end
+
     it "is an instance of Trip" do
       expect(@trip).must_be_kind_of RideShare::Trip
     end
