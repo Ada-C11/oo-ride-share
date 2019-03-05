@@ -6,7 +6,6 @@ require_relative 'csv_record'
 module RideShare
   class Trip < CsvRecord
     attr_reader :id, :passenger, :passenger_id, :start_time, :end_time, :cost, :rating
-
     def initialize(id:,
       passenger: nil, passenger_id: nil,
       start_time:, end_time:, cost: nil, rating:)
@@ -48,6 +47,10 @@ module RideShare
     def connect(passenger)
       @passenger = passenger
       passenger.add_trip(self)
+    end 
+
+    def calculate_duration
+     return (@end_time - @start_time)
     end
 
     private
