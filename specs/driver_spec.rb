@@ -3,12 +3,14 @@ require_relative "spec_helper"
 describe "Driver class" do
   describe "Driver instantiation" do
     before do
-      @driver = RideShare::Driver.new(
+      @driver_data = {
         id: 54,
         name: "Test Driver",
         vin: "12345678901234567",
         status: :AVAILABLE,
-      )
+      }
+
+      @driver = RideShare::Driver.new(@driver_data)
     end
 
     it "is an instance of Driver" do
@@ -29,7 +31,8 @@ describe "Driver class" do
     end
 
     it "has a status of :AVAILALBE or :UNAVAILABLE" do
-      expect { RideShare::Driver.new(id: 100, name: "George", vin: "12345678901234567", status: :NOTLEGIT) }.must_raise ArgumentError
+      @driver_data[:status] = "available"
+      expect { RideShare::Driver.new(@driver_data) }.must_raise ArgumentError
     end
 
     it "sets driven trips to an empty array if not provided" do
