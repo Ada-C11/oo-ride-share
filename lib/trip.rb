@@ -37,6 +37,10 @@ module RideShare
       end
     end
 
+    def duration
+      return end_time - start_time
+    end
+
     def inspect
       # Prevent infinite loop when puts-ing a Trip
       # trip contains a passenger contains a trip contains a passenger...

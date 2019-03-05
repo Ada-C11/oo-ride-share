@@ -66,5 +66,11 @@ describe "Passenger class" do
         expect(trip.passenger.id).must_equal 9
       end
     end
+
+    it "returns the total amount spent by passenger" do
+      @passenger.trips.each do |trip|
+        expect()
+      end
+    end
   end
 end
