@@ -49,4 +49,27 @@ describe "Trip class" do
       end.must_raise ArgumentError
     end
   end
+
+  describe "time_duration method" do
+    before do
+      start_time = "2018-12-27 02:39:05 -0800"
+      end_time = "2018-12-27 03:38:08 -0800"
+      @trip_data = {
+        id: 8,
+        passenger: RideShare::Passenger.new(id: 1,
+                                            name: "Ada",
+                                            phone_number: "412-432-7640"),
+        start_time: start_time.to_s,
+        end_time: end_time.to_s,
+        cost: 23.45,
+        rating: 3,
+      }
+      @trip = RideShare::Trip.new(@trip_data)
+    end
+    it "calculates the trip duration in seconds" do
+      duration = RideShare::Trip.new(@trip_data).trip_duration
+
+      expect(duration).must_equal 3543.0
+    end
+  end
 end
