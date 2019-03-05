@@ -35,7 +35,7 @@ module RideShare
     end
 
     def duration_in_seconds
-      length_of_trip = @start_time - @end_time
+      length_of_trip = @end_time - @start_time
       return length_of_trip
     end
 
