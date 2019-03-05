@@ -9,12 +9,12 @@ module RideShare
       super(id)
 
       if vin.length != 17
-        raise ArgumentError, "VIN length invalid"
+        raise ArgumentError, "VIN length is invalid"
       end
 
       statuses = [:AVAILABLE, :UNAVAILABLE]
-      if !statuses.include?(status)
-        raise ArgumentError, "Status invalid."
+      if !statuses.include?(status.to_sym)
+        raise ArgumentError, "Status is invalid."
       end
 
       @id = id
@@ -23,16 +23,14 @@ module RideShare
       @status = status
       @trips = trips
     end
-  end
 
-  private
-
-  def self.from_csv(record)
-    return self.new(
-             id: record[:id],
-             name: record[:name],
-             vin: record[:vin],
-             status: record[:status],
-           )
+    def self.from_csv(record)
+      return self.new(
+            id: record[:id],
+            name: record[:name],
+            vin: record[:vin],
+            status: record[:status],
+            )
+    end
   end
 end
