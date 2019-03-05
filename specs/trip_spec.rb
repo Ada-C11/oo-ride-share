@@ -22,6 +22,15 @@ describe "Trip class" do
       expect(@trip).must_be_kind_of RideShare::Trip
     end
 
+    it "raises an error for starting time after ending time" do
+
+        @trip_data[:start_time] = "2018-06-11 22:57:00 -0700"
+        @trip_data[:end_time] = "2018-06-11 22:22:00 -0700"
+        expect do
+          RideShare::Trip.new(@trip_data)
+        end.must_raise ArgumentError
+    end
+
     it "stores an instance of passenger" do
       expect(@trip.passenger).must_be_kind_of RideShare::Passenger
     end
