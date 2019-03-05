@@ -35,6 +35,21 @@ module RideShare
       end
     end
 
+    def total_revenue
+      driver_take_home = 0
+      cost_after_deduction = 0
+      if trips.length == 0
+        return 0
+      else
+        @trips.each do |trip|
+          cost_after_deduction = trip.cost - 1.65
+          driver_take_home += cost_after_deduction
+        end
+        driver_take_home *= 0.8
+      end
+      return driver_take_home.to_f
+    end
+
     private
 
     def self.from_csv(record)
