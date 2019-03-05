@@ -2,7 +2,7 @@ require_relative "spec_helper"
 
 TEST_DATA_DIRECTORY = "specs/test_data"
 
-xdescribe "TripDispatcher class" do
+describe "TripDispatcher class" do
   def build_test_dispatcher
     return RideShare::TripDispatcher.new(
              directory: TEST_DATA_DIRECTORY,
@@ -78,8 +78,7 @@ xdescribe "TripDispatcher class" do
     end
   end
 
-  # TODO: un-skip for Wave 2
-  xdescribe "drivers" do
+  describe "drivers" do
     describe "find_driver method" do
       before do
         @dispatcher = build_test_dispatcher
