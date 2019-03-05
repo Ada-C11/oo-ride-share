@@ -1,6 +1,6 @@
 require_relative 'spec_helper'
 
-xdescribe "Driver class" do
+describe "Driver class" do
   describe "Driver instantiation" do
     before do
       @driver = RideShare::Driver.new(
@@ -10,7 +10,7 @@ xdescribe "Driver class" do
         status: :AVAILABLE
       )
     end
-
+    
     it "is an instance of Driver" do
       expect(@driver).must_be_kind_of RideShare::Driver
     end
