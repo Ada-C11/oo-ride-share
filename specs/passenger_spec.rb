@@ -49,10 +49,20 @@ describe "Passenger class" do
         passenger: @passenger,
         start_time: "2016-08-08",
         end_time: "2016-08-09",
+        cost: 20,
         rating: 5
         )
 
+      trip2 = RideShare::Trip.new(
+          id: 8,
+          passenger: @passenger,
+          start_time: "2016-08-10",
+          end_time: "2016-08-11",
+          cost: 20,
+          rating: 5
+        )
       @passenger.add_trip(trip)
+      @passenger.add_trip(trip2)
     end
 
     it "each item in array is a Trip instance" do
@@ -66,5 +76,17 @@ describe "Passenger class" do
         expect(trip.passenger.id).must_equal 9
       end
     end
+
+    it "totals up Passenger's trips" do
+      total_trip = @passenger.net_expenditures
+      expect(total_trip).must_equal 40
+    end
+
+    # it "returns zero for net_expenditure if passenger has no trips" do
+    #   total_trip = nil
+    #   total_trip = @passenger.net_expenditures
+
+    #   expect(total_trip).must_equal 0
+    # end
   end
 end
