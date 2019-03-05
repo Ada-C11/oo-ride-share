@@ -48,8 +48,8 @@ module RideShare
       passenger.add_trip(self)
     end
 
-    def duration(start_time, end_time)
-      duration = (end_time - start_time).to_i
+    def duration
+      duration = (@end_time - @start_time).to_i
       return duration
     end
 
