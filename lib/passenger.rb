@@ -1,5 +1,4 @@
 require_relative "csv_record"
-require_relative "trip_dispatcher"
 
 module RideShare
   class Passenger < CsvRecord
@@ -18,6 +17,11 @@ module RideShare
     end
 
     def net_expenditures
+      if @trips == nil
+        return 0
+      else
+        return @trips.sum { |trip| trip.cost }
+      end
     end
 
     private

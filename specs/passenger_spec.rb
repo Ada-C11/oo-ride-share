@@ -97,7 +97,8 @@ describe "Passenger class" do
     end
 
     it "Totals all trip costs for a passenger" do
-      net_expenditures = @trip_one.cost + @trip_two.cost
+      net_expenditures = @passenger.trips.sum { |trip| trip.cost }
+
       expect(net_expenditures).must_equal 50
     end
   end
