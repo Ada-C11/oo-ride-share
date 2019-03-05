@@ -26,12 +26,17 @@ module RideShare
       @cost = cost
       @rating = rating
       if @start_time > @end_time
-        raise ArgumentError, 'No! The start time cannot be after the end time.'
+        raise ArgumentError, "No! The start time cannot be after the end time."
       end
 
       if @rating > 5 || @rating < 1
         raise ArgumentError.new("Invalid rating #{@rating}")
       end
+    end
+
+    def duration_in_seconds
+      length_of_trip = @start_time - @end_time
+      return length_of_trip
     end
 
     def inspect
