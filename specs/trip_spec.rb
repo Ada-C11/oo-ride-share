@@ -1,9 +1,10 @@
-require_relative 'spec_helper'
+require_relative "spec_helper"
+require "pry"
 
 describe "Trip class" do
   describe "initialize" do
     before do
-      start_time = Time.parse('2015-05-20T12:14:00+00:00')
+      start_time = Time.parse("2015-05-20T12:14:00+00:00")
       end_time = start_time + 25 * 60 # 25 minutes
       @trip_data = {
         id: 8,
@@ -13,9 +14,30 @@ describe "Trip class" do
         start_time: start_time.to_s,
         end_time: end_time.to_s,
         cost: 23.45,
-        rating: 3
+        rating: 3,
       }
       @trip = RideShare::Trip.new(@trip_data)
+    end
+
+    it "raise an ArgumentError if end time is before start time" do
+      start_time = Time.parse("2015-05-20T12:14:00+00:00")
+      end_time = start_time - 25 * 60 # 25 minutes
+      trip_data_2 = {
+        id: 8,
+        passenger: RideShare::Passenger.new(id: 1,
+                                            name: "Ada",
+                                            phone_number: "412-432-7640"),
+        start_time: start_time.to_s,
+        end_time: end_time.to_s,
+        cost: 23.45,
+        rating: 3,
+      }
+
+      # binding.pry
+
+      expect {
+        RideShare::Trip.new(trip_data_2)
+      }.must_raise ArgumentError
     end
 
     it "is an instance of Trip" do
