@@ -31,7 +31,7 @@ describe "Trip class" do
       expect(@trip.driver).must_be_kind_of RideShare::Driver
     end
 
-    it "Calculates time duration in seconds" do
+    it "calculates time duration in seconds" do
       expect(@trip.calculate_duration).must_equal 1500
       expect
     end
