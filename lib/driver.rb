@@ -1,4 +1,3 @@
-require "pry"
 require_relative "csv_record"
 
 module RideShare
@@ -14,6 +13,9 @@ module RideShare
       raise ArgumentError, "Invalid VIN number length." if @vin.length != 17
 
       @status = status
+
+      raise ArgumentError, "Invalid driver status." if @status != :AVAILABLE && @status != :UNAVAILABLE
+
       @trips = trips || []
     end
 
