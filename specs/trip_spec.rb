@@ -25,6 +25,12 @@ describe "Trip class" do
       end.must_raise ArgumentError
     end
 
+    it "calculates trip duration" do
+      new_ride = RideShare::Trip.new(id: 1, start_time: "2018-12-27 03:38:08 -0800", end_time: "2018-12-27 03:38:09 -0800", rating: 5,
+                                     passenger_id: 4)
+      expect(new_ride.calculate_trip_time).must_equal 1
+    end
+
     it "is an instance of Trip" do
       expect(@trip).must_be_kind_of RideShare::Trip
     end
