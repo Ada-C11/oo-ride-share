@@ -76,8 +76,42 @@ describe "Trip class" do
       expect(@trip.duration).must_be_instance_of Integer
     end
 
-    it "returns second" do
+    it "NOMINAL: returns seconds same day" do
       expect(@trip.duration).must_equal 1500
+    end
+
+    it "EDGE: calculates correct seconds over crossing more than one day" do
+      start_time = Time.parse("2015-05-20T23:50:00+00:00")
+      end_time = Time.parse("2015-05-21T00:10:00+00:00")
+      @trip_data = {
+        id: 8,
+        passenger: RideShare::Passenger.new(id: 1,
+                                            name: "Ada",
+                                            phone_number: "412-432-7640"),
+        start_time: start_time.to_s,
+        end_time: end_time.to_s,
+        cost: 23.45,
+        rating: 3,
+      }
+      trip_over_midnight = RideShare::Trip.new(@trip_data)
+      expect(trip_over_midnight.duration).must_equal 1200
+    end
+
+    it "EDGE: if times are equal return 0" do
+      start_time = Time.parse("2015-05-20T23:50:00+00:00")
+      end_time = start_time
+      @trip_data = {
+        id: 8,
+        passenger: RideShare::Passenger.new(id: 1,
+                                            name: "Ada",
+                                            phone_number: "412-432-7640"),
+        start_time: start_time.to_s,
+        end_time: end_time.to_s,
+        cost: 23.45,
+        rating: 3,
+      }
+      trip_time_equal = RideShare::Trip.new(@trip_data)
+      expect(trip_time_equal.duration).must_equal 0
     end
   end
 end
