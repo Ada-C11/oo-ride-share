@@ -151,7 +151,32 @@ describe "Driver class" do
   end
 
   describe "total_revenue" do
-    # You add tests for the total_revenue method
+    before do
+      pass = RideShare::Passenger.new(
+        id: 1,
+        name: "Test Passenger",
+        phone_number: "412-432-7640",
+      )
+      @driver = RideShare::Driver.new(
+        id: 3,
+        name: "Test Driver",
+        vin: "12345678912345678",
+      )
+      @trip = RideShare::Trip.new(
+        id: 8,
+        driver: @driver,
+        passenger: pass,
+        start_time: "2016-08-08",
+        end_time: "2018-08-09",
+        rating: 5,
+        cost: 6.65,
+      )
+      @driver.add_trip(@trip)
+    end
+
+    it "returns the correct number with one trip" do
+      expect(@driver.total_revenue).must_equal ((6.65 - 1.65) * 0.8)
+    end
   end
 
   describe "net_expenditures" do

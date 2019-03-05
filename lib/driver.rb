@@ -33,6 +33,14 @@ module RideShare
       return average
     end
 
+    def total_revenue
+      sum = 0
+      trips.each do |trip|
+        sum = trip.cost > 1.65 ? (sum + ((trip.cost - 1.65) * 0.8)) : sum
+      end
+      return sum
+    end
+
     private
 
     def self.from_csv(record)
