@@ -16,6 +16,7 @@ module RideShare
       @trips << trip
     end
 
+<<<<<<< HEAD
     def total_time_spent
       all_trip_durations = 0
 
@@ -27,6 +28,21 @@ module RideShare
       return all_trip_durations
     end
 
+=======
+    # Add an instance method, net_expenditures, to Passenger that will return the total amount of money that passenger has spent on their trips
+    # take passenger ID and all IDs listed in trip with that passenger ID, need to tally up the total spent
+    def net_expenditures
+      total_trip = 0
+      @trips.each do |trip|
+        # if trip.nil?
+        #   next
+        # end
+        total_trip += trip.cost
+      end
+      return total_trip
+    end
+    
+>>>>>>> c9127b2e62c663b3ee002be394640d737791c61c
     private
 
     def self.from_csv(record)
@@ -36,5 +52,6 @@ module RideShare
                phone_number: record[:phone_num],
              )
     end
+
   end
 end
