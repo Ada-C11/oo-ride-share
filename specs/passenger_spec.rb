@@ -120,6 +120,7 @@ describe "Passenger class" do
     it "Should calculated the correct total time duration of all trips for passenger" do
       expect(@passenger.total_time_spent).must_equal 4500
     end
+
     it "Should return 0 for passenger with no trip" do
       @passenger = RideShare::Passenger.new(
         id: 9,
