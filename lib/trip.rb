@@ -71,6 +71,8 @@ module RideShare
                end_time: record[:end_time],
                cost: record[:cost],
                rating: record[:rating],
+               driver: record[:driver],
+               driver_id: record[:driver_id],
              )
     end
   end
