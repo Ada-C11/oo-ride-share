@@ -31,16 +31,6 @@ module RideShare
       end
     end
 
-    # drivers total revenue = (total sum (1.65 * num of trips)) * .8
-
-    #   rides_net_pay = 0
-    #   driver_instance = RideShare::TripDispatcher.find_driver(id)
-    #   driver_instance.trips each do |trip|
-    #     rides_net_pay += trip.cost
-    #   end
-    #   driver_take_home = (rides_net_pay * (1.65 * trips.length) * 0.8)
-    #   return driver_take_home
-
     def total_revenue
       driver_take_home = 0
       cost_after_deduction = 0
@@ -51,8 +41,8 @@ module RideShare
           cost_after_deduction = trip.cost - 1.65
           driver_take_home += cost_after_deduction
         end
-        driver_take_home *= 0.8
       end
+      driver_take_home *= 0.8
       return driver_take_home.to_f
     end
 
