@@ -17,6 +17,7 @@ module RideShare
     end
 
     def net_expenditures
+      raise ArgumentError, "Passenger has to trips!" if @trips == []
       cost_array = @trips.map do |trip|
         trip.cost
       end
@@ -24,6 +25,11 @@ module RideShare
     end
 
     def total_time_spent
+      raise ArgumentError, "Passenger has to trips!" if @trips == []
+      total_time_array = @trips.map do |trip|
+        trip.duration
+      end
+      return total_time_array.sum
     end
 
     private

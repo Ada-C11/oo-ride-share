@@ -1,7 +1,6 @@
-require_relative 'spec_helper'
+require_relative "spec_helper"
 
 describe "Passenger class" do
-
   describe "Passenger instantiation" do
     before do
       @passenger = RideShare::Passenger.new(id: 1, name: "Smithy", phone_number: "353-533-5334")
@@ -34,7 +33,6 @@ describe "Passenger class" do
     end
   end
 
-
   describe "trips property" do
     before do
       # TODO: you'll need to add a driver at some point here.
@@ -42,15 +40,15 @@ describe "Passenger class" do
         id: 9,
         name: "Merl Glover III",
         phone_number: "1-602-620-2330 x3723",
-        trips: []
-        )
+        trips: [],
+      )
       trip = RideShare::Trip.new(
         id: 8,
         passenger: @passenger,
         start_time: "2016-08-08",
         end_time: "2016-08-09",
-        rating: 5
-        )
+        rating: 5,
+      )
 
       @passenger.add_trip(trip)
     end
@@ -65,6 +63,93 @@ describe "Passenger class" do
       @passenger.trips.each do |trip|
         expect(trip.passenger.id).must_equal 9
       end
+    end
+  end
+
+  describe "net_expenditures" do
+    before do
+      @passenger = RideShare::Passenger.new(
+        id: 9,
+        name: "Merl Glover III",
+        phone_number: "1-602-620-2330 x3723",
+        trips: [],
+      )
+      trip = RideShare::Trip.new(
+        id: 8,
+        passenger: @passenger,
+        start_time: "2016-08-08",
+        end_time: "2016-08-09",
+        cost: 5,
+        rating: 5,
+      )
+      @passenger.add_trip(trip)
+
+      trip = RideShare::Trip.new(
+        id: 8,
+        passenger: @passenger,
+        start_time: "2016-08-08",
+        end_time: "2016-08-09",
+        cost: 4,
+        rating: 5,
+      )
+      @passenger.add_trip(trip)
+    end
+    it "returns the right amount of money spent by the passenger" do
+      expect(@passenger.net_expenditures).must_equal 9
+    end
+
+    it "raises an error if the passenger has no trips" do
+      @passenger = RideShare::Passenger.new(
+        id: 9,
+        name: "Merl Glover III",
+        phone_number: "1-602-620-2330 x3723",
+        trips: [],
+      )
+      expect { @passenger.net_expenditures }.must_raise ArgumentError
+    end
+  end
+
+  describe "total_time_spent" do
+    before do
+      @passenger = RideShare::Passenger.new(
+        id: 9,
+        name: "Merl Glover III",
+        phone_number: "1-602-620-2330 x3723",
+        trips: [],
+      )
+      trip = RideShare::Trip.new(
+        id: 8,
+        passenger: @passenger,
+        start_time: "2015-05-20 12:14:00+00:00",
+        end_time: "2015-05-20 12:16:10+00:00",
+        cost: 5,
+        rating: 5,
+      )
+      @passenger.add_trip(trip)
+
+      trip = RideShare::Trip.new(
+        id: 8,
+        passenger: @passenger,
+        start_time: "2015-05-21 12:14:00+00:00",
+        end_time: "2015-05-21 12:16:10+00:00",
+        cost: 4,
+        rating: 5,
+      )
+      @passenger.add_trip(trip)
+    end
+
+    it "returns the right length of time spent" do
+      expect(@passenger.total_time_spent).must_be_close_to 260.0
+    end
+
+    it "raises an error if the passenger has no trips" do
+      @passenger = RideShare::Passenger.new(
+        id: 9,
+        name: "Merl Glover III",
+        phone_number: "1-602-620-2330 x3723",
+        trips: [],
+      )
+      expect { @passenger.total_time_spent }.must_raise ArgumentError
     end
   end
 end
