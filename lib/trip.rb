@@ -2,8 +2,8 @@ require "csv"
 require "time"
 
 require_relative "csv_record"
-require_relative 'driver'
-require_relative 'passenger'
+require_relative "driver"
+require_relative "passenger"
 
 module RideShare
   class Trip < CsvRecord
@@ -11,7 +11,7 @@ module RideShare
 
     def initialize(id:,
                    passenger: nil, passenger_id: nil,
-                   start_time:, end_time:, cost: nil, rating:, driver_id:)
+                   start_time:, end_time:, cost: nil, rating:, driver: nil, driver_id: nil)
       super(id)
 
       if passenger
@@ -19,8 +19,19 @@ module RideShare
         @passenger_id = passenger.id
       elsif passenger_id
         @passenger_id = passenger_id
+      elsif passenger_id = 0
+        raise ArgumentError, "Passenger or passenger_id is invalid"
       else
         raise ArgumentError, "Passenger or passenger_id is required"
+      end
+
+      if driver
+        @driver = driver
+        @driver_id = driver.id
+      elsif driver_id
+        @driver_id = driver_id
+      else
+        raise ArgumentError, "Driver or driver_id is required"
       end
 
       @start_time = Time.parse(start_time)
@@ -28,7 +39,6 @@ module RideShare
       @cost = cost
       @rating = rating
       @duration = duration_secs(start_time, end_time)
-      @driver_id = driver_id
 
       # Add a check in Trip#initialize that raises an ArgumentError if the end
       # time is before the start time, and a corresponding test
@@ -54,6 +64,11 @@ module RideShare
       passenger.add_trip(self)
     end
 
+    def connect(driver)
+      @driver = driver_id
+      driver.add_trip(self)
+    end
+
     def duration_secs(start_time, end_time)
       duration = (@end_time) - (@start_time)
       return duration.to_i.to_s
@@ -69,6 +84,7 @@ module RideShare
                end_time: record[:end_time],
                cost: record[:cost],
                rating: record[:rating],
+               driver_id: record[:driver_id],
              )
     end
   end
