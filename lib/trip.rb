@@ -8,7 +8,7 @@ module RideShare
   class Trip < CsvRecord
     attr_reader :id, :passenger, :passenger_id, :start_time, :end_time, :cost, :rating, :driver_id
 
-    def initialize(driver_id:, id:,
+    def initialize(id:, driver_id:,
                    passenger: nil, passenger_id: nil,
                    start_time:, end_time:, cost: nil, rating:)
       super(id)
@@ -54,17 +54,19 @@ module RideShare
       "PassengerID=#{passenger&.id.inspect}>"
     end
 
-    def connect(passenger)
+    def connect(passenger, driver)
       @passenger = passenger
+      @driver = driver
       passenger.add_trip(self)
+      driver.add_trip(self)
     end
 
     private
 
     def self.from_csv(record)
       return self.new(
-               driver_id: record[:driver_id],
                id: record[:id],
+               driver_id: record[:driver_id],
                passenger_id: record[:passenger_id],
                start_time: record[:start_time],
                end_time: record[:end_time],

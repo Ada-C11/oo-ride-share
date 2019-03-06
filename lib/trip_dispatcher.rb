@@ -13,8 +13,8 @@ module RideShare
     def initialize(directory: "./support")
       @passengers = Passenger.load_all(directory: directory)
       @trips = Trip.load_all(directory: directory)
-      connect_trips
       @drivers = Driver.load_all(directory: directory)
+      connect_trips
     end
 
     def find_passenger(id)
@@ -52,13 +52,10 @@ module RideShare
 
     def connect_trips
       @trips.each do |trip|
-        passenger = find_passenger(trip.passenger_id)
-        #binding.pry
         driver = find_driver(trip.driver_id)
-        trip.connect(passenger)
-        trip.connect(driver)
+        passenger = find_passenger(trip.passenger_id)
+        trip.connect(passenger, driver)
       end
-
       return trips
     end
   end
