@@ -43,7 +43,7 @@ describe "Passenger class" do
         trips: [],
       )
       trip = RideShare::Trip.new(
-        driver: 1,
+        driver_id: 1,
         id: 8,
         passenger: @passenger,
         start_time: "2015-05-20T12:14:00+00:00",
@@ -52,7 +52,7 @@ describe "Passenger class" do
         cost: 25,
       )
       trip_2 = RideShare::Trip.new(
-        driver: 3,
+        driver_id: 3,
         id: 10,
         passenger: @passenger,
         start_time: "2016-05-20T13:14:00+00:00",

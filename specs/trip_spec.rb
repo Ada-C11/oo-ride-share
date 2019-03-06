@@ -1,4 +1,5 @@
 require_relative "spec_helper"
+require "time"
 
 describe "Trip class" do
   describe "initialize" do
@@ -6,9 +7,9 @@ describe "Trip class" do
       start_time = Time.parse("2015-05-20T12:14:00+00:00")
       end_time = start_time + 25 * 60 # 25 minutes
       @trip_data = {
-        driver: RideShare::Driver.new(id: 54,
-                                      name: "Rogers Bartell IV",
-                                      vin: "1C9EVBRM0YBC564DZ"),
+        driver_id: RideShare::Driver.new(id: 54,
+                                         name: "Rogers Bartell IV",
+                                         vin: "1C9EVBRM0YBC564DZ"),
         id: 8,
         passenger: RideShare::Passenger.new(id: 1,
                                             name: "Ada",
@@ -22,20 +23,12 @@ describe "Trip class" do
     end
 
     it "raises ArgumentError if end time is before start time" do
-      # start_time = Time.parse("2015-05-20T12:14:00+00:00")
-      # end_time = start_time - 25 * 60 # 25 minutes
-
-      # puts @trip.start_time
-
-      # total_trip_time = end_time - start_time
-      # expect (total_trip_time).must_raise ArgumentError
-
       start_time = Time.parse("2015-05-20T12:14:00+00:00")
       end_time = Time.parse("2010-05-20T12:14:00+00:00") #start_time - 25 * 60 # 25 minutes
       @bad_trip_data = {
-        driver: RideShare::Driver.new(id: 54,
-                                      name: "Rogers Bartell IV",
-                                      vin: "1C9EVBRM0YBC564DZ"),
+        driver_id: RideShare::Driver.new(id: 54,
+                                         name: "Rogers Bartell IV",
+                                         vin: "1C9EVBRM0YBC564DZ"),
         id: 8,
         passenger: RideShare::Passenger.new(id: 1,
                                             name: "Ada",
@@ -62,7 +55,7 @@ describe "Trip class" do
     end
 
     it "stores an instance of driver" do
-      expect(@trip.driver).must_be_kind_of RideShare::Driver
+      expect(@trip.driver_id).must_be_kind_of RideShare::Driver
     end
 
     it "raises an error for an invalid rating" do
@@ -82,9 +75,9 @@ describe "Trip class" do
       end_time = start_time + 25 * 60 # 25 minutes
 
       trip_with_duration_of_1500 = RideShare::Trip.new({
-        driver: RideShare::Driver.new(id: 54,
-                                      name: "Rogers Bartell IV",
-                                      vin: "1C9EVBRM0YBC564DZ"),
+        driver_id: RideShare::Driver.new(id: 54,
+                                         name: "Rogers Bartell IV",
+                                         vin: "1C9EVBRM0YBC564DZ"),
         id: 8,
         passenger: RideShare::Passenger.new(id: 1,
                                             name: "Ada",
