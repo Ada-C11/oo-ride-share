@@ -114,9 +114,9 @@ describe "TripDispatcher class" do
       it "connects trips and drivers" do
         dispatcher = build_test_dispatcher
         dispatcher.trips.each do |trip|
-          expect(trip.driver_id).wont_be_nil
-          expect(trip.driver_id).must_equal trip.driver_id
-          expect(trip.driver_id.trips).must_include trip
+          expect(trip.driver).wont_be_nil
+          expect(trip.driver.id).must_equal trip.driver_id
+          expect(trip.driver.trips).must_include trip
         end
       end
     end
