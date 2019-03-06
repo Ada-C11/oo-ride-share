@@ -19,6 +19,9 @@ module RideShare
 
     def find_passenger(id)
       Passenger.validate_id(id)
+      if id.zero?
+        return raise ArgumentError, "Invalid ID"
+      end
       return @passengers.find { |passenger| passenger.id == id }
     end
 
