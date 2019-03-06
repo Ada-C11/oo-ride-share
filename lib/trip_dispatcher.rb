@@ -45,18 +45,15 @@ module RideShare
         end
       end
 
-      available_drivers = available_drivers.sort_by { |driver| driver.trips.last.end_time }
+      available_drivers.sort_by! do |driver|
+        return driver.trips.sort_by { |trip| trip.end_time }.first
+      end
 
       return available_drivers.first
     end
 
     def request_trip(passenger_id)
       # The passenger ID will be supplied (this is the person requesting a trip)
-      @drivers.each do |driver|
-        if driver.id == passenger_id && driver.status == :AVAILABLE
-          driver.status = :UNAVAILABLE
-        end
-      end
 
       driver = self.available_driver
       passenger = self.find_passenger(passenger_id)
@@ -65,9 +62,9 @@ module RideShare
         id: (@trips.length) + 1,
         driver: driver,
         passenger: passenger,
-        start_time: Time.now,
-      # end_time: nil,
-      # # rating: nil,
+        start_time: Time.now.to_s,
+        end_time: nil,
+        rating: nil,
       }
 
       in_progress_ride = Trip.new(requested_trip)
@@ -77,12 +74,6 @@ module RideShare
       passenger.add_trip(in_progress_ride)
 
       @trips << in_progress_ride
-
-      @drivers.each do |driver|
-        if driver.id == passenger_id
-          driver.status = :AVAILABLE
-        end
-      end
 
       return in_progress_ride
     end

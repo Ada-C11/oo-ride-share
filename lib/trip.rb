@@ -31,9 +31,13 @@ module RideShare
       end
 
       start_time = Time.parse(start_time)
-      end_time = Time.parse(end_time)
-      if start_time.to_i > end_time.to_i
-        raise ArgumentError.new("End time cannot be before start time")
+
+      unless end_time.nil?
+        end_time = Time.parse(end_time)
+
+        if start_time.to_i > end_time.to_i
+          raise ArgumentError.new("End time cannot be before start time")
+        end
       end
 
       @start_time = start_time
@@ -41,7 +45,7 @@ module RideShare
       @cost = cost
       @rating = rating
 
-      if @rating > 5 || @rating < 1
+      if !@rating.nil? && (@rating > 5 || @rating < 1)
         raise ArgumentError.new("Invalid rating #{@rating}")
       end
     end
