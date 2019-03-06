@@ -133,5 +133,59 @@ describe "Driver class" do
 
   describe "total_revenue" do
     # You add tests for the total_revenue method
+    before do
+      @driver = RideShare::Driver.new(
+        id: 54,
+        name: "Rogers Bartell IV",
+        vin: "1C9EVBRM0YBC564DZ",
+      )
+      trip = RideShare::Trip.new(
+        id: 8,
+        driver: @driver,
+        passenger_id: 3,
+        driver_id: 7,
+        start_time: "2016-08-08",
+        end_time: "2016-08-08",
+        cost: 1.60,
+        rating: 5,
+      )
+      @driver.add_trip(trip)
+      trip2 = RideShare::Trip.new(
+        id: 8,
+        driver: @driver,
+        passenger_id: 3,
+        start_time: "2016-08-08",
+        end_time: "2016-08-09",
+        cost: 8,
+        rating: 1,
+      )
+      @driver.add_trip(trip2)
+    end
+
+    it "returns a float" do
+      expect(@driver.total_revenue).must_be_kind_of Float
+    end
+
+    it "does not provide negative revenue" do
+      expect(@driver.total_revenue).must_equal 5.08
+    end   
+
+    it "returns drivers total revenue" do
+    trip3 = RideShare::Trip.new(
+      id: 8,
+      driver: @driver,
+      passenger_id: 3,
+      start_time: "2016-08-08",
+      end_time: "2016-08-09",
+      cost: 7,
+      rating: 1,
+    )
+
+    @driver.add_trip(trip3)
+    
+      expect(@driver.total_revenue).must_equal 9.36
+    end
+
+
   end
 end

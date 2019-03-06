@@ -39,6 +39,20 @@ module RideShare
                (rating / @trips.length) : rating
     end
 
+    def total_revenue
+      revenue = 0
+
+      @trips.each do |trip|
+       if trip.cost < 1.65
+        revenue += 0
+       else
+       revenue += ((trip.cost - 1.65) * 0.8)
+       end
+      end
+
+      return revenue.to_f
+    end
+
     def self.from_csv(record)
       return new(
                id: record[:id],

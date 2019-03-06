@@ -34,6 +34,19 @@ module RideShare
               #{passengers.count} passengers>"
     end
 
+    # attempting wave 3, need to write test
+    # def request_trip(passenger_id)
+    #   @trip = Trip.new(
+    #     id: record[:id],
+    #     passenger_id: passenger_id,
+    #     start_time: Time.now,
+    #     end_time: nil,
+    #     driver_id: drivers.status[:AVAILABLE].first.driver_id,
+    #     cost: nil,
+    #     rating: nil,
+    #   )
+    # end
+
     private
 
     def connect_trips
