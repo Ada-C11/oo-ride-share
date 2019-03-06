@@ -167,7 +167,7 @@ describe "TripDispatcher class" do
 
         # exhaust all available drivers
         count_available_drivers.times do |time|
-          new_trip = test_dispatcher.request_trip(1)
+          test_dispatcher.request_trip(1)
         end
 
         expect(test_dispatcher.request_trip(1)).must_be_nil
@@ -205,8 +205,8 @@ describe "TripDispatcher class" do
 
       it "calculates average rating of Driver with unfinished trip" do
         test_dispatcher = build_test_dispatcher
-        driver = test_dispatcher.drivers.find { |driver| driver.status == :AVAILABLE }
-        before = driver.average_rating
+        assigned_driver = test_dispatcher.drivers.find { |driver| driver.status == :AVAILABLE }
+        before = assigned_driver.average_rating
         new_trip = test_dispatcher.request_trip(1)
         after = new_trip.driver.average_rating
         expect(after).must_equal before
@@ -214,8 +214,8 @@ describe "TripDispatcher class" do
 
       it "calculates total revenue for Driver with unfinished trip" do
         test_dispatcher = build_test_dispatcher
-        driver = test_dispatcher.drivers.find { |driver| driver.status == :AVAILABLE }
-        before = driver.total_revenue
+        assigned_driver = test_dispatcher.drivers.find { |driver| driver.status == :AVAILABLE }
+        before = assigned_driver.total_revenue
         new_trip = test_dispatcher.request_trip(1)
         after = new_trip.driver.total_revenue
         expect(after).must_equal before
