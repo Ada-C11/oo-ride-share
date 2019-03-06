@@ -26,6 +26,17 @@ module RideShare
       @trips << trip
     end
 
+    def total_revenue
+      if @trips.length == 0 
+        raise ArgumentError, "Driver has no trips."
+      end 
+
+      raw_revenue = @trips.map{|trip| (trip.cost)}.sum
+      revenue = 0.8 * (raw_revenue - (trips.count * 1.65))
+      
+      return revenue
+    end
+
     def self.from_csv(record)
       return new(
         id: record[:id],
