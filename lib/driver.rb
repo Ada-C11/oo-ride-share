@@ -14,8 +14,6 @@ module RideShare
         raise ArgumentError, "The vin length is incorrect."
       end
 
-      # status_possibilities = [:AVAILABLE, :UNAVAILABLE]
-
       unless status == :AVAILABLE || status == :UNAVAILABLE
         raise ArgumentError, "Status must be :AVAILABLE or :UNAVAILABLE. It's: #{status}"
       end
