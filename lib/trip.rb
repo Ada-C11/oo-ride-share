@@ -67,11 +67,12 @@ module RideShare
       driver.add_trip(self)
     end
 
-    # changed method name here from connect to connect driver. Ruby was confusing them
-    def connect_driver(driver)
-      @driver = driver_id
-      driver.add_trip(self)
-    end
+    # Actually don tthink this is important anymore. Consolidated into connect method.
+    # # changed method name here from connect to connect driver. Ruby was confusing them.
+    # def connect_driver(driver)
+    #   @driver = driver_id
+    #   driver.add_trip(self)
+    # end
 
     def duration_secs(start_time, end_time)
       duration = (@end_time) - (@start_time)
