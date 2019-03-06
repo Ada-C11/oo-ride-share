@@ -4,20 +4,25 @@ require_relative "csv_record"
 
 module RideShare
   class Driver < CsvRecord
-    attr_reader :name, :vin, :status, :trips
+    attr_reader :id, :name, :vin, :status, :trips
 
-    def initialize(id:, name:, vin:, status: :AVAILABLE)
+    def initialize(id:, name:, vin:, status: :AVAILABLE, trips: nil)
       super(id)
-
+      avail_statuses = [:AVAILABLE, :UNAVAILABLE]
       @name = name
-      @trips = trips || []
-      @status = :AVAILABLE || :UNAVAILABLE
 
-      if vin.length != 17
-        raise ArgumentError, "Invalid VIN"
-      else
+      if vin.length == 17
         @vin = vin
+      else
+        raise ArgumentError, "VIN must be string of length 17"
       end
+
+      if avail_statuses.include?(status)
+        @status = status
+      else
+        raise ArgumentError, "Invalid status"
+      end
+      @trips = trips || []
     end
 
     def add_trip(trip)
@@ -45,8 +50,8 @@ module RideShare
           cost_after_deduction = trip.cost - 1.65
           driver_take_home += cost_after_deduction
         end
-        driver_take_home *= 0.8
       end
+      driver_take_home *= 0.8
       return driver_take_home.to_f
     end
 
@@ -57,7 +62,7 @@ module RideShare
                id: record[:id],
                name: record[:name],
                vin: record[:vin],
-               status: record[:status],
+               status: record[:status].to_sym,
              )
     end
   end

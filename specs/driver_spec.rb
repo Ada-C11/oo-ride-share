@@ -10,34 +10,27 @@ describe "Driver class" do
         status: :AVAILABLE,
       )
     end
-
     it "is an instance of Driver" do
       expect(@driver).must_be_kind_of RideShare::Driver
     end
-
     it "throws an argument error with a bad VIN" do
       expect { RideShare::Driver.new(id: 0, name: "George", vin: "33133313331333133") }.must_raise ArgumentError
     end
-
     it "throws an argument error with a bad VIN value" do
       expect { RideShare::Driver.new(id: 100, name: "George", vin: "") }.must_raise ArgumentError
       expect { RideShare::Driver.new(id: 100, name: "George", vin: "33133313331333133extranums") }.must_raise ArgumentError
     end
-
     it "has a default status of :AVAILABLE" do
       expect(RideShare::Driver.new(id: 100, name: "George", vin: "12345678901234567").status).must_equal :AVAILABLE
     end
-
     it "sets driven trips to an empty array if not provided" do
       expect(@driver.trips).must_be_kind_of Array
       expect(@driver.trips.length).must_equal 0
     end
-
     it "is set up for specific attributes and data types" do
       [:id, :name, :vin, :status, :trips].each do |prop|
         expect(@driver).must_respond_to prop
       end
-
       expect(@driver.id).must_be_kind_of Integer
       expect(@driver.name).must_be_kind_of String
       expect(@driver.vin).must_be_kind_of String
@@ -59,10 +52,11 @@ describe "Driver class" do
       )
       @trip = RideShare::Trip.new(
         id: 8,
-        driver: @driver_id,
+        driver_id: @driver_id,
         passenger: pass,
         start_time: "2016-08-08",
         end_time: "2018-08-09",
+        cost: 5,
         rating: 5,
       )
     end
@@ -87,10 +81,11 @@ describe "Driver class" do
       )
       trip = RideShare::Trip.new(
         id: 8,
-        driver: @driver_id,
+        driver_id: @driver_id,
         passenger_id: 3,
         start_time: "2016-08-08",
         end_time: "2016-08-08",
+        cost: 5,
         rating: 5,
       )
       @driver.add_trip(trip)
@@ -118,10 +113,11 @@ describe "Driver class" do
     it "correctly calculates the average rating" do
       trip2 = RideShare::Trip.new(
         id: 8,
-        driver_id: @driver,
+        driver_id: @driver_id,
         passenger_id: 3,
         start_time: "2016-08-08",
         end_time: "2016-08-09",
+        cost: 5,
         rating: 1,
       )
       @driver.add_trip(trip2)
@@ -129,7 +125,6 @@ describe "Driver class" do
       expect(@driver.average_rating).must_be_close_to (5.0 + 1.0) / 2.0, 0.01
     end
   end
-
   describe "total_revenue" do
     before do
       @driver = RideShare::Driver.new(
@@ -139,31 +134,33 @@ describe "Driver class" do
       )
       trip = RideShare::Trip.new(
         id: 8,
-        driver_id: @driver,
+        driver_id: @driver_id,
         passenger_id: 3,
         start_time: "2016-08-08",
         end_time: "2016-08-08",
-        rating: 5,
         cost: 5,
+        rating: 5,
       )
+
       trip2 = RideShare::Trip.new(
         id: 8,
-        driver_id: @driver,
-        passenger_id: 4,
-        start_time: "2017-08-08",
-        end_time: "2017-08-08",
-        rating: 5,
+        driver_id: @driver_id,
+        passenger_id: 3,
+        start_time: "2016-08-08",
+        end_time: "2016-08-09",
         cost: 5,
+        rating: 1,
       )
       @driver.add_trip(trip)
       @driver.add_trip(trip2)
     end
+
     it "returns total_revenue" do
       expect(@driver.total_revenue).must_be_close_to 5.36
     end
   end
 
-  xdescribe "net_expenditures" do
+  describe "net_expenditures" do
     # You add tests for the net_expenditures method
   end
 end

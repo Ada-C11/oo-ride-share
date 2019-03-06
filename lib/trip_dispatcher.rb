@@ -57,6 +57,5 @@ module RideShare
       end
       return trips
     end
-    
   end
 end

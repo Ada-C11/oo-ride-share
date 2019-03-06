@@ -42,51 +42,27 @@ describe "Passenger class" do
         phone_number: "1-602-620-2330 x3723",
         trips: [],
       )
-      trip = RideShare::Trip.new(
-        driver_id: 1,
-        id: 8,
+      trip1 = RideShare::Trip.new(
+        driver_id: 2,
+        id: 9,
         passenger: @passenger,
-        start_time: "2015-05-20T12:14:00+00:00",
-        end_time: "2015-05-20T12:25:00+00:00",
+        start_time: "2016-08-08",
+        end_time: "2016-08-09",
         rating: 5,
-        cost: 25,
+        cost: 15,
       )
+      @passenger.add_trip(trip1)
+
       trip_2 = RideShare::Trip.new(
         driver_id: 3,
-        id: 10,
-        passenger: @passenger,
-        start_time: "2016-05-20T13:14:00+00:00",
-        end_time: "2016-05-20T14:14:00+00:00",
-        rating: 5,
-        cost: 45,
-      )
-
-      @passenger.add_trip(trip)
-      @passenger.add_trip(trip_2)
-
-      @passenger_2 = RideShare::Passenger.new(
         id: 9,
-        name: "Merl Glover III",
-        phone_number: "1-602-620-2330 x3723",
-        trips: [],
+        passenger: @passenger,
+        start_time: "2017-08-09",
+        end_time: "2017-08-10",
+        rating: 5,
+        cost: 10,
       )
-    end
-
-    it "calculates total cost of all trips" do
-      total = @passenger.net_expenditures
-
-      expect(total).must_equal 70
-    end
-
-    it "calculates total time spent on all trips" do
-      total = @passenger.total_time_spent
-
-      expect(total).must_equal 4260.0
-    end
-
-    it "returns 0 if the passenger has no trips" do
-      total = @passenger_2.total_time_spent
-      expect(total).must_equal 0
+      @passenger.add_trip(trip_2)
     end
 
     it "each item in array is a Trip instance" do
@@ -97,8 +73,18 @@ describe "Passenger class" do
 
     it "all Trips must have the same passenger's passenger id" do
       @passenger.trips.each do |trip|
-        expect(trip.passenger.id).must_equal 9
+        expect(@passenger.id).must_equal 9
       end
+    end
+
+    it "calculates the total each passenger has spent on trips" do
+      # return nil or raise error in edge case of no rides?
+      expect(@passenger.net_expenditures).must_equal 25
+    end
+
+    it "calculates total time spent per passenger" do
+      # return nil or raise error in edge case of no rides?
+      expect(@passenger.total_time_spent).must_equal 2 * 86400
     end
   end
 end

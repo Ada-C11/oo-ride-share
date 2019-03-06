@@ -7,13 +7,10 @@ module RideShare
   class Trip < CsvRecord
     attr_reader :id, :passenger, :passenger_id, :start_time, :end_time, :cost, :rating, :driver_id
 
-    def initialize(driver_id:, id:,
+    def initialize(id:, driver_id:,
                    passenger: nil, passenger_id: nil,
                    start_time:, end_time:, cost: nil, rating:)
       super(id)
-
-      @start_time = Time.new(start_time)
-      @end_time = Time.new(end_time)
 
       if passenger
         @passenger = passenger
@@ -25,21 +22,26 @@ module RideShare
       end
 
       @driver_id = driver_id
-      @start_time = start_time
-      @end_time = end_time
+      @start_time = Time.parse(start_time)
+      @end_time = Time.parse(end_time)
       @cost = cost
       @rating = rating
 
-      if @end_time < @start_time
-        raise ArgumentError, "End time is less than start time."
+      if @end_time != nil && (@start_time > @end_time)
+        raise ArgumentError, "Start time cannot preceed end time."
       end
-
-      # if end_time < start_time
-      #   raise ArgumentError, "End time is less than start time."
-      # end
 
       if @rating > 5 || @rating < 1
         raise ArgumentError.new("Invalid rating #{@rating}")
+      end
+    end
+
+    def duration_in_seconds
+      if end_time == nil
+        raise ArgumentError.new("Trip is still in progress.")
+      else
+        duration = end_time - start_time
+        return duration.to_i
       end
     end
 
@@ -58,19 +60,12 @@ module RideShare
       driver.add_trip(self)
     end
 
-    def duration_in_seconds
-      start_time = Time.parse(@start_time)
-      end_time = Time.parse(@end_time)
-      duration = (end_time - start_time)
-      return duration
-    end
-
     private
 
     def self.from_csv(record)
       return self.new(
-               driver_id: record[:driver_id],
                id: record[:id],
+               driver_id: record[:driver_id],
                passenger_id: record[:passenger_id],
                start_time: record[:start_time],
                end_time: record[:end_time],
