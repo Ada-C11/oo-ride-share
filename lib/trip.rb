@@ -10,7 +10,7 @@ module RideShare
 
     def initialize(id:,
                    passenger: nil, passenger_id: nil,
-                   start_time:, end_time:, cost: nil, rating:, driver_id:, driver:)
+                   start_time:, end_time:, cost: nil, rating:, driver_id: nil, driver: nil)
       super(id)
 
       if passenger
@@ -65,6 +65,7 @@ module RideShare
                end_time: record[:end_time],
                cost: record[:cost],
                rating: record[:rating],
+               driver_id: record[:driver_id],
              )
     end
   end
