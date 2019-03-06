@@ -9,7 +9,8 @@ module RideShare
 
     def initialize(id:,
                    passenger: nil, passenger_id: nil,
-                   start_time:, end_time:, cost: nil, rating:)
+                   start_time:, end_time:, cost: nil, rating:,
+                   driver: nil, driver_id: nil)
       super(id)
 
       if passenger
@@ -19,6 +20,15 @@ module RideShare
         @passenger_id = passenger_id
       else
         raise ArgumentError, "Passenger or passenger_id is required"
+      end
+
+      if driver
+        @driver = driver
+        @driver_id = driver.id
+      elsif driver_id
+        @driver_id = driver_id
+      else
+        raise ArgumentError, "driver or driver_id is required"
       end
 
       @start_time = Time.parse(start_time)
@@ -60,6 +70,7 @@ module RideShare
                end_time: record[:end_time],
                cost: record[:cost],
                rating: record[:rating],
+               driver_id: record[:driver_id],
              )
     end
   end
