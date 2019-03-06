@@ -67,7 +67,7 @@ module RideShare
 
     def self.from_csv(record)
       return self.new(
-               driver: record[:driver],
+               driver_id: record[:driver_id],
                id: record[:id],
                passenger_id: record[:passenger_id],
                start_time: record[:start_time],

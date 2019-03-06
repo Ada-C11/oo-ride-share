@@ -6,7 +6,9 @@ describe "Trip class" do
       start_time = Time.parse("2015-05-20T12:14:00+00:00")
       end_time = start_time + 25 * 60 # 25 minutes
       @trip_data = {
-        driver: 3,
+        driver: RideShare::Driver.new(id: 54,
+                                      name: "Rogers Bartell IV",
+                                      vin: "1C9EVBRM0YBC564DZ"),
         id: 8,
         passenger: RideShare::Passenger.new(id: 1,
                                             name: "Ada",
@@ -31,7 +33,9 @@ describe "Trip class" do
       start_time = Time.parse("2015-05-20T12:14:00+00:00")
       end_time = Time.parse("2010-05-20T12:14:00+00:00") #start_time - 25 * 60 # 25 minutes
       @bad_trip_data = {
-        driver: 3,
+        driver: RideShare::Driver.new(id: 54,
+                                      name: "Rogers Bartell IV",
+                                      vin: "1C9EVBRM0YBC564DZ"),
         id: 8,
         passenger: RideShare::Passenger.new(id: 1,
                                             name: "Ada",
@@ -58,7 +62,6 @@ describe "Trip class" do
     end
 
     it "stores an instance of driver" do
-      skip # Unskip after wave 2
       expect(@trip.driver).must_be_kind_of RideShare::Driver
     end
 
@@ -79,7 +82,9 @@ describe "Trip class" do
       end_time = start_time + 25 * 60 # 25 minutes
 
       trip_with_duration_of_1500 = RideShare::Trip.new({
-        driver: 3,
+        driver: RideShare::Driver.new(id: 54,
+                                      name: "Rogers Bartell IV",
+                                      vin: "1C9EVBRM0YBC564DZ"),
         id: 8,
         passenger: RideShare::Passenger.new(id: 1,
                                             name: "Ada",

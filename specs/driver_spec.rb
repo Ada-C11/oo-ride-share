@@ -45,7 +45,7 @@ describe "Driver class" do
     end
   end
 
-  xdescribe "add_trip method" do
+  describe "add_trip method" do
     before do
       pass = RideShare::Passenger.new(
         id: 1,
@@ -160,7 +160,6 @@ describe "Driver class" do
     end
     it "returns total_revenue" do
       expect(@driver.total_revenue).must_be_close_to 5.36
-      # You add tests for the total_revenue method
     end
   end
 
