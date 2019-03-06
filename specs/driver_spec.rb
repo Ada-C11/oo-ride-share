@@ -59,7 +59,7 @@ describe "Driver class" do
       )
       @trip = RideShare::Trip.new(
         id: 8,
-        driver: @driver,
+        driver_id: @driver_id,
         passenger: pass,
         start_time: "2016-08-08",
         end_time: "2018-08-09",
@@ -88,7 +88,7 @@ describe "Driver class" do
       )
       trip = RideShare::Trip.new(
         id: 8,
-        driver: @driver,
+        driver_id: @driver_id,
         passenger_id: 3,
         start_time: "2016-08-08",
         end_time: "2016-08-08",
@@ -120,7 +120,7 @@ describe "Driver class" do
     it "correctly calculates the average rating" do
       trip2 = RideShare::Trip.new(
         id: 8,
-        driver: @driver,
+        driver_id: @driver_id,
         passenger_id: 3,
         start_time: "2016-08-08",
         end_time: "2016-08-09",
@@ -131,12 +131,7 @@ describe "Driver class" do
 
       expect(@driver.average_rating).must_be_close_to (5.0 + 1.0) / 2.0, 0.01
     end
-
-    it "calculates total revenue" do
-      expect(@driver.total_revenue).must_be_close_to 8.04
-    end
   end
-
   describe "total_revenue" do
     before do
       @driver = RideShare::Driver.new(
@@ -146,7 +141,7 @@ describe "Driver class" do
       )
       trip = RideShare::Trip.new(
         id: 8,
-        driver: @driver,
+        driver_id: @driver_id,
         passenger_id: 3,
         start_time: "2016-08-08",
         end_time: "2016-08-08",
@@ -156,7 +151,7 @@ describe "Driver class" do
 
       trip2 = RideShare::Trip.new(
         id: 8,
-        driver: @driver,
+        driver_id: @driver_id,
         passenger_id: 3,
         start_time: "2016-08-08",
         end_time: "2016-08-09",

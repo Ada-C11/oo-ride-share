@@ -7,7 +7,11 @@ describe "Trip class" do
       start_time = Time.parse("2015-05-20T12:14:00+00:00")
       end_time = start_time + 25 * 60 # 25 minutes
       @trip_data = {
-        driver: 1,
+        driver_id: RideShare::Driver.new(
+          id: 54,
+          name: "Rogers Bartell IV",
+          vin: "1C9EVBRM0YBC564DZ",
+        ),
         id: 8,
         passenger: RideShare::Passenger.new(id: 1,
                                             name: "Ada",
@@ -24,7 +28,11 @@ describe "Trip class" do
       start_time = Time.parse("2015-05-20T12:14:00+00:00")
       end_time = Time.parse("2014-05-20T12:14:00+00:00")
       @trip_data = {
-        driver: 1,
+        driver_id: RideShare::Driver.new(
+          id: 54,
+          name: "Rogers Bartell IV",
+          vin: "1C9EVBRM0YBC564DZ",
+        ),
         id: 8,
         passenger: RideShare::Passenger.new(id: 1,
                                             name: "Ada",
@@ -41,7 +49,11 @@ describe "Trip class" do
       start_time = Time.parse("2015-05-20T12:14:00+00:00")
       end_time = Time.parse("2015-05-20T12:14:21+00:00")
       @trip_data = {
-        driver: 1,
+        driver_id: RideShare::Driver.new(
+          id: 54,
+          name: "Rogers Bartell IV",
+          vin: "1C9EVBRM0YBC564DZ",
+        ),
         id: 8,
         passenger: RideShare::Passenger.new(id: 1,
                                             name: "Ada",
@@ -64,8 +76,7 @@ describe "Trip class" do
     end
 
     it "stores an instance of driver" do
-      skip # Unskip after wave 2
-      expect(@trip.driver).must_be_kind_of RideShare::Driver
+      expect(@trip.driver_id).must_be_kind_of RideShare::Driver
     end
 
     it "raises an error for an invalid rating" do
