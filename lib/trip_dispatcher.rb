@@ -1,13 +1,13 @@
-require 'csv'
-require_relative 'passenger'
-require_relative 'trip'
-require_relative 'driver'
+require "csv"
+require_relative "passenger"
+require_relative "trip"
+require_relative "driver"
 
 module RideShare
   class TripDispatcher
     attr_reader :drivers, :passengers, :trips
 
-    def initialize(directory: './support')
+    def initialize(directory: "./support")
       @passengers = Passenger.load_all(directory: directory)
       @trips = Trip.load_all(directory: directory)
       @drivers = Driver.load_all(directory: directory)
@@ -30,6 +30,61 @@ module RideShare
               #{trips.count} trips, \
               #{drivers.count} drivers, \
               #{passengers.count} passengers>"
+    end
+
+    def available_driver
+      if @drivers.find_all { |driver| driver.status == :AVAILABLE } == []
+        raise ArgumentError.new("Sorry, there are no available drivers near you.")
+      else
+        available_drivers = @drivers.find_all { |driver| driver.status == :AVAILABLE }
+      end
+
+      available_drivers.each do |driver|
+        if driver.trips == []
+          return driver
+        end
+      end
+
+      available_drivers = available_drivers.sort_by { |driver| driver.trips.last.end_time }
+
+      return available_drivers.first
+    end
+
+    def request_trip(passenger_id)
+      # The passenger ID will be supplied (this is the person requesting a trip)
+      @drivers.each do |driver|
+        if driver.id == passenger_id && driver.status == :AVAILABLE
+          driver.status = :UNAVAILABLE
+        end
+      end
+
+      driver = self.available_driver
+      passenger = self.find_passenger(passenger_id)
+
+      requested_trip = {
+        id: (@trips.length) + 1,
+        driver: driver,
+        passenger: passenger,
+        start_time: Time.now,
+      # end_time: nil,
+      # # rating: nil,
+      }
+
+      in_progress_ride = Trip.new(requested_trip)
+
+      driver.status = :UNAVAILABLE
+      driver.add_trip(in_progress_ride)
+      passenger.add_trip(in_progress_ride)
+
+      @trips << in_progress_ride
+
+      @drivers.each do |driver|
+        if driver.id == passenger_id
+          driver.status = :AVAILABLE
+        end
+      end
+
+      return in_progress_ride
     end
 
     private

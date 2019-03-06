@@ -78,7 +78,7 @@ describe "TripDispatcher class" do
     end
   end
 
-  # TODO: un-skip for Wave 2
+  # Wave 2
   describe "drivers" do
     describe "find_driver method" do
       before do
@@ -120,6 +120,59 @@ describe "TripDispatcher class" do
           expect(trip.driver.trips).must_include trip
         end
       end
+    end
+  end
+
+  describe "In progress trip" do
+    before do
+      @dispatcher = build_test_dispatcher
+    end
+    it "Adds an in progress trip correctly" do
+      trip = @dispatcher.request_trip(2)
+      expect(trip).must_be_instance_of RideShare::Trip
+      expect(trip.id).must_equal @dispatcher.trips.length
+      expect(trip.end_time).must_be_nil
+      expect(trip.rating).must_be_nil
+      expect(trip.cost).must_be_nil
+      expect(trip.driver).must_be_instance_of RideShare::Driver
+      expect(trip.passenger).must_be_kind_of RideShare::Passenger
+      expect(trip.driver.status).must_equal :UNAVAILABLE
+    end
+
+    it "Checks driver in progress trip" do
+      trip = @dispatcher.request_trip(2)
+      driver = @dispatcher.trips.last.driver
+      expect(driver.trips.last).must_equal trip
+    end
+
+    it "Checks passenger in-progress trip" do
+      trip = @dispatcher.request_trip(2)
+      passenger = @dispatcher.trips.last.passenger
+      expect(passenger.trips.last).must_equal trip
+    end
+
+    it "Checks to find the driver who has gone longest without trip" do
+      expect (@dispatcher.available_driver.id).must_equal 3
+      expect (@dispatcher.available_driver.status).must_equal :AVAILABLE
+      expect (@dispatcher.available_driver).must_be_instance_of RideShare::Driver
+    end
+
+    it "Checks passenger not assigned as driver" do
+      trip = @dispatcher.request_trip(8)
+      expect(trip.driver.id).wont_equal 8
+    end
+
+    it "Check driver status is available" do
+      driver = @dispatcher.available_driver
+      expect(driver.status).must_equal :AVAILABLE
+    end
+
+    it "Raise ArgumentError if all drivers are unavailable -" do
+      @dispatcher.drivers[1].status = :UNAVAILABLE
+      @dispatcher.drivers[2].status = :UNAVAILABLE
+      puts @dispatcher.drivers[1].status
+      puts @dispatcher.drivers[2].status
+      expect { @dispatcher.available_driver }.must_raise ArgumentError
     end
   end
 end
