@@ -15,6 +15,10 @@ module RideShare
       @trips = trips || []
     end
 
+    def add_trip(trip)
+      @trips << trip
+    end
+
     def self.validate_vin(vin)
       unless vin.length == 17
         raise ArgumentError, "Vin must have 17 characters"
