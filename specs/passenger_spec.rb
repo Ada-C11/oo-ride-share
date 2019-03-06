@@ -42,12 +42,19 @@ describe "Passenger class" do
         phone_number: "1-602-620-2330 x3723",
         trips: [],
       )
+      @driver = RideShare::Driver.new(
+        id: 1,
+        name: "Paul Klee",
+        vin: "WBS76FYD47DJF7206",
+        status: :AVAILABLE,
+      )
       trip = RideShare::Trip.new(
         id: 8,
         passenger: @passenger,
         start_time: "2016-08-08",
         end_time: "2016-08-09",
         rating: 5,
+        driver: @driver,
       )
 
       @passenger.add_trip(trip)
@@ -74,6 +81,12 @@ describe "Passenger class" do
         phone_number: "1-602-620-2330 x3723",
         trips: [],
       )
+      @driver = RideShare::Driver.new(
+        id: 1,
+        name: "Paul Klee",
+        vin: "WBS76FYD47DJF7206",
+        status: :AVAILABLE,
+      )
       trip = RideShare::Trip.new(
         id: 8,
         passenger: @passenger,
@@ -81,6 +94,7 @@ describe "Passenger class" do
         end_time: "2016-08-09",
         rating: 5,
         cost: 110,
+        driver: @driver,
       )
       @passenger.add_trip(trip)
       trip = RideShare::Trip.new(
@@ -90,6 +104,7 @@ describe "Passenger class" do
         end_time: "2016-08-09",
         rating: 5,
         cost: 230,
+        driver: @driver,
       )
 
       @passenger.add_trip(trip)
@@ -108,6 +123,12 @@ describe "Passenger class" do
         phone_number: "1-602-620-2330 x3723",
         trips: [],
       )
+      @driver = RideShare::Driver.new(
+        id: 1,
+        name: "Paul Klee",
+        vin: "WBS76FYD47DJF7206",
+        status: :AVAILABLE,
+      )
 
       trip = RideShare::Trip.new(
         id: 8,
@@ -116,6 +137,7 @@ describe "Passenger class" do
         end_time: "2019-01-09 22:14:39 -0800",
         rating: 5,
         cost: 110,
+        driver: @driver,
       )
       @passenger.add_trip(trip)
       trip = RideShare::Trip.new(
@@ -125,6 +147,7 @@ describe "Passenger class" do
         end_time: "2019-01-25 11:35:35 -0800",
         rating: 5,
         cost: 230,
+        driver: @driver,
       )
 
       @passenger.add_trip(trip)
