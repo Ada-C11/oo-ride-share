@@ -193,7 +193,8 @@ describe "TripDispatcher class" do
 
         expect(new_trip.rating).must_be_nil
       end
-
+    end
+    describe "handles unfinished trips" do
       it "calculates total money spent for Passenger with unfinished trip" do
         test_dispatcher = build_test_dispatcher
         before = test_dispatcher.find_passenger(1).net_expenditures
@@ -217,6 +218,19 @@ describe "TripDispatcher class" do
         before = driver.total_revenue
         new_trip = test_dispatcher.request_trip(1)
         after = new_trip.driver.total_revenue
+        expect(after).must_equal before
+      end
+
+      it "returns nil if calculating duration of unfinished trip" do
+        test_dispatcher = build_test_dispatcher
+        new_trip = test_dispatcher.request_trip(1)
+        expect(new_trip.calculate_duration).must_be_nil
+      end
+      it "excludes unfinished trips in total time spent" do
+        test_dispatcher = build_test_dispatcher
+        before = test_dispatcher.find_passenger(1).total_time_spent
+        new_trip = test_dispatcher.request_trip(1)
+        after = new_trip.passenger.total_time_spent
         expect(after).must_equal before
       end
     end
