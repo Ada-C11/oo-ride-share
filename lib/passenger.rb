@@ -28,9 +28,12 @@ module RideShare
     def net_expenditures
       if @trips.length == 0
         raise ArgumentError, "Passenger has no trips."
+      else
+        return @trips.map{|trip| 
+          unless trip.end_time == nil # ignore in-progress trips
+            trip.cost
+          end}.sum
       end
-
-      return @trips.map{|trip| trip.cost}.sum
     end
 
     private
