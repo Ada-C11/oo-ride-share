@@ -12,7 +12,7 @@ module RideShare
 
       raise ArgumentError, "Invalid VIN number length." if @vin.length != 17
 
-      @status = status
+      @status = status.to_sym
 
       raise ArgumentError, "Invalid driver status." if @status != :AVAILABLE && @status != :UNAVAILABLE
 
@@ -23,9 +23,11 @@ module RideShare
     def add_trip(trip)
       @trips << trip
     end
-    
+
     # what is this driver's average rating?
     def average_rating
+      average_rating = @trips[:rating].sum.to_f / @trips[:rating].count.to_f
+      return average_rating
     end
 
     # calculates driver's total revenue across all trips. each driver gets 80% of trip cost after a fee of 1.65 is deducted
@@ -40,7 +42,7 @@ module RideShare
                name: record[:name],
                vin: record[:vin],
                status: record[:status],
-               trips: record[:trips]
+               trips: record[:trips],
              )
     end
   end

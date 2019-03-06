@@ -20,7 +20,7 @@ module RideShare
       else
         raise ArgumentError, "Driver or driver ID is required"
       end
-      
+
       if passenger
         @passenger = passenger
         @passenger_id = passenger.id
@@ -51,9 +51,14 @@ module RideShare
       "PassengerID=#{passenger&.id.inspect}>"
     end
 
-    def connect(passenger)
+    def connect_passenger(passenger)
       @passenger = passenger
       passenger.add_trip(self)
+    end
+
+    def connect_driver(driver)
+      @driver = driver
+      driver.add_trip(self)
     end
 
     def duration
@@ -70,7 +75,7 @@ module RideShare
                start_time: record[:start_time],
                end_time: record[:end_time],
                cost: record[:cost],
-               rating: record[:rating]
+               rating: record[:rating],
              )
     end
   end
