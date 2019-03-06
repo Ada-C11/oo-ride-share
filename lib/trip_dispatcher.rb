@@ -36,9 +36,15 @@ module RideShare
 
     def request_trip(passenger_id)
       trip_driver = ""
+      # drivers.each do |driver|
+      #   until driver.status == :AVAILABLE
+      #     trip_driver = driver
+      #   end
+      # end
+      available_drivers = []
       drivers.each do |driver|
-        until driver.status == :AVAILABLE
-          trip_driver = driver
+        if driver.status == :AVAILABLE
+          available_drivers << driver
         end
       end
       if trip_driver == ""
