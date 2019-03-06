@@ -34,8 +34,8 @@ module RideShare
 
     def total_revenue
       total_revenue = trips.reduce(0) { |total, trip| total += trip.cost if trip.cost }
-      net_revenue = (total_revenue.to_f - (trips.count {|trip| trip.cost} * 1.65)) * 0.8
-      return net_revenue.round(2)
+      net_revenue = (total_revenue - (trips.count {|trip| trip.cost} * 1.65)) * 0.8
+      return net_revenue
     end
 
     def assign_trip(trip)
