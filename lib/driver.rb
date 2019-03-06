@@ -36,8 +36,11 @@ module RideShare
     def total_revenue
       if @trips.length == 0 
         raise ArgumentError, "Driver has no trips."
-      else 
-        raw_revenue = @trips.map{|trip| trip.cost }.sum
+      else
+        raw_revenue = @trips.map{|trip| 
+          unless trip.end_time == nil # ignore in-progress trips
+            trip.cost
+          end}.sum
         revenue = 0.8 * (raw_revenue - (trips.count * 1.65))
         return revenue
       end
