@@ -22,6 +22,15 @@ module RideShare
         raise ArgumentError, "Passenger or passenger_id is required"
       end
 
+      if driver
+        @driver = driver
+        @driver_id = driver.id
+      elsif passenger_id
+        @driver_id = driver_id
+      else
+        raise ArgumentError, "Driver or driver_id is required"
+      end
+
       @start_time = Time.parse(start_time)
       @end_time = Time.parse(end_time)
       @cost = cost
@@ -52,8 +61,8 @@ module RideShare
 
     def connect(passenger, driver)
       @passenger = passenger
-      passenger.add_trip(self)
       @driver = driver
+      passenger.add_trip(self)
       driver.add_trip(self)
     end
 
@@ -70,9 +79,9 @@ module RideShare
                passenger_id: record[:passenger_id],
                start_time: record[:start_time],
                end_time: record[:end_time],
+               driver_id: record[:driver_id],
                cost: record[:cost],
                rating: record[:rating],
-               driver_id: record[:driver_id],
              )
     end
   end

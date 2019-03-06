@@ -3,7 +3,7 @@ require "csv"
 
 module RideShare
   class Driver < CsvRecord
-    attr_reader :name, :vin, :status, :trips
+    attr_reader :id, :name, :vin, :status, :trips
 
     STATUS = [:AVAILABLE, :UNAVAILABLE]
 
