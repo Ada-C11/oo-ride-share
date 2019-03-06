@@ -7,6 +7,7 @@ module RideShare
     attr_reader :id, :passenger, :passenger_id, :start_time, :end_time, :cost, :rating
 
     def initialize(id:,
+                   driver_id: nil, driver: nil,
                    passenger: nil, passenger_id: nil,
                    start_time:, end_time:, cost: nil, rating:)
       super(id)
@@ -54,6 +55,7 @@ module RideShare
     def self.from_csv(record)
       return self.new(
                id: record[:id],
+               driver_id: record[:driver_id],
                passenger_id: record[:passenger_id],
                start_time: record[:start_time],
                end_time: record[:end_time],

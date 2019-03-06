@@ -5,18 +5,24 @@ module RideShare
   class Driver < CsvRecord
     attr_reader :name, :vin, :status, :trips
 
-    STATUS_OPTIONS = [:AVAILABLE, :UNAVAILABLE]
-
-    def initialize(id:, name:, vin:, status:, trips: nil)
+    def initialize(id:, name:, vin:, status: :AVAILABLE, trips: nil)
       super(id)
 
       @name = name
-      #   raise ArgumentError, "invalud VIN length" if vin.length != 17
+      raise ArgumentError, "invalud VIN length" if vin.length != 17
       @vin = vin
-      #   raise ArgumentError, "invalid status" if status.include?(STATUS_OPTIONS) == false
       @status = status
+      status_options = [:AVAILABLE, :UNAVAILABLE]
+      raise ArgumentError, "invalid status" if status_options.include?(status) == false
       @trips = trips || []
     end
+
+    # will revisit
+    def add_trip(trip)
+      @trips << trip
+    end
+
+    private
 
     def self.from_csv(record)
       return new(
