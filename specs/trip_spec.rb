@@ -12,6 +12,7 @@ describe "Trip class" do
       start_time: start_time.to_s,
       end_time: end_time.to_s,
       cost: 23.45,
+      driver_id: 1,
       rating: 3,
     }
     @trip = RideShare::Trip.new(@trip_data)

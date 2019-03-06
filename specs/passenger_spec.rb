@@ -49,6 +49,7 @@ describe "Passenger class" do
         end_time: "2018-06-11 22:57:00",
         rating: 5,
         cost: 25,
+        driver_id: 1
       )
       trip2 = RideShare::Trip.new(
         id: 9,
@@ -57,6 +58,7 @@ describe "Passenger class" do
         end_time: "2018-08-12 15:14:00",
         rating: 5,
         cost: 10,
+        driver_id: 1
       )
 
       @passenger.add_trip(trip)

@@ -5,12 +5,12 @@ require_relative "csv_record"
 
 module RideShare
   class Trip < CsvRecord
-    attr_reader :id, :passenger, :passenger_id, :start_time, :end_time, :cost, :rating, :driver, :driver_id
+    attr_reader :id, :passenger, :passenger_id, :driver, :driver_id, :start_time, :end_time, :cost, :rating
 
     def initialize(id:,
-                   passenger: nil, passenger_id: nil,
-                   start_time:, end_time:, cost: nil, rating:, 
-                   driver_id: nil, driver: nil)
+                  passenger: nil, passenger_id: nil,
+                  driver: nil, driver_id: nil,
+                  start_time:, end_time:, cost: nil, rating:)
       super(id)
 
       if passenger

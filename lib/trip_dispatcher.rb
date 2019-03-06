@@ -43,8 +43,6 @@ module RideShare
         driver = find_driver(trip.driver_id)
         trip.connect(passenger, driver)
       end
-
-
       return trips
     end
   end
