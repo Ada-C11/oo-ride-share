@@ -134,8 +134,45 @@ describe "Driver class" do
     end
   end
 
-  xdescribe "total_revenue" do
-    # You add tests for the total_revenue method
+  describe "total_revenue" do
+   before do
+    @driver = RideShare::Driver.new(
+      id: 54,
+      name: "Test Driver",
+      vin: "12345678901234567",
+      status: :AVAILABLE,
+    )
+
+    trip7 = RideShare::Trip.new(
+      id: 90,
+      driver: @driver,
+      passenger_id: 3,
+      start_time: "2016-08-08",
+      end_time: "2016-08-09",
+      rating: 1,
+      cost: 50
+    )
+    trip8 = RideShare::Trip.new(
+      id: 91,
+      driver: @driver,
+      passenger_id: 3,
+      start_time: "2016-08-08",
+      end_time: "2016-08-09",
+      rating: 1,
+      cost: 41
+    )
+@driver.add_trip(trip7)
+@driver.add_trip(trip8)
+    end
+    it "returns a float" do
+
+      expect(@driver.total_revenue).must_be_kind_of Float
+    end
+
+    it "returns the total cost of all of a driver's trips" do
+      expect(@driver.total_revenue).must_be_close_to 70.16
+    end
+
   end
 
   xdescribe "net_expenditures" do
