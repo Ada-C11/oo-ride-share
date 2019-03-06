@@ -182,4 +182,40 @@ describe "Driver class" do
   describe "net_expenditures" do
     # You add tests for the net_expenditures method
   end
+
+  describe "start trip" do
+    before do
+      pass = RideShare::Passenger.new(
+        id: 1,
+        name: "Test Passenger",
+        phone_number: "412-432-7640",
+      )
+      @driver = RideShare::Driver.new(
+        id: 3,
+        name: "Test Driver",
+        vin: "12345678912345678",
+      )
+      @trip = RideShare::Trip.new(
+        id: 8,
+        driver: @driver,
+        passenger: pass,
+        start_time: "2016-08-08",
+        end_time: "2018-08-09",
+        rating: 5,
+        cost: 6.65,
+      )
+      # @driver.add_trip(@trip)
+    end
+
+    it "Driver status to unavailable" do
+      @driver.start_trip(@trip)
+      expect(@driver.status).must_equal :UNAVAILABLE
+    end
+
+    it "Adds trip to trip array" do
+      expect(@driver.trips.count).must_equal 0
+      @driver.start_trip(@trip)
+      expect(@driver.trips.count).must_equal 1
+    end
+  end
 end

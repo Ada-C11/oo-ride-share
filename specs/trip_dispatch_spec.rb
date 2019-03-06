@@ -1,12 +1,12 @@
-require_relative 'spec_helper'
+require_relative "spec_helper"
 
-TEST_DATA_DIRECTORY = 'specs/test_data'
+TEST_DATA_DIRECTORY = "specs/test_data"
 
 describe "TripDispatcher class" do
   def build_test_dispatcher
     return RideShare::TripDispatcher.new(
-      directory: TEST_DATA_DIRECTORY
-    )
+             directory: TEST_DATA_DIRECTORY,
+           )
   end
 
   describe "Initializer" do
@@ -28,10 +28,10 @@ describe "TripDispatcher class" do
 
     it "loads the development data by default" do
       # Count lines in the file, subtract 1 for headers
-      trip_count = %x{wc -l 'support/trips.csv'}.split(' ').first.to_i - 1
+      trip_count = %x{wc -l 'support/trips.csv'}.split(" ").first.to_i - 1
 
       dispatcher = RideShare::TripDispatcher.new
-      
+
       expect(dispatcher.trips.length).must_equal trip_count
     end
   end
@@ -43,7 +43,7 @@ describe "TripDispatcher class" do
       end
 
       it "throws an argument error for a bad ID" do
-        expect{ @dispatcher.find_passenger(0) }.must_raise ArgumentError
+        expect { @dispatcher.find_passenger(0) }.must_raise ArgumentError
       end
 
       it "finds a passenger instance" do
@@ -84,11 +84,11 @@ describe "TripDispatcher class" do
       before do
         @dispatcher = build_test_dispatcher
       end
-    
+
       it "throws an argument error for a bad ID" do
         expect { @dispatcher.find_driver(0) }.must_raise ArgumentError
       end
-    
+
       it "finds a driver instance" do
         driver = @dispatcher.find_driver(2)
         expect(driver).must_be_kind_of RideShare::Driver
@@ -119,6 +119,28 @@ describe "TripDispatcher class" do
           expect(trip.driver.id).must_equal trip.driver_id
           expect(trip.driver.trips).must_include trip
         end
+      end
+    end
+    describe "Request Trip" do
+      before do
+        dispatcher = RideShare::TripDispatcher.new(("./support"))
+        @passengers = Passenger.load_all(directory: directory)
+        @trips = Trip.load_all(directory: directory)
+        @drivers = Driver.load_all(directory: directory)
+      end
+      it "Returns trip" do
+        trip = dispatcher.request_new_trip(1)
+        expect(trip).must_be_kind_of Trip
+      end
+
+      it "Finds available driver" do
+        trip = dispatcher.request_new_trip(1)
+        expect(trip.driver.status).must_equal :AVAILABLE
+      end
+
+      it "Driver status to unavailable" do
+        trip = dispatcher.request_new_trip(1)
+        expect(trip.driver.status).must_equal :UNAVAILABLE
       end
     end
   end
