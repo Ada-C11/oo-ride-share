@@ -16,6 +16,10 @@ module RideShare
       @trips = trips || []
     end
 
+    def add_trip(trip)
+      @trips << trip
+    end
+
     def self.from_csv(record)
       return new(
                id: record[:id],
