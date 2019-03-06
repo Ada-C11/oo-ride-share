@@ -55,8 +55,15 @@ module RideShare
     end
 
     # Adds instance of Trip class into passenger
-    def connect(person)
-      person.add_trip(self)
+    def connect(passenger: nil, driver: nil)
+      if passenger
+        @passenger = passenger
+        passenger.add_trip(self)
+      end
+      if driver
+        @driver = driver
+        driver.add_trip(self)
+      end
     end
 
     private

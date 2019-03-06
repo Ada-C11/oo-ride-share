@@ -3,6 +3,7 @@ require "time"
 
 require_relative "passenger"
 require_relative "trip"
+require_relative "driver"
 
 module RideShare
   class TripDispatcher
@@ -39,10 +40,9 @@ module RideShare
       @trips.each do |trip|
         # finds passenger as instance
         passenger = find_passenger(trip.passenger_id)
-        # Adds passenger to trip
-        trip.connect(passenger)
         driver = find_driver(trip.driver_id)
-        trip.connect(driver)
+        trip.connect(passenger: passenger)
+        trip.connect(driver: driver)
       end
 
       return trips

@@ -70,6 +70,8 @@ describe "TripDispatcher class" do
       it "connects trips and passengers" do
         dispatcher = build_test_dispatcher
         dispatcher.trips.each do |trip|
+          puts trip.id
+          puts trip.passenger
           expect(trip.passenger).wont_be_nil
           expect(trip.passenger.id).must_equal trip.passenger_id
           expect(trip.passenger.trips).must_include trip
