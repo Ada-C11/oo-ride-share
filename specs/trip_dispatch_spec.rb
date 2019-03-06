@@ -1,4 +1,4 @@
-
+require "pry"
 require_relative "spec_helper"
 
 TEST_DATA_DIRECTORY = "specs/test_data"
@@ -205,7 +205,8 @@ describe "TripDispatcher class" do
 
       it "calculates average rating of Driver with unfinished trip" do
         test_dispatcher = build_test_dispatcher
-        assigned_driver = test_dispatcher.drivers.find { |driver| driver.status == :AVAILABLE }
+        assigned_driver = test_dispatcher.intelligent_dispatch
+        binding.pry
         before = assigned_driver.average_rating
         new_trip = test_dispatcher.request_trip(1)
         after = new_trip.driver.average_rating
@@ -214,7 +215,7 @@ describe "TripDispatcher class" do
 
       it "calculates total revenue for Driver with unfinished trip" do
         test_dispatcher = build_test_dispatcher
-        assigned_driver = test_dispatcher.drivers.find { |driver| driver.status == :AVAILABLE }
+        assigned_driver = test_dispatcher.intelligent_dispatch
         before = assigned_driver.total_revenue
         new_trip = test_dispatcher.request_trip(1)
         after = new_trip.driver.total_revenue

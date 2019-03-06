@@ -36,7 +36,7 @@ module RideShare
     def request_trip(passenger_id)
       id = trips.length + 1
       passenger = find_passenger(passenger_id)
-      assigned_driver = drivers.find { |driver| driver.status == :AVAILABLE }
+      assigned_driver = intelligent_dispatch
         return nil if !assigned_driver
       start_time = Time.now.to_s
       end_time = nil
@@ -54,6 +54,18 @@ module RideShare
       assigned_driver.assign_trip(new_trip)
       passenger.add_trip(new_trip)
       return new_trip
+    end
+
+    def intelligent_dispatch
+      available_drivers = drivers.select {|driver| driver.status == :AVAILABLE}
+      assigned_driver = available_drivers.find {|driver| driver.trips == []}
+        if assigned_driver
+          return assigned_driver
+        else
+          available_drivers.select! {|driver| driver.trips.last.end_time}
+          assigned_driver = available_drivers.min_by {|driver| driver.trips.last.end_time}
+          return assigned_driver
+        end
     end
 
     private
