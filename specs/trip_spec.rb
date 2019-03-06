@@ -14,6 +14,10 @@ describe "Trip class" do
         end_time: end_time.to_s,
         cost: 23.45,
         rating: 3,
+        driver: RideShare::Driver.new(id: 2,
+                                      name: "Bob",
+                                      vin: "12345678901234567",
+                                      )
       }
       @trip = RideShare::Trip.new(@trip_data)
     end
@@ -60,6 +64,10 @@ describe "Trip class" do
         end_time: end_time.to_s,
         cost: 23.45,
         rating: 3,
+        driver: RideShare::Driver.new(id: 2,
+                                      name: "Bob",
+                                      vin: "12345678901234567",
+                                      )
       }
       @trip = RideShare::Trip.new(@trip_data)
 
