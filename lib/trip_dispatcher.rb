@@ -47,16 +47,25 @@ module RideShare
           available_drivers << driver
         end
       end
-
-      if trip_driver == ""
-        raise ArgumentError, "No Available Drivers"
+      if available_drivers == []
+        raise ArgumentError, "No available drivers"
       end
+
+      available_drivers.each do |driver|
+        if driver.trips.length == 0
+          trip_driver = driver
+        end
+      end
+
+      # if trip_driver == ""
+      #   raise ArgumentError, "No Available Drivers"
+      # end
       start_time = Time.now
       end_time = nil
       cost = nil
       rating = nil
-      trip = Trip.new(driver: driver, start_time: start_time, end_time: end_time, cost: cost, rating: rating)
-      driver.start_trip(trip)
+      trip = Trip.new(driver: trip_driver, start_time: start_time, end_time: end_time, cost: cost, rating: rating)
+      trip_driver.start_trip(trip)
       passenger.add_trip(trip)
       add_trip(trip)
 
