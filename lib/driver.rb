@@ -13,9 +13,13 @@ module RideShare
       else
         raise ArgumentError, "The vin length is incorrect."
       end
+
+      # status_possibilities = [:AVAILABLE, :UNAVAILABLE]
+
       unless status == :AVAILABLE || status == :UNAVAILABLE
-        raise ArgumentError, "Status must be :AVAILABLE or :UNAVAILABLE"
+        raise ArgumentError, "Status must be :AVAILABLE or :UNAVAILABLE. It's: #{status}"
       end
+
       @status = status
       @trips = trips
     end
@@ -27,7 +31,7 @@ module RideShare
                id: record[:id],
                name: record[:name],
                vin: record[:vin],
-               status: record[:status],
+               status: record[:status].to_sym,
              )
     end
   end

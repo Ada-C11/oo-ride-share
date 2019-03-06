@@ -36,6 +36,11 @@ describe "Trip class" do
         end_time: end_time.to_s,
         cost: 23.45,
         rating: 3,
+        driver_id: 7,
+        driver: RideShare::Driver.new(id: 54,
+                                      name: "Test Driver",
+                                      vin: "12345678901234567",
+                                      status: :AVAILABLE),
       }
       expect {
         RideShare::Trip.new(@trip_data)
@@ -77,6 +82,11 @@ describe "Trip class" do
         end_time: end_time.to_s,
         cost: 23.45,
         rating: 3,
+        driver_id: 7,
+        driver: RideShare::Driver.new(id: 54,
+                                      name: "Test Driver",
+                                      vin: "12345678901234567",
+                                      status: :AVAILABLE),
       }
       trip = RideShare::Trip.new(@trip_data)
       expect(trip.trip_duration).must_equal 60
