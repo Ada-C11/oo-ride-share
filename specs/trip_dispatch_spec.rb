@@ -42,6 +42,7 @@ describe "TripDispatcher class" do
         @dispatcher = build_test_dispatcher
       end
 
+      #failure fix me
       it "throws an argument error for a bad ID" do
         expect { @dispatcher.find_passenger(0) }.must_raise ArgumentError
       end
@@ -86,7 +87,7 @@ describe "TripDispatcher class" do
       before do
         @dispatcher = build_test_dispatcher
       end
-
+      #failure fix me
       it "throws an argument error for a bad ID" do
         expect { @dispatcher.find_driver(0) }.must_raise ArgumentError
       end

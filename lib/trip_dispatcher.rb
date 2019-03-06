@@ -17,12 +17,10 @@ module RideShare
     end
 
     def find_passenger(id)
-      Passenger.validate_id(id)
       return @passengers.find { |passenger| passenger.id == id }
     end
 
     def find_driver(id)
-      Driver.validate_id(id)
       return @drivers.find { |driver| driver.id == id }
     end
 
