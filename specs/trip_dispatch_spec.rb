@@ -192,6 +192,32 @@ describe "TripDispatcher class" do
 
         expect(new_trip.rating).must_be_nil
       end
+
+      it "calculates total money spent for Passenger with unfinished trip" do
+        test_dispatcher = build_test_dispatcher
+        before = test_dispatcher.find_passenger(1).net_expenditures
+        new_trip = test_dispatcher.request_trip(1)
+        after = new_trip.passenger.net_expenditures
+        expect(before).must_equal after
+      end
+
+      it "calculates average rating of Driver with unfinished trip" do
+        test_dispatcher = build_test_dispatcher
+        driver = test_dispatcher.drivers.find { |driver| driver.status == :AVAILABLE }
+        before = driver.average_rating
+        new_trip = test_dispatcher.request_trip(1)
+        after = new_trip.driver.average_rating
+        expect(before).must_equal after
+      end
+
+      it "calculates total revenue for Driver with unfinished trip" do
+        test_dispatcher = build_test_dispatcher
+        driver = test_dispatcher.drivers.find { |driver| driver.status == :AVAILABLE }
+        before = driver.total_revenue
+        new_trip = test_dispatcher.request_trip(1)
+        after = new_trip.driver.total_revenue
+        expect(before).must_equal after
+      end
     end
   end
 end
