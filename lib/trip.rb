@@ -29,6 +29,8 @@ module RideShare
         @driver_id = driver.id
       elsif driver_id
         @driver_id = driver_id
+      elsif driver_id == 0
+        raise ArgumentError, "Driver or driver_id is invalid"
       else
         raise ArgumentError, "Driver or driver_id is required"
       end
@@ -60,7 +62,7 @@ module RideShare
 
     # updated to take 2 arguments since we call it in trip dispatcher based on that.
     # Added ability to also connect driver
-    def connect(passenger,driver)
+    def connect(passenger, driver)
       @passenger = passenger
       passenger.add_trip(self)
       @driver = driver
