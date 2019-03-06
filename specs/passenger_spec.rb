@@ -42,6 +42,13 @@ describe "Passenger class" do
         phone_number: "1-602-620-2330 x3723",
         trips: [],
       )
+      @driver = RideShare::Driver.new(
+        id: 1,
+        name: "Karl",
+        vin: "ABCDEFGHIJKLMNOPQ",
+        status: :UNAVAILABLE,
+        trips: [],
+      )
       trip = RideShare::Trip.new(
         id: 8,
         passenger: @passenger,
