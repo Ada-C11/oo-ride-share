@@ -20,17 +20,20 @@ module RideShare
       else
         raise ArgumentError, "Passenger or passenger_id is required"
       end
-      if Time.parse(end_time) < Time.parse(start_time)
-        raise ArgumentError, "End time must be later than start time"
-      else
-        @start_time = Time.parse(start_time)
-        @end_time = Time.parse(end_time)
+      if end_time != nil
+        if Time.parse(end_time) < Time.parse(start_time)
+          raise ArgumentError, "End time must be later than start time"
+        else
+          @start_time = Time.parse(start_time)
+          @end_time = Time.parse(end_time)
+        end
       end
       @cost = cost
       @rating = rating
-
-      if @rating > 5 || @rating < 1
-        raise ArgumentError.new("Invalid rating #{@rating}")
+      if rating
+        if @rating > 5 || @rating < 1
+          raise ArgumentError.new("Invalid rating #{@rating}")
+        end
       end
       if driver
         @driver = driver

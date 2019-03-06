@@ -80,4 +80,47 @@ describe "Passenger class" do
       expect(@passenger.total_time_spent).must_equal 1440
     end
   end
+
+  describe "in progress trips" do
+    before do
+      @pass = RideShare::Passenger.new(
+        id: 1,
+        name: "Test Passenger",
+        phone_number: "412-432-7640",
+      )
+      @driver = RideShare::Driver.new(
+        id: 3,
+        name: "Test Driver",
+        vin: "12345678912345678",
+      )
+      @trip = RideShare::Trip.new(
+        id: 8,
+        driver: @driver,
+        passenger: @pass,
+        start_time: "2016-08-08",
+        end_time: "2018-08-09",
+        rating: 5,
+        cost: 6.65,
+      )
+
+      @trip2 = RideShare::Trip.new(
+        id: 2,
+        driver: @driver,
+        passenger: @pass,
+        start_time: "2016-08-08",
+        end_time: nil,
+        rating: nil,
+        cost: nil,
+      )
+      @driver.add_trip(@trip)
+    end
+
+    it "calcluates total expenditures during in progress trip" do
+      initial_expediture = @pass.net_expenditures
+      @pass.add_trip(@trip2)
+      second_expenditure = @pass.net_expenditures
+
+      expect(initial_expediture).must_equal second_expenditure
+    end
+  end
 end

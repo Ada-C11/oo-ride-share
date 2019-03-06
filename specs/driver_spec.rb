@@ -220,7 +220,7 @@ describe "Driver class" do
   end
   describe "inprogress trip errors" do
     before do
-      pass = RideShare::Passenger.new(
+      @pass = RideShare::Passenger.new(
         id: 1,
         name: "Test Passenger",
         phone_number: "412-432-7640",
@@ -233,22 +233,38 @@ describe "Driver class" do
       @trip = RideShare::Trip.new(
         id: 8,
         driver: @driver,
-        passenger: pass,
+        passenger: @pass,
         start_time: "2016-08-08",
         end_time: "2018-08-09",
         rating: 5,
         cost: 6.65,
       )
+
+      @trip2 = RideShare::Trip.new(
+        id: 2,
+        driver: @driver,
+        passenger: @pass,
+        start_time: "2016-08-08",
+        end_time: nil,
+        rating: nil,
+        cost: nil,
+      )
       @driver.add_trip(@trip)
     end
-    it "checks if total revenue "
-    @trip2 = RideShare::Trip.new(
-      id: 10,
-      driver: @driver,
-      passenger: pass,
-      start_time: nil ,
-      end_time: nil ,
-      rating: nil ,
-      cost: nil,
+    it "checks if total revenue " do
+      initial_revenue = @driver.total_revenue
+      @driver.add_trip(@trip2)
+      second_revenue = @driver.total_revenue
+
+      expect(initial_revenue).must_equal second_revenue
+    end
+
+    it "doesn't change the average rating if there's an in-progress trip" do
+      initial_rating = @driver.average_rating
+      @driver.add_trip(@trip2)
+      second_rating = @driver.average_rating
+
+      expect(initial_rating).must_equal second_rating
+    end
   end
 end
