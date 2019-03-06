@@ -63,7 +63,7 @@ describe "Driver class" do
         passenger: pass,
         start_time: "2016-08-08",
         end_time: "2018-08-09",
-        cost: 40,
+        cost: 50.00,
         rating: 5
       )
     end
@@ -92,7 +92,7 @@ describe "Driver class" do
         passenger_id: 3,
         start_time: "2016-08-08",
         end_time: "2016-08-08",
-        cost: 20,
+        cost: 100.00,
         rating: 5
       )
       @driver.add_trip(trip)
@@ -124,7 +124,7 @@ describe "Driver class" do
         passenger_id: 3,
         start_time: "2016-08-08",
         end_time: "2016-08-09",
-        cost: 10,
+        cost: 10.00,
         rating: 1
       )
       @driver.add_trip(trip2)
@@ -133,18 +133,7 @@ describe "Driver class" do
     end
 
     it "calculates total_revenue" do
-      trip2 = RideShare::Trip.new(
-        id: 8,
-        driver: @driver,
-        passenger_id: 3,
-        start_time: "2016-08-08",
-        end_time: "2016-08-09",
-        cost: 50.00,
-        rating: 1
-      )
-      @driver.add_trip(trip2)
-
-      expect(@driver.total_revenue).must_be_close_to 38.60
+      expect(@driver.total_revenue).must_be_close_to 78.68
     end
   end
 end
