@@ -10,10 +10,10 @@ module RideShare
     attr_reader :drivers, :passengers, :trips
 
     def initialize(directory: "./support")
+      @drivers = Driver.load_all(directory: directory)
       @passengers = Passenger.load_all(directory: directory)
       @trips = Trip.load_all(directory: directory)
       connect_trips
-      @drivers = Driver.load_all(directory: directory)
     end
 
     def find_passenger(id)

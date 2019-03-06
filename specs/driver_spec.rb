@@ -68,7 +68,6 @@ describe "Driver class" do
     end
 
     it "adds the trip" do
-      skip
       expect(@driver.trips).wont_include @trip
       previous = @driver.trips.length
 
@@ -98,19 +97,16 @@ describe "Driver class" do
     end
 
     it "returns a float" do
-      skip
       expect(@driver.average_rating).must_be_kind_of Float
     end
 
     it "returns a float within range of 1.0 to 5.0" do
-      skip
       average = @driver.average_rating
       expect(average).must_be :>=, 1.0
       expect(average).must_be :<=, 5.0
     end
 
     it "returns zero if no driven trips" do
-      skip
       driver = RideShare::Driver.new(
         id: 54,
         name: "Rogers Bartell IV",
@@ -120,7 +116,6 @@ describe "Driver class" do
     end
 
     it "correctly calculates the average rating" do
-      skip
       trip2 = RideShare::Trip.new(
         id: 8,
         driver: @driver,

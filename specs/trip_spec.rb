@@ -8,6 +8,12 @@ describe "Trip class" do
       end_time = start_time + 25 * 60 # 25 minutes
       @trip_data = {
         id: 8,
+        driver: RideShare::Driver.new(
+          id: 6,
+          name: "Bob",
+          vin: "12345678912345678",
+          status: :AVAILABLE,
+        ),
         passenger: RideShare::Passenger.new(id: 1,
                                             name: "Ada",
                                             phone_number: "412-432-7640"),
@@ -16,6 +22,7 @@ describe "Trip class" do
         cost: 23.45,
         rating: 3,
       }
+
       @trip = RideShare::Trip.new(@trip_data)
     end
 
@@ -24,6 +31,12 @@ describe "Trip class" do
       end_time = start_time - 25 * 60 # 25 minutes
       trip_data_2 = {
         id: 8,
+        driver: RideShare::Driver.new(
+          id: 6,
+          name: "Bob",
+          vin: "12345678912345678",
+          status: :AVAILABLE,
+        ),
         passenger: RideShare::Passenger.new(id: 1,
                                             name: "Ada",
                                             phone_number: "412-432-7640"),
@@ -67,6 +80,12 @@ describe "Trip class" do
       end_time = start_time + 25 * 60 # 25 minutes
       @trip_data = {
         id: 8,
+        driver: RideShare::Driver.new(
+          id: 6,
+          name: "Bob",
+          vin: "12345678912345678",
+          status: :AVAILABLE,
+        ),
         passenger: RideShare::Passenger.new(id: 1,
                                             name: "Ada",
                                             phone_number: "412-432-7640"),
@@ -85,6 +104,12 @@ describe "Trip class" do
       end_time = start_time + 25 * 60 # 25 minutes
       @trip_data = {
         id: 8,
+        driver: RideShare::Driver.new(
+          id: 6,
+          name: "Bob",
+          vin: "12345678912345678",
+          status: :AVAILABLE,
+        ),
         passenger: RideShare::Passenger.new(id: 1,
                                             name: "Ada",
                                             phone_number: "412-432-7640"),
@@ -104,6 +129,12 @@ describe "Trip class" do
       end_time = start_time
       @trip_data = {
         id: 8,
+        driver: RideShare::Driver.new(
+          id: 6,
+          name: "Bob",
+          vin: "12345678912345678",
+          status: :AVAILABLE,
+        ),
         passenger: RideShare::Passenger.new(id: 1,
                                             name: "Ada",
                                             phone_number: "412-432-7640"),
