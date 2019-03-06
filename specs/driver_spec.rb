@@ -212,7 +212,4 @@ describe "Driver class" do
       expect(revenue).must_equal 7.08
     end
   end
-
-  describe "net_expenditures" do
-  end
 end
