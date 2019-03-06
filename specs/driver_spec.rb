@@ -133,7 +133,7 @@ describe "Driver class" do
 
   describe "total_revenue" do
     it "returns the total revenue for that driver" do
-      expect(@driver.total_revenue).must_equal 48.13
+      expect(@driver.total_revenue).must_equal 48.46
     end
 
     it "returns zero if no driven trips" do
