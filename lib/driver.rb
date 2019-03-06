@@ -23,11 +23,6 @@ module RideShare
 
       raise ArgumentError, "Driver must have a status of AVAILABLE or UNAVAILABLE" if status != ( :AVAILABLE || :UNAVAILABLE ) && status.nil?
 
-      # if status != :AVAILABLE && status != :UNAVAILABLE
-      #   raise ArgumentError, "Driver must have a valid status, AVAILABLE OR UNAVAILABLE"
-      # else
-      #   @status = status
-      # end
     end
 
     private
