@@ -122,6 +122,18 @@ describe "TripDispatcher class" do
           expect(trip.driver.trips).must_include trip
         end
       end
+
+      it "request a new trips" do
+        ongoing_trip = request_trip(9)
+
+        expect(ongoing_trip.driver.status == :AVAILABLE)
+      end
+
+
+    # Was the trip created properly?
+    # Were the trip lists for the driver and passenger updated?
+    # Was the driver who was selected AVAILABLE?
+    # What happens if you try to request a trip when there are no AVAILABLE drivers?
     end
   end
 end

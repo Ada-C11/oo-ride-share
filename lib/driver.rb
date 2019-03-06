@@ -54,6 +54,8 @@ module RideShare
         status: (record[:status]).to_sym
       )
     end
+
+    
   end
 
 end
