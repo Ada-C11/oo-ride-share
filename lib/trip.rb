@@ -32,8 +32,16 @@ module RideShare
       if @rating > 5 || @rating < 1
         raise ArgumentError.new("Invalid rating #{@rating}")
       end
-      @driver_id = driver_id
       @driver = driver
+      @driver_id = driver_id
+      # if driver
+      #   @driver = driver
+      #   @driver_id = driver.id
+      # elsif driver_id
+      #   @driver_id = driver_id
+      # else
+      #   raise ArgumentError, "Driver or driver ID is required"
+      # end
     end
 
     def inspect
