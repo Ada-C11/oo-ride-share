@@ -91,15 +91,17 @@ describe "Passenger class" do
         rating: 5,
 
       )
-
-      @passenger.add_trip(@trip_one)
-      @passenger.add_trip(@trip_two)
     end
 
     it "Totals all trip costs for a passenger" do
-      net_expenditures = @passenger.trips.sum { |trip| trip.cost }
+      @passenger.add_trip(@trip_one)
+      @passenger.add_trip(@trip_two)
 
-      expect(net_expenditures).must_equal 50
+      expect(@passenger.net_expenditures).must_equal 50
+    end
+
+    it "Returns 0 if the passenger has no trips" do
+      expect(@passenger.net_expenditures).must_equal 0
     end
   end
 end
