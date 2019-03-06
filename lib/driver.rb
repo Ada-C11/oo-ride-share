@@ -28,11 +28,7 @@ module RideShare
         return 0
       else
         average_total = trips.reduce(0) do |total, trip|
-          if trip.rating
-            total + trip.rating
-          else
-            total
-          end
+          trip.rating ? (total + trip.rating) : total
         end
         average_rating = average_total.to_f / (trips.count { |trip| trip.rating })
         return average_rating.round(2)
@@ -41,11 +37,7 @@ module RideShare
 
     def total_revenue
       total_revenue = trips.reduce(0) do |total, trip|
-        if trip.cost
-          total + trip.cost.to_f
-        else
-          total
-        end
+        trip.cost ? (total + trip.cost.to_f) : total
       end
       net_revenue = (total_revenue.to_f - (trips.count { |trip| trip.cost } * 1.65)) * 0.8
       return net_revenue.round(2)

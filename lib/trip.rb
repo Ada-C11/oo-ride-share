@@ -63,7 +63,7 @@ module RideShare
     end
 
     def calculate_duration
-      return end_time - start_time
+      return end_time ? (end_time - start_time) : nil
     end
 
     private

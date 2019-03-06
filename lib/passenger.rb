@@ -19,22 +19,14 @@ module RideShare
 
     def net_expenditures
       net_expenditures = trips.reduce(0) do |total, trip|
-        if trip.cost
-          total + trip.cost
-        else
-          total
-        end
+        trip.cost ? (total + trip.cost) : total
       end
       return net_expenditures
     end
 
     def total_time_spent
       total_time = trips.reduce(0) do |total, trip|
-        if trip.calculate_duration
-          total + trip.calculate_duration
-        else
-          total
-        end
+        trip.calculate_duration ? (total + trip.calculate_duration) : total
       end
       return total_time
     end
