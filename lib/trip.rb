@@ -2,6 +2,8 @@ require "csv"
 require "time"
 
 require_relative "csv_record"
+require_relative 'driver'
+require_relative 'passenger'
 
 module RideShare
   class Trip < CsvRecord
@@ -9,7 +11,7 @@ module RideShare
 
     def initialize(id:,
                    passenger: nil, passenger_id: nil,
-                   start_time:, end_time:, cost: nil, rating:)
+                   start_time:, end_time:, cost: nil, rating:, driver_id:)
       super(id)
 
       if passenger
@@ -26,6 +28,7 @@ module RideShare
       @cost = cost
       @rating = rating
       @duration = duration_secs(start_time, end_time)
+      @driver_id = driver_id
 
       # Add a check in Trip#initialize that raises an ArgumentError if the end
       # time is before the start time, and a corresponding test
