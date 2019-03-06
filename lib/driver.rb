@@ -5,7 +5,7 @@ module RideShare
   class Driver < CsvRecord
     attr_reader :id, :name, :vin, :status, :trips
 
-    def initialize(id:, name:, vin:, status:, trips: nil)
+    def initialize(id:, name:, vin:, status: :AVAILABLE, trips: nil)
       super(id)
 
       if vin.length != 17
@@ -21,7 +21,33 @@ module RideShare
       @name = name
       @vin = vin
       @status = status
-      @trips = trips
+      @trips = trips || []
+    end
+
+    def add_trip(trip)
+      @trips << trip
+    end
+
+    def average_rating
+      if @trips.length == 0
+        return 0
+      end
+
+      sum_rating = @trips.sum { |trip| trip.rating }.to_f.round(1)
+      num_trips = @trips.length.to_f.round(1)
+
+      return sum_rating / num_trips
+    end
+
+    def total_revenue
+      if @trips.nil?
+        return 0.00
+      end
+
+      total_fees = 1.65 * @trips.length.to_f.round(2)
+      sum_costs = @trips.sum { |trip| trip.cost }
+
+      return (sum_costs - total_fees) * 0.80
     end
 
     def self.from_csv(record)

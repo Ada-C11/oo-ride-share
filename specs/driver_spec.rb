@@ -1,6 +1,6 @@
 require_relative 'spec_helper'
 
-xdescribe "Driver class" do
+describe "Driver class" do
   describe "Driver instantiation" do
     before do
       @driver = RideShare::Driver.new(
@@ -131,10 +131,30 @@ xdescribe "Driver class" do
   end
 
   describe "total_revenue" do
-    # You add tests for the total_revenue method
-  end
+    before do
+      @driver = RideShare::Driver.new(
+        id: 54,
+        name: "Rogers Bartell IV",
+        vin: "1C9EVBRM0YBC564DZ"
+      )
+      trip = RideShare::Trip.new(
+        id: 8,
+        driver: @driver,
+        passenger_id: 3,
+        start_time: "2016-08-08",
+        end_time: "2016-08-08",
+        cost: 40,
+        rating: 5
+      )
+      @driver.add_trip(trip)
+    end
 
-  describe "net_expenditures" do
-    # You add tests for the net_expenditures method
+    it "returns a float number" do
+      expect(@driver.total_revenue).must_be_kind_of Float
+    end
+
+    it "returns total amount of money drivers made" do
+      expect(@driver.total_revenue).must_be_close_to 30.68
+    end
   end
 end
