@@ -1,3 +1,4 @@
+require "pry"
 require_relative "spec_helper"
 
 TEST_DATA_DIRECTORY = "specs/test_data"
@@ -60,7 +61,7 @@ describe "TripDispatcher class" do
       it "accurately loads passenger information into passengers array" do
         first_passenger = @dispatcher.passengers.first
         last_passenger = @dispatcher.passengers.last
- 
+
         expect(first_passenger.name).must_equal "Passenger 1"
         expect(first_passenger.id).must_equal 1
         expect(last_passenger.name).must_equal "Passenger 8"
@@ -198,7 +199,7 @@ describe "TripDispatcher class" do
         before = test_dispatcher.find_passenger(1).net_expenditures
         new_trip = test_dispatcher.request_trip(1)
         after = new_trip.passenger.net_expenditures
-        expect(before).must_equal after
+        expect(after).must_equal before
       end
 
       it "calculates average rating of Driver with unfinished trip" do
@@ -207,7 +208,7 @@ describe "TripDispatcher class" do
         before = driver.average_rating
         new_trip = test_dispatcher.request_trip(1)
         after = new_trip.driver.average_rating
-        expect(before).must_equal after
+        expect(after).must_equal before
       end
 
       it "calculates total revenue for Driver with unfinished trip" do
@@ -216,7 +217,7 @@ describe "TripDispatcher class" do
         before = driver.total_revenue
         new_trip = test_dispatcher.request_trip(1)
         after = new_trip.driver.total_revenue
-        expect(before).must_equal after
+        expect(after).must_equal before
       end
     end
   end
