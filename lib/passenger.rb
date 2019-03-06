@@ -17,7 +17,7 @@ module RideShare
     end
 
     def net_expenditures
-      net_expenditures = trips.reduce(0) {|total, trip| total += trip.cost}
+      net_expenditures = trips.reduce(0) {|total, trip| total += trip.cost if trip.cost}
       return net_expenditures
     end
 
