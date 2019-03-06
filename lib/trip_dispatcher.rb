@@ -47,7 +47,14 @@ module RideShare
       rating = nil
       trip = Trip.new(driver: driver, start_time: start_time, end_time: end_time, cost: cost, rating: rating)
       driver.start_trip(trip)
+      passenger.add_trip(trip)
+      add_trip(trip)
+
       return trip
+    end
+
+    def add_trip(trip)
+      @trips << trip
     end
 
     private

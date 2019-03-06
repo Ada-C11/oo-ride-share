@@ -104,11 +104,11 @@ describe "TripDispatcher class" do
         first_driver = @dispatcher.drivers.first
         last_driver = @dispatcher.drivers.last
 
-        expect(first_driver.name).must_equal "Driver2"
-        expect(first_driver.id).must_equal 2
+        expect(first_driver.name).must_equal "Driver 1 (unavailable)"
+        expect(first_driver.id).must_equal 1
         expect(first_driver.status).must_equal :UNAVAILABLE
-        expect(last_driver.name).must_equal "Driver8"
-        expect(last_driver.id).must_equal 8
+        expect(last_driver.name).must_equal "Driver 3 (no trips)"
+        expect(last_driver.id).must_equal 3
         expect(last_driver.status).must_equal :AVAILABLE
       end
 
@@ -138,9 +138,17 @@ describe "TripDispatcher class" do
         expect(trip.driver.status).must_equal :AVAILABLE
       end
 
-      it "Driver status to unavailable" do
+      it "Adds a trip to passenger trip array" do
+        passenger = find_passenger(2)
+        count = passenger.trips.count
         trip = dispatcher.request_new_trip(1)
-        expect(trip.driver.status).must_equal :UNAVAILABLE
+        expect(passenger.trips.count).must_equal count + 1
+      end
+
+      it "Adds a trip to dispatch trip array" do
+        count = dispatcher.trips.count
+        trip = dispatcher.request_new_trip(1)
+        expect(dispatcher.trips.count).must_equal count + 1
       end
     end
   end
