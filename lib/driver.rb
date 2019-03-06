@@ -22,13 +22,11 @@ module RideShare
     end
 
     def average_rating
-      if @trips == nil # not working, needs attention
+      if @trips.length == 0
         return 0
-      elsif ratings = @trips.map do |trip|
+      else ratings = @trips.map do |trip|
         trip.rating.to_f
-      end
-      end
-
+      end       end
       return ratings.sum / ratings.length
     end
 
