@@ -104,6 +104,14 @@ describe "Passenger class" do
       expect(total_cost).must_equal 27
     end
 
+    it "returns 0 dollars if there are no trips" do
+      @passenger.trips.clear
+
+      total_cost = @passenger.net_expenditures
+
+      expect(total_cost).must_equal 0
+    end
+
     it "calculates total amount of time spent by one passenger" do
       total_time = @passenger.total_time_spent
 
@@ -114,6 +122,7 @@ describe "Passenger class" do
       @passenger.trips.clear
 
       total_time = @passenger.total_time_spent
+
       expect(total_time).must_equal 0
     end
   end
