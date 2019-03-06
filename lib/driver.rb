@@ -20,7 +20,7 @@ module RideShare
       @id = id
       @name = name
       @vin = vin
-      @status = status
+      @status = status.to_sym
       @trips = trips || []
     end
 
@@ -52,11 +52,11 @@ module RideShare
 
     def self.from_csv(record)
       return self.new(
-            id: record[:id],
-            name: record[:name],
-            vin: record[:vin],
-            status: record[:status],
-            )
+               id: record[:id],
+               name: record[:name],
+               vin: record[:vin],
+               status: record[:status],
+             )
     end
   end
 end
