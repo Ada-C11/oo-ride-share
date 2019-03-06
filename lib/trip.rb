@@ -5,7 +5,7 @@ require_relative "csv_record"
 
 module RideShare
   class Trip < CsvRecord
-    attr_reader :id, :passenger, :passenger_id, :start_time, :end_time, :cost, :rating
+    attr_reader :id, :passenger, :passenger_id, :start_time, :end_time, :cost, :rating, :driver_id, :driver
 
     def initialize(id:,
                    passenger: nil, passenger_id: nil,
@@ -55,9 +55,8 @@ module RideShare
     end
 
     # Adds instance of Trip class into passenger
-    def connect(passenger)
-      @passenger = passenger
-      passenger.add_trip(self)
+    def connect(person)
+      person.add_trip(self)
     end
 
     private
