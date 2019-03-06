@@ -78,7 +78,7 @@ describe "Driver class" do
     end
   end
 
-  xdescribe "average_rating method" do
+  describe "average_rating method" do
     before do
       @driver = RideShare::Driver.new(
         id: 54,
@@ -131,7 +131,63 @@ describe "Driver class" do
   end
 
   describe "total_revenue" do
+    before do
+      @driver = RideShare::Driver.new(
+        id: 54,
+        name: "Rogers Bartell IV",
+        vin: "1C9EVBRM0YBC564DZ",
+      )
+      @driver_two = RideShare::Driver.new(
+        id: 54,
+        name: "Hazel Flufferpuff",
+        vin: "1C9EVBRM0YBC43L8P",
+      )
+      trip = RideShare::Trip.new(
+        id: 8,
+        driver: @driver,
+        passenger_id: 3,
+        start_time: "2016-08-08",
+        end_time: "2016-08-08",
+        rating: 5,
+        cost: 20,
+      )
+      trip2 = RideShare::Trip.new(
+        id: 8,
+        driver: @driver,
+        passenger_id: 3,
+        start_time: "2016-08-08",
+        end_time: "2016-08-08",
+        rating: 5,
+        cost: 30,
+      )
+      @driver.add_trip(trip)
+      @driver.add_trip(trip2)
+    end
     # You add tests for the total_revenue method
+    it "Returns the accurate total revenue" do
+      revenue = @driver.total_revenue
+      expect(revenue).must_equal 37.36
+    end
+
+    it "Returns Zero if there are no trips" do
+      revenue = @driver_two.total_revenue
+      expect(revenue).must_equal 0
+    end
+
+    it "Counts an trip with a cost under 1.65 as 0" do
+      trip2 = RideShare::Trip.new(
+        id: 9,
+        driver: @driver_two,
+        passenger_id: 2,
+        start_time: "2017-08-08",
+        end_time: "2017-08-08",
+        rating: 5,
+        cost: 1.50,
+      )
+      @driver_two.add_trip(trip2)
+      revenue = @driver_two.total_revenue
+      expect(revenue).must_equal 0
+    end
   end
 
   describe "net_expenditures" do
