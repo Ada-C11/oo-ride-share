@@ -133,10 +133,10 @@ describe "TripDispatcher class" do
         expect(trip).must_be_kind_of Trip
       end
 
-      it "Finds available driver" do
-        trip = dispatcher.request_new_trip(1)
-        expect(trip.driver.status).must_equal :AVAILABLE
-      end
+      # it "Finds available driver" do
+      #   trip = dispatcher.request_new_trip(1)
+      #   expect(trip.driver.status).must_equal :AVAILABLE
+      # end
 
       it "Raises an error if no available drivers" do
         @drivers.each do |driver|
@@ -156,6 +156,11 @@ describe "TripDispatcher class" do
         count = dispatcher.trips.count
         trip = dispatcher.request_new_trip(1)
         expect(dispatcher.trips.count).must_equal count + 1
+      end
+
+      it "available driver with no trips" do
+        trip = dispatcher.request_new_trip(1)
+        expect(trip.driver.id).must_equal 3
       end
     end
   end
