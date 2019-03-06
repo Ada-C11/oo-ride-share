@@ -32,12 +32,17 @@ module RideShare
       end
 
       @start_time = Time.parse(start_time)
-      @end_time = Time.parse(end_time)
-      raise ArgumentError, "Start time should start before end time" if @end_time < @start_time
+      
+      if end_time
+        @end_time = Time.parse(end_time)
+        if @end_time < @start_time
+          raise ArgumentError, "Start time should start before end time" 
+        end
+      end
       @cost = cost
       @rating = rating
 
-      if @rating > 5 || @rating < 1
+      if @rating && (@rating > 5 || @rating < 1)
         raise ArgumentError.new("Invalid rating #{@rating}")
       end
     end

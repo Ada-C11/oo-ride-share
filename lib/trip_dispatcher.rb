@@ -37,6 +37,7 @@ module RideShare
       id = trips.length + 1
       passenger = find_passenger(passenger_id)
       driver = drivers.find { |driver| driver.status == :AVAILABLE }
+        return nil if !driver
       start_time = Time.now.to_s
       end_time = nil
       cost = nil
@@ -52,6 +53,7 @@ module RideShare
       trips << new_trip
       driver.assign_trip(new_trip)
       passenger.add_trip(new_trip)
+      return new_trip
     end
 
     private
@@ -62,7 +64,6 @@ module RideShare
         passenger = find_passenger(trip.passenger_id)
         trip.connect(passenger, driver)
       end
-
       return trips
     end
   end
