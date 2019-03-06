@@ -82,7 +82,7 @@ describe "Driver class" do
     end
   end
 
-  describe "average_rating method" do
+  xdescribe "average_rating method" do
     before do
       @driver = RideShare::Driver.new(
         id: 54,
@@ -134,11 +134,11 @@ describe "Driver class" do
     end
   end
 
-  describe "total_revenue" do
+  xdescribe "total_revenue" do
     # You add tests for the total_revenue method
   end
 
-  describe "net_expenditures" do
+  xdescribe "net_expenditures" do
     # You add tests for the net_expenditures method
   end
 end

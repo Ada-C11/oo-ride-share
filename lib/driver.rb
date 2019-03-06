@@ -12,7 +12,7 @@ module RideShare
 
       @name = name
       @trips = []
-      @status = status
+      @status = status.to_sym
 
       #vin argument error thing
       if vin.length != 17 || vin.nil?
@@ -24,7 +24,9 @@ module RideShare
       raise ArgumentError, "Driver must have a status of AVAILABLE or UNAVAILABLE" if status != ( :AVAILABLE || :UNAVAILABLE ) && status.nil?
 
     end
-
+    def add_trip(trip)
+      @trips << trip
+    end
     private
 
     def self.from_csv(record)
