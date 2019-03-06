@@ -1,7 +1,6 @@
 require "csv"
 
 require_relative "csv_record"
-# require_relative "trip_dispatcher"
 
 module RideShare
   class Trip < CsvRecord
@@ -40,19 +39,6 @@ module RideShare
       if @rating > 5 || @rating < 1
         raise ArgumentError.new("Invalid rating #{@rating}")
       end
-
-      # if driver_id == nil && driver == nil
-      #   raise ArgumentError, "Driver ID or Driver must be provided"
-      # elsif driver_id == nil
-      #   @driver = driver
-      #   # @driver_id = driver.id # find the driver id based on the driver
-      # elsif driver == nil
-      #   @driver_id = driver_id
-      #   # @driver = find_driver(driver_id) # find the driver based on the driver id
-      # else
-      #   @driver_id = driver_id
-      #   @driver = driver
-      # end
 
       if driver
         @driver = driver
