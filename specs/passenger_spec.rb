@@ -109,5 +109,12 @@ describe "Passenger class" do
 
       expect(total_time).must_equal 5943.0
     end
+
+    it "returns 0 seconds if there are no trips" do
+      @passenger.trips.clear
+
+      total_time = @passenger.total_time_spent
+      expect(total_time).must_equal 0
+    end
   end
 end
