@@ -57,16 +57,14 @@ describe "TripDispatcher class" do
         @dispatcher = build_test_dispatcher
       end
 
-      it "accurately loads driver information into drivers array" do
-        first_driver = @dispatcher.drivers.first
-        last_driver = @dispatcher.drivers.last
-
-        expect(first_driver.name).must_equal "Driver 1 (unavailable)"
-        expect(first_driver.id).must_equal 1
-        expect(first_driver.status).must_equal :UNAVAILABLE
-        expect(last_driver.name).must_equal "Driver 3 (no trips)"
-        expect(last_driver.id).must_equal 3
-        expect(last_driver.status).must_equal :AVAILABLE
+      it "accurately loads passenger information into passengers array" do
+        first_passenger = @dispatcher.passengers.first
+        last_passenger = @dispatcher.passengers.last
+ 
+        expect(first_passenger.name).must_equal "Passenger 1"
+        expect(first_passenger.id).must_equal 1
+        expect(last_passenger.name).must_equal "Passenger 8"
+        expect(last_passenger.id).must_equal 8
       end
 
       it "connects trips and passengers" do
@@ -105,11 +103,11 @@ describe "TripDispatcher class" do
         first_driver = @dispatcher.drivers.first
         last_driver = @dispatcher.drivers.last
 
-        expect(first_driver.name).must_equal "Driver2"
-        expect(first_driver.id).must_equal 2
+        expect(first_driver.name).must_equal "Driver 1 (unavailable)"
+        expect(first_driver.id).must_equal 1
         expect(first_driver.status).must_equal :UNAVAILABLE
-        expect(last_driver.name).must_equal "Driver8"
-        expect(last_driver.id).must_equal 8
+        expect(last_driver.name).must_equal "Driver 3 (no trips)"
+        expect(last_driver.id).must_equal 3
         expect(last_driver.status).must_equal :AVAILABLE
       end
 
