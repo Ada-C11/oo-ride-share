@@ -1,12 +1,12 @@
-require_relative 'csv_record'
+require_relative "csv_record"
 
 module RideShare
   class Driver < CsvRecord
     attr_reader :name, :vin, :status, :trips
 
-    def initialize (id:, name:, vin:, status: :AVAILABLE, trips: nil)
+    def initialize(id:, name:, vin:, status: :AVAILABLE, trips: nil)
       super(id)
-    
+
       @name = name
       self.class.validate_vin(vin)
       @vin = vin
@@ -17,6 +17,18 @@ module RideShare
 
     def add_trip(trip)
       @trips << trip
+    end
+
+    def average_rating
+      total = 0
+      if trips.length == 0 || trips.length == nil
+        return 0
+      else
+        @trips.each do |trip|
+          total += trip.rating.to_f
+        end
+        return total / @trips.length
+      end
     end
 
     def self.validate_vin(vin)
@@ -33,10 +45,10 @@ module RideShare
 
     def self.from_csv(record)
       return new(
-        id: record[:id],
-        name: record[:name],
-        vin: record[:vin],
-      )
+               id: record[:id],
+               name: record[:name],
+               vin: record[:vin],
+             )
     end
   end
 end
