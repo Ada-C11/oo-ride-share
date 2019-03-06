@@ -49,7 +49,7 @@ module RideShare
         return driver.trips.sort_by { |trip| trip.end_time }.first
       end
 
-      return available_drivers.first
+      return available_drivers
     end
 
     def request_trip(passenger_id)
@@ -67,6 +67,7 @@ module RideShare
         rating: nil,
       }
 
+      #(@trips.length) + 1, self.available_driver, find_passenger(passenger_id), Time.now.to_s, nil, nil
       in_progress_ride = Trip.new(requested_trip)
 
       driver.status = :UNAVAILABLE
