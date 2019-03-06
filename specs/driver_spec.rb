@@ -7,7 +7,7 @@ describe "Driver class" do
         id: 54,
         name: "Test Driver",
         vin: "12345678901234567",
-        status: :AVAILABLE,
+        status: :AVAILABLE
       }
 
       @driver = RideShare::Driver.new(@driver_data)
@@ -138,7 +138,7 @@ describe "Driver class" do
   end
 
   describe "total_revenue" do
-    # You add tests for the total_revenue method
+    
   end
 
   # describe "net_expenditures" do

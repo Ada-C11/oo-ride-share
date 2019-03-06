@@ -2,7 +2,7 @@ require_relative "csv_record"
 
 module RideShare
   class Passenger < CsvRecord
-    attr_reader :name, :phone_number, :trips
+    attr_reader :id, :name, :phone_number, :trips
 
     def initialize(id:, name:, phone_number:, trips: nil)
       super(id)
@@ -29,7 +29,7 @@ module RideShare
 
     # Add an instance method, net_expenditures, to Passenger that will return the total amount of money that passenger has spent on their trips
     # take passenger ID and all IDs listed in trip with that passenger ID, need to tally up the total spent
-    def net_expenditures
+    def net_expenditures # refactor
       total_trip = 0
       @trips.each do |trip|
         total_trip += trip.cost
