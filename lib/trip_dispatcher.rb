@@ -59,8 +59,8 @@ module RideShare
       end
 
       if trip_driver == ""
-        trip_driver = available_drivers.reduce(0) do |memo, driver|
-          memo = (Time.now - driver.end_time) > memo ? (Time.now - driver.end_time) : memo
+        trip_driver = available_drivers.reduce do |memo, driver|
+          memo = (Time.now - driver.end_time) > (Time.now - memo.end_time) ? driver : memo
         end
       end
       # if trip_driver == ""
