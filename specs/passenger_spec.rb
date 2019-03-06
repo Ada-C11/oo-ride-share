@@ -97,15 +97,44 @@ describe "Passenger class" do
       @passenger.add_trip(@trip_one)
       @passenger.add_trip(@trip_two)
 
-      net_expenditures = @passenger.trips.sum { |trip| trip.cost }
-
-      expect(net_expenditures).must_equal 50
+      expect(@passenger.net_expenditures).must_equal 50
     end
+    it "Returns 0 if the passenger has no trips" do
+      expect(@passenger.net_expenditures).must_equal 0
+    end
+  end
 
-    it "Returns 0 when passenger has no trips" do
-      net_expenditures = @passenger.trips.sum { |trip| trip.cost }
+  describe "Total time traveled" do
+    before do
+      @passenger = RideShare::Passenger.new(
+        id: 9,
+        name: "Merl Glover III",
+        phone_number: "1-602-620-2330 x3723",
+        trips: [],
+      )
+      @trip_one = RideShare::Trip.new(
+        id: 8,
+        passenger: @passenger,
+        start_time: "2018-12-27 02:39:05 -0800",
+        end_time: "2018-12-27 03:38:08 -0800",
+        cost: 20,
+        rating: 5,
+      )
+      @trip_two = RideShare::Trip.new(
+        id: 10,
+        passenger: @passenger,
+        start_time: "2018-12-17 16:09:21 -0800",
+        end_time: "2018-12-17 16:42:21 -0800",
+        cost: 30,
+        rating: 5,
 
-      expect(net_expenditures).must_equal 0
+      )
+    end
+    it "Totals time spent on all rides" do
+      @passenger.add_trip(@trip_one)
+      @passenger.add_trip(@trip_two)
+
+      expect(@passenger.total_time_spent).must_be_close_to 5523
     end
   end
 end

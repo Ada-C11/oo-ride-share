@@ -17,11 +17,11 @@ module RideShare
     end
 
     def net_expenditures
-      if @trips == nil
-        return 0
-      else
-        return @trips.sum { |trip| trip.cost }
-      end
+      return @trips == nil ? 0 : @trips.sum { |trip| trip.cost }
+    end
+
+    def total_time_spent
+      return @trips == nil ? 0 : @trips.sum { |trip| trip.duration }
     end
 
     private
