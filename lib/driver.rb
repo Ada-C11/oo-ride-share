@@ -1,13 +1,13 @@
 require_relative 'csv_record'
-require "pry"
+
 
 module RideShare
   class Driver < CsvRecord
     attr_reader :name, :vin, :status, :trips
 
-    def initialize(id:, name:, vin:, status: :AVAILABLE, trips: nil)
+    def initialize(id:, name:, vin:, status: :AVAILABLE, trips: [])
       super(id)
-
+    
       @name = name
       @vin = vin
       @status = status

@@ -60,12 +60,13 @@ describe "Driver class" do
       )
       @trip = RideShare::Trip.new(
         id: 8,
-        driver: @driver,
         passenger: pass,
         start_time: "2016-08-08",
         end_time: "2018-08-09",
         cost: 50.00,
-        rating: 5
+        rating: 5,
+        driver: @driver,
+        driver_id: 3
       )
     end
 
@@ -90,12 +91,13 @@ describe "Driver class" do
       )
       trip = RideShare::Trip.new(
         id: 8,
-        driver: @driver,
         passenger_id: 3,
         start_time: "2016-08-08",
         end_time: "2016-08-08",
         cost: 100.00,
-        rating: 5
+        rating: 5,
+        driver: @driver,
+        driver_id: 54
       )
       @driver.add_trip(trip)
     end
@@ -123,12 +125,13 @@ describe "Driver class" do
     it "correctly calculates the average rating" do
       trip2 = RideShare::Trip.new(
         id: 8,
-        driver: @driver,
         passenger_id: 3,
         start_time: "2016-08-08",
         end_time: "2016-08-09",
         cost: 10.00,
-        rating: 1
+        rating: 1,
+        driver: @driver,
+        driver_id: 54
       )
       @driver.add_trip(trip2)
 
