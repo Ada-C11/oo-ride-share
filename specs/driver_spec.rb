@@ -162,8 +162,35 @@ describe "Driver class" do
     it "returns accurate total revenue" do
       expect(@driver.total_revenue).must_be_close_to 76.73, 0.01
     end
-
+    
+    it "returns zero when there is no trip" do
     # You add tests for the total_revenue method
+      driver = RideShare::Driver.new(
+        id: 54,
+        name: "Rogers Bartell IV",
+        vin: "1C9EVBRM0YBC564DZ"
+      )
+      expect(driver.total_revenue).must_equal 0
+    end
+
+    it "returns zero when the trip costs less than 1.65" do
+      @driver = RideShare::Driver.new(
+        id: 54,
+        name: "Rogers Bartell IV",
+        vin: "1C9EVBRM0YBC564DZ"
+      )
+      trip = RideShare::Trip.new(
+        id: 8,
+        driver: @driver,
+        passenger_id: 3,
+        start_time: "2016-08-08",
+        end_time: "2016-08-08",
+        rating: 5,
+        cost: 1.25
+      )
+      @driver.add_trip(trip)
+      expect(@driver.total_revenue).must_equal 0
+    end
   end
 
   describe "net_expenditures" do
