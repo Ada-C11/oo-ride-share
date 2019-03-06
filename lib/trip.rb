@@ -56,9 +56,14 @@ module RideShare
       "PassengerID=#{passenger&.id.inspect}>"
     end
 
-    def connect(passenger)
-      @passenger = passenger
-      passenger.add_trip(self)
+    def connect(instance)
+      if instance.is_a? RideShare::Passenger
+        @passenger = instance
+        instance.add_trip(self)
+      elsif instance.is_a? RideShare::Driver
+        @driver = instance
+        instance.add_trip(self)
+      end
     end 
 
     def calculate_duration
@@ -71,6 +76,7 @@ module RideShare
       return self.new(
         id: record[:id],
         passenger_id: record[:passenger_id],
+        driver_id: record[:driver_id],
         start_time: record[:start_time],
         end_time: record[:end_time],
         cost: record[:cost],
