@@ -14,6 +14,12 @@ describe "Trip class" do
         end_time: end_time.to_s,
         cost: 23.45,
         rating: 3,
+        driver: RideShare::Driver.new(
+          id: 1,
+          name: "Paul Klee",
+          vin: "WBS76FYD47DJF7206",
+          status: :AVAILABLE,
+        ),
       }
       @trip = RideShare::Trip.new(@trip_data)
     end
@@ -59,6 +65,12 @@ describe "Trip class" do
         end_time: end_time.to_s,
         cost: 23.45,
         rating: 3,
+        driver: RideShare::Driver.new(
+          id: 1,
+          name: "Paul Klee",
+          vin: "WBS76FYD47DJF7206",
+          status: :AVAILABLE,
+        ),
       }
       @trip = RideShare::Trip.new(@trip_data)
     end
