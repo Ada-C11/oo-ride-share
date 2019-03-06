@@ -12,7 +12,7 @@ module RideShare
       @status = status.to_sym
       @trips = trips || []
 
-      raise ArgumentError.new("Invalid Vin") if @vin.length != 17 
+      raise ArgumentError.new("Invalid Vin") if @vin.length != 17
     end
 
     def add_trip(trip)
@@ -27,8 +27,16 @@ module RideShare
         @trips.each do |trip|
           rating_total += trip.rating
         end
-      return rating_total/@trips.length.to_f.round(2)
+        return rating_total / @trips.length.to_f.round(2)
       end
+    end
+
+    def total_revenue
+      total_revenue = 0
+      @trips.each do |trip|
+        total_revenue += trip.cost * 0.8 - 1.65
+      end
+      return total_revenue
     end
 
     private
