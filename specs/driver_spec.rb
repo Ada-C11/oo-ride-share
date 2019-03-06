@@ -218,4 +218,37 @@ describe "Driver class" do
       expect(@driver.trips.count).must_equal 1
     end
   end
+  describe "inprogress trip errors" do
+    before do
+      pass = RideShare::Passenger.new(
+        id: 1,
+        name: "Test Passenger",
+        phone_number: "412-432-7640",
+      )
+      @driver = RideShare::Driver.new(
+        id: 3,
+        name: "Test Driver",
+        vin: "12345678912345678",
+      )
+      @trip = RideShare::Trip.new(
+        id: 8,
+        driver: @driver,
+        passenger: pass,
+        start_time: "2016-08-08",
+        end_time: "2018-08-09",
+        rating: 5,
+        cost: 6.65,
+      )
+      @driver.add_trip(@trip)
+    end
+    it "checks if total revenue "
+    @trip2 = RideShare::Trip.new(
+      id: 10,
+      driver: @driver,
+      passenger: pass,
+      start_time: nil ,
+      end_time: nil ,
+      rating: nil ,
+      cost: nil,
+  end
 end

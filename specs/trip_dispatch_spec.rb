@@ -138,6 +138,13 @@ describe "TripDispatcher class" do
         expect(trip.driver.status).must_equal :AVAILABLE
       end
 
+      it "Raises an error if no available drivers" do
+        @drivers.each do |driver|
+          driver.status = :UNAVAILABLE
+        end
+        expect { trip = dispatcher.request_new_trip(1) }.must_raise ArgumentError
+      end
+
       it "Adds a trip to passenger trip array" do
         passenger = find_passenger(2)
         count = passenger.trips.count

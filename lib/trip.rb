@@ -58,7 +58,9 @@ module RideShare
     end
 
     def trip_duration
-      return (end_time - start_time)
+      if end_time
+        return (end_time - start_time)
+      else return 0       end
     end
 
     private

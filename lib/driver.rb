@@ -26,17 +26,24 @@ module RideShare
 
     def average_rating
       sum = 0
+      in_progress_trips = 0
       trips.each do |trip|
-        sum += trip.rating
+        if trip.rating == nil
+          in_progress_trips += 1
+        else
+          sum += trip.rating
+        end
       end
-      average = trips.count == 0 ? 0 : sum.to_f / trips.count
+      average = trips.count == 0 ? 0 : sum.to_f / (trips.count - in_progress_trips)
       return average
     end
 
     def total_revenue
       sum = 0
       trips.each do |trip|
-        sum = trip.cost > 1.65 ? (sum + ((trip.cost - 1.65) * 0.8)) : sum
+        if trip.cost != nil
+          sum = trip.cost > 1.65 ? (sum + ((trip.cost - 1.65) * 0.8)) : sum
+        end
       end
       return sum
     end

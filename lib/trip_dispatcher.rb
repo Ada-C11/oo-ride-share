@@ -41,6 +41,9 @@ module RideShare
           trip_driver = driver
         end
       end
+      if trip_driver == ""
+        raise ArgumentError, "No Available Drivers"
+      end
       start_time = Time.now
       end_time = nil
       cost = nil
