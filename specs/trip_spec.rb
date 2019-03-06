@@ -1,6 +1,6 @@
 require_relative "spec_helper"
 
-describe "Trip class" do
+xdescribe "Trip class" do
   describe "initialize" do
     before do
       start_time = Time.parse("2015-05-20T12:14:00+00:00")
@@ -14,6 +14,8 @@ describe "Trip class" do
         end_time: end_time.to_s,
         cost: 23.45,
         rating: 3,
+        driver: "Fred Gorge",
+        driver_id: 1,
       }
       @trip = RideShare::Trip.new(@trip_data)
     end

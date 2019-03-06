@@ -7,7 +7,7 @@ module RideShare
     def initialize(id)
       self.class.validate_id(id)
       #CsvRecord.validate_id(id)
-      @id = id
+      @id = id 
     end
     
     # Takes either full_path or directory and optional file_name
@@ -15,12 +15,12 @@ module RideShare
     def self.load_all(full_path: nil, directory: nil, file_name: nil)
       full_path ||= build_path(directory, file_name)
 
-      return CSV.read(
+      return CSV.read( #array of hashes, array of CSVrows
         full_path,
         headers: true,
         header_converters: :symbol,
         converters: :numeric
-      ).map { |record| from_csv(record) }
+      ).map { |record| from_csv(record)  } #a single hash becomes a new object. What kind? depends on which child class is using this
     end
 
     def self.validate_id(id)

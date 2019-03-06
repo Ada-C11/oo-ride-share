@@ -1,6 +1,6 @@
 require_relative "spec_helper"
 
-describe "Passenger class" do
+xdescribe "Passenger class" do
   describe "Passenger instantiation" do
     before do
       @passenger = RideShare::Passenger.new(id: 1, name: "Smithy", phone_number: "353-533-5334")
@@ -49,6 +49,8 @@ describe "Passenger class" do
         end_time: "2016-08-09",
         cost: 10,
         rating: 5,
+        driver: "Greg Forge",
+        driver_id: 1,
       )
 
       @passenger.add_trip(trip)
