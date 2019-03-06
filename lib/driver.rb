@@ -19,6 +19,19 @@ module RideShare
       @trips = trips || []
     end
 
+    # add a trip to the driver's list of trips
+    def add_trip(trip)
+      @trips << trip
+    end
+    
+    # what is this driver's average rating?
+    def average_rating
+    end
+
+    # calculates driver's total revenue across all trips. each driver gets 80% of trip cost after a fee of 1.65 is deducted
+    def total_revenue
+    end
+
     private
 
     def self.from_csv(record)
