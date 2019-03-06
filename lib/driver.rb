@@ -23,11 +23,11 @@ module RideShare
         @vin = vin
       end
 
-      #   if status != :AVAILABLE || status != :UNAVAILABLE
-      #     raise ArgumentError, "Driver must have a valid status, AVAILABLE OR UNAVAILABLE"
-      #   else
-      #     @status = status
-      #   end
+      if status != :AVAILABLE && status != :UNAVAILABLE
+        raise ArgumentError, "Driver must have a valid status, AVAILABLE OR UNAVAILABLE"
+      else
+        @status = status
+      end
     end
 
     private
