@@ -17,11 +17,15 @@ module RideShare
     end
 
     def find_passenger(id)
-      return @passengers.find { |passenger| passenger.id == id }
+      passenger = @passengers.find { |passenger| passenger.id == id }
+      raise ArgumentError, "Passenger not found" if passenger == nil
+      return passenger
     end
 
     def find_driver(id)
-      return @drivers.find { |driver| driver.id == id }
+      driver = @drivers.find { |driver| driver.id == id }
+      raise ArgumentError, "Passenger not found" if driver == nil
+      return driver
     end
 
     def inspect
