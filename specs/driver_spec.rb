@@ -78,24 +78,35 @@ describe "Driver class" do
     end
   end
 
+  before do
+    @driver = RideShare::Driver.new(
+      id: 54,
+      name: "Rogers Bartell IV",
+      vin: "1C9EVBRM0YBC564DZ",
+    )
+    trip = RideShare::Trip.new(
+      id: 8,
+      driver: @driver,
+      passenger_id: 3,
+      start_time: "2016-08-08",
+      end_time: "2016-08-08",
+      cost: 34.20,
+      rating: 5,
+    )
+    @driver.add_trip(trip)
+    trip2 = RideShare::Trip.new(
+      id: 8,
+      driver: @driver,
+      passenger_id: 3,
+      start_time: "2016-08-08",
+      end_time: "2016-08-09",
+      cost: 29.67
+      rating: 1,
+    )
+    @driver.add_trip(trip2)
+  end
+  
   describe "average_rating method" do
-    before do
-      @driver = RideShare::Driver.new(
-        id: 54,
-        name: "Rogers Bartell IV",
-        vin: "1C9EVBRM0YBC564DZ",
-      )
-      trip = RideShare::Trip.new(
-        id: 8,
-        driver: @driver,
-        passenger_id: 3,
-        start_time: "2016-08-08",
-        end_time: "2016-08-08",
-        rating: 5,
-      )
-      @driver.add_trip(trip)
-    end
-
     it "returns a float" do
       expect(@driver.average_rating).must_be_kind_of Float
     end
@@ -116,22 +127,19 @@ describe "Driver class" do
     end
 
     it "correctly calculates the average rating" do
-      trip2 = RideShare::Trip.new(
-        id: 8,
-        driver: @driver,
-        passenger_id: 3,
-        start_time: "2016-08-08",
-        end_time: "2016-08-09",
-        rating: 1,
-      )
-      @driver.add_trip(trip2)
-
       expect(@driver.average_rating).must_be_close_to (5.0 + 1.0) / 2.0, 0.01
     end
   end
 
+  # This method calculates that driver's total revenue across 
+  # all their trips. Each driver gets 80% of the trip cost 
+  # after a fee of $1.65 per trip is subtracted.
+
+
   describe "total_revenue" do
-    # You add tests for the total_revenue method
+    it "returns the total revenue for that driver" do
+      expect(@driver.total_revenue).must_equal 63.87
+    end
   end
 
   describe "net_expenditures" do
