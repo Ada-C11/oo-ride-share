@@ -21,12 +21,19 @@ module RideShare
         raise ArgumentError, "Passenger or passenger_id is required"
       end
 
+      if driver
+        @driver = driver
+        @driver_id = driver.id
+      elsif driver_id
+        @driver_id = driver_id
+      else
+        raise ArgumentError, "Driver or driver_id is required"
+      end
+
       @start_time = Time.parse(start_time)
       @end_time = Time.parse(end_time)
       @cost = cost
       @rating = rating
-      @driver = driver
-      @driver_id = driver_id
 
       if @start_time > @end_time
         raise ArgumentError, "Invalid start time cannot be greater than end time"
