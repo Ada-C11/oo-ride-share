@@ -158,9 +158,14 @@ describe "TripDispatcher class" do
         expect(dispatcher.trips.count).must_equal count + 1
       end
 
-      it "available driver with no trips" do
+      xit "available driver with no trips" do
         trip = dispatcher.request_new_trip(1)
         expect(trip.driver.id).must_equal 3
+      end
+
+      it "longest time since last trip driver" do
+        trip = dispatcher.request_new_trip(1)
+        expect(trip.driver.id).must_equal 4
       end
     end
   end
