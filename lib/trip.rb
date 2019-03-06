@@ -29,9 +29,15 @@ module RideShare
         raise ArgumentError.new("Start Time must be earlier than (<) End Time.")
       end
 
+      
       if @rating > 5 || @rating < 1
         raise ArgumentError.new("Invalid rating #{@rating}")
       end
+    end
+
+    def duration(start_time, end_time)
+      trip_duration = (end_time - sstart_time)
+      return trip_duration.to_i
     end
 
     def inspect
