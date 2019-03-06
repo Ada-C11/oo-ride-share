@@ -11,8 +11,6 @@ module RideShare
       super(id)
 
       @name = name
-      #   @vin = vin
-      #   @status = status
       @trips = []
       @status = status
 
@@ -23,11 +21,13 @@ module RideShare
         @vin = vin
       end
 
-      if status != :AVAILABLE && status != :UNAVAILABLE
-        raise ArgumentError, "Driver must have a valid status, AVAILABLE OR UNAVAILABLE"
-      else
-        @status = status
-      end
+      raise ArgumentError, "Driver must have a status of AVAILABLE or UNAVAILABLE" if status != ( :AVAILABLE || :UNAVAILABLE ) && status.nil?
+
+      # if status != :AVAILABLE && status != :UNAVAILABLE
+      #   raise ArgumentError, "Driver must have a valid status, AVAILABLE OR UNAVAILABLE"
+      # else
+      #   @status = status
+      # end
     end
 
     private
