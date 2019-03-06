@@ -12,6 +12,8 @@ module RideShare
       start_time:, end_time:, cost: nil, rating:)
       super(id)
 
+      #raise ArgumentError, "Cost is nil" if cost.nil?
+
       if passenger
         @passenger = passenger
         @passenger_id = passenger.id
