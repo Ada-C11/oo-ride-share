@@ -6,11 +6,7 @@ require_relative "../specs/spec_helper"
 
 module RideShare
   class Trip < CsvRecord
-<<<<<<< HEAD
-    attr_reader  :passenger, :passenger_id, :start_time, :end_time, :cost, :rating
-=======
     attr_reader :passenger, :passenger_id, :start_time, :end_time, :cost, :rating
->>>>>>> 2b88fc3807ca5ffc0bf8d474dbadaa1f1b7c61bd
 
     def initialize(id:,
                    passenger: nil, passenger_id: nil,

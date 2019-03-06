@@ -7,7 +7,7 @@ module RideShare
     def initialize(id:, name:, vin:, status:, trips: nil)
       super(id)
       @name = name
-      @vin = vin
+      @vin = vin.length == 17 ? vin : (raise ArgumentError.new("Invalid Vin: #{vin.length} length"))
       @status = status
       @trips = trips || []
     end
