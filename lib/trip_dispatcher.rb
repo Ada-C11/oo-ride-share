@@ -33,10 +33,9 @@ module RideShare
     end
 
     def available_driver
-      if @drivers.find_all { |driver| driver.status == :AVAILABLE } == []
+      available_drivers = @drivers.find_all { |driver| driver.status == :AVAILABLE }
+      if available_drivers == []
         raise ArgumentError.new("Sorry, there are no available drivers near you.")
-      else
-        available_drivers = @drivers.find_all { |driver| driver.status == :AVAILABLE }
       end
 
       available_drivers.each do |driver|
@@ -44,39 +43,28 @@ module RideShare
           return driver
         end
       end
-
-      available_drivers.sort_by! do |driver|
-        return driver.trips.sort_by { |trip| trip.end_time }.first
-      end
-
-      return available_drivers
+      return driver.trips.min_by { |trip| trip.end_time }.driver
     end
 
     def request_trip(passenger_id)
-      # The passenger ID will be supplied (this is the person requesting a trip)
-
-      driver = self.available_driver
-      passenger = self.find_passenger(passenger_id)
-
-      requested_trip = {
+      new_ride = Trip.new(
         id: (@trips.length) + 1,
-        driver: driver,
-        passenger: passenger,
+        driver: available_driver,
+        passenger: find_passenger(passenger_id),
         start_time: Time.now.to_s,
         end_time: nil,
         rating: nil,
-      }
+      )
 
-      #(@trips.length) + 1, self.available_driver, find_passenger(passenger_id), Time.now.to_s, nil, nil
-      in_progress_ride = Trip.new(requested_trip)
+      puts "new ride #{new_ride.driver.id}"
 
-      driver.status = :UNAVAILABLE
-      driver.add_trip(in_progress_ride)
-      passenger.add_trip(in_progress_ride)
+      new_ride.driver.status = :UNAVAILABLE
+      new_ride.driver.add_trip(new_ride)
+      new_ride.passenger.add_trip(new_ride)
 
-      @trips << in_progress_ride
+      @trips << new_ride
 
-      return in_progress_ride
+      return new_ride
     end
 
     private

@@ -29,6 +29,7 @@ module RideShare
       @trips << trip
     end
 
+    # account for in progress trips
     def average_rating
       if @trips.length == 0
         return 0
@@ -40,6 +41,7 @@ module RideShare
       return sum_rating / num_trips
     end
 
+    # account for in progress trips
     def total_revenue
       if @trips.nil?
         return 0.00
