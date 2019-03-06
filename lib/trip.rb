@@ -22,15 +22,6 @@ module RideShare
         raise ArgumentError, "Passenger or passenger_id is required"
       end
 
-      if driver
-        @driver = driver
-        @driver_id = driver.id
-      elsif passenger_id
-        @driver_id = driver_id
-      else
-        raise ArgumentError, "Driver or driver_id is required"
-      end
-
       @start_time = Time.parse(start_time)
       @end_time = Time.parse(end_time)
       @cost = cost
