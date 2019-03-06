@@ -52,11 +52,17 @@ module RideShare
       end
 
       available_drivers.each do |driver|
+        times_array = []
         if driver.trips.length == 0
           trip_driver = driver
         end
       end
 
+      if trip_driver == ""
+        trip_driver = available_drivers.reduce(0) do |memo, driver|
+          memo = (Time.now - driver.end_time) > memo ? (Time.now - driver.end_time) : memo
+        end
+      end
       # if trip_driver == ""
       #   raise ArgumentError, "No Available Drivers"
       # end
