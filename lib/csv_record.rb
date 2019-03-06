@@ -1,5 +1,7 @@
 require "csv"
 
+#got rid of all require relatives
+
 module RideShare
   class CsvRecord
     attr_reader :id

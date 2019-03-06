@@ -45,96 +45,96 @@ describe "Driver class" do
       end
     end
 
-    # describe "add_trip method" do
-    #   before do
-    #     pass = RideShare::Passenger.new(
-    #       id: 1,
-    #       name: "Test Passenger",
-    #       phone_number: "412-432-7640",
-    #     )
-    #     @driver = RideShare::Driver.new(
-    #       id: 3,
-    #       name: "Test Driver",
-    #       vin: "12345678912345678",
-    #     )
-    #     @trip = RideShare::Trip.new(
-    #       id: 8,
-    #       driver: @driver,
-    #       passenger: pass,
-    #       start_time: "2016-08-08",
-    #       end_time: "2018-08-09",
-    #       rating: 5,
-    #     )
-    #   end
+    describe "add_trip method" do
+      before do
+        pass = RideShare::Passenger.new(
+          id: 1,
+          name: "Test Passenger",
+          phone_number: "412-432-7640",
+        )
+        @driver = RideShare::Driver.new(
+          id: 3,
+          name: "Test Driver",
+          vin: "12345678912345678",
+        )
+        @trip = RideShare::Trip.new(
+          id: 8,
+          driver: @driver,
+          passenger: pass,
+          start_time: "2016-08-08",
+          end_time: "2018-08-09",
+          rating: 5,
+        )
+      end
 
-    #   it "adds the trip" do
-    #     expect(@driver.trips).wont_include @trip
-    #     previous = @driver.trips.length
+      it "adds the trip" do
+        expect(@driver.trips).wont_include @trip
+        previous = @driver.trips.length
 
-    #     @driver.add_trip(@trip)
+        @driver.add_trip(@trip)
 
-    #     expect(@driver.trips).must_include @trip
-    #     expect(@driver.trips.length).must_equal previous + 1
-    #   end
-    # end
+        expect(@driver.trips).must_include @trip
+        expect(@driver.trips.length).must_equal previous + 1
+      end
+    end
 
-    # describe "average_rating method" do
-    #   before do
-    #     @driver = RideShare::Driver.new(
-    #       id: 54,
-    #       name: "Rogers Bartell IV",
-    #       vin: "1C9EVBRM0YBC564DZ",
-    #     )
-    #     trip = RideShare::Trip.new(
-    #       id: 8,
-    #       driver: @driver,
-    #       passenger_id: 3,
-    #       start_time: "2016-08-08",
-    #       end_time: "2016-08-08",
-    #       rating: 5,
-    #     )
-    #     @driver.add_trip(trip)
-    #   end
+    describe "average_rating method" do
+      before do
+        @driver = RideShare::Driver.new(
+          id: 54,
+          name: "Rogers Bartell IV",
+          vin: "1C9EVBRM0YBC564DZ",
+        )
+        trip = RideShare::Trip.new(
+          id: 8,
+          driver: @driver,
+          passenger_id: 3,
+          start_time: "2016-08-08",
+          end_time: "2016-08-08",
+          rating: 5,
+        )
+        @driver.add_trip(trip)
+      end
 
-    #   it "returns a float" do
-    #     expect(@driver.average_rating).must_be_kind_of Float
-    #   end
+      it "returns a float" do
+        expect(@driver.average_rating).must_be_kind_of Float
+      end
 
-    #   it "returns a float within range of 1.0 to 5.0" do
-    #     average = @driver.average_rating
-    #     expect(average).must_be :>=, 1.0
-    #     expect(average).must_be :<=, 5.0
-    #   end
+      it "returns a float within range of 1.0 to 5.0" do
+        average = @driver.average_rating
+        expect(average).must_be :>=, 1.0
+        expect(average).must_be :<=, 5.0
+      end
 
-    #   it "returns zero if no driven trips" do
-    #     driver = RideShare::Driver.new(
-    #       id: 54,
-    #       name: "Rogers Bartell IV",
-    #       vin: "1C9EVBRM0YBC564DZ",
-    #     )
-    #     expect(driver.average_rating).must_equal 0
-    #   end
+      it "returns zero if no driven trips" do
+        driver = RideShare::Driver.new(
+          id: 54,
+          name: "Rogers Bartell IV",
+          vin: "1C9EVBRM0YBC564DZ",
+        )
+        expect(driver.average_rating).must_equal 0
+      end
 
-    #   it "correctly calculates the average rating" do
-    #     trip2 = RideShare::Trip.new(
-    #       id: 8,
-    #       driver: @driver,
-    #       passenger_id: 3,
-    #       start_time: "2016-08-08",
-    #       end_time: "2016-08-09",
-    #       rating: 1,
-    #     )
-    #     @driver.add_trip(trip2)
+      it "correctly calculates the average rating" do
+        trip2 = RideShare::Trip.new(
+          id: 8,
+          driver: @driver,
+          passenger_id: 3,
+          start_time: "2016-08-08",
+          end_time: "2016-08-09",
+          rating: 1,
+        )
+        @driver.add_trip(trip2)
 
-    #     expect(@driver.average_rating).must_be_close_to (5.0 + 1.0) / 2.0, 0.01
-    #   end
-    # end
+        expect(@driver.average_rating).must_be_close_to (5.0 + 1.0) / 2.0, 0.01
+      end
+    end
 
-    # describe "total_revenue" do
-    #   # You add tests for the total_revenue method
-    # end
+    describe "total_revenue" do
+      # You add tests for the total_revenue method
+    end
 
-    # describe "net_expenditures" do
-    #   # You add tests for the net_expenditures method
-    # end
+    describe "net_expenditures" do
+      # You add tests for the net_expenditures method
+    end
 end

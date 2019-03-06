@@ -2,12 +2,11 @@ require "csv"
 require "time"
 
 require_relative "csv_record"
-require_relative "driver"
-require_relative "passenger"
+#removed all the require relatives
 
 module RideShare
-  class Trip < CsvRecord
-    attr_reader :id, :passenger, :passenger_id, :start_time, :end_time, :cost, :rating, :duration
+  class Trip < CsvRecord # added driver_id and driver to reader
+    attr_reader :id, :passenger, :passenger_id, :start_time, :end_time, :cost, :rating, :duration, :driver_id, :driver
 
     def initialize(id:,
                    passenger: nil, passenger_id: nil,
@@ -19,7 +18,7 @@ module RideShare
         @passenger_id = passenger.id
       elsif passenger_id
         @passenger_id = passenger_id
-      elsif passenger_id = 0
+      elsif passenger_id == 0
         raise ArgumentError, "Passenger or passenger_id is invalid"
       else
         raise ArgumentError, "Passenger or passenger_id is required"
@@ -59,12 +58,17 @@ module RideShare
       "PassengerID=#{passenger&.id.inspect}>"
     end
 
-    def connect(passenger)
+    # updated to take 2 arguments since we call it in trip dispatcher based on that.
+    # Added ability to also connect driver
+    def connect(passenger,driver)
       @passenger = passenger
       passenger.add_trip(self)
+      @driver = driver
+      driver.add_trip(self)
     end
 
-    def connect(driver)
+    # changed method name here from connect to connect driver. Ruby was confusing them
+    def connect_driver(driver)
       @driver = driver_id
       driver.add_trip(self)
     end

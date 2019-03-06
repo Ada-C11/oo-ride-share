@@ -1,6 +1,5 @@
 require_relative "csv_record"
 require_relative 'trip'
-require_relative 'driver'
 
 # Parent CsvRecord to Passenger class
 module RideShare
