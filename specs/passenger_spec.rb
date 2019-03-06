@@ -52,6 +52,7 @@ describe "Passenger class" do
       start_time: start_time.to_s,
       end_time: end_time.to_s,
       rating: 5,
+      driver_id: 3,
     )
 
     @passenger.add_trip(trip)
@@ -63,6 +64,7 @@ describe "Passenger class" do
       start_time: start_time.to_s,
       end_time: end_time.to_s,
       rating: 5,
+      driver_id: 3,
     )
 
     @passenger.add_trip(trip)
@@ -74,6 +76,7 @@ describe "Passenger class" do
       start_time: start_time.to_s,
       end_time: end_time.to_s,
       rating: 5,
+      driver_id: 3,
     )
 
     @passenger.add_trip(trip)
