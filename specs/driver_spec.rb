@@ -100,12 +100,12 @@ describe "Driver class" do
       passenger_id: 3,
       start_time: "2016-08-08",
       end_time: "2016-08-09",
-      cost: 29.67
+      cost: 29.67,
       rating: 1,
     )
     @driver.add_trip(trip2)
   end
-  
+
   describe "average_rating method" do
     it "returns a float" do
       expect(@driver.average_rating).must_be_kind_of Float
@@ -130,11 +130,6 @@ describe "Driver class" do
       expect(@driver.average_rating).must_be_close_to (5.0 + 1.0) / 2.0, 0.01
     end
   end
-
-  # This method calculates that driver's total revenue across 
-  # all their trips. Each driver gets 80% of the trip cost 
-  # after a fee of $1.65 per trip is subtracted.
-
 
   describe "total_revenue" do
     it "returns the total revenue for that driver" do
