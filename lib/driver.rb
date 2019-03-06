@@ -20,6 +20,17 @@ module RideShare
       @trips << trip
     end
 
+    def average_rating
+      if @trips == nil
+        return 0
+      elsif ratings = @trips.map do |trip|
+        trip.rating.to_f
+      end
+      end
+
+      return ratings.sum / ratings.length
+    end
+
     private
 
     def self.from_csv(record)
