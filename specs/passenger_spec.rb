@@ -136,5 +136,9 @@ describe "Passenger class" do
 
       expect(@passenger.total_time_spent).must_be_close_to 5523
     end
+
+    it "Returns 0 if trips is nil" do
+      expect(@passenger.total_time_spent).must_equal 0
+    end
   end
 end
