@@ -32,11 +32,11 @@ module RideShare
       end
 
       @start_time = Time.parse(start_time)
-      
+
       if end_time
         @end_time = Time.parse(end_time)
         if @end_time < @start_time
-          raise ArgumentError, "Start time should start before end time" 
+          raise ArgumentError, "Start time should start before end time"
         end
       end
       @cost = cost
