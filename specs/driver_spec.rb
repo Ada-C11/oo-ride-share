@@ -130,11 +130,89 @@ describe "Driver class" do
     end
   end
 
-  xdescribe "total_revenue" do
-    # You add tests for the total_revenue method
+  describe "total_revenue" do
+    it "accurately calculates a driver's revenue" do
+      driver = RideShare::Driver.new(
+        id: 54,
+        name: "Rogers Bartell IV",
+        vin: "1C9EVBRM0YBC564DZ",
+        status: :AVAILABLE,
+      )
+      trip1 = RideShare::Trip.new(
+        id: 8,
+        driver: driver,
+        passenger_id: 3,
+        start_time: "2016-08-08",
+        end_time: "2016-08-08",
+        cost: 10.5,
+        rating: 5,
+      )
+
+      trip2 = RideShare::Trip.new(
+        id: 10,
+        driver: driver,
+        passenger_id: 5,
+        start_time: "2019-01-01",
+        end_time: "2019-01-02",
+        cost: 4.75,
+        rating: 5,
+      )
+
+      driver.add_trip(trip1)
+      driver.add_trip(trip2)
+
+      revenue = driver.total_revenue
+      expect(revenue).must_equal 9.56
+    end
+
+    it "returns 0 if the driver has not driven any trips" do
+      driver = RideShare::Driver.new(
+        id: 54,
+        name: "Rogers Bartell IV",
+        vin: "1C9EVBRM0YBC564DZ",
+        status: :AVAILABLE,
+      )
+
+      revenue = driver.total_revenue
+
+      expect(revenue).must_equal 0
+    end
+
+    it "a trip that costs less than 1.65 does not get added to revenue" do
+      driver = RideShare::Driver.new(
+        id: 54,
+        name: "Rogers Bartell IV",
+        vin: "1C9EVBRM0YBC564DZ",
+        status: :AVAILABLE,
+      )
+      trip1 = RideShare::Trip.new(
+        id: 8,
+        driver: driver,
+        passenger_id: 3,
+        start_time: "2016-08-08",
+        end_time: "2016-08-08",
+        cost: 10.5,
+        rating: 5,
+      )
+
+      trip2 = RideShare::Trip.new(
+        id: 10,
+        driver: driver,
+        passenger_id: 5,
+        start_time: "2019-01-01",
+        end_time: "2019-01-02",
+        cost: 0.0,
+        rating: 5,
+      )
+
+      driver.add_trip(trip1)
+      driver.add_trip(trip2)
+
+      revenue = driver.total_revenue
+      expect(revenue).must_equal 7.08
+    end
   end
 
-  xdescribe "net_expenditures" do
-    # You add tests for the net_expenditures method
+  describe "net_expenditures" do
   end
 end

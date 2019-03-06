@@ -12,10 +12,10 @@ module RideShare
         raise ArgumentError, "VIN must be 17 characters"
       end
       @vin = vin
-      unless status = :AVAILABLE || status = :UNAVAILABLE
+      @status = status.to_sym
+      unless @status == :AVAILABLE || @status == :UNAVAILABLE
         raise ArgumentError, "Status must either be :AVAILABLE or :UNAVAILABLE."
       end
-      @status = status
       @trips = trips || []
     end
 
@@ -33,6 +33,16 @@ module RideShare
       else
         return total / self.trips.length
       end
+    end
+
+    def total_revenue
+      revenue = 0
+      self.trips.each do |trip|
+        if trip.cost > 1.65
+          revenue += (trip.cost - 1.65) * 0.8
+        end
+      end
+      return revenue.truncate(2)
     end
 
     private
