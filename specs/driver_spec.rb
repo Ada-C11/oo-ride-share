@@ -16,12 +16,12 @@ describe "Driver class" do
     end
 
     it "throws an argument error with a bad VIN" do
-      expect { RideShare::Driver.new(id: 0, name: "George", vin: "33133313331333133") }.must_raise ArgumentError
+      expect { RideShare::Driver.new(id: 0, name: "George", vin: "33133313331333133", status: :AVAILABLE) }.must_raise ArgumentError
     end
 
     it "throws an argument error with a bad VIN value" do
-      expect { RideShare::Driver.new(id: 100, name: "George", vin: "") }.must_raise ArgumentError
-      expect { RideShare::Driver.new(id: 100, name: "George", vin: "33133313331333133extranums") }.must_raise ArgumentError
+      expect { RideShare::Driver.new(id: 100, name: "George", vin: "", status: :AVAILABLE ) }.must_raise ArgumentError
+      expect { RideShare::Driver.new(id: 100, name: "George", vin: "33133313331333133extranums", status: :AVAILABLE) }.must_raise ArgumentError
     end
 
     it "has a default status of :AVAILABLE" do
@@ -55,7 +55,8 @@ describe "Driver class" do
       @driver = RideShare::Driver.new(
         id: 3,
         name: "Test Driver",
-        vin: "12345678912345678"
+        vin: "12345678912345678",
+        status: :AVAILABLE
       )
       @trip = RideShare::Trip.new(
         id: 8,
@@ -83,7 +84,8 @@ describe "Driver class" do
       @driver = RideShare::Driver.new(
         id: 54,
         name: "Rogers Bartell IV",
-        vin: "1C9EVBRM0YBC564DZ"
+        vin: "1C9EVBRM0YBC564DZ",
+        status: :AVAILABLE
       )
       trip = RideShare::Trip.new(
         id: 8,
@@ -110,7 +112,8 @@ describe "Driver class" do
       driver = RideShare::Driver.new(
         id: 54,
         name: "Rogers Bartell IV",
-        vin: "1C9EVBRM0YBC564DZ"
+        vin: "1C9EVBRM0YBC564DZ",
+        status: :AVAILABLE
       )
       expect(driver.average_rating).must_equal 0
     end

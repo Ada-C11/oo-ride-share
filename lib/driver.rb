@@ -13,7 +13,7 @@ module RideShare
       @status = status
       @trips = trips || []
 
-      unless status == :AVAILABLE ||  status == :UNAVAILABLE
+      unless status.to_sym == :AVAILABLE || status.to_sym == :UNAVAILABLE
         raise ArgumentError, "Invalid status provided"
       end
       
@@ -49,7 +49,7 @@ module RideShare
         id: record[:id],
         name: record[:name],
         vin: record[:vin],
-        status: record[:status]
+        status: (record[:status]).to_sym
       )
     end
   end
