@@ -1,5 +1,5 @@
 require_relative 'csv_record'
-
+require "pry"
 
 module RideShare
   class Driver < CsvRecord
@@ -36,12 +36,11 @@ module RideShare
     def total_revenue
       if @trips.length == 0 
         raise ArgumentError, "Driver has no trips."
-      end 
-
-      raw_revenue = @trips.map{|trip| (trip.cost)}.sum
-      revenue = 0.8 * (raw_revenue - (trips.count * 1.65))
-      
-      return revenue
+      else 
+        raw_revenue = @trips.map{|trip| trip.cost }.sum
+        revenue = 0.8 * (raw_revenue - (trips.count * 1.65))
+        return revenue
+      end
     end
 
     def self.from_csv(record)

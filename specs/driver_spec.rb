@@ -64,6 +64,7 @@ describe "Driver class" do
         passenger: pass,
         start_time: "2016-08-08",
         end_time: "2018-08-09",
+        cost: 50.00,
         rating: 5
       )
     end
@@ -93,6 +94,7 @@ describe "Driver class" do
         passenger_id: 3,
         start_time: "2016-08-08",
         end_time: "2016-08-08",
+        cost: 100.00,
         rating: 5
       )
       @driver.add_trip(trip)
@@ -125,19 +127,16 @@ describe "Driver class" do
         passenger_id: 3,
         start_time: "2016-08-08",
         end_time: "2016-08-09",
+        cost: 10.00,
         rating: 1
       )
       @driver.add_trip(trip2)
 
       expect(@driver.average_rating).must_be_close_to (5.0 + 1.0) / 2.0, 0.01
     end
-  end
 
-  describe "total_revenue" do
-    # You add tests for the total_revenue method
-  end
-
-  describe "net_expenditures" do
-    # You add tests for the net_expenditures method
+    it "calculates total_revenue" do
+      expect(@driver.total_revenue).must_be_close_to 78.68
+    end
   end
 end

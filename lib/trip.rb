@@ -13,6 +13,8 @@ module RideShare
       driver: nil, driver_id: nil)
       super(id)
 
+      #raise ArgumentError, "Cost is nil" if cost.nil?
+
       if passenger
         @passenger = passenger
         @passenger_id = passenger.id
