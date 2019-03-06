@@ -7,30 +7,45 @@ module RideShare
 
     STATUS = [:AVAILABLE, :UNAVAILABLE]
 
-    def initialize(id:, name:, vin:, status: :AVAILABLE, trips: nil)
-        super(id)
-  
-        @name = name
-        @vin = vin
-        @status = status
-        @trips = trips || []
+    def initialize(id:, name:, vin:, status: :AVAILABLE, trips: [])
+      super(id)
 
-        if vin.length != 17
-            raise ArgumentError, "Invalid vin #{vin}."
-        end
+      @name = name
+      @vin = vin
+      @status = status.to_sym
+      @trips = trips
 
-        unless STATUS.include?(status)
-            raise ArgumentError, "Invalid status #{status}."
-        end
+      if vin.length != 17
+        raise ArgumentError, "Invalid vin #{vin}."
+      end
+
+      if !STATUS.include?(@status)
+        raise ArgumentError, "Invalid status #{@status}."
+      end
     end
 
-      def self.from_csv(record)
-        return new(
-                 id: record[:id],
-                 name: record[:name],
-                 vin: record[:vin],
-                 status: record[:status],
-               )
+    def add_trip(trip)
+      @trips << trip
+    end
+
+    def average_rating
+      rating = 0
+
+      @trips.each do |trip|
+        rating += trip.rating.to_f
       end
+
+      return @trips.length > 0 ?
+               (rating / @trips.length) : rating
+    end
+
+    def self.from_csv(record)
+      return new(
+               id: record[:id],
+               name: record[:name],
+               vin: record[:vin],
+               status: record[:status],
+             )
+    end
   end
 end

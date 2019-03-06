@@ -26,8 +26,13 @@ module RideShare
       @end_time = Time.parse(end_time)
       @cost = cost
       @rating = rating
-      @driver_id = driver_id
+
+      @driver_id = (driver && driver.id) || driver_id
       @driver = driver
+
+      if (@driver_id.nil? && @driver.nil?)
+        raise ArgumentError, "Driver or driver_id is required"
+      end
 
       if @end_time < @start_time
         raise ArgumentError.new("End time before start time.")
@@ -45,9 +50,11 @@ module RideShare
       "PassengerID=#{passenger&.id.inspect}>"
     end
 
-    def connect(passenger)
+    def connect(passenger, driver)
       @passenger = passenger
       passenger.add_trip(self)
+      @driver = driver
+      driver.add_trip(self)
     end
 
     def duration

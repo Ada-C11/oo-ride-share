@@ -14,23 +14,21 @@ describe "Trip class" do
         end_time: end_time.to_s,
         cost: 23.45,
         rating: 3,
-        driver_id: 2,
-        driver: 1,
+        driver: RideShare::Driver.new(
+          id: 1,
+          name: "Ada",
+          vin: "41243276405656657",
+        ),
       }
       @trip = RideShare::Trip.new(@trip_data)
     end
 
     it "has an end time that is after start time" do
-      start_time = Time.parse("2015-05-20T12:14:00+00:00")
-      end_time = start_time + 25 * 60 # 25 minutes
-      expect(end_time > start_time).must_equal true
+      expect(@trip.end_time > @trip.start_time).must_equal true
     end
 
     it "provides duration in seconds" do
-      start_time = Time.parse("2015-05-20T12:14:00+00:00")
-      end_time = start_time + 25 * 60 # 25 minutes
-      duration = (end_time - start_time).to_i
-      expect(duration).must_equal 1500
+      expect(@trip.duration).must_equal 1500
     end
 
     it "is an instance of Trip" do
@@ -42,7 +40,7 @@ describe "Trip class" do
     end
 
     it "stores an instance of driver" do
-      skip # Unskip after wave 2
+      # Unskip after wave 2
       expect(@trip.driver).must_be_kind_of RideShare::Driver
     end
 
