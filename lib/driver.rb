@@ -12,7 +12,8 @@ module RideShare
       if vin.length != 17
         raise ArgumentError, "VIN must be 17 digits."
       end
-      @status = status
+      @status = status.to_sym
+      # REMEMBER: raise an error if not AVAILABLE, UNAVAILABLE
       @trips = trips || []
     end
 
@@ -21,7 +22,7 @@ module RideShare
     end
 
     def average_rating
-      if @trips == nil
+      if @trips == nil # not working, needs attention
         return 0
       elsif ratings = @trips.map do |trip|
         trip.rating.to_f
