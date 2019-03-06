@@ -17,6 +17,10 @@ module RideShare
       end
     end
 
+    def add_trip(trip)
+      @trips << trip
+    end
+
     private
 
     def self.from_csv(record)
