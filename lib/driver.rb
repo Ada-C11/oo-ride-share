@@ -4,11 +4,15 @@ module RideShare
   class Driver < CsvRecord
     attr_reader :name, :vin, :status, :trips
 
-    def initialize(id:, name:, vin:, status:, trips: nil)
+    def initialize(id:, name:, vin:, status: :AVAILABLE, trips: nil)
       super(id)
       @name = name
       @vin = vin.length == 17 ? vin : (raise ArgumentError.new("Invalid Vin: #{vin.length} length"))
       @status = status
+      if ![:AVAILABLE, :UNAVAILABLE].include? (status)
+        raise ArgumentError, "Invalid Status"
+      end
+
       @trips = trips || []
     end
   end
