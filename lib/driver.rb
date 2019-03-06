@@ -31,6 +31,14 @@ module RideShare
       end
     end
 
+    def total_revenue
+      total_revenue = 0
+      @trips.each do |trip|
+        total_revenue += (trip.cost - 1.65) * 0.8
+      end
+      return total_revenue
+    end
+
     def self.validate_vin(vin)
       unless vin.length == 17
         raise ArgumentError, "Vin must have 17 characters"
