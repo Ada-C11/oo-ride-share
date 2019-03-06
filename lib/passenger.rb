@@ -25,6 +25,11 @@ module RideShare
     end
 
     def total_time_spent
+      total_time = 0
+      @trips.each do |trip|
+        total_time += trip.trip_duration
+      end
+      return total_time
     end
 
     private
