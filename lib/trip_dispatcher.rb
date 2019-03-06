@@ -47,6 +47,7 @@ module RideShare
           available_drivers << driver
         end
       end
+
       if trip_driver == ""
         raise ArgumentError, "No Available Drivers"
       end
