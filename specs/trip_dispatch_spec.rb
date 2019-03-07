@@ -64,8 +64,8 @@ describe "TripDispatcher class" do
 
         expect(first_passenger.name).must_equal "Passenger 1"
         expect(first_passenger.id).must_equal 1
-        expect(last_passenger.name).must_equal "Passenger 8"
-        expect(last_passenger.id).must_equal 8
+        expect(last_passenger.name).must_equal "Passenger 8" #
+        expect(last_passenger.id).must_equal 8 #
       end
 
       it "connects trips and passengers" do
@@ -108,9 +108,9 @@ describe "TripDispatcher class" do
         expect(first_driver.name).must_equal "Driver 1 (unavailable)"
         expect(first_driver.id).must_equal 1
         expect(first_driver.status).must_equal :UNAVAILABLE
-        expect(last_driver.name).must_equal "Driver 3 (no trips)"
-        expect(last_driver.id).must_equal 3
-        expect(last_driver.status).must_equal :AVAILABLE
+        expect(last_driver.name).must_equal "Driver 3 (no trips)" #
+        expect(last_driver.id).must_equal 3 #
+        expect(last_driver.status).must_equal :AVAILABLE # THIS MIGHT FAIL WHEN A NEW TRIP GETS ADDED.. Because it will go to the last position of the array. I'm starting to think it will not fail
       end
 
       it "connects trips and drivers" do
@@ -140,21 +140,37 @@ describe "TripDispatcher class" do
     #     driver: nil,
     #   }
     # @trip = RideShare::Trip.new(@trip_data)
+    before do
+      @dispatcher = build_test_dispatcher
+    end
 
     it "will return instance of trip" do
-      dispatcher = build_test_dispatcher
+      # dispatcher = build_test_dispatcher
+      last_trip_driver = @dispatcher.trips.last
+      passenger_id_new_trip = 1
+      request_new_trip = @dispatcher.request_trip(passenger_id_new_trip)
+      expect(request_new_trip).must_be_kind_of RideShare::Trip
+      expect(request_new_trip.id).must_equal 6
+      expect(request_new_trip.driver_id).must_equal 2
+      expect(request_new_trip.passenger_id).must_equal 1
+      expect(request_new_trip.start_time).must_be_kind_of Time
+      expect(request_new_trip.end_time).must_be_kind_of NilClass
+      expect(request_new_trip.rating).must_be_kind_of NilClass
+      puts "HEREEEEEEE #{request_new_trip.rating}"
+
+      # expect(last_trip_driver.driver_id).must_equal 2 # This is checking the test_data folder and it's not saving new trip
+      # puts "#{last_trip_driver.cost}"
       # create a new trip in request_trip
       #     instantiate Trip in TripDispatch ang pass the passenger id, OK
       #     trip id which will be the lenght of the @trips array OK
       #      start time Time.now (figure what format to give to the initialize as... I believe it should be string in .new) OK
-      # find passenger that is requesting the new trip using the id given --> I THINK WE DON'T NEED TO FIND THE PASSENGER WHEN CREATING THE TRIP
-      # find a driver from list that's available from a list check status OK
+
+      # find passenger that is requesting the new trip using the id given --> I THINK WE DON'T NEED TO FIND THE PASSENGER WHEN CREATING THE TRIP (didn't do it)
+      # find a driver that's available from a list check status OK
       # change driver status to unavailable -> by using the helper method OK added driver.find(driver_new_trip).status = :UNAVAILABLE in request_trip
-      #   in Driver class (change attr_reader for status or do the change within an instance method????)
-      # create the trip with a new time which is the current time Time.now
-      # set end date, cost, and rating to nil
-      # the trip hasn't finished ########
+
       # add a new trip instance to the collection in Passenger, Driver, and Tripdispatcher
+      #       trip added to collection of trips for driver OK
       # return the newly created trip (instance of Trip)
 
       ## NOT SURE IF WE SHOULD ADD
@@ -166,7 +182,10 @@ describe "TripDispatcher class" do
       # )
       #
 
-      expect(dispatcher.request_trip(1)).must_be_kind_of RideShare::Trip
     end
+
+    # it "returns the new trip created" do
+    #   last_trip_driver = @dispatcher.trips.last
+    # end
   end
 end
