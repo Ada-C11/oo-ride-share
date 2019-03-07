@@ -26,6 +26,15 @@ module RideShare
       return @drivers.find { |driver| driver.id == id }
     end
 
+    def request_trip(passenger_id)
+      Rideshare::Trip.new(
+        id: generate_trip_id,
+        passenger_id: passenger_id,
+        start_time: Time.now,
+        driver_id: find_avaiable,
+      )
+    end
+
     def inspect
       # Make puts output more useful
       return "#<#{self.class.name}:0x#{object_id.to_s(16)} \
@@ -35,6 +44,22 @@ module RideShare
     end
 
     private
+
+    def find_available
+      @drivers.each do |driver|
+        if driver.status == :AVAILABLE
+          driver.change_status
+          return driver.id
+        end
+      end
+      raise ArgumentError, "There are no available drivers."
+    end
+
+    def generate_trip_id
+      trip_id_array = @trips.map { |record| record.id }
+      generate_id = trip_id_array.max + 1
+      return generate_id
+    end
 
     def connect_trips
       @trips.each do |trip|

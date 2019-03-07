@@ -23,16 +23,6 @@ module RideShare
       @status = @status == :AVAILABLE ? :UNAVAILABLE : :AVAILABLE
     end
 
-    def find_available(drivers)
-      drivers.each do |driver|
-        if driver.status == :AVAILABLE
-          driver.change_status
-          return driver.id
-        end
-      end
-      raise ArgumentError, "There are no available drivers."
-    end
-
     def average_rating
       total = 0
       if trips.length == 0 || trips.length == nil
