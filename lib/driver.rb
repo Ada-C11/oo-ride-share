@@ -20,6 +20,14 @@ module RideShare
       @trips << trip
     end
 
+    def average_rating
+      average_rating = @trips.sum do |trip|
+        trip.rating
+      end
+      average_rating /= @trips.length.to_f if @trips.length > 0
+      return average_rating
+    end
+
     def self.from_csv(record)
       return new(
                id: record[:id],
