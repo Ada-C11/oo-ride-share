@@ -146,7 +146,7 @@ describe "TripDispatcher class" do
 
     it "the new trip id will be the next sequentially available id" do
       passenger_id = dispatcher.passengers[2].id
-      expect(dispatcher.request_trip(passenger_id).id).must_equal dispatcher.trips.length + 1
+      expect(dispatcher.request_trip(passenger_id).id).must_equal dispatcher.trips.length
     end
 
     it "the trip will be added to the driver's trips" do
