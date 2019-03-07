@@ -71,6 +71,7 @@ describe "Driver class" do
         start_time: "2016-08-08",
         end_time: "2018-08-09",
         rating: 5,
+        cost: 25
       )
     end
 
@@ -99,7 +100,9 @@ describe "Driver class" do
         start_time: "2016-08-08",
         end_time: "2016-08-08",
         rating: 5,
+        cost: 25
       )
+
       @driver.add_trip(trip)
     end
 
@@ -138,10 +141,43 @@ describe "Driver class" do
   end
 
   describe "total_revenue" do
-    
-  end
+    it "will return 80% sum of trips minus 1.65/trip deductions" do
+      @driver = RideShare::Driver.new(
+        id: 54,
+        name: "Rogers Bartell IV",
+        vin: "1C9EVBRM0YBC564DZ",
+      )
+      trip = RideShare::Trip.new(
+        id: 8,
+        driver: @driver,
+        passenger_id: 3,
+        start_time: "2016-08-08",
+        end_time: "2016-08-08",
+        rating: 5,
+        cost: 25
+      )
+      trip2 = RideShare::Trip.new(
+        id: 9,
+        driver: @driver,
+        passenger_id: 3,
+        start_time: "2016-08-08",
+        end_time: "2016-08-09",
+        rating: 1,
+        cost: 25
+      )
+      @driver.add_trip(trip)
+      @driver.add_trip(trip2)
 
-  # describe "net_expenditures" do
-  #   # You add tests for the net_expenditures method
-  # end
+      expect(@driver.total_revenue).must_equal 36.70
+    end
+
+    it "will return 0 if no trips given" do
+      @driver = RideShare::Driver.new(
+        id: 55,
+        name: "Rogers Bartell IV",
+        vin: "1C9EVBRM0YBC564DZ",
+      )
+      expect(@driver.total_revenue).must_equal 0
+    end
+  end
 end

@@ -38,6 +38,13 @@ module RideShare
 
     # calculates driver's total revenue across all trips. each driver gets 80% of trip cost after a fee of 1.65 is deducted
     def total_revenue
+      cost_per_trip = []
+      @trips.each do |trip|
+        cost_per_trip << trip.cost
+      end
+      deduction = (1.65 * cost_per_trip.length)
+      total_income = ((cost_per_trip.sum * 0.8) - deduction)
+      return total_income
     end
 
     private
