@@ -39,7 +39,7 @@ module RideShare
       driver_id = available_driver.id
       time = Time.now.to_s
       
-      in_progress_trip = Trip.new(
+      @in_progress_trip = Trip.new(
         id: 7,
         passenger_id: passenger_id,
         start_time: time,
@@ -50,7 +50,9 @@ module RideShare
         driver_id: driver_id
         )
         
-      return in_progress_trip
+      return @in_progress_trip
+      
+      available_driver.accept_new_trip(@in_progress_trip)
     end
 
     private
