@@ -45,7 +45,7 @@ describe "Driver class" do
     end
   end
 
-  xdescribe "add_trip method" do
+  describe "add_trip method" do
     before do
       pass = RideShare::Passenger.new(
         id: 1,
@@ -64,6 +64,7 @@ describe "Driver class" do
         start_time: "2016-08-08",
         end_time: "2018-08-09",
         rating: 5,
+        driver_id: 2,
       )
     end
 
@@ -78,7 +79,7 @@ describe "Driver class" do
     end
   end
 
-  xdescribe "average_rating method" do
+  describe "average_rating method" do
     before do
       @driver = RideShare::Driver.new(
         id: 54,
@@ -92,6 +93,7 @@ describe "Driver class" do
         start_time: "2016-08-08",
         end_time: "2016-08-08",
         rating: 5,
+        driver_id: 2,
       )
       @driver.add_trip(trip)
     end
@@ -123,6 +125,8 @@ describe "Driver class" do
         start_time: "2016-08-08",
         end_time: "2016-08-09",
         rating: 1,
+        driver_id: 2,
+
       )
       @driver.add_trip(trip2)
 
@@ -130,11 +134,7 @@ describe "Driver class" do
     end
   end
 
-  xdescribe "total_revenue" do
+  describe "total_revenue" do
     # You add tests for the total_revenue method
-  end
-
-  xdescribe "net_expenditures" do
-    # You add tests for the net_expenditures method
   end
 end

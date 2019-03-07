@@ -20,8 +20,24 @@ module RideShare
       @trips << trip
     end
 
-    def avg_rating
-      return @trips.sum { |trip| trip.rating } / @trips.length
+    def average_rating
+      if @trips.length == 0
+        return 0
+      else
+        return @trips.sum { |trip| trip.rating } / @trips.length.to_f
+      end
+    end
+
+    def total_revenue
+      driver_revenue = @trips.map do |trip|
+        if trip.cost > 1.65
+          trip.cost - 1.65
+        else
+          trip.cost
+        end
+      end
+
+      return driver_revenue.sum * 0.8
     end
 
     private
