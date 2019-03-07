@@ -1,6 +1,6 @@
 require "csv"
 require "time"
-# TEST_DATA_DIRECTORY = "./specs/test_data"
+TEST_DATA_DIRECTORY = "./specs/test_data"
 
 require_relative "csv_record"
 require_relative "passenger"
@@ -15,7 +15,6 @@ module RideShare
       @passengers = Passenger.load_all(directory: directory)
       @trips = Trip.load_all(directory: directory)
       @drivers = Driver.load_all(directory: directory)
-
       connect_trips
     end
 
@@ -25,7 +24,8 @@ module RideShare
     end
 
     def find_driver(id)
-      return @drivers.find { |driver| driver.id }
+      Driver.validate_id(id)
+      return @drivers.find { |driver| driver.id == id }
     end
 
     def inspect
@@ -36,18 +36,39 @@ module RideShare
               #{passengers.count} passengers>"
     end
 
+    def request_trip(passenger_id)
+      passenger_id = passenger_id
+      first_available_driver = @drivers.find { |driver| driver.status == :AVAILABLE }
+      first_available_driver_id = first_available_driver.id
+      current_time = Time.now.to_s
+      puts Time.parse(current_time)
+      end_time = nil
+      cost = nil
+      rating = nil
+      trip_id = rand(100..999)
+      trip_data = {id: trip_id,
+                   passenger_id: passenger_id,
+                   passenger: find_passenger(passenger_id),
+                   start_time: current_time,
+                   end_time: end_time,
+                   cost: cost,
+                   rating: rating,
+                   driver: first_available_driver,
+                   driver_id: first_available_driver_id}
+      return Trip.new(trip_data)
+    end
+
     private
 
     def connect_trips
       @trips.each do |trip|
-        # passenger_id = trip.passenger_id
         passenger = find_passenger(trip.passenger_id)
         trip.connect(passenger)
+      end
 
-        @trips.each do |trip|
-          driver = find_driver(trip.driver_id)
-          trip.connect_driver(driver)
-        end
+      @trips.each do |trip|
+        driver = find_driver(trip.driver_id)
+        trip.connect_driver(driver)
       end
 
       return trips
@@ -61,5 +82,5 @@ end
 #          )
 # end
 
-# @dispatcher = build_test_dispatcher
-# p @dispatcher.drivers
+# @dispatcher = build_test_dispatcher\
+# drivers = @dispatcher.drivers

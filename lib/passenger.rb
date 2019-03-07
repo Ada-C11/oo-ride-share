@@ -19,8 +19,6 @@ module RideShare
     end
 
     def net_expenditures
-      # total_cost = @trips.inject { |sum, trip| sum + trip.cost }
-      # puts "total_cost"
       if trips == []
         return "This passenger has taken no trips."
       else

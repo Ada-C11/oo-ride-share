@@ -122,4 +122,27 @@ describe "TripDispatcher class" do
       end
     end
   end
+
+  # wave 3
+  describe "request trip" do
+    before do
+      @dispatcher = build_test_dispatcher
+      @passenger_id = 1
+    end
+    it "creates an instance of type Trip" do
+      puts @dispatcher.request_trip(@passenger_id)
+      expect(@dispatcher.request_trip(@passenger_id)).must_be_kind_of RideShare::Trip
+    end
+    it "updates the trip list for the driver" do
+      trip_requested = @dispatcher.request_trip(@passenger_id)
+      driver = trip_requested.driver
+      driver.driver_trip_status_after_trip_request(trip_requested)
+      last = driver.trips.last
+      expect(last.passenger_id).must_equal 1
+      passenger = trip_requested.passenger
+      passenger.add_trip(trip_requested)
+      last2 = passenger.trips.last
+      expect(last2.end_time).must_equal nil
+    end
+  end
 end

@@ -21,16 +21,22 @@ module RideShare
         raise ArgumentError, "Passenger or passenger_id is required"
       end
       @start_time = Time.parse(start_time)
-      @end_time = Time.parse(end_time)
-      #if end time is before start time, raise an argument error
-      if @start_time > @end_time
-        raise ArgumentError
+      if !end_time.nil?
+        @end_time = Time.parse(end_time)
+        #if end time is before start time, raise an argument error
+        if @start_time > @end_time
+          raise ArgumentError
+        end
+      else
+        @end_time = nil
       end
+
       @cost = cost
       @rating = rating
-
-      if @rating > 5 || @rating < 1
-        raise ArgumentError.new("Invalid rating #{@rating}")
+      if !rating.nil?
+        if @rating > 5 || @rating < 1
+          raise ArgumentError.new("Invalid rating #{@rating}")
+        end
       end
       @driver = driver
       @driver_id = driver_id
@@ -45,10 +51,6 @@ module RideShare
     end
 
     def duration_seconds
-      # hour_to_seconds = (@end_time.hour - @start_time.hour) * 60 * 60
-      # minutes_to_seconds = (@end_time.min - @start_time.min) * 60
-      # seconds = @end_time.sec - start_time.sec
-      # total_duration_sec = hour_to_seconds + minutes_to_seconds + seconds
       return @end_time - @start_time
     end
 
@@ -67,6 +69,7 @@ module RideShare
     def self.from_csv(record)
       return self.new(
                id: record[:id],
+               driver_id: record[:driver_id],
                passenger_id: record[:passenger_id],
                start_time: record[:start_time],
                end_time: record[:end_time],
@@ -77,18 +80,18 @@ module RideShare
   end
 end
 
-start_time = Time.parse("2015-05-20T11:04:00+00:00")
-# end_time = start_time + 25 * 60 # 25 minutes
-end_time = Time.parse("2015-05-20T12:02:00+00:00")
-trip_data = {
-  id: 8,
-  passenger: RideShare::Passenger.new(id: 1,
-                                      name: "Ada",
-                                      phone_number: "412-432-7640"),
-  start_time: start_time.to_s,
-  end_time: end_time.to_s,
-  cost: 23.45,
-  rating: 3,
-}
-# trip = RideShare::Trip.new(trip_data)
-# puts trip.duration_seconds
+# start_time = Time.parse("2015-05-20T11:04:00+00:00")
+# # end_time = start_time + 25 * 60 # 25 minutes
+# end_time = Time.parse("2015-05-20T12:02:00+00:00")
+# trip_data = {
+#   id: 8,
+#   passenger: RideShare::Passenger.new(id: 1,
+#                                       name: "Ada",
+#                                       phone_number: "412-432-7640"),
+#   start_time: start_time.to_s,
+#   end_time: end_time.to_s,
+#   cost: 23.45,
+#   rating: 3,
+# }
+# # trip = RideShare::Trip.new(trip_data)
+# # puts trip.duration_seconds
