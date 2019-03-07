@@ -134,7 +134,9 @@ describe "TripDispatcher class" do
       end
 
       it "returns an error when there are no available drivers" do
-
+        available_driver = nil
+        expect(ongoing_trip = @dispatcher.request_trip(9))
+        expect(ongoing_trip).must_raise ArgumentError
       end
 
 
