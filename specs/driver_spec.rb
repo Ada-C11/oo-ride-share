@@ -165,36 +165,18 @@ describe "Driver class" do
       expect(@driver.total_revenue).must_be_kind_of Float
     end
 
-    it "returns a float that is 80 percent of (driver's earnings - 1.65)" do
+    it "It accurately calculates total revenue -- 80 percent of (driver's earnings - 1.65)" do
       total_revenue = @driver.total_revenue
       expect(total_revenue).must_equal 26.16
     end
 
-    # it "returns zero if no driven trips" do
-    #   driver = RideShare::Driver.new(
-    #     id: 54,
-    #     name: "Rogers Bartell IV",
-    #     vin: "1C9EVBRM0YBC564DZ",
-    #   )
-    #   expect(driver.average_rating).must_equal 0
-    # end
-
-    # it "correctly calculates the average rating" do
-    #   trip2 = RideShare::Trip.new(
-    #     id: 8,
-    #     driver: @driver,
-    #     passenger_id: 3,
-    #     start_time: "2016-08-08",
-    #     end_time: "2016-08-09",
-    #     rating: 1,
-    #   )
-    #   @driver.add_trip(trip2)
-
-    #   expect(@driver.average_rating).must_be_close_to (5.0 + 1.0) / 2.0, 0.01
-    # end
-  end
-
-  describe "net_expenditures" do
-    # You add tests for the net_expenditures method
+    it "returns zero if no driven trips" do
+      driver = RideShare::Driver.new(
+        id: 54,
+        name: "Rogers Bartell IV",
+        vin: "1C9EVBRM0YBC564DZ",
+      )
+      expect(driver.total_revenue).must_equal 0
+    end
   end
 end
