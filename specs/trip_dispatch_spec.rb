@@ -165,5 +165,11 @@ describe "TripDispatcher class" do
       trip = dispatcher.request_trip(passenger_id)
       expect(dispatcher.trips[-1]).must_equal trip
     end
+
+    it "new trip's end time should be nil" do
+      passenger_id = dispatcher.passengers[2].id
+      trip = dispatcher.request_trip(passenger_id)
+      expect(trip.end_time).must_be_nil
+    end
   end
 end
