@@ -10,8 +10,8 @@ module RideShare
     def initialize(id:, driver: nil, driver_id: nil, passenger: nil, passenger_id: nil, start_time:, end_time:, cost: nil, rating:)
       super(id)
 
-      @driver = driver
-      @driver_id = driver_id
+      # @driver = driver
+      # @driver_id = driver_id
       if driver
         @driver = driver
         @driver_id = driver.id
@@ -20,7 +20,7 @@ module RideShare
       else
         raise ArgumentError, "Driver or driver ID is required"
       end
-
+      
       if passenger
         @passenger = passenger
         @passenger_id = passenger.id
@@ -75,7 +75,7 @@ module RideShare
                start_time: record[:start_time],
                end_time: record[:end_time],
                cost: record[:cost],
-               rating: record[:rating],
+               rating: record[:rating]
              )
     end
   end

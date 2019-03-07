@@ -41,7 +41,7 @@ module RideShare
       cost_per_trip = []
       @trips.each do |trip|
         if trip.cost < 1.65
-          cost_per_trip << 0
+          cost_per_trip << trip.cost * 0.8
         else
           cost_per_trip << (trip.cost - 1.65) * 0.8
         end
