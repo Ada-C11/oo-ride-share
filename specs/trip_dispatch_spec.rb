@@ -125,23 +125,20 @@ describe "TripDispatcher class" do
   describe "request_trip(passenger_id)" do
     before do
       @dispatcher = build_test_dispatcher
-      puts @dispatcher.trips[0].passenger_id
-      # @trip = RideShare::Trip.new(
-      #   driver_id: 3,
-      #   id: 7,
-      #   passenger: 9,
-      #   start_time: Time.now,
-      # )
-      @passenger = RideShare::Passenger.new(
-        id: 9,
-        name: "Merl Glover III",
-        phone_number: "1-602-620-2330 x3723",
-        trips: [],
-      )
+      puts @dispatcher.drivers[1].status
     end
 
-    it "will supply passenger ID" do
+    
+
+    it "returns an instance of a Trip" do
       expect(@dispatcher.request_trip(1)).must_be_kind_of RideShare::Trip
     end
-  end
+
+    it "should select driver with status AVAILABLE" do
+      new_trip = @dispatcher.request_trip(1)
+      available_driver = @dispatcher.find_driver(new_trip.driver_id)
+      expect(available_driver.status).must_equal :AVAILABLE
+    end
+
+ end
 end
