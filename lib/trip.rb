@@ -5,11 +5,11 @@ require_relative "csv_record"
 
 module RideShare
   class Trip < CsvRecord
-    attr_reader :id, :passenger, :passenger_id, :start_time, :end_time, :cost, :rating
+    attr_reader :id, :passenger, :passenger_id, :start_time, :end_time, :cost, :rating, :driver_id, :driver
 
     def initialize(id:,
                    passenger: nil, passenger_id: nil,
-                   start_time:, end_time:, cost: nil, rating:)
+                   start_time:, end_time:, cost: nil, rating:, driver_id:, driver:)
       super(id)
 
       if passenger
@@ -25,6 +25,8 @@ module RideShare
       @end_time = Time.parse(end_time)
       @cost = cost
       @rating = rating
+      @driver_id = driver_id
+      @driver = driver
 
       if @end_time < @start_time
         raise ArgumentError, "End time must be a later time than start time"
@@ -63,6 +65,8 @@ module RideShare
                end_time: record[:end_time],
                cost: record[:cost],
                rating: record[:rating],
+               driver_id: record[:driver_id],
+               driver: record[:driver],
              )
     end
   end
