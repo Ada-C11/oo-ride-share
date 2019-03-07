@@ -23,16 +23,19 @@ module RideShare
 
       @driver_id = driver_id
       @start_time = Time.parse(start_time)
-      @end_time = Time.parse(end_time)
+      if end_time != nil
+        @end_time = Time.parse(end_time)
+      end
       @cost = cost
       @rating = rating
 
       if @end_time != nil && (@start_time > @end_time)
         raise ArgumentError, "Start time cannot preceed end time."
       end
-
-      if @rating > 5 || @rating < 1
-        raise ArgumentError.new("Invalid rating #{@rating}")
+      if @rating != nil
+        if @rating > 5 || @rating < 1
+          raise ArgumentError.new("Invalid rating #{@rating}")
+        end
       end
     end
 

@@ -121,4 +121,27 @@ describe "TripDispatcher class" do
       end
     end
   end
+
+  describe "request_trip(passenger_id)" do
+    before do
+      @dispatcher = build_test_dispatcher
+      puts @dispatcher.trips[0].passenger_id
+      # @trip = RideShare::Trip.new(
+      #   driver_id: 3,
+      #   id: 7,
+      #   passenger: 9,
+      #   start_time: Time.now,
+      # )
+      @passenger = RideShare::Passenger.new(
+        id: 9,
+        name: "Merl Glover III",
+        phone_number: "1-602-620-2330 x3723",
+        trips: [],
+      )
+    end
+
+    it "will supply passenger ID" do
+      expect(@dispatcher.request_trip(1)).must_be_kind_of RideShare::Trip
+    end
+  end
 end
