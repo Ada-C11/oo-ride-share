@@ -15,6 +15,9 @@ describe "Trip class" do
         cost: 23.45,
         rating: 3,
         driver_id: 1,
+        driver: RideShare::Driver.new(id: 1,
+                                      name: "Paul Klee",
+                                      vin: "WBS76FYD47DJF7206"),
       }
       @trip = RideShare::Trip.new(@trip_data)
     end

@@ -35,12 +35,12 @@ module RideShare
     end
 
     def find_available_driver
-      @drivers.each do |driver|
-        if driver.status == :AVAILABLE
-          return driver
-        end
+      eligible_driver_list = @drivers.select { |driver| driver.status == :AVAILABLE && driver.last_end_time = nil }
+      unless eligible_driver_list.empty? # list of drivers that have never taken a RideShare and that array is not empty
+        return eligible_driver_list.first
       end
-      return nil
+      return @drivers.min_by { |driver| driver.last_end_time }
+        # return driver with the smallest end time which is really the furthest one away
     end
 
     def request_trip(passenger_id)

@@ -5,14 +5,15 @@ require_relative "csv_record"
 require_relative 'trip'
 
 module RideShare
-  class Driver < CsvRecord
-    attr_reader :name, :vin, :status, :trips
+  class Driver < CsvRecord # Added last end time to driver. This stores information about when an instance of driver last took a rice
+    attr_reader :name, :vin, :status, :trips, :last_end_time
 
     DRIVE_STATUS = [:AVAILABLE, :UNAVAILABLE]
 
     def initialize(id:, name:, vin:, status: :AVAILABLE, trips: nil)
       super(id)
       @name = name
+      @last_end_time = nil
       @vin = vin
       if vin.length != 17 || nil
         return raise ArgumentError, "Invalid VIN"
@@ -54,9 +55,10 @@ module RideShare
       return driver_take_home
     end
 
-
-    # def net_expenditures
-    # end
+# takes an instance of trip and assigns the end time of that trip to the driver instance variable of last end time.
+    def accept_trip(trip)
+      @last_end_time = trip.end_time
+    end
 
     # private
 
