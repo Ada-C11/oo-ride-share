@@ -22,9 +22,11 @@ module RideShare
       end  
     end
 
+
     def add_trip(trip)
       @trips << trip
     end
+    
     
     def average_rating
       if @trips.count == 0
@@ -32,6 +34,7 @@ module RideShare
       end
       return (@trips.map{|trip| trip.rating}.sum).to_f/@trips.count
     end
+    
 
     def total_revenue
       if @trips.length == 0 
@@ -46,6 +49,7 @@ module RideShare
       end
     end
 
+
     def self.from_csv(record)
       return new(
         id: record[:id],
@@ -55,6 +59,28 @@ module RideShare
       )
     end
 
+#     Modify this selected driver using a new helper method in Driver:
+# Add the new trip to the collection of trips for that Driver
+# Set the driver's status to :UNAVAILABLE 
+# Add the Trip to the Passenger's list of Trips
+# Add the new trip to the collection of all Trips in TripDispatcher
+# Return the newly created trip
+# in_progress_trip = Trip.new(
+#         id: 7,
+#         passenger_id: passenger_id,
+#         start_time: time,
+#         end_time: nil, 
+#         cost: nil, 
+#         rating: nil,
+#         driver: available_driver, 
+#         driver_id: driver_id
+#         )
+    
+    def self.accept_new_trip(trip)
+      trip = Rideshare::TripDispatcher.request_new_trip
+        self.add_trip(trip)
+        self.status = :UNAVAILABLE 
+    end
     
   end
 
