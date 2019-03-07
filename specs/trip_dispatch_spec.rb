@@ -124,7 +124,7 @@ describe "TripDispatcher class" do
 
   describe "Requesting a trip" do
     before do
-      @passenger_id = 4 # why doesn't this work?
+      @passenger_id = 4 
       @dispatcher = build_test_dispatcher
     end
 
@@ -136,6 +136,23 @@ describe "TripDispatcher class" do
     it "assigns a driver" do
       new_trip = @dispatcher.request_trip(@passenger_id)
       expect(new_trip.driver).must_be_kind_of RideShare::Driver
+    end
+
+    it "Assigns :AVAILABLE driver" do 
+      new_trip = @dispatcher.request_trip(@passenger_id)
+      expect(new_trip.driver.status).must_equal :AVAILABLE
+    end
+
+    it "Uses time for the start time" do 
+      new_trip = @dispatcher.request_trip(@passenger_id)
+      expect(new_trip.start_time).must_be_kind_of Time
+    end
+
+    it "End date cost and rating will all be nil" do
+      new_trip = @dispatcher.request_trip(@passenger_id)
+      expect(new_trip.end_time).must_equal nil
+      expect(new_trip.cost).must_equal nil
+      expect(new_trip.rating).must_equal nil
     end
   end
 end
