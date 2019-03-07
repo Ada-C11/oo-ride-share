@@ -117,7 +117,7 @@ describe "Driver class" do
 
     it "correctly calculates the average rating" do
       trip2 = RideShare::Trip.new(
-        id: 8,
+        id: 10,
         driver: @driver,
         passenger_id: 3,
         start_time: "2016-08-08",
@@ -146,7 +146,7 @@ describe "Driver class" do
         rating: 5,
       )
       trip2 = RideShare::Trip.new(
-        id: 8,
+        id: 10,
         passenger_id: 12,
         driver_id: 1,
         start_time: "2015-05-20T12:14:00+00:00",
@@ -161,11 +161,12 @@ describe "Driver class" do
 
     it "calculates total revenue" do
       total_revenue = @driver.total_revenue
-      expect(total_revenue).must_be_close_to (60 - 2 * 1.65) * 0.8
+      expected_value = (60 - 2 * 1.65) * 0.8
+      expect(total_revenue).must_be_close_to expected_value
     end
     it "calculates total revenue when some trips cost less than $1.65" do
       cheap_trip = RideShare::Trip.new(
-        id: 8,
+        id: 10,
         passenger_id: 12,
         driver_id: 1,
         start_time: "2015-05-20T12:14:00+00:00",
@@ -175,7 +176,8 @@ describe "Driver class" do
       )
       @driver.add_trip(cheap_trip)
       # Added $1 cost to total which all gets taken away in fees!
-      expect(@driver.total_revenue).must_be_close_to (61 - (2 * 1.65) - 1) * 0.8
+      expected_value = (61 - (2 * 1.65) - 1) * 0.8
+      expect(@driver.total_revenue).must_be_close_to expected_value
     end
   end
 end

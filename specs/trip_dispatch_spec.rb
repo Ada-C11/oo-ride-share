@@ -120,81 +120,66 @@ describe "TripDispatcher class" do
         end
       end
     end
-
-    describe "request trip" do
-      before do
-        def build_test_dispatcher
-          return RideShare::TripDispatcher.new(
-                   directory: TEST_DATA_DIRECTORY,
-                 )
-        end
-      end
-
-      it "is an instance of Trip" do
-        test_dispatcher = build_test_dispatcher
-        expect(test_dispatcher.request_trip(1)).must_be_instance_of RideShare::Trip
-      end
-      it "updates trip lists for driver and passenger" do
-        test_dispatcher = build_test_dispatcher
-        new_trip = test_dispatcher.request_trip(1)
-
-        expect(new_trip.passenger.trips).must_include new_trip
-        expect(new_trip.driver.trips).must_include new_trip
-      end
-
-      it "only assigns available drivers" do
-        test_dispatcher = build_test_dispatcher
-
-        available_drivers = test_dispatcher.drivers.select { |driver| driver.status == :AVAILABLE }
-        new_trip = test_dispatcher.request_trip(1)
-
-        expect(available_drivers).must_include new_trip.driver
-      end
-
-      it "will change an assigned driver's status to :UNAVAILABLE" do
-        test_dispatcher = build_test_dispatcher
-        new_trip = test_dispatcher.request_trip(1)
-
-        expect(new_trip.driver.status).must_equal :UNAVAILABLE
-      end
-
-      it "will return nil if no drivers are available" do
-        test_dispatcher = build_test_dispatcher
-
-        # select all available drivers
-        count_available_drivers = test_dispatcher.drivers.count { |driver| driver.status == :AVAILABLE }
-
-        # exhaust all available drivers
-        count_available_drivers.times do |time|
-          test_dispatcher.request_trip(1)
-        end
-
-        expect(test_dispatcher.request_trip(1)).must_be_nil
-      end
-
-      it "returns nil for unfinished trip's end time" do
-        test_dispatcher = build_test_dispatcher
-        new_trip = test_dispatcher.request_trip(1)
-
-        expect(new_trip.end_time).must_be_nil
-      end
-
-      it "returns nil for unfinished trip's cost" do
-        test_dispatcher = build_test_dispatcher
-        new_trip = test_dispatcher.request_trip(1)
-
-        expect(new_trip.cost).must_be_nil
-      end
-
-      it "returns nil for unfinished trip's rating" do
-        test_dispatcher = build_test_dispatcher
-        new_trip = test_dispatcher.request_trip(1)
-
-        expect(new_trip.rating).must_be_nil
-      end
+  end
+  describe "request trip" do
+    before do
+      @dispatcher = build_test_dispatcher
+      @new_trip = @dispatcher.request_trip(1)
     end
-    describe "handles unfinished trips" do
-      it "calculates total money spent for Passenger with unfinished trip" do
+    it "is an instance of Trip" do
+      expect(@new_trip).must_be_instance_of RideShare::Trip
+    end
+    it "updates trip lists for driver and passenger" do
+      expect(@new_trip.passenger.trips).must_include @new_trip
+      expect(@new_trip.driver.trips).must_include @new_trip
+    end
+
+    it "will change an assigned driver's status to :UNAVAILABLE" do
+      expect(@new_trip.driver.status).must_equal :UNAVAILABLE
+    end
+
+    it "returns nil for unfinished trip's end time" do
+      expect(@new_trip.end_time).must_be_nil
+    end
+
+    it "returns nil for unfinished trip's cost" do
+      expect(@new_trip.cost).must_be_nil
+    end
+
+    it "returns nil for unfinished trip's rating" do
+      expect(@new_trip.rating).must_be_nil
+    end
+
+    it "will return nil if no passenger with id is found" do
+      expect(@dispatcher.request_trip(10000)).must_be_nil
+    end
+
+    it "will return nil if no drivers are available" do
+      test_dispatcher = build_test_dispatcher
+
+      # select all available drivers
+      count_available_drivers = test_dispatcher.drivers.count { |driver| driver.status == :AVAILABLE }
+
+      # exhaust all available drivers
+      count_available_drivers.times do |time|
+        test_dispatcher.request_trip(1)
+      end
+
+      expect(test_dispatcher.request_trip(1)).must_be_nil
+    end
+
+    it "only assigns available drivers" do
+      test_dispatcher = build_test_dispatcher
+
+      available_drivers = test_dispatcher.drivers.select { |driver| driver.status == :AVAILABLE }
+      new_trip = test_dispatcher.request_trip(1)
+
+      expect(available_drivers).must_include new_trip.driver
+    end
+  end
+  describe "handles unfinished trips" do
+    describe "passenger methods" do
+      it "calculates net expenditures for Passenger with unfinished trip" do
         test_dispatcher = build_test_dispatcher
         before = test_dispatcher.find_passenger(1).net_expenditures
         new_trip = test_dispatcher.request_trip(1)
@@ -202,7 +187,7 @@ describe "TripDispatcher class" do
         expect(after).must_equal before
       end
 
-      it "calculates total money spent if passenger's only trip is unfinished" do
+      it "calculates net expenditures if Passenger's only trip is unfinished" do
         passenger = RideShare::Passenger.new(
           id: 9,
           name: "Merl Glover III",
@@ -223,6 +208,36 @@ describe "TripDispatcher class" do
         expect(passenger.net_expenditures).must_equal 0
       end
 
+      it "calculates total time spent for Passenger with unfinished trip" do
+        test_dispatcher = build_test_dispatcher
+        before = test_dispatcher.find_passenger(1).total_time_spent
+        new_trip = test_dispatcher.request_trip(1)
+        after = new_trip.passenger.total_time_spent
+        expect(after).must_equal before
+      end
+
+      it "calculates total time spent if Passenger's only trip is unfinished" do
+        passenger = RideShare::Passenger.new(
+          id: 9,
+          name: "Merl Glover III",
+          phone_number: "1-602-620-2330 x3723",
+          trips: [],
+        )
+        trip1 = RideShare::Trip.new(
+          id: 8,
+          passenger: passenger,
+          driver_id: 1,
+          start_time: "2015-05-20T12:14:00+00:00",
+          end_time: nil,
+          cost: nil,
+          rating: nil,
+        )
+        passenger.add_trip(trip1)
+
+        expect(passenger.total_time_spent).must_equal 0
+      end
+    end
+    describe "driver methods" do
       it "calculates average rating of Driver with unfinished trip" do
         test_dispatcher = build_test_dispatcher
         assigned_driver = test_dispatcher.intelligent_dispatch
@@ -232,7 +247,7 @@ describe "TripDispatcher class" do
         expect(after).must_equal before
       end
 
-      it "calculates driver average rating if only trip is incomplete" do
+      it "calculates average rating of Driver if only trip is incomplete" do
         test_driver = RideShare::Driver.new(id: 1,
                                             name: "Valentine",
                                             vin: "DF5S6HFG365HGDCVG",
@@ -252,7 +267,7 @@ describe "TripDispatcher class" do
         expect(test_driver.average_rating).must_equal 0
       end
 
-      it "calculates driver total revenue for Driver with unfinished trip" do
+      it "calculates total revenue for Driver with unfinished trip" do
         test_dispatcher = build_test_dispatcher
         assigned_driver = test_dispatcher.intelligent_dispatch
         before = assigned_driver.total_revenue
@@ -261,7 +276,7 @@ describe "TripDispatcher class" do
         expect(after).must_equal before
       end
 
-      it "calculates total_revenue if only trip is incomplete" do
+      it "calculates total revenue for Driver if only trip is incomplete" do
         test_driver = RideShare::Driver.new(id: 1,
                                             name: "Valentine",
                                             vin: "DF5S6HFG365HGDCVG",
@@ -280,41 +295,36 @@ describe "TripDispatcher class" do
 
         expect(test_driver.total_revenue).must_equal 0
       end
-
-      it "returns nil if calculating duration of unfinished trip" do
+    end
+    describe "trip methods" do
+      it "returns nil if calculating duration of unfinished Trip" do
         test_dispatcher = build_test_dispatcher
         new_trip = test_dispatcher.request_trip(1)
         expect(new_trip.calculate_duration).must_be_nil
       end
-      it "excludes unfinished trips in total time spent" do
-        test_dispatcher = build_test_dispatcher
-        before = test_dispatcher.find_passenger(1).total_time_spent
-        new_trip = test_dispatcher.request_trip(1)
-        after = new_trip.passenger.total_time_spent
-        expect(after).must_equal before
+    end
+  end
+
+  describe "intelligent dispatch" do
+    before do
+      @test_dispatcher = build_test_dispatcher
+      @assigned_driver = @test_dispatcher.intelligent_dispatch
+    end
+    it "will assign an available driver" do
+      expect(@assigned_driver.status).must_equal :AVAILABLE
+    end
+    it "will assign a driver that does not have an unfinished trip" do
+      if @assigned_driver.trips.length > 0
+        expect(@assigned_driver.trips.last.end_time).wont_be_nil
+      else
+        expect(@assigned_driver.trips.length).must_equal 0
       end
     end
-    describe "intelligent dispatch" do
-      before do
-        @test_dispatcher = build_test_dispatcher
-        @assigned_driver = @test_dispatcher.intelligent_dispatch
-      end
-      it "will assign an available driver" do
-        expect(@assigned_driver.status).must_equal :AVAILABLE
-      end
-      it "will assign a driver that does not have an unfinished trip" do
-        if @assigned_driver.trips.length > 0
-          expect(@assigned_driver.trips.last.end_time).wont_be_nil
-        else
-          expect(@assigned_driver.trips.length).must_equal 0
-        end
-      end
-      it "will prioritize assigning drivers with no previous trips" do
-        @test_dispatcher.request_trip(1)
-        expect(@assigned_driver.id).must_equal 3
-        second_assigned_driver = @test_dispatcher.intelligent_dispatch
-        expect(second_assigned_driver.id).must_equal 2
-      end
+    it "will prioritize assigning drivers with no previous trips" do
+      @test_dispatcher.request_trip(1)
+      expect(@assigned_driver.id).must_equal 3
+      second_assigned_driver = @test_dispatcher.intelligent_dispatch
+      expect(second_assigned_driver.id).must_equal 2
     end
   end
 end
