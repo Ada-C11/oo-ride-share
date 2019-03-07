@@ -143,5 +143,10 @@ describe "TripDispatcher class" do
       passenger_id = dispatcher.passengers[4].id
       expect(dispatcher.request_trip(passenger_id).driver.status).must_equal :UNAVAILABLE
     end
+
+    it "the new trip id will be the next sequentially available id" do
+      passenger_id = dispatcher.passengers[4].id
+      expect(dispatcher.request_trip(passenger_id).id).must_equal dispatcher.trips.length
+    end
   end
 end
