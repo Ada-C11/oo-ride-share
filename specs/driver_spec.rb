@@ -199,8 +199,4 @@ describe "Driver class" do
       end
     end
   end
-
-  xdescribe "net_expenditures" do
-    # You add tests for the net_expenditures method
-  end
 end
