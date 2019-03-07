@@ -159,6 +159,12 @@ describe "TripDispatcher class" do
     end
 
     it "raises exception if no drivers are available" do
+      expect{
+        3.times do 
+          @dispatcher_2.request_trip(1)
+        end
+      }.must_raise ArgumentError
+
     end
   end
 end
