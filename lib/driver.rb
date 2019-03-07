@@ -29,7 +29,11 @@ module RideShare
         return 0
       else
         @trips.each do |trip|
-          total += trip.rating.to_f
+          if trip.end_time == nil
+            next
+          else
+            total += trip.rating.to_f
+          end
         end
         return total / @trips.length
       end
@@ -38,7 +42,11 @@ module RideShare
     def total_revenue
       total_revenue = 0
       @trips.each do |trip|
-        total_revenue += (trip.cost - 1.65) * 0.8
+        if trip.end_time == nil
+          next
+        else
+          total_revenue += (trip.cost - 1.65) * 0.8
+        end
       end
       return total_revenue
     end

@@ -147,7 +147,7 @@ describe "Driver class" do
         end_time: "2016-08-08",
         rating: 5,
         driver_id: 1,
-        cost: 5.00
+        cost: 5.00,
       )
       @driver.add_trip(trip)
 
@@ -158,14 +158,28 @@ describe "Driver class" do
         start_time: "2016-08-08",
         end_time: "2016-08-09",
         rating: 1,
-        cost: 2.50
+        cost: 2.50,
       )
       @driver.add_trip(trip2)
     end
 
     it "calculates the correct revenue for driver" do
-        expect(@driver.total_revenue).must_be_close_to 3.36, 0.01
+      expect(@driver.total_revenue).must_be_close_to 3.36, 0.01
+    end
+
+    it "calculates the correct rating for drivers with in progress trip" do
+      trip3 = RideShare::Trip.new(
+        id: 8,
+        driver: @driver,
+        passenger_id: 3,
+        start_time: "2016-08-08",
+        end_time: nil,
+        rating: nil,
+        cost: nil,
+      )
+      @driver.add_trip(trip3)
+
+      expect(@driver.total_revenue).must_be_close_to 3.36, 0.01
     end
   end
-
 end

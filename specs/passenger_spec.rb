@@ -89,16 +89,16 @@ describe "Passenger class" do
         id: 9,
         passenger: @passenger,
         start_time: "2016-08-11",
-        end_time: "2016-08-12",
+        end_time: nil,
         rating: 5,
-        cost: 10,
+        cost: nil,
         driver_id: 1,
       )
 
       @passenger.add_trip(trip)
       @passenger.add_trip(trip_2)
 
-      expect(@passenger.net_expenditures).must_equal 30
+      expect(@passenger.net_expenditures).must_equal 20
     end
   end
 
@@ -124,7 +124,7 @@ describe "Passenger class" do
         id: 9,
         passenger: @passenger,
         start_time: "2:04",
-        end_time: "2:07",
+        end_time: nil,
         rating: 5,
         cost: 10,
         driver_id: 1,
@@ -133,7 +133,7 @@ describe "Passenger class" do
       @passenger.add_trip(trip)
       @passenger.add_trip(trip_2)
 
-      expect(@passenger.total_time_spent).must_equal 2160
+      expect(@passenger.total_time_spent).must_equal 1980
     end
   end
 end
