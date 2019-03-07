@@ -40,7 +40,7 @@ describe "Trip class" do
       expect(@trip.driver).must_be_kind_of RideShare::Driver
     end
 
-    xit "raises an error for an invalid rating" do
+    it "raises an error for an invalid rating" do
       [-3, 0, 6].each do |rating|
         @trip_data[:rating] = rating
         expect do
