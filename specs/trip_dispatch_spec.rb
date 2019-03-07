@@ -137,8 +137,13 @@ describe "TripDispatcher class" do
         driver.status == :AVAILABLE
       end
       expect(dispatcher.request_trip(passenger_id).driver).must_equal driver
-      # Dependent on test file. Manual check of first available driver_id. 
+      # Dependent on test file. Manual check of first available driver_id.
       expect(dispatcher.request_trip(passenger_id).driver_id).must_equal 2
+    end
+
+    it "will changed the assigned driver's status to :UNAVAILABLE" do
+      passenger_id = dispatcher.passengers[4].id
+      expect(dispatcher.request_trip(passenger_id).driver.status).must_equal :UNAVAILABLE
     end
   end
 end
