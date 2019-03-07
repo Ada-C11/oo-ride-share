@@ -53,6 +53,10 @@ module RideShare
       return total_revenue.to_f.round(2)
     end
 
+    def assign_new_trip(new_trip)
+    add_trip(new_trip)
+    end
+
     private
 
     def self.from_csv(record)
