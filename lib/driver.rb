@@ -30,23 +30,38 @@ module RideShare
     end
 
     def average_rating
+      nil_counter = 0
+      total_ratings = 0.0
       if trips.length == 0
-        return 0
-      else
-        rating_sum = @trips.reduce(0) do |ratings, trip|
-          ratings += trip.rating
-        end
-        return (rating_sum / trips.length).to_f
+        return nil
       end
+      @trips.each do |trip|
+        if trip.rating == nil
+          nil_counter += 1
+        else
+          total_ratings += trip.rating
+        end
+      end
+      return (total_ratings / (trips.length - nil_counter)).to_f
+    end
+
+    def change_driver_status
+      @status = :UNAVAILABLE
     end
 
     def total_revenue
       driver_take_home = 0
       cost_after_deduction = 0
       if trips.length == 0
-        return 0
-      else
-        @trips.each do |trip|
+        return nil
+      end
+      @trips.each do |trip|
+        if trip.cost == nil
+          next
+        elsif trip.cost <= 1.65
+          cost_after_deduction = trip.cost
+          driver_take_home += cost_after_deduction
+        else
           cost_after_deduction = trip.cost - 1.65
           driver_take_home += cost_after_deduction
         end

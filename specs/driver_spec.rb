@@ -47,7 +47,7 @@ describe "Driver class" do
 
   describe "add_trip method" do
     before do
-      pass = RideShare::Passenger.new(
+      @passenger = RideShare::Passenger.new(
         id: 1,
         name: "Test Passenger",
         phone_number: "412-432-7640",
@@ -60,7 +60,7 @@ describe "Driver class" do
       @trip = RideShare::Trip.new(
         id: 8,
         driver_id: 4,
-        passenger: pass,
+        passenger: @passenger,
         start_time: "2016-08-08",
         end_time: "2018-08-09",
         cost: 5,
@@ -108,13 +108,14 @@ describe "Driver class" do
       expect(average).must_be :<=, 5.0
     end
 
-    it "returns zero if no driven trips" do
-      driver = RideShare::Driver.new(
+    it "returns nil for average_rating and total_revenue if no trips exist" do
+      @driver = RideShare::Driver.new(
         id: 54,
         name: "Rogers Bartell IV",
         vin: "1C9EVBRM0YBC564DZ",
       )
-      expect(driver.average_rating).must_equal 0
+      expect(@driver.average_rating).must_equal nil
+      expect(@driver.total_revenue).must_equal nil
     end
 
     it "correctly calculates the average rating" do
@@ -156,18 +157,38 @@ describe "Driver class" do
         start_time: "2016-08-08",
         end_time: "2016-08-09",
         cost: 5,
-        rating: 1,
+        rating: 3,
       )
+
+      trip3 = RideShare::Trip.new(
+        id: 8,
+        driver_id: 4,
+        passenger_id: 3,
+        start_time: "2016-08-08",
+        end_time: "2016-08-09",
+        cost: 1.64,
+        rating: 2,
+      )
+
+      trip4 = RideShare::Trip.new(
+        id: 8,
+        driver_id: 4,
+        passenger_id: 3,
+        start_time: "2016-08-08",
+        end_time: nil,
+        cost: nil,
+        rating: nil,
+      )
+
       @driver.add_trip(trip)
       @driver.add_trip(trip2)
+      @driver.add_trip(trip3)
+      @driver.add_trip(trip4)
     end
 
-    it "returns total_revenue" do
-      expect(@driver.total_revenue).must_be_close_to 5.36
+    it "returns total_revenue and average_rating - includes trips $1.65 or under and includes in progress trips" do
+      expect(@driver.total_revenue).must_be_close_to 6.672
+      expect(@driver.average_rating).must_be_close_to 3.333
     end
-  end
-
-  describe "net_expenditures" do
-    # You add tests for the net_expenditures method
   end
 end

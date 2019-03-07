@@ -28,7 +28,6 @@ module RideShare
     end
 
     def inspect
-      # Make puts output more useful
       return "#<#{self.class.name}:0x#{object_id.to_s(16)} \
               #{trips.count} trips, \
               #{drivers.count} drivers, \
@@ -55,7 +54,7 @@ module RideShare
       passenger.add_trip(current_trip)
       avail_driver.add_trip(current_trip)
       @trips << current_trip
-      avail_driver.status = :UNAVAILABLE
+      avail_driver.change_driver_status
       return current_trip
     end
 
