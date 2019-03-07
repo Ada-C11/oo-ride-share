@@ -24,7 +24,16 @@ module RideShare
     end
 
     
+    private
 
+    def self.from_csv(record)
+      return new(
+               id: record[:id],
+               name: record[:name],
+               vin: record[:vin],
+               status: record[:status],
+             )
+    end
 
 
   end # Class end
