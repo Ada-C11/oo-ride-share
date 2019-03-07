@@ -1,4 +1,3 @@
-require "pry"
 require_relative "spec_helper"
 
 TEST_DATA_DIRECTORY = "specs/test_data"
@@ -311,7 +310,7 @@ describe "TripDispatcher class" do
         end
       end
       it "will prioritize assigning drivers with no previous trips" do
-        new_trip = @test_dispatcher.request_trip(1)
+        @test_dispatcher.request_trip(1)
         expect(@assigned_driver.id).must_equal 3
         second_assigned_driver = @test_dispatcher.intelligent_dispatch
         expect(second_assigned_driver.id).must_equal 2
