@@ -20,6 +20,10 @@ module RideShare
       @trips << trip
     end
 
+    def avg_rating
+      return @trips.sum { |trip| trip.rating } / @trips.length
+    end
+
     private
 
     def self.from_csv(record)
