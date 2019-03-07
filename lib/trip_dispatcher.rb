@@ -49,6 +49,8 @@ module RideShare
         driver: available_driver, 
         driver_id: driver_id
         )
+        
+      return in_progress_trip
     end
 
     private
@@ -59,11 +61,6 @@ module RideShare
         driver = find_driver(trip.driver_id)
         trip.connect(passenger, driver)
       end
-      
-      #  @trips.each do |trip|
-      #   driver = find_driver(trip.driver_id)
-      #   trip.connect(driver)
-      # end
 
       return trips
     end
