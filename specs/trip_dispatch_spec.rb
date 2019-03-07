@@ -127,8 +127,6 @@ describe "TripDispatcher class" do
       @dispatcher = build_test_dispatcher
     end
 
-    
-
     it "returns an instance of a Trip" do
       expect(@dispatcher.request_trip(1)).must_be_kind_of RideShare::Trip
     end
@@ -139,22 +137,25 @@ describe "TripDispatcher class" do
       expect(available_driver.status).must_equal :AVAILABLE
     end
 
-    it "adds a trip to the Passenger's list of trips" do 
+    it "adds a trip to the Passenger's list of trips" do
       new_trip = @dispatcher.request_trip(1)
-
       passenger = @dispatcher.find_passenger(1)
 
       expect(passenger.trips.last.id).must_equal new_trip.id
-
-      # passenger = @dispatcher.find_passenger(new_trip.passenger.id)
-      # puts @dispatcher.passengers
-
-      
-      
-      # puts passenger.trips.include?(new_trip)
-
-      # expect(passenger.trips)
     end
 
- end
+    it "adds a trip to the Driver's list of trips" do
+      new_trip = @dispatcher.request_trip(1)
+      driver = @dispatcher.find_driver(new_trip.driver_id)
+
+      expect(driver.trips.last.id).must_equal new_trip.id
+    end
+
+    it "changes driver status to :UNAVAILABLE" do
+      new_trip = @dispatcher.request_trip(1)
+      available_driver = @dispatcher.find_driver(new_trip.driver_id)
+
+      expect(available_driver.status).must_equal :UNAVAILABLE
+    end
+  end
 end

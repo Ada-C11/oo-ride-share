@@ -1,5 +1,6 @@
 require "csv"
 
+require_relative "trip_dispatcher"
 require_relative "csv_record"
 
 module RideShare
@@ -53,6 +54,22 @@ module RideShare
       end
       driver_take_home *= 0.8
       return driver_take_home.to_f
+    end
+
+    def change_status(current_driver_id)
+      # current_driver = TripDispatcher.find_driver(driver.id)
+
+      # add_trip(request_trip(passenger_id))
+      # driver.add_trip(Trip.new(
+      #   id: @trips.length + 1,
+      #   driver_id: driver.id,
+      #   passenger_id: find_passenger(passenger_id),
+      #   start_time: Time.now.to_s,
+      #   end_time: nil,
+      #   cost: nil,
+      #   rating: nil,
+      # ))
+      # find_driver(current_driver_id)
     end
 
     private
