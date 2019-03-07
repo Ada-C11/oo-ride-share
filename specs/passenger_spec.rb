@@ -45,6 +45,7 @@ describe "Passenger class" do
       trip = RideShare::Trip.new(
         id: 8,
         passenger: @passenger,
+        driver: @driver,
         start_time: "2016-08-08",
         end_time: "2016-08-09",
         rating: 5,
