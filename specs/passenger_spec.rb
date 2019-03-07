@@ -124,17 +124,20 @@ describe "Passenger class" do
     end
 
     it "calculate total amount spent on all trips taken by one passenger" do
-      trip_prices_array = []
-      @passenger.trips.each do |trip|
-        trip_price = trip.cost
-        trip_prices_array << trip_price
-        # iterate through this passenger's trips, shovel into array below
-      end
+      # trip_prices_array = []
+      # @passenger.trips.each do |trip|
+      #   trip_price = trip.cost
+      #   trip_prices_array << trip_price
+      # end
+        # # ^^ this is the long way to write the map method below
+      # trip_prices_array = @passenger.trips.map { |trip| trip.cost }
+
       amt_spent_total = @passenger.net_expenditures
       expect(amt_spent_total).must_equal 37.45
     end
 
     it "calculate to total time spent on all trips taken by one passenger" do
+      
     end
   end
 end
