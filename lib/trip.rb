@@ -23,13 +23,13 @@ module RideShare
       end
 
       @start_time = Time.parse(start_time)
-  
+
       if end_time == nil
         @end_time = @start_time
       else
-        @end_time = Time.parse(end_time) 
+        @end_time = Time.parse(end_time)
       end
-  
+
       if @start_time > @end_time
         raise ArgumentError, "start time needs to be before end time"
       end
@@ -38,13 +38,11 @@ module RideShare
       @driver_id = driver_id
       @driver = driver
 
-
       if rating != nil
         if @rating > 5 || @rating < 1
           raise ArgumentError.new("Invalid rating #{@rating}")
         end
       end
-
     end
 
     def inspect

@@ -35,18 +35,18 @@ module RideShare
     end
 
     def request_trip(passenger_id)
-      assigned_driver = @drivers.detect{|driver| driver.status == :AVAILABLE}
-      ids = @trips.map{|trip| trip.id}
+      assigned_driver = @drivers.detect { |driver| driver.status == :AVAILABLE }
+      raise ArgumentError, "no available drivers" if assigned_driver == nil
+      ids = @trips.map { |trip| trip.id }
       new_trip = Trip.new(id: ids.max + 1,
-        passenger: nil, passenger_id: passenger_id,
-        start_time: Time.now.to_s, end_time: nil, cost: nil, rating: nil, driver_id: assigned_driver.id, driver: assigned_driver)
+                          passenger: nil, passenger_id: passenger_id,
+                          start_time: Time.now.to_s, end_time: nil, cost: nil, rating: nil, driver_id: assigned_driver.id, driver: assigned_driver)
       @trips.push(new_trip)
       assigned_driver.start_trip(new_trip)
       assigned_passenger = find_passenger(passenger_id)
       assigned_passenger.add_trip(new_trip)
       return new_trip
     end
-
 
     private
 
@@ -61,6 +61,5 @@ module RideShare
 
       return trips
     end
-
   end
 end

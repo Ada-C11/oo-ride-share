@@ -123,8 +123,6 @@ describe "TripDispatcher class" do
     end
 
     describe "Describes request_trip" do
-
-
       it "creates a new instance of a trip" do
         dispatcher = build_test_dispatcher
         length = dispatcher.trips.length
@@ -142,25 +140,35 @@ describe "TripDispatcher class" do
         new_length = active_passenger.trips.length
         expect(new_length).must_equal length + 1
         expect(active_passenger.trips.last).must_be_instance_of RideShare::Trip
-
       end
 
-      it "adds trip to drivers trips array" do
-        # dispatcher = build_test_dispatcher
-        # length = driver.trips.length
-        # new_trip = dispatcher.request_trip(6)
-        # new_length = active_passenger.trips.length
-        # expect(new_length).must_equal length + 1
-        # expect(active_passenger.trips.last).must_be_instance_of RideShare::Trip
-      end
+      it "adds trip to drivers trips array and changes status from AVAILABLE to UNAVAILABLE" do
+        assigned_driver = RideShare::Driver.new(
+          id: 4,
+          name: "Test Driver",
+          vin: "12345678912345678",
+          status: :AVAILABLE,
+        )
 
-      it "selects available driver" do
-        
+        dispatcher = build_test_dispatcher
+        dispatcher.drivers[0] = assigned_driver
+        length = assigned_driver.trips.length
+        expect(assigned_driver.status).must_equal :AVAILABLE
+        new_trip = dispatcher.request_trip(6)
+        new_length = assigned_driver.trips.length
+        expect(new_length).must_equal length + 1
+        expect(assigned_driver.trips.last).must_be_instance_of RideShare::Trip
+        expect(assigned_driver.status).must_equal :UNAVAILABLE
       end
 
       it "raises ArgumentError for no available driver" do
+        dispatcher = build_test_dispatcher
+        expect {
+          3.times do |it|
+            dispatcher.request_trip(it + 1)
+          end
+        }.must_raise ArgumentError
       end
-
     end
   end
 end
