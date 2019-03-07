@@ -35,39 +35,26 @@ module RideShare
       end
 
       sum_rating = 0.00
+      num_ratings = 0
       @trips.each do |trip|
         if !trip.rating.nil?
           sum_rating += trip.rating.to_f.round(2)
+          num_ratings += 1
         end
       end
 
-      return sum_rating / completed_trips
-    end
-
-    def completed_trips
-      num_trips = @trips.length.to_f.round(2)
-      @trips.each do |trip|
-        if trip.end_time == nil
-          num_trips -= 1.00
-        end
-      end
-      return num_trips
+      return sum_rating / num_ratings
     end
 
     def total_revenue
-      if @trips.nil?
-        return 0.00
-      end
-
-      total_fees = 1.65 * completed_trips
-
+      total_fees = 0
       sum_costs = 0
       @trips.each do |trip|
         if !trip.cost.nil?
           sum_costs += trip.cost
         end
 
-        if trip.cost <= 1.65
+        if !trip.cost.nil? && trip.cost > 1.65
           total_fees += 1.65
         end
       end
