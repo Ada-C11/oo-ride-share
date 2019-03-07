@@ -26,7 +26,13 @@ module RideShare
 
     # what is this driver's average rating?
     def average_rating
-      average_rating = @trips[:rating].sum.to_f / @trips[:rating].count.to_f
+      return 0 if @trips.length == 0
+
+      ratings = []
+      @trips.each do |trip|
+        ratings << trip.rating
+      end
+      average_rating = ratings.sum.to_f / ratings.length.to_f
       return average_rating
     end
 
