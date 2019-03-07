@@ -63,12 +63,10 @@ module RideShare
              )
     end
 
-    private
-
     def change_status(trip)
       @status == :AVAILABLE ? @status = :UNAVAILABLE : @status = :AVAILABLE
-
       add_trip(trip)
     end
+
   end
 end
