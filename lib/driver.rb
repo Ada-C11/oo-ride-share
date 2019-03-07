@@ -25,22 +25,24 @@ module RideShare
 
     def average_rating
       total = 0.0
+      completed_trips = 0
       self.trips.each do |trip|
         unless trip.end_time == nil
           total += trip.rating
+          completed_trips += 1
         end
       end
       if self.trips.length == 0
         return 0
       else
-        return total / self.trips.length
+        return total / completed_trips
       end
     end
 
     def total_revenue
       revenue = 0
       self.trips.each do |trip|
-        unless trip.end_time == nil && trip.cost < 1.65
+        if trip.end_time != nil && trip.cost > 1.65
           revenue += (trip.cost - 1.65) * 0.8
         end
       end

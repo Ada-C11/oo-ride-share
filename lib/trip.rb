@@ -30,7 +30,8 @@ module RideShare
       end
 
       @start_time = Time.parse(start_time)
-      unless @end_time == nil
+      @end_time = end_time
+      if @end_time != nil
         @end_time = Time.parse(end_time)
       end
       if @end_time != nil && @start_time > @end_time

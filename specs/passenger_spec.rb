@@ -118,6 +118,48 @@ describe "Passenger class" do
       expect(result).must_equal 15.50
     end
 
+    it "doesn't include the cost of an in-progress trip for a passenger" do
+      @passenger = RideShare::Passenger.new(
+        id: 9,
+        name: "Merl Glover III",
+        phone_number: "1-602-620-2330 x3723",
+        trips: [],
+      )
+
+      @driver = RideShare::Driver.new(
+        id: 6,
+        name: "Bob",
+        vin: "12345678912345678",
+        status: :AVAILABLE,
+      )
+
+      trip = RideShare::Trip.new(
+        id: 8,
+        driver: @driver,
+        passenger: @passenger,
+        start_time: "2016-08-08",
+        end_time: "2016-08-09",
+        cost: 5.50,
+        rating: 5,
+      )
+
+      @passenger.add_trip(trip)
+
+      trip = RideShare::Trip.new(
+        id: 10,
+        driver: @driver,
+        passenger: @passenger,
+        start_time: "2016-08-10",
+        end_time: nil,
+        cost: nil,
+        rating: nil,
+      )
+      @passenger.add_trip(trip)
+
+      result = @passenger.net_expenditures
+      expect(result).must_equal 5.50
+    end
+
     it "returns 0 if the passenger hasn't taken any trips" do
       @passenger = RideShare::Passenger.new(
         id: 9,

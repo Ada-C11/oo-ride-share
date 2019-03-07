@@ -35,12 +35,22 @@ module RideShare
     end
 
     def request_trip(passenger_id)
+      i = 1
       @drivers.each do |driver|
         if driver.status == :AVAILABLE
           @driver = driver
           break
         end
+        i += 1
+        if @drivers.length == i
+          raise NotImplementedError, "No available drivers."
+          exit
+        end
       end
+      # if @driver == nil
+      #   raise NotImplementedError, "No available drivers."
+      #   exit
+      # end
       # create a new trip with end date, cost and rating all set to nil
       # start time of this trip = current time
 

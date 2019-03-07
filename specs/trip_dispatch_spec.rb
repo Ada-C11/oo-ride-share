@@ -121,4 +121,64 @@ describe "TripDispatcher class" do
       end
     end
   end
+
+  describe "request_trip" do
+    it "find the first driver available" do
+      dispatcher = build_test_dispatcher
+
+      trip = dispatcher.request_trip(4)
+      expect(trip.driver.id).must_equal 2
+    end
+
+    it "makes a trip" do
+      dispatcher = build_test_dispatcher
+
+      trip = dispatcher.request_trip(4)
+      expect(trip).must_be_kind_of RideShare::Trip
+    end
+
+    it "change the selected driver status to unavailable" do
+      dispatcher = build_test_dispatcher
+
+      trip = dispatcher.request_trip(4)
+      expect(trip.driver.status).must_equal :UNAVAILABLE
+    end
+
+    # it "set the current time as start time" do
+    #   dispatcher = build_test_dispatcher
+
+    #   trip = dispatcher.request_trip(4)
+    #   expect(trip.start_time).must_be_close_to Time.now
+    # end
+
+    it "adds a trip to the driver trips" do
+      dispatcher = build_test_dispatcher
+
+      trip = dispatcher.request_trip(4)
+      expect(trip.driver.trips).must_include trip
+    end
+
+    it "adds a trip to the passenger" do
+      dispatcher = build_test_dispatcher
+
+      trip = dispatcher.request_trip(4)
+      expect(trip.passenger.trips).must_include trip
+    end
+
+    it "adds a trip to the trips in dispatcher" do
+      dispatcher = build_test_dispatcher
+
+      trip = dispatcher.request_trip(4)
+      expect(dispatcher.trips).must_include trip
+    end
+
+    it "error is raised if there is no available driver" do
+      dispatcher = build_test_dispatcher
+      expect {
+        3.times do
+          dispatcher.request_trip(4)
+        end
+      }.must_raise NotImplementedError
+    end
+  end
 end
