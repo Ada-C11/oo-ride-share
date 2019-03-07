@@ -128,7 +128,7 @@ describe "TripDispatcher class" do
   describe "TripDispatcher#request_trip" do
     it "will return Trip class" do
       passenger_id = dispatcher.passengers[4].id
-      expect(dispatcher.request_trip(passenger_id)).must_be_instance_of Trip
+      expect(dispatcher.request_trip(passenger_id)).must_be_instance_of RideShare::Trip
     end
   end
 end

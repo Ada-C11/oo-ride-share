@@ -33,6 +33,19 @@ module RideShare
               #{passengers.count} passengers>"
     end
 
+    def request_trip(passenger_id)
+      return Trip.new ({id: 8,
+                        passenger_id: passenger_id,
+                        start_time: Time.new().to_s,
+                        end_time: Time.new().to_s,
+                        cost: 23.45,
+                        rating: 3,
+                        driver_id: 3,
+                        driver: RideShare::Driver.new(id: 54,
+                                                      name: "Rogers Bartell IV",
+                                                      vin: "1C9EVBRM0YBC564DZ")})
+    end
+
     private
 
     def connect_trips
