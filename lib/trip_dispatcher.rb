@@ -35,6 +35,16 @@ module RideShare
     end
 
     def request_trip(passenger_id)
+      first_available_driver = "" 
+      @drivers.each do |driver|
+        if driver.status == "AVAILABLE"
+          first_available_driver = driver
+          break
+        end 
+      end 
+      return first_available_driver
+    end
+
       # Assigns first driver who's :AVAILABLE
       # Uses current time for start time
       # End date, cost and rating = nil
@@ -46,8 +56,7 @@ module RideShare
       # Add the Trip to the Passenger's list of Trips
       # Add the new trip to the collection of all Trips in TripDispatcher
       # Return the newly-created trip
-    end
-
+    
     private
 
     def connect_trips
