@@ -39,8 +39,9 @@ module RideShare
       @drivers.each do |driver|
         if driver.status == :AVAILABLE && driver.trips.empty?
           new_trip_driver = driver
-          break
-        elsif driver.status == :AVAILABLE 
+          
+        end
+        if driver.status == :AVAILABLE && !driver.trips.empty?
           time = Time.now.to_s
           farthest_end_time = Time.parse(time)
           driver.trips.each do |trip|
@@ -49,7 +50,7 @@ module RideShare
               new_trip_driver = driver
             end
           end
-          break
+    
         end
       end
       

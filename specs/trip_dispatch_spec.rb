@@ -143,16 +143,22 @@ describe "TripDispatcher class" do
         expect(new_trip.driver.trips).must_include new_trip
       end
 
-      it "selects a driver with AVAILABLE status" do 
-        new_trip = @dispatcher.request_trip(3)
-        expect(new_trip.driver_id).must_equal 2
-      end
-
       it "notifies the user when drivers are not available" do 
         new_trip = @dispatcher.request_trip(3)
         new_trip2 = @dispatcher.request_trip(4)
         new_trip3 = @dispatcher.request_trip(4)
         expect(new_trip3).must_be_nil
+      end
+
+      it "selects a driver with no trips" do
+        new_trip =@dispatcher.request_trip(1)
+        expect(new_trip.driver_id).must_equal 3
+      end
+
+      it "selects a driver with the endtime that was longest ago" do
+        new_trip =@dispatcher.request_trip(1)
+        new_trip =@dispatcher.request_trip(4)
+        expect(new_trip.driver_id).must_equal 2
       end
     end
   end
