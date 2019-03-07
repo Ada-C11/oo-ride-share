@@ -28,6 +28,12 @@ module RideShare
       return average_rating
     end
 
+    def total_revenue
+      return @trips.sum do |trip|
+               (trip.cost - 1.65) * 0.80
+             end
+    end
+
     def self.from_csv(record)
       return new(
                id: record[:id],

@@ -82,24 +82,25 @@ describe "Driver class" do
     end
   end
 
-  describe "average_rating method" do
-    before do
-      @driver = RideShare::Driver.new(
-        id: 54,
-        name: "Rogers Bartell IV",
-        vin: "1C9EVBRM0YBC564DZ",
-      )
-      trip = RideShare::Trip.new(
-        id: 8,
-        driver: @driver,
-        passenger_id: 3,
-        start_time: "2016-08-08",
-        end_time: "2016-08-08",
-        rating: 5,
-      )
-      @driver.add_trip(trip)
-    end
+  before do
+    @driver = RideShare::Driver.new(
+      id: 54,
+      name: "Rogers Bartell IV",
+      vin: "1C9EVBRM0YBC564DZ",
+    )
+    trip = RideShare::Trip.new(
+      id: 8,
+      driver: @driver,
+      passenger_id: 3,
+      start_time: "2016-08-08",
+      end_time: "2016-08-08",
+      rating: 5,
+      cost: 22,
+    )
+    @driver.add_trip(trip)
+  end
 
+  describe "average_rating method" do
     it "returns a float" do
       expect(@driver.average_rating).must_be_kind_of Float
     end
@@ -136,6 +137,21 @@ describe "Driver class" do
 
   describe "total_revenue" do
     # You add tests for the total_revenue method
+    before do
+      trip = RideShare::Trip.new(
+        id: 8,
+        driver: @driver,
+        passenger_id: 3,
+        start_time: "2016-08-08",
+        end_time: "2016-08-08",
+        rating: 5,
+        cost: 10,
+      )
+      @driver.add_trip(trip)
+    end
+    it "should return a floating point number" do
+      expect(@driver.total_revenue).must_be_instance_of Float
+    end
   end
 
   describe "net_expenditures" do
