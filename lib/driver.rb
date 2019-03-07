@@ -65,11 +65,10 @@ module RideShare
 
     private
 
-    def add_new_trip
-      # this Trip.new() goes into the collection of trips for this particular driver
-      # STATUS: AVAILABLE
+    def change_status(trip)
+      @status == :AVAILABLE ? @status = :UNAVAILABLE : @status = :AVAILABLE
 
-      #Passengers list of trips << this helper trip
+      add_trip(trip)
     end
   end
 end

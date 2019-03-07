@@ -168,24 +168,61 @@ describe "Driver class" do
 
     it "does not provide negative revenue" do
       expect(@driver.total_revenue).must_equal 5.08
-    end   
-
-    it "returns drivers total revenue" do
-    trip3 = RideShare::Trip.new(
-      id: 8,
-      driver: @driver,
-      passenger_id: 3,
-      start_time: "2016-08-08",
-      end_time: "2016-08-09",
-      cost: 7,
-      rating: 1,
-    )
-
-    @driver.add_trip(trip3)
-    
-      expect(@driver.total_revenue).must_equal 9.36
     end
 
+    it "returns drivers total revenue" do
+      trip3 = RideShare::Trip.new(
+        id: 8,
+        driver: @driver,
+        passenger_id: 3,
+        start_time: "2016-08-08",
+        end_time: "2016-08-09",
+        cost: 7,
+        rating: 1,
+      )
 
+      @driver.add_trip(trip3)
+
+      expect(@driver.total_revenue).must_equal 9.36
+    end
+  end
+  describe "helper method adds trip" do
+    before do
+      @driver = RideShare::Driver.new(
+        id: 54,
+        name: "Rogers Bartell IV",
+        vin: "1C9EVBRM0YBC564DZ",
+      )
+    end
+
+    it "adds trip to driver array" do
+      trip = RideShare::Trip.new(
+        id: 8,
+        driver: @driver,
+        passenger_id: 3,
+        start_time: "2016-08-08",
+        end_time: "2016-08-08",
+        rating: 5,
+        driver_id: 1,
+        cost: 5.00,
+      )
+      @driver.add_trip(trip)
+      starting_length = @driver.trips.length
+      puts "starting length", starting_length
+
+      trip2 = RideShare::Trip.new(
+        id: 8,
+        driver: @driver,
+        passenger_id: 3,
+        start_time: "2016-08-08",
+        end_time: "2016-08-09",
+        rating: 1,
+      )
+      @driver.add_trip(trip2)
+      ending_length = @driver.trips.length
+      puts "ending length", ending_length
+
+      expect(ending_length).must_equal starting_length + 1
+    end
   end
 end
