@@ -122,4 +122,22 @@ describe "TripDispatcher class" do
       end
     end
   end
+
+  describe "request trip" do
+    it "creates a new instance of trip" do
+      dispatcher_2 = build_test_dispatcher
+      new_trip = dispatcher_2.request_trip(1)
+
+      expect(new_trip).must_be_instance_of RideShare::Trip
+    end
+
+    it "updates trip lists for driver and passenger" do
+    end
+
+    it "selects only driver with status available" do 
+    end
+
+    it "raises exception if no drivers are available" do
+    end
+  end
 end

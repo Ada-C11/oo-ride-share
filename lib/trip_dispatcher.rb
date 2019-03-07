@@ -27,14 +27,14 @@ module RideShare
     end
 
     def request_trip(passenger_id)
-      new_trip = Rideshare::Trip.new(
+      new_trip = RideShare::Trip.new(
         id: generate_trip_id,
         passenger_id: passenger_id,
-        start_time: Time.now,
-        driver_id: find_avaiable,
+        start_time: Time.now.to_s,
+        driver_id: find_available,
       )
       passenger = find_passenger(passenger_id)
-      driver = find_driver(find_avaiable)
+      driver = find_driver(find_available)
 
       new_trip.connect(passenger, driver)
 
@@ -78,3 +78,4 @@ module RideShare
     end
   end
 end
+
