@@ -36,6 +36,18 @@ module RideShare
               #{passengers.count} passengers>"
     end
 
+    def request_trip(passenger_id)
+      ## NOT SURE WHERE TO INSTANTIATE NEW METHOD
+      trip = RideShare::Trip.new(
+        passenger_id: passenger_id,
+        id: @trips.length + 1,
+        start_time: "2019-03-06 16:53:00 -0800",
+        end_time: nil,
+        rating: nil,
+        cost: nil,
+      )
+    end
+
     private
 
     def connect_trips

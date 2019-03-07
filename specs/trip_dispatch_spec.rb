@@ -1,4 +1,5 @@
 require_relative "spec_helper"
+require "time"
 
 TEST_DATA_DIRECTORY = "specs/test_data"
 
@@ -119,22 +120,49 @@ describe "TripDispatcher class" do
           expect(trip.driver.id).must_equal trip.driver_id
           expect(trip.driver.trips).must_include trip
         end
+        puts Time.now
       end
     end
   end
   describe "request_trip" do
-    dispatcher = build_test_dispatcher
-    # create a new trip in request_trip
-    # find passenger that is requesting the new trip using the id given
-    # find a driver from list that's available from a list check status
-    # change driver status to unavailable -> by using the helper method
-    #   in Driver class (change attr_reader for status or do the change within an instance method????)
-    # create the trip with a new time which is the current time Time.now
-    # set end date, cost, and rating to nil
-    # the trip hasn't finished ########
-    # add a new trip instance to the collection in Passenger, Driver, and Tripdispatcher
-    # return the newly created trip (instance of Trip)
+    ## NOT SURE IF WE SHOULD ADD 
+    # before do
+    #   start_time = Time.parse("2015-05-20T12:14:00+00:00")
+    #   end_time = start_time + 25 * 60 # 25 minutes
+    #   @trip_data = {
+    #     id: 8,
+    #     passenger: RideShare::Passenger.new(id: 1,
+    #                                         name: "Ada",
+    #                                         phone_number: "412-432-7640"),
+    #     start_time: start_time.to_s,
+    #     end_time: end_time.to_s,
+    #     cost: 23.45,
+    #     rating: 3,
+    #     driver: nil,
+    #   }
+      # @trip = RideShare::Trip.new(@trip_data)
+    end
+    it "will return instance of trip" do
+      dispatcher = build_test_dispatcher
+      # create a new trip in request_trip
+      # find passenger that is requesting the new trip using the id given
+      # find a driver from list that's available from a list check status
+      # change driver status to unavailable -> by using the helper method
+      #   in Driver class (change attr_reader for status or do the change within an instance method????)
+      # create the trip with a new time which is the current time Time.now
+      # set end date, cost, and rating to nil
+      # the trip hasn't finished ########
+      # add a new trip instance to the collection in Passenger, Driver, and Tripdispatcher
+      # return the newly created trip (instance of Trip)
 
-    expect(dispatcher.request_trip).must_be_kind_of Trip
+      ## NOT SURE IF WE SHOULD ADD
+      # @passenger = RideShare::Passenger.new(
+      #   id: 9,
+      #   name: "Merl Glover III",
+      #   phone_number: "1-602-620-2330 x3723",
+      #   trips: [],
+      # )
+      expect(dispatcher.request_trip(1)).must_be_kind_of Trip
+    end
   end
 end
