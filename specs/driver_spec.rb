@@ -163,10 +163,10 @@ describe "Driver class" do
       )
       @driver.add_trip(trip)
       @driver.add_trip(trip2)
-      expect(@driver.total_revenue).must_be_close_to 8.28
+      expect(@driver.total_revenue).must_be_close_to 6.96
     end
 
-    it "it calculates total revenue the driver made" do
+    it "it calculates total revenue when one of the costs is under $1.65" do
       trip = RideShare::Trip.new(
         id: 8,
         driver: @driver,

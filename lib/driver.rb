@@ -42,13 +42,13 @@ module RideShare
       sum = 0.0
       @trips.each do |trip|
         if trip.cost > 1.65
-          sum += trip.cost
+          sum += (trip.cost - 1.65)
         end
       end
       if @trips.length == 0
         return 0
       else
-        return ((sum - 1.65) * 0.8).round(2)
+        return (sum * 0.8).round(2)
       end
     end
 
