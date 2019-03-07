@@ -136,8 +136,9 @@ describe "Passenger class" do
       expect(amt_spent_total).must_equal 37.45
     end
 
-    it "calculate to total time spent on all trips taken by one passenger" do
-      
+    it "calculate total time spent on all trips taken by one passenger" do
+      total_time = @passenger.total_time_spent
+      expect(total_time).must_equal 2400
     end
   end
 end

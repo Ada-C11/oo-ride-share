@@ -152,7 +152,7 @@ Using the pry session we started above, how would you...
 - Print the ID of every trip taken by passenger 9
 - Print the ID of the trip that cost the most money
 
-[3] pry(main)> td.trips.length
+<!-- [3] pry(main)> td.trips.length
 => 600
 [4] pry(main)> td.trips[1].rating
 => 4
@@ -210,7 +210,7 @@ Elles-Air:oo-ride-share elle$ pry -r ./lib/trip_dispatcher.rb
 
 
 [7] pry(main)> all_trip_costs.max
-=> 30
+=> 30 -->
 
 
 
@@ -368,7 +368,7 @@ Of Ada and Katherine, we prefer Ada, because their most recent trip is older.
 Check out the [feedback template](feedback.md) which lists the items instructors will be looking for as they evaluate your project.
 
 
-1. The driver with ID 14's name: td.drivers[13].name
+<!-- 1. The driver with ID 14's name: td.drivers[13].name
 2. The last passenger's name: td.passengers.last.name
 3. The rating of the first passenger's last trip: td.passengers.first.trips.last.rating
 4. Driver with ID 3's first trip's passenger: td.drivers[2].trips.first.passenger
@@ -378,4 +378,4 @@ Check out the [feedback template](feedback.md) which lists the items instructors
 
 1. Change driver with id 97's name to "Dee": td.drivers[96].name = "Dee"
 2. Change the first driver in the trip dispatcher's last trip rating to 5: td.trips.last.rating = 5 OR td.drivers..first.trips.last.rating = 5
-3. Change the driver for the first trip from driver ID # 14 to driver with ID # 27: 
+3. Change the driver for the first trip from driver ID # 14 to driver with ID # 27:  -->
