@@ -128,21 +128,74 @@ describe "TripDispatcher class" do
     before do
       @dispatcher = build_test_dispatcher
       @passenger_id = 1
+      @trip_requested = @dispatcher.request_trip(@passenger_id)
     end
     it "creates an instance of type Trip" do
       puts @dispatcher.request_trip(@passenger_id)
       expect(@dispatcher.request_trip(@passenger_id)).must_be_kind_of RideShare::Trip
     end
     it "updates the trip list for the driver" do
-      trip_requested = @dispatcher.request_trip(@passenger_id)
-      driver = trip_requested.driver
-      driver.driver_trip_status_after_trip_request(trip_requested)
+      driver = @trip_requested.driver
+      driver.driver_trip_status_after_trip_request(@trip_requested)
       last = driver.trips.last
       expect(last.passenger_id).must_equal 1
-      passenger = trip_requested.passenger
-      passenger.add_trip(trip_requested)
+    end
+
+    it "changed the driver status to unavailable" do
+      driver = @trip_requested.driver
+      driver.driver_trip_status_after_trip_request(@trip_requested)
+      expect(@trip_requested.driver.status).must_equal :UNAVAILABLE
+    end
+
+    it "updates the trip list for the passenger" do
+      passenger = @trip_requested.passenger
+      passenger.add_trip(@trip_requested)
       last2 = passenger.trips.last
       expect(last2.end_time).must_equal nil
     end
+
+    it "only sums completed trips when calculating total revenue" do
+      driver = @trip_requested.driver
+      driver.driver_trip_status_after_trip_request(@trip_requested)
+      expect(driver.total_revenue).must_equal (55 - 1.65 * 3) * 0.8
+    end
+
+    it "only sums completed trips when calculating average rating" do
+      driver = @trip_requested.driver
+      driver.driver_trip_status_after_trip_request(@trip_requested)
+      expect(driver.average_rating).must_equal 2
+      p @trip_requested.duration_seconds
+    end
+
+    it "only sums completed times when calculating total time" do
+      driver = @trip_requested.driver
+      driver.driver_trip_status_after_trip_request(@trip_requested)
+      expect(@trip_requested.duration_seconds).must_equal nil
+    end
+
+    it "only sums completed trip costs when calculating net expenditures" do
+      driver = @trip_requested.driver
+      driver.driver_trip_status_after_trip_request(@trip_requested)
+      passenger = @trip_requested.passenger
+      passenger.add_trip(@trip_requested)
+      expect(passenger.net_expenditures).must_equal 10
+    end
+
+    it "only sums completed trip time spent when calculating total time" do
+      driver = @trip_requested.driver
+      driver.driver_trip_status_after_trip_request(@trip_requested)
+      passenger = @trip_requested.passenger
+      passenger.add_trip(@trip_requested)
+      expect(passenger.total_time_spent).must_equal 1940
+    end
+
+    # it "tells the user to try again later if there are no available drivers" do
+    #   @dispatcher.drivers.each do |driver|
+    #     driver.status = :UNAVAILABLE
+    #     p driver.status
+    #   end
+
+    #   @trip_requested = @dispatcher.request_trip(@passenger_id)
+    # end
   end
 end

@@ -42,9 +42,11 @@ module RideShare
         return 0
       end
       trips.each do |trip|
-        sum_rating += trip.rating
+        if trip.rating != nil
+          sum_rating += trip.rating
+        end
       end
-      return sum_rating.to_f / trips.count
+      return sum_rating.to_f / trips.count { |trip| trip.cost != nil }
     end
 
     def driver_trip_status_after_trip_request(trip)
@@ -58,7 +60,9 @@ module RideShare
         return 0
       end
       trips.each do |trip|
-        sum_revenue += (trip.cost - 1.65) * 0.8
+        if trip.cost != nil
+          sum_revenue += (trip.cost - 1.65) * 0.8
+        end
       end
       return sum_revenue
     end

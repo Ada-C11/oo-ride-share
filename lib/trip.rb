@@ -1,6 +1,5 @@
 require "csv"
 require "time"
-# require_relative "passenger"
 require_relative "csv_record"
 
 module RideShare
@@ -51,7 +50,11 @@ module RideShare
     end
 
     def duration_seconds
-      return @end_time - @start_time
+      if @end_time == nil
+        return nil
+      else
+        return @end_time - @start_time
+      end
     end
 
     def connect(passenger)

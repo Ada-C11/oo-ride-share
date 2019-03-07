@@ -1,6 +1,5 @@
 require "csv"
 require "time"
-TEST_DATA_DIRECTORY = "./specs/test_data"
 
 require_relative "csv_record"
 require_relative "passenger"
@@ -39,6 +38,11 @@ module RideShare
     def request_trip(passenger_id)
       passenger_id = passenger_id
       first_available_driver = @drivers.find { |driver| driver.status == :AVAILABLE }
+      p first_available_driver
+      if first_available_driver == nil
+        puts "There are currently no available drivers. Please try again later."
+        return
+      end
       first_available_driver_id = first_available_driver.id
       current_time = Time.now.to_s
       puts Time.parse(current_time)

@@ -1,6 +1,4 @@
 require_relative "csv_record"
-# require_relative "trip"
-# require_relative "trip_dispatcher"
 
 module RideShare
   class Passenger < CsvRecord
@@ -24,7 +22,9 @@ module RideShare
       else
         sum = 0
         @trips.each do |trip|
-          sum += trip.cost
+          if trip.cost != nil
+            sum += trip.cost
+          end
         end
         total_cost = sum
         return total_cost
@@ -37,7 +37,9 @@ module RideShare
       else
         total_time = 0
         @trips.each do |trip|
-          total_time += trip.duration_seconds
+          if trip.end_time != nil
+            total_time += trip.duration_seconds
+          end
         end
         return total_time
       end
