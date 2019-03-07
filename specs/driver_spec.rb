@@ -132,7 +132,6 @@ describe "Driver class" do
   end
 
   describe "total_revenue" do
-    # You add tests for the total_revenue method
     before do
       @driver = RideShare::Driver.new(
         id: 54,
@@ -186,6 +185,7 @@ describe "Driver class" do
       expect(@driver.total_revenue).must_equal 9.36
     end
   end
+
   describe "helper method adds trip" do
     before do
       @driver = RideShare::Driver.new(
@@ -224,5 +224,10 @@ describe "Driver class" do
 
       expect(ending_length).must_equal starting_length + 1
     end
+
+    it "changes status of driver when trip added" do
+      expect(@driver.change_status(trip)).must_equal :UNAVAILABLE
+    end
+
   end
 end

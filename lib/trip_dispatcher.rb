@@ -35,7 +35,6 @@ module RideShare
               #{passengers.count} passengers>"
     end
 
-    # attempting wave 3, need to write test
     def request_trip(passenger_id)
       driver_id = @drivers.find do |driver|
         driver.status == :AVAILABLE
@@ -53,9 +52,17 @@ module RideShare
         cost: nil,
         rating: nil,
       )
+
+      # call helper method
+      @driver.change_status(trip)
+
+      # add trip to passenger list
+      passenger = find_passenger(passenger_id)
+      passenger.add_trip(trip)
+
+      return trip
     end
 
-    #when a trip is requested the driver status
 
     private
 
