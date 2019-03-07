@@ -43,11 +43,11 @@ module RideShare
       revenue = 0
 
       @trips.each do |trip|
-       if trip.cost < 1.65
-        revenue += 0
-       else
-       revenue += ((trip.cost - 1.65) * 0.8)
-       end
+        if trip.cost < 1.65
+          revenue += 0
+        else
+          revenue += ((trip.cost - 1.65) * 0.8)
+        end
       end
 
       return revenue.to_f
@@ -60,6 +60,15 @@ module RideShare
                vin: record[:vin],
                status: record[:status],
              )
+    end
+
+    private
+
+    def add_new_trip
+      # this Trip.new() goes into the collection of trips for this particular driver
+      # STATUS: AVAILABLE
+
+      #Passengers list of trips << this helper trip
     end
   end
 end

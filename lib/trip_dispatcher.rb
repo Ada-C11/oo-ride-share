@@ -1,5 +1,6 @@
 require "csv"
 require "time"
+require "pry"
 
 require_relative "passenger"
 require_relative "trip"
@@ -35,17 +36,24 @@ module RideShare
     end
 
     # attempting wave 3, need to write test
-    # def request_trip(passenger_id)
-    #   @trip = Trip.new(
-    #     id: record[:id],
-    #     passenger_id: passenger_id,
-    #     start_time: Time.now,
-    #     end_time: nil,
-    #     driver_id: drivers.status[:AVAILABLE].first.driver_id,
-    #     cost: nil,
-    #     rating: nil,
-    #   )
-    # end
+    def request_trip(passenger_id)
+      driver_id = @drivers.find do |driver|
+        driver.status == :AVAILABLE
+      end
+      id = @trips.map do |trip|
+        trip.id
+      end
+      new_id = id.max + 1
+      trip = Trip.new(
+        id: new_id,
+        passenger_id: passenger_id,
+        start_time: Time.now,
+        end_time: nil,
+        driver_id: driver_id.id,
+        cost: nil,
+        rating: nil,
+      )
+    end
 
     private
 
