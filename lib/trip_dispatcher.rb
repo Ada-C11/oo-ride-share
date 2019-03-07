@@ -56,8 +56,6 @@ module RideShare
         rating: nil,
       )
 
-      puts "new ride #{new_ride.driver.id}"
-
       new_ride.driver.status = :UNAVAILABLE
       new_ride.driver.add_trip(new_ride)
       new_ride.passenger.add_trip(new_ride)

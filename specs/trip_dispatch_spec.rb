@@ -170,8 +170,6 @@ describe "TripDispatcher class" do
     it "Raise ArgumentError if all drivers are unavailable -" do
       @dispatcher.drivers[1].status = :UNAVAILABLE
       @dispatcher.drivers[2].status = :UNAVAILABLE
-      puts @dispatcher.drivers[1].status
-      puts @dispatcher.drivers[2].status
       expect { @dispatcher.available_driver }.must_raise ArgumentError
     end
   end

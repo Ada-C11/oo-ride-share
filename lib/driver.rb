@@ -29,13 +29,17 @@ module RideShare
       @trips << trip
     end
 
-    # need to add test for end time is nil, should test must_close to
     def average_rating
       if @trips.length == 0
         return 0
       end
 
-      sum_rating = @trips.sum { |trip| trip.rating }.to_f.round(2)
+      sum_rating = 0.00
+      @trips.each do |trip|
+        if !trip.rating.nil?
+          sum_rating += trip.rating.to_f.round(2)
+        end
+      end
 
       return sum_rating / completed_trips
     end
@@ -50,20 +54,19 @@ module RideShare
       return num_trips
     end
 
-    # test must close to
     def total_revenue
       if @trips.nil?
         return 0.00
       end
 
       total_fees = 1.65 * completed_trips
-      # will this raise an error for cost equals nil?
-      sum_costs = @trips.sum { |trip|
-        if trip.cost == nil
-          next
+
+      sum_costs = 0
+      @trips.each do |trip|
+        if !trip.cost.nil?
+          sum_costs += trip.cost
         end
-        trip.cost
-      }
+      end
 
       return (sum_costs - total_fees) * 0.80
     end
