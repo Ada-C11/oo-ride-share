@@ -35,28 +35,37 @@ module RideShare
     end
 
     def request_trip(passenger_id)
-      first_available_driver = "" 
+      first_available_driver = ""
       @drivers.each do |driver|
         if driver.status == "AVAILABLE"
           first_available_driver = driver
           break
-        end 
-      end 
-      return first_available_driver
+        end
+      end
+      new_trip = RideShare::Trip.new(
+        id: @trips.count + 1,
+        driver: first_available_driver,
+        passenger_id: passenger_id,
+        start_time: Time.now.to_s,
+        end_time: nil,
+        rating: nil,
+        cost: nil,
+      )
+      #return new_trip
     end
 
-      # Assigns first driver who's :AVAILABLE
-      # Uses current time for start time
-      # End date, cost and rating = nil
+    # Assigns first driver who's :AVAILABLE
+    # Uses current time for start time
+    # End date, cost and rating = nil
 
-      # Create a new instance of Trip
-      # Modify the selected driver using a new HELPER METHOD in Driver
-      #   - Add new trip to collection of trips for that Driver
-      #   - Set the driver's status to :UNAVAILABLE
-      # Add the Trip to the Passenger's list of Trips
-      # Add the new trip to the collection of all Trips in TripDispatcher
-      # Return the newly-created trip
-    
+    # Create a new instance of Trip
+    # Modify the selected driver using a new HELPER METHOD in Driver
+    #   - Add new trip to collection of trips for that Driver
+    #   - Set the driver's status to :UNAVAILABLE
+    # Add the Trip to the Passenger's list of Trips
+    # Add the new trip to the collection of all Trips in TripDispatcher
+    # Return the newly-created trip
+
     private
 
     def connect_trips
