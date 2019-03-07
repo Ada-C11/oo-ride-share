@@ -36,6 +36,15 @@ module RideShare
               #{passengers.count} passengers>"
     end
 
+
+    def request_trip(passenger_id)
+      available_driver = @drivers.find { |driver| driver.status == :AVAILABLE }
+      return trip.new(passenger_id: passenger_id,
+        start_time: Time.now, end_time: nil, driver: available_driver)
+    end
+
+
+
     private
 
     def connect_trips
