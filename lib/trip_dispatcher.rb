@@ -47,14 +47,15 @@ module RideShare
         driver_id: avail_driver.id,
         id: 6,
         passenger: passenger,
-        start_time: start_time,
-        end_time: end_time,
-        cost: cost,
-        rating: rating,
+        start_time: start_time.to_s,
+        end_time: nil,
+        cost: nil,
+        rating: nil,
       )
       passenger.add_trip(current_trip)
       avail_driver.add_trip(current_trip)
-      avail_driver.status == :UNAVAILABLE
+      @trips << current_trip
+      avail_driver.status = :UNAVAILABLE
       return current_trip
     end
 

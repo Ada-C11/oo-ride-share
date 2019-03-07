@@ -1,4 +1,5 @@
 require_relative "spec_helper"
+require "pry"
 
 TEST_DATA_DIRECTORY = "specs/test_data"
 
@@ -131,14 +132,25 @@ describe "TripDispatcher class" do
     end
     it "should add trip to drivers trip collection" do
       current_trip = @dispatcher.request_trip(1)
-      current_driver = find_driver(current_trip.driver_id)
+      current_driver_id = current_trip.driver_id
+      current_driver = @dispatcher.find_driver(current_driver_id)
       expect(current_driver.trips).must_include current_trip
     end
     it "should set driver's status to :UNAVAILABLE" do
+      current_trip = @dispatcher.request_trip(1)
+      current_driver_id = current_trip.driver_id
+      current_driver = @dispatcher.find_driver(current_driver_id)
+      expect(current_driver.status).must_equal :UNAVAILABLE
     end
     it "adds a trip to the passengers trip collection" do
+      current_trip = @dispatcher.request_trip(1)
+      current_passenger_id = current_trip.passenger.id
+      current_passenger = @dispatcher.find_passenger(current_passenger_id)
+      expect(current_passenger.trips).must_include current_trip
     end
     it "adds the trip to the trip dispatchers trip collection" do
+      current_trip = @dispatcher.request_trip(1)
+      expect(@dispatcher.trips).must_include current_trip
     end
   end
 end
