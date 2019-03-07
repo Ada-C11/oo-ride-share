@@ -124,14 +124,25 @@ describe "TripDispatcher class" do
   end
 
   describe "request trip" do
+   before do
+    @dispatcher_2 = build_test_dispatcher
+   end
+
     it "creates a new instance of trip" do
-      dispatcher_2 = build_test_dispatcher
-      new_trip = dispatcher_2.request_trip(1)
+      new_trip = @dispatcher_2.request_trip(1)
 
       expect(new_trip).must_be_instance_of RideShare::Trip
     end
 
-    it "updates trip lists for driver and passenger" do
+    it "updates trip lists for passenger" do
+      passenger_1 = @dispatcher_2.find_passenger(1)
+      pass_1_trips = passenger_1.trips.length
+
+      new_trip = @dispatcher_2.request_trip(1)
+
+      pass_1_new_trips = passenger_1.trips.length
+
+      expect(pass_1_new_trips - pass_1_trips).must_equal 1
     end
 
     it "selects only driver with status available" do 
