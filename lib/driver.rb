@@ -45,7 +45,7 @@ module RideShare
 
     def total_revenue
       @revenue = []
-        @trips.each do |cost|
+        @trips.each do |trip|
           @revenue << trip.cost - FEE
         end
         total_revenue = (@revenue.sum) * PERCENT

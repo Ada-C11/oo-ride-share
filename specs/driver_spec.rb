@@ -142,7 +142,6 @@ describe "Driver class" do
       vin: "12345678901234567",
       status: :AVAILABLE,
     )
-
     trip7 = RideShare::Trip.new(
       id: 90,
       driver: @driver,
@@ -173,9 +172,5 @@ describe "Driver class" do
       expect(@driver.total_revenue).must_be_close_to 70.16
     end
 
-  end
-
-  xdescribe "net_expenditures" do
-    # You add tests for the net_expenditures method
   end
 end
