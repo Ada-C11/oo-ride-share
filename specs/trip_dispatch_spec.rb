@@ -169,8 +169,18 @@ describe "TripDispatcher class" do
     it "new trip's cost should be nil" do
       expect(new_trip.cost).must_be_nil
     end
+
     it "new trip's rating should be nil" do
       expect(new_trip.rating).must_be_nil
+    end
+
+    it "raise exception if no avaiable drivers" do
+      dispatcher.drivers.each do |driver|
+        driver.status = :UNAVAILABLE
+      end
+      expect {
+        dispatcher.request_trip(dispatcher.passengers[2].id)
+      }.must_raise NoDriverAvailableError
     end
   end
 end
