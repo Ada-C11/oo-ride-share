@@ -192,8 +192,4 @@ describe "Driver class" do
       expect(@driver.total_revenue).must_equal 0
     end
   end
-
-  describe "net_expenditures" do
-    # You add tests for the net_expenditures method
-  end
 end
