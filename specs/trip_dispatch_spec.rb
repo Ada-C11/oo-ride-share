@@ -145,7 +145,17 @@ describe "TripDispatcher class" do
       expect(pass_1_new_trips - pass_1_trips).must_equal 1
     end
 
+    it "updates trip list for driver" do
+      @drivers = [RideShare::Driver.new(id: 1, name: "Alfred", vin: "12345678901234567")]
+      new_trip = @dispatcher_2.request_trip(1)
+
+      expect(new_trip.driver.trips).must_include new_trip
+    end
+
     it "selects only driver with status available" do 
+      new_trip = @dispatcher_2.request_trip(1)
+
+      expect(new_trip.driver.status).must_equal :UNAVAILABLE 
     end
 
     it "raises exception if no drivers are available" do
