@@ -122,4 +122,19 @@ describe "TripDispatcher class" do
       end
     end
   end
+  describe "request_trip" do
+    dispatcher = build_test_dispatcher
+    # create a new trip in request_trip
+    # find passenger that is requesting the new trip using the id given
+    # find a driver from list that's available from a list check status
+    # change driver status to unavailable -> by using the helper method
+    #   in Driver class (change attr_reader for status or do the change within an instance method????)
+    # create the trip with a new time which is the current time Time.now
+    # set end date, cost, and rating to nil
+    # the trip hasn't finished ########
+    # add a new trip instance to the collection in Passenger, Driver, and Tripdispatcher
+    # return the newly created trip (instance of Trip)
+
+    expect(dispatcher.request_trip).must_be_kind_of Trip
+  end
 end
