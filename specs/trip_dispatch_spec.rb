@@ -124,6 +124,7 @@ describe "TripDispatcher class" do
 
     describe "Describes request_trip" do
 
+
       it "creates a new instance of a trip" do
         dispatcher = build_test_dispatcher
         length = dispatcher.trips.length
@@ -132,6 +133,34 @@ describe "TripDispatcher class" do
         expect(new_length).must_equal length + 1
         expect(dispatcher.trips.last).must_be_instance_of RideShare::Trip
       end
+
+      it "adds trip to passenger trips array" do
+        dispatcher = build_test_dispatcher
+        active_passenger = dispatcher.find_passenger(6)
+        length = active_passenger.trips.length
+        new_trip = dispatcher.request_trip(6)
+        new_length = active_passenger.trips.length
+        expect(new_length).must_equal length + 1
+        expect(active_passenger.trips.last).must_be_instance_of RideShare::Trip
+
+      end
+
+      it "adds trip to drivers trips array" do
+        # dispatcher = build_test_dispatcher
+        # length = driver.trips.length
+        # new_trip = dispatcher.request_trip(6)
+        # new_length = active_passenger.trips.length
+        # expect(new_length).must_equal length + 1
+        # expect(active_passenger.trips.last).must_be_instance_of RideShare::Trip
+      end
+
+      it "selects available driver" do
+        
+      end
+
+      it "raises ArgumentError for no available driver" do
+      end
+
     end
   end
 end

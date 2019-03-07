@@ -47,5 +47,13 @@ module RideShare
       end
       return total
     end
+
+    def start_trip(trip)
+      @status == :AVAILABLE ? @status = :UNAVAILABLE : @status = :AVAILABLE
+      add_trip(trip)
+    end
+   
+  
+
   end
 end

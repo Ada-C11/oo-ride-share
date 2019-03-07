@@ -41,7 +41,13 @@ module RideShare
         passenger: nil, passenger_id: passenger_id,
         start_time: Time.now.to_s, end_time: nil, cost: nil, rating: nil, driver_id: assigned_driver.id, driver: assigned_driver)
       @trips.push(new_trip)
+      assigned_driver.start_trip(new_trip)
+      assigned_passenger = find_passenger(passenger_id)
+      assigned_passenger.add_trip(new_trip)
+      return new_trip
     end
+
+
     private
 
     def connect_trips
