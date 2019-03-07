@@ -68,9 +68,8 @@ describe "Passenger class" do
     end
   end
 
-  describe "calculates trip costs and time" do
+  describe "net_expenditures" do
     before do
-      # TODO: you'll need to add a driver at some point here.
       @passenger = RideShare::Passenger.new(
         id: 9,
         name: "Merl Glover III",
@@ -113,6 +112,40 @@ describe "Passenger class" do
       total_cost = @passenger.net_expenditures
 
       expect(total_cost).must_equal 0
+    end
+  end
+
+  describe "total_time" do
+    before do
+      @passenger = RideShare::Passenger.new(
+        id: 9,
+        name: "Merl Glover III",
+        phone_number: "1-602-620-2330 x3723",
+        trips: [],
+      )
+      trip = RideShare::Trip.new(
+        id: 8,
+        passenger: @passenger,
+        start_time: "2018-12-27 02:39:05 -0800",
+        end_time: "2018-12-27 03:38:08 -0800",
+        cost: 15,
+        rating: 5,
+        driver_id: 1,
+      )
+
+      @passenger.add_trip(trip)
+
+      trip = RideShare::Trip.new(
+        id: 8,
+        passenger: @passenger,
+        start_time: "2018-12-27 04:20:08 -0800",
+        end_time: "2018-12-27 05:00:08 -0800",
+        cost: 12,
+        rating: 4,
+        driver_id: 1,
+      )
+
+      @passenger.add_trip(trip)
     end
 
     it "calculates total amount of time spent by one passenger" do
