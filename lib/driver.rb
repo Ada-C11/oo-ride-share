@@ -27,7 +27,7 @@ module RideShare
                id: record[:id],
                name: record[:name],
                vin: record[:vin],
-               status: record[:vin],
+               status: record[:status].to_sym,
              )
     end
   end
