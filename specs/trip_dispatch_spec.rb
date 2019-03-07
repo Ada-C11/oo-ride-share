@@ -140,5 +140,15 @@ describe "TripDispatcher class" do
       expect(available_driver.status).must_equal :AVAILABLE
     end
 
+    it "adds a trip to the Passenger's list of trips" do 
+      new_trip = @dispatcher.request_trip(1)
+      puts @dispatcher.passengers.trips
+
+      passenger = @dispatcher.find_passenger(new_trip.passenger_id)
+      puts passenger.trips
+
+      # expect(passenger.trips)
+    end
+
  end
 end
