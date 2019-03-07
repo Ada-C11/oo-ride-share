@@ -51,6 +51,7 @@ module RideShare
         driver_id: driver_new_trip,
       )
       return trip
+      driver.find(driver_new_trip).status = :UNAVAILABLE
     end
 
     private

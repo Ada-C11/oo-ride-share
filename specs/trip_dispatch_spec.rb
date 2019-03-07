@@ -149,7 +149,7 @@ describe "TripDispatcher class" do
       #      start time Time.now (figure what format to give to the initialize as... I believe it should be string in .new) OK
       # find passenger that is requesting the new trip using the id given --> I THINK WE DON'T NEED TO FIND THE PASSENGER WHEN CREATING THE TRIP
       # find a driver from list that's available from a list check status OK
-      # change driver status to unavailable -> by using the helper method ----- WORKING ON THIS
+      # change driver status to unavailable -> by using the helper method OK added driver.find(driver_new_trip).status = :UNAVAILABLE in request_trip
       #   in Driver class (change attr_reader for status or do the change within an instance method????)
       # create the trip with a new time which is the current time Time.now
       # set end date, cost, and rating to nil
