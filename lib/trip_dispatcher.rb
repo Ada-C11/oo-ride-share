@@ -27,12 +27,18 @@ module RideShare
     end
 
     def request_trip(passenger_id)
-      Rideshare::Trip.new(
+      new_trip = Rideshare::Trip.new(
         id: generate_trip_id,
         passenger_id: passenger_id,
         start_time: Time.now,
         driver_id: find_avaiable,
       )
+      passenger = find_passenger(passenger_id)
+      driver = find_driver(find_avaiable)
+
+      new_trip.connect(passenger, driver)
+
+      return new_trip
     end
 
     def inspect
@@ -48,7 +54,7 @@ module RideShare
     def find_available
       @drivers.each do |driver|
         if driver.status == :AVAILABLE
-          driver.change_status
+          driver.change_status # is this actually modified?
           return driver.id
         end
       end
