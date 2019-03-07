@@ -30,7 +30,7 @@ module RideShare
     end
 
       average_rating /= @trips.length
-      average_rating.to_f
+      return average_rating.round(2)
     end
 
     def total_revenue
@@ -42,8 +42,9 @@ module RideShare
           total_revenue += (trip.cost - 1.65)
         end
       end
+
       total_revenue *= 0.8
-      return total_revenue.to_f
+      return total_revenue.round(2)
     end
 
     private
