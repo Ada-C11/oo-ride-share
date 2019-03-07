@@ -122,4 +122,19 @@ describe "TripDispatcher class" do
       end
     end
   end
+
+  describe "request_trip method" do
+    it "instantiates a trip" do
+      new_trip = RideShare::TripDispatcher.request_trip(4)
+      expect(new_trip.request_trip(4)).must_be_kind_of RideShare::Trip
+    end
+
+    it "updates the trip lists for driver and passenger" do
+      trip_count = %x{wc -l 'support/trips.csv'}.split(" ").first.to_i
+
+      dispatcher = RideShare::TripDispatcher.request_trip(4)
+
+      expect(dispatcher.length).must_equal trip_count
+    end
+  end
 end
