@@ -18,13 +18,13 @@ describe "TripDispatcher class" do
 
     it "establishes the base data structures when instantiated" do
       dispatcher = build_test_dispatcher
-      [:trips, :passengers].each do |prop|
+      [:trips, :passengers, :drivers].each do |prop|
         expect(dispatcher).must_respond_to prop
       end
 
       expect(dispatcher.trips).must_be_kind_of Array
       expect(dispatcher.passengers).must_be_kind_of Array
-      # expect(dispatcher.drivers).must_be_kind_of Array
+      expect(dispatcher.drivers).must_be_kind_of Array
     end
 
     it "loads the development data by default" do
@@ -120,12 +120,11 @@ describe "TripDispatcher class" do
           expect(trip.driver.id).must_equal trip.driver_id
           expect(trip.driver.trips).must_include trip
         end
-        puts Time.now
       end
     end
   end
   describe "request_trip" do
-    ## NOT SURE IF WE SHOULD ADD 
+    ## NOT SURE IF WE SHOULD ADD
     # before do
     #   start_time = Time.parse("2015-05-20T12:14:00+00:00")
     #   end_time = start_time + 25 * 60 # 25 minutes
@@ -140,14 +139,17 @@ describe "TripDispatcher class" do
     #     rating: 3,
     #     driver: nil,
     #   }
-      # @trip = RideShare::Trip.new(@trip_data)
-    end
+    # @trip = RideShare::Trip.new(@trip_data)
+
     it "will return instance of trip" do
       dispatcher = build_test_dispatcher
       # create a new trip in request_trip
-      # find passenger that is requesting the new trip using the id given
-      # find a driver from list that's available from a list check status
-      # change driver status to unavailable -> by using the helper method
+      #     instantiate Trip in TripDispatch ang pass the passenger id, OK
+      #     trip id which will be the lenght of the @trips array OK
+      #      start time Time.now (figure what format to give to the initialize as... I believe it should be string in .new) OK
+      # find passenger that is requesting the new trip using the id given --> I THINK WE DON'T NEED TO FIND THE PASSENGER WHEN CREATING THE TRIP
+      # find a driver from list that's available from a list check status OK
+      # change driver status to unavailable -> by using the helper method ----- WORKING ON THIS
       #   in Driver class (change attr_reader for status or do the change within an instance method????)
       # create the trip with a new time which is the current time Time.now
       # set end date, cost, and rating to nil
@@ -162,7 +164,9 @@ describe "TripDispatcher class" do
       #   phone_number: "1-602-620-2330 x3723",
       #   trips: [],
       # )
-      expect(dispatcher.request_trip(1)).must_be_kind_of Trip
+      #
+
+      expect(dispatcher.request_trip(1)).must_be_kind_of RideShare::Trip
     end
   end
 end

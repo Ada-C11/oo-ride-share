@@ -37,15 +37,20 @@ module RideShare
     end
 
     def request_trip(passenger_id)
-      ## NOT SURE WHERE TO INSTANTIATE NEW METHOD
+      driver_new_trip = 0
+      drivers.find do |driver|
+        if driver.status == :AVAILABLE
+          driver_new_trip = driver.id
+        end
+      end
+      trip_id = trips.count + 1
       trip = RideShare::Trip.new(
         passenger_id: passenger_id,
-        id: @trips.length + 1,
-        start_time: "2019-03-06 16:53:00 -0800",
-        end_time: nil,
-        rating: nil,
-        cost: nil,
+        id: trip_id,
+        start_time: Time.now.to_s,
+        driver_id: driver_new_trip,
       )
+      return trip
     end
 
     private
