@@ -125,51 +125,49 @@ describe "TripDispatcher class" do
   let(:dispatcher) {
     build_test_dispatcher
   }
+  let(:new_trip) {
+    dispatcher.request_trip(dispatcher.passengers[1].id)
+  }
   describe "TripDispatcher#request_trip" do
     it "will return Trip class" do
-      passenger_id = dispatcher.passengers[4].id
-      expect(dispatcher.request_trip(passenger_id)).must_be_instance_of RideShare::Trip
+      expect(new_trip).must_be_instance_of RideShare::Trip
     end
 
     it "will assign the first available driver to the new trip instance" do
-      passenger_id = dispatcher.passengers[4].id
       driver = dispatcher.drivers.find do |driver|
         driver.status == :AVAILABLE
       end
-      expect(dispatcher.request_trip(passenger_id).driver).must_equal driver
+      expect(new_trip.driver).must_equal driver
     end
 
     it "will changed the assigned driver's status to :UNAVAILABLE" do
-      passenger_id = dispatcher.passengers[4].id
-      expect(dispatcher.request_trip(passenger_id).driver.status).must_equal :UNAVAILABLE
+      expect(new_trip.driver.status).must_equal :UNAVAILABLE
     end
 
     it "the new trip id will be the next sequentially available id" do
-      passenger_id = dispatcher.passengers[2].id
-      expect(dispatcher.request_trip(passenger_id).id).must_equal dispatcher.trips.length
+      expect(new_trip.id).must_equal dispatcher.trips.length
     end
 
     it "the trip will be added to the driver's trips" do
-      passenger_id = dispatcher.passengers[2].id
-      trip = dispatcher.request_trip(passenger_id)
-      expect(trip.driver.trips[-1]).must_equal trip
+      expect(new_trip.driver.trips[-1]).must_equal new_trip
     end
+
     it "the trip will be added to the passenger's trips" do
-      passenger_id = dispatcher.passengers[2].id
-      trip = dispatcher.request_trip(passenger_id)
-      expect(trip.passenger.trips[-1]).must_equal trip
+      expect(new_trip.passenger.trips[-1]).must_equal new_trip
     end
 
     it "the trip will be added to the Dispatcher's trips" do
-      passenger_id = dispatcher.passengers[2].id
-      trip = dispatcher.request_trip(passenger_id)
-      expect(dispatcher.trips[-1]).must_equal trip
+      p new_trip
+      p dispatcher.trips[-1]
+      expect(dispatcher.trips[-1]).must_equal new_trip
     end
 
     it "new trip's end time should be nil" do
-      passenger_id = dispatcher.passengers[2].id
-      trip = dispatcher.request_trip(passenger_id)
-      expect(trip.end_time).must_be_nil
+      expect(new_trip.end_time).must_be_nil
+    end
+
+    it "new trip's cost should be nil" do
+      expect(new_trip.cost).must_be_nil
     end
   end
 end
