@@ -19,6 +19,10 @@ module RideShare
       @trips << trip
     end
 
+    def change_status
+      @status = @status == :AVAILABLE ? :UNAVAILABLE : :AVAILABLE
+    end
+
     def average_rating
       total = 0
       if trips.length == 0 || trips.length == nil
@@ -56,7 +60,7 @@ module RideShare
                id: record[:id],
                name: record[:name],
                vin: record[:vin],
-               status: record[:status].to_sym
+               status: record[:status].to_sym,
              )
     end
   end
