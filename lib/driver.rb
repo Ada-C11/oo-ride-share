@@ -25,15 +25,33 @@ module RideShare
       @trips << trip
     end
 
-    def average_rating(driver)
+    def average_rating
       rating = []
-      @trips.each do |trip|
-        if trip.driver_id == driver.id
-          rating << driver.id.rating
+      if @trips.length > 0
+        @trips.each do |trip|
+          rating << trip.rating
         end
+        average_rating = rating.reduce(:+) / rating.length.to_f
+        return average_rating
+      else
+        return 0
       end
-      average_rating = rating.reduce(:+) / rating.length.to_f
-      return average_rating
+    end
+
+    def total_revenue
+      total_cost = 0.0
+      if @trips.length > 0
+        @trips.each do |trip|
+          total_cost += trip.cost
+        end
+        total_rev = (total_cost - 1.65) * 0.8
+        if total_cost < 1.65
+          total_rev = 0
+        end
+        return total_rev
+      else
+        return 0
+      end
     end
 
     private
