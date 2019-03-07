@@ -154,5 +154,10 @@ describe "TripDispatcher class" do
       trip = dispatcher.request_trip(passenger_id)
       expect(trip.driver.trips[-1]).must_equal trip
     end
+    it "the trip will be added to the passenger's trips" do
+      passenger_id = dispatcher.passengers[2].id
+      trip = dispatcher.request_trip(passenger_id)
+      expect(trip.passenger.trips[-1]).must_equal trip
+    end
   end
 end
