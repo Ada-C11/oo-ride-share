@@ -34,6 +34,20 @@ module RideShare
               #{passengers.count} passengers>"
     end
 
+    def request_trip(passenger_id)
+      # Assigns first driver who's :AVAILABLE
+      # Uses current time for start time
+      # End date, cost and rating = nil
+
+      # Create a new instance of Trip
+      # Modify the selected driver using a new HELPER METHOD in Driver
+      #   - Add new trip to collection of trips for that Driver
+      #   - Set the driver's status to :UNAVAILABLE
+      # Add the Trip to the Passenger's list of Trips
+      # Add the new trip to the collection of all Trips in TripDispatcher
+      # Return the newly-created trip
+    end
+
     private
 
     def connect_trips
