@@ -38,16 +38,28 @@ module RideShare
 
       @drivers.each do |driver|
         if driver.status == :AVAILABLE
+          passenger = find_passenger(passenger_id)
+          passenger.add_trip(Trip.new(
+              id: @trips.length + 1,
+              driver_id: driver.id,
+              passenger_id: find_passenger(passenger_id),
+              start_time: Time.now.to_s,
+              end_time: nil, 
+              cost: nil,
+              rating: nil,
+            ))
+
           return Trip.new(
-                   id: @trips.length + 1,
-                   driver_id: driver.id,
-                   passenger_id: passenger_id,
-                   start_time: Time.now.to_s,
-                   end_time: nil,
-                   cost: nil,
-                   rating: nil,
-                 )
+            id: @trips.length + 1,
+            driver_id: driver.id,
+            passenger_id: find_passenger(passenger_id),
+            start_time: Time.now.to_s,
+            end_time: nil, 
+            cost: nil,
+            rating: nil,
+          )
         end
+
       end
     end
 

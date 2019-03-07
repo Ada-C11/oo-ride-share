@@ -125,7 +125,6 @@ describe "TripDispatcher class" do
   describe "request_trip(passenger_id)" do
     before do
       @dispatcher = build_test_dispatcher
-      puts @dispatcher.drivers[1].status
     end
 
     
@@ -142,10 +141,17 @@ describe "TripDispatcher class" do
 
     it "adds a trip to the Passenger's list of trips" do 
       new_trip = @dispatcher.request_trip(1)
-      puts @dispatcher.passengers.trips
 
-      passenger = @dispatcher.find_passenger(new_trip.passenger_id)
-      puts passenger.trips
+      passenger = @dispatcher.find_passenger(1)
+
+      expect(passenger.trips.last.id).must_equal new_trip.id
+
+      # passenger = @dispatcher.find_passenger(new_trip.passenger.id)
+      # puts @dispatcher.passengers
+
+      
+      
+      # puts passenger.trips.include?(new_trip)
 
       # expect(passenger.trips)
     end
