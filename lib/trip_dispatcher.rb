@@ -52,6 +52,15 @@ module RideShare
         cost: nil,
         rating: nil,
       )
+
+      # call helper method
+      @driver.change_status(trip)
+
+      # add trip to passenger list
+      passenger = find_passenger(passenger_id)
+      passenger.add_trip(trip)
+
+      return trip
     end
 
 
