@@ -129,6 +129,14 @@ describe "TripDispatcher class" do
         expect(ongoing_trip.driver.status == :AVAILABLE)
       end
 
+      it "updates passenger trips when new trip is requested" do
+
+      end
+
+      it "returns an error when there are no available drivers" do
+
+      end
+
 
     # Was the trip created properly?
     # Were the trip lists for the driver and passenger updated?

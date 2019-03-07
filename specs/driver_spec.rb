@@ -1,5 +1,6 @@
 require_relative 'spec_helper'
 
+
 describe "Driver class" do
   describe "Driver instantiation" do
     before do
@@ -140,6 +141,12 @@ describe "Driver class" do
 
     it "calculates total_revenue" do
       expect(@driver.total_revenue).must_be_close_to 78.68
+    end
+
+    it "updates driver trips when new trip is requested" do
+      count = @driver.trips.length 
+      new_trip = @driver.accept_new_trip
+      expect(count).must_equal count += 1
     end
   end
 end
