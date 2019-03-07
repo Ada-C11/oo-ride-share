@@ -23,7 +23,7 @@ describe "TripDispatcher class" do
 
       expect(dispatcher.trips).must_be_kind_of Array
       expect(dispatcher.passengers).must_be_kind_of Array
-      # expect(dispatcher.drivers).must_be_kind_of Array
+      expect(dispatcher.drivers).must_be_kind_of Array
     end
 
     it "loads the development data by default" do
@@ -48,7 +48,9 @@ describe "TripDispatcher class" do
 
       it "finds a passenger instance" do
         passenger = @dispatcher.find_passenger(2)
+        driver = @dispatcher.find_driver(3)
         expect(passenger).must_be_kind_of RideShare::Passenger
+        # expect(driver).must_be_kind_of RideShare::Driver
       end
     end
 

@@ -1,9 +1,11 @@
 require 'csv'
+require 'pry'
 require_relative 'csv_record'
 
 module RideShare
   class Driver < CsvRecord
-    attr_reader :id, :name, :vin, :status, :trips
+    attr_reader :id, :name, :vin, :trips
+    attr_accessor :status
 
     STATUS = [:AVAILABLE, :UNAVAILABLE]
 
@@ -19,19 +21,20 @@ module RideShare
       end
 
       if !(STATUS.include?(status))
+        binding.pry
         raise ArgumentError, "Status must be either Available or Unavailable."
       end
     end
 
-    
+
     private
 
     def self.from_csv(record)
-      return new(
+      return self.new(
                id: record[:id],
                name: record[:name],
                vin: record[:vin],
-               status: record[:status],
+               status: record[:status].to_sym,
              )
     end
 

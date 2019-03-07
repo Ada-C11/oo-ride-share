@@ -42,6 +42,13 @@ describe "Passenger class" do
         phone_number: "1-602-620-2330 x3723",
         trips: [],
       )
+      @driver = RideShare::Driver.new(
+        id: 8,
+        name: "Finn Glover III",
+        vin: "12345678987654321",
+        status: :UNAVAILABLE,
+        trips: [],
+      )
       trip = RideShare::Trip.new(
         id: 8,
         passenger: @passenger,
@@ -49,6 +56,7 @@ describe "Passenger class" do
         start_time: "2016-08-08",
         end_time: "2016-08-09",
         rating: 5,
+        driver_id: 8,
       )
 
       @passenger.add_trip(trip)
@@ -87,6 +95,7 @@ describe "Passenger class" do
         end_time: end_time.to_s,
         cost: 23.45,
         rating: 3,
+        driver_id: 8,
       }
       @trip_1 = RideShare::Trip.new(@trip_data_1)
       @passenger.add_trip(@trip_1)
@@ -103,6 +112,7 @@ describe "Passenger class" do
         end_time: end_time.to_s,
         cost: 5.00,
         rating: 3,
+        driver_id: 7,
       }
       @trip_2 = RideShare::Trip.new(@trip_data_2)
       @passenger.add_trip(@trip_2)
@@ -119,14 +129,15 @@ describe "Passenger class" do
         end_time: end_time.to_s,
         cost: 9.00,
         rating: 3,
+        driver_id: 6,
       }
       @trip_3 = RideShare::Trip.new(@trip_data_3)
       @passenger.add_trip(@trip_3)
     end
 
-    describe "net_expenditures" do
-      # You add tests for the net_expenditures method
-    end
+    # describe "net_expenditures" do
+    #   # You add tests for the net_expenditures method
+    # end
     
     it "calculate total amount spent on all trips taken by one passenger" do
       # trip_prices_array = []
