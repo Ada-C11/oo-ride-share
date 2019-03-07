@@ -26,7 +26,9 @@ module RideShare
     def average_rating
       total = 0.0
       self.trips.each do |trip|
-        total += trip.rating
+        unless trip.end_time == nil
+          total += trip.rating
+        end
       end
       if self.trips.length == 0
         return 0
@@ -38,11 +40,16 @@ module RideShare
     def total_revenue
       revenue = 0
       self.trips.each do |trip|
-        if trip.cost > 1.65
+        unless trip.end_time == nil && trip.cost < 1.65
           revenue += (trip.cost - 1.65) * 0.8
         end
       end
       return revenue.truncate(2)
+    end
+
+    def add_requested_trip(trip)
+      self.add_trip(trip)
+      @status = :UNAVAILABLE
     end
 
     private

@@ -10,7 +10,7 @@ module RideShare
 
     def initialize(id:, driver: nil, driver_id: nil,
                    passenger: nil, passenger_id: nil,
-                   start_time:, end_time:, cost: nil, rating:)
+                   start_time:, end_time: nil, cost: nil, rating: nil)
       super(id)
 
       if passenger
@@ -30,20 +30,28 @@ module RideShare
       end
 
       @start_time = Time.parse(start_time)
-      @end_time = Time.parse(end_time)
-      if @start_time > @end_time
+      unless @end_time == nil
+        @end_time = Time.parse(end_time)
+      end
+      if @end_time != nil && @start_time > @end_time
         raise ArgumentError, "End time must come after start time."
       end
       @cost = cost
       @rating = rating
 
-      if @rating > 5 || @rating < 1
-        raise ArgumentError.new("Invalid rating #{@rating}")
+      unless rating == nil
+        if @rating > 5 || @rating < 1
+          raise ArgumentError.new("Invalid rating #{@rating}")
+        end
       end
     end
 
     def trip_duration_seconds
-      duration = (end_time - start_time).to_i
+      if end_time == nil
+        raise ArgumentError, "This trip is still in progress. Duration can't be calculated."
+      else
+        duration = (end_time - start_time).to_i
+      end
       return duration
     end
 
