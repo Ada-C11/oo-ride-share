@@ -37,14 +37,15 @@ module RideShare
       assigned_driver = @drivers.find(ifnone = nil) do |driver|
         driver.status == :AVAILABLE
       end
+      new_trip_id = @trips.length + 1
       assigned_driver.status = :UNAVAILABLE
-      return Trip.new ({id: 8,
-                        passenger_id: passenger_id,
-                        start_time: Time.new().to_s,
-                        end_time: Time.new().to_s,
-                        cost: 23.45,
-                        rating: 3,
-                        driver: assigned_driver})
+      return Trip.new ({ id: new_trip_id,
+                         passenger_id: passenger_id,
+                         start_time: Time.new().to_s,
+                         end_time: Time.new().to_s,
+                         cost: 23.45,
+                         rating: 3,
+                         driver: assigned_driver })
     end
 
     private
