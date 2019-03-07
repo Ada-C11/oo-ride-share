@@ -169,5 +169,8 @@ describe "TripDispatcher class" do
     it "new trip's cost should be nil" do
       expect(new_trip.cost).must_be_nil
     end
+    it "new trip's rating should be nil" do
+      expect(new_trip.rating).must_be_nil
+    end
   end
 end

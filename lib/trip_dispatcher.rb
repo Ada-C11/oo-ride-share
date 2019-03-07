@@ -39,14 +39,14 @@ module RideShare
       end
       new_trip_id = @trips.length + 1
       assigned_passenger = find_passenger(passenger_id)
-      new_trip = Trip.new ({ id: new_trip_id,
-                             passenger_id: passenger_id,
-                             passenger: assigned_passenger,
-                             start_time: Time.new().to_s,
-                             end_time: nil,
-                             cost: 23.45,
-                             rating: 3,
-                             driver: assigned_driver })
+      new_trip = Trip.new ({id: new_trip_id,
+                            passenger_id: passenger_id,
+                            passenger: assigned_passenger,
+                            start_time: Time.new().to_s,
+                            end_time: nil,
+                            cost: nil,
+                            rating: 3,
+                            driver: assigned_driver})
       assigned_driver.status = :UNAVAILABLE
       assigned_passenger.add_trip(new_trip)
       assigned_driver.add_trip(new_trip)
