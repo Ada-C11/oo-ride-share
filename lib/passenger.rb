@@ -20,7 +20,7 @@ module RideShare
       #return the total amount of money that passenger has spent on their trips
       cost_sum = 0
       @trips.each do |trip|
-        cost_sum += trip.cost
+        cost_sum += trip.cost if trip.cost != nil
       end
       return cost_sum
     end
@@ -29,7 +29,7 @@ module RideShare
       #return the total amount of time that passenger has spent on their trips
       total_time = 0
       @trips.each do |trip|
-        total_time += trip.calculate_duration
+        total_time += trip.calculate_duration if trip.end_time != nil
       end
       return total_time
     end
