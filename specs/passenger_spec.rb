@@ -67,4 +67,8 @@ describe "Passenger class" do
       end
     end
   end
+
+  describe "net_expenditures" do
+    # You add tests for the net_expenditures method
+  end
 end
