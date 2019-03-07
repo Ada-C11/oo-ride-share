@@ -43,7 +43,7 @@ module RideShare
         end
       end
       total_revenue *= 0.8
-      return total_revenue
+      return total_revenue.to_f
     end
 
     private
