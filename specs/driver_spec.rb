@@ -165,7 +165,7 @@ describe "Driver class" do
       expect(@driver.total_revenue).must_be_kind_of Float
     end
 
-    it "It accurately calculates total revenue -- 80 percent of (driver's earnings - 1.65)" do
+    it "accurately calculates total revenue -- 80 percent of (driver's earnings - 1.65)" do
       total_revenue = @driver.total_revenue
       expect(total_revenue).must_equal 26.16
     end
@@ -177,6 +177,37 @@ describe "Driver class" do
         vin: "1C9EVBRM0YBC564DZ",
       )
       expect(driver.total_revenue).must_equal 0
+    end
+
+    it "does not increase total revenue if trip cost is less than 1.65" do
+      @driver = RideShare::Driver.new(
+        id: 54,
+        name: "Rogers Bartell IV",
+        vin: "1C9EVBRM0YBC564DZ",
+      )
+      trip = RideShare::Trip.new(
+        id: 8,
+        driver: @driver,
+        passenger_id: 3,
+        start_time: "2016-08-08",
+        end_time: "2016-08-08",
+        rating: 5,
+        cost: 1.50,
+      )
+
+      trip_2 = RideShare::Trip.new(
+        id: 8,
+        driver: @driver,
+        passenger_id: 5,
+        start_time: "2016-08-08",
+        end_time: "2016-08-08",
+        rating: 5,
+        cost: 11.65,
+      )
+      @driver.add_trip(trip)
+      @driver.add_trip(trip_2)
+
+      expect(@driver.total_revenue).must_equal 8.00
     end
   end
 end
