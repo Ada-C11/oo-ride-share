@@ -136,7 +136,11 @@ describe "TripDispatcher class" do
       expect(ending_length).must_equal starting_length + 1
     end
 
-    it "" do
-    end
+    # it "sets the driver's status to :UNAVAILABLE" do
+    #   dispatcher = build_test_dispatcher
+    #   puts unavailable_status = dispatcher.drivers.status
+
+    #   expect(unavailable_status).must_equal :UNAVAILABLE
+    # end
   end
 end

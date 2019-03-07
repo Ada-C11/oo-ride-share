@@ -55,6 +55,8 @@ module RideShare
       )
     end
 
+    #when a trip is requested the driver status
+
     private
 
     def connect_trips
