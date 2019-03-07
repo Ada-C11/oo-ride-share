@@ -124,7 +124,7 @@ describe "TripDispatcher class" do
       end
 
       it "request a new trips" do
-        ongoing_trip = request_trip(9)
+        ongoing_trip = @dispatcher.request_trip(9)
 
         expect(ongoing_trip.driver.status == :AVAILABLE)
       end
