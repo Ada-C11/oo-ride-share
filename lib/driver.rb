@@ -41,8 +41,10 @@ module RideShare
       else
         total_revenue = 0
         @trips.each do |trip|
-          unless trip.cost < 1.65
-            total_revenue += (trip.cost - 1.65)
+          if trip.end_time != nil
+            unless trip.cost < 1.65
+              total_revenue += (trip.cost - 1.65)
+            end
           end
         end
       end
