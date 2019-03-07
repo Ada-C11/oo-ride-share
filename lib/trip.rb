@@ -23,7 +23,11 @@ module RideShare
       end
 
       @start_time = Time.parse(start_time)
-      @end_time = Time.parse(end_time)
+      if end_time.nil?
+        @end_time = nil
+      else
+        @end_time = Time.parse(end_time)
+      end
       @cost = cost
       @rating = rating
 
@@ -34,10 +38,10 @@ module RideShare
         raise ArgumentError, "Driver or driver_id is required"
       end
 
-      if @end_time < @start_time
+      if !@end_time.nil? && @end_time < @start_time
         raise ArgumentError.new("End time before start time.")
       end
-      if @rating > 5 || @rating < 1
+      if !@rating.nil? && (@rating > 5 || @rating < 1)
         raise ArgumentError.new("Invalid rating #{@rating}")
       end
     end

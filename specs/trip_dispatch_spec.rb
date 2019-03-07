@@ -122,4 +122,21 @@ describe "TripDispatcher class" do
       end
     end
   end
+
+  describe "request_trip method" do
+    it "creates a new instance of a trip" do
+      dispatcher = build_test_dispatcher
+      starting_length = dispatcher.trips.length
+      puts "starting length", starting_length
+      test_passenger = dispatcher.passengers[3]
+      test_passenger_id = test_passenger.id
+      dispatcher.request_trip(test_passenger_id)
+      ending_length = dispatcher.trips.length
+      puts "ending lenth", ending_length
+      expect(ending_length).must_equal starting_length + 1
+    end
+
+    it "" do
+    end
+  end
 end

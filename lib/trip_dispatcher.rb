@@ -40,14 +40,14 @@ module RideShare
       driver_id = @drivers.find do |driver|
         driver.status == :AVAILABLE
       end
-      id = @trips.map do |trip|
+      ids = @trips.map do |trip|
         trip.id
       end
-      new_id = id.max + 1
-      trip = Trip.new(
+      new_id = ids.max + 1
+      @trips << Trip.new(
         id: new_id,
         passenger_id: passenger_id,
-        start_time: Time.now,
+        start_time: Time.now.to_s,
         end_time: nil,
         driver_id: driver_id.id,
         cost: nil,
