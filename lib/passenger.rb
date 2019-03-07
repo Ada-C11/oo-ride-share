@@ -18,12 +18,23 @@ module RideShare
 
     # take into account incomplete trips
     def net_expenditures
-      return 0 if @trips.nil?
-      return @trips.sum { |trip| trip.cost }
+      sum_cost = 0.00
+      @trips.each do |trip|
+        if !trip.cost.nil?
+          sum_cost += trip.cost
+        end
+      end
+      return sum_cost
     end
 
     def total_time_spent
-      return @trips.sum { |trip| trip.trip_duration }
+      time_spent = 0
+      @trips.each do |trip|
+        if !trip.end_time.nil?
+          time_spent += trip.trip_duration
+        end
+      end
+      return time_spent
     end
 
     def self.from_csv(record)
