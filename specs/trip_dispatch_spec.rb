@@ -122,4 +122,13 @@ describe "TripDispatcher class" do
       end
     end
   end
+  let(:dispatcher) {
+    build_test_dispatcher
+  }
+  describe "TripDispatcher#request_trip" do
+    it "will return Trip class" do
+      passenger_id = dispatcher.passengers[4].id
+      expect(dispatcher.request_trip(passenger_id)).must_be_instance_of Trip
+    end
+  end
 end
