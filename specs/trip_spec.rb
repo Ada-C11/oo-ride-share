@@ -59,7 +59,7 @@ describe "Trip class" do
         expect {RideShare::Trip.new(@trip_data)}.must_raise ArgumentError
     end
       
-      #expect {Card.new(0, :diamonds)}.must_raise ArgumentError
+    
 
   end
 end

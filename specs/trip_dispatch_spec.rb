@@ -121,5 +121,17 @@ describe "TripDispatcher class" do
         end
       end
     end
+
+    describe "Describes request_trip" do
+
+      it "creates a new instance of a trip" do
+        dispatcher = build_test_dispatcher
+        length = dispatcher.trips.length
+        dispatcher.request_trip(6)
+        new_length = dispatcher.trips.length
+        expect(new_length).must_equal length + 1
+        expect(dispatcher.trips.last).must_be_instance_of RideShare::Trip
+      end
+    end
   end
 end
