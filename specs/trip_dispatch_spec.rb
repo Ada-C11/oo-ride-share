@@ -138,9 +138,9 @@ describe "TripDispatcher class" do
       expect(new_trip.driver).must_be_kind_of RideShare::Driver
     end
 
-    it "Assigns :AVAILABLE driver" do
+    it "changes driver's status to :UNAVAILABLE driver" do
       new_trip = @dispatcher.request_trip(@passenger_id)
-      expect(new_trip.driver.status).must_equal :AVAILABLE
+      expect(new_trip.driver.status).must_equal :UNAVAILABLE
     end
 
     it "Uses time for the start time" do
@@ -157,9 +157,9 @@ describe "TripDispatcher class" do
 
     # THIS DOESN'T WORK
     it "adds Trip to Passenger's list of Trips" do
-      original_trip_list = @dispatcher.passengers[@passenger_id - 1].trips
+      original_trip_list = @dispatcher.find_passenger(@passenger_id).trips
       new_trip = @dispatcher.request_trip(@passenger_id)
-      new_trip_list = @dispatcher.passengers[@passenger_id - 1].trips
+      new_trip_list = @dispatcher.find_passenger(@passenger_id).trips
       expect(new_trip_list.length - original_trip_list.length).must_equal 1
     end
 
