@@ -130,5 +130,13 @@ describe "TripDispatcher class" do
       passenger_id = dispatcher.passengers[4].id
       expect(dispatcher.request_trip(passenger_id)).must_be_instance_of RideShare::Trip
     end
+
+    it "will assign the first available driver to the new trip instance" do
+      passenger_id = dispatcher.passengers[4].id
+      driver = dispatcher.drivers.find do |driver|
+        driver.status == :AVAILABLE
+      end
+      expect(dispatcher.request_trip(passenger_id).driver).must_equal driver
+    end
   end
 end
