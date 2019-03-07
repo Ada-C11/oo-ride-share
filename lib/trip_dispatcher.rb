@@ -51,19 +51,22 @@ module RideShare
         rating: nil,
         cost: nil,
       )
-      #return new_trip
+
+      passenger = find_passenger(passenger_id)
+      passenger.add_trip(new_trip)
+      return new_trip
     end
 
-    # Assigns first driver who's :AVAILABLE
-    # Uses current time for start time
-    # End date, cost and rating = nil
+    # Assigns first driver who's :AVAILABLE  <-- DONE
+    # Uses current time for start time <-- DONE
+    # End date, cost and rating = nil  <-- DONE
 
-    # Create a new instance of Trip
-    # Modify the selected driver using a new HELPER METHOD in Driver
-    #   - Add new trip to collection of trips for that Driver
-    #   - Set the driver's status to :UNAVAILABLE
-    # Add the Trip to the Passenger's list of Trips
-    # Add the new trip to the collection of all Trips in TripDispatcher
+    # Create a new instance of Trip <-- DONE
+    # Modify the selected driver using a new HELPER METHOD in Driver <-- HELPS DRIVER
+    #   - Add new trip to collection of trips for that Driver  <--- HELPS DRIVER
+    #   - Set the driver's status to :UNAVAILABLE <--- HELPS DRIVER
+    # Add the Trip to the Passenger's list of Trips <--- DONE
+    # Add the new trip to the collection of all Trips in TripDispatcher <--- HELPS TRIPDISPATCHER
     # Return the newly-created trip
 
     private
