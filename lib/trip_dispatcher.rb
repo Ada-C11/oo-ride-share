@@ -37,8 +37,15 @@ module RideShare
     def request_trip(passenger_id)
       new_trip_driver = nil
       @drivers.each do |driver|
-        new_trip_driver = driver if driver.status == :AVAILABLE
+        if driver.status == :AVAILABLE
+          new_trip_driver = driver
+          break
+        end
       end
+      if new_trip_driver == nil 
+        return nil
+      end
+
       # new_trip_driver = driver
       time = Time.now.to_s
       time_now = Time.parse(time)
@@ -56,7 +63,7 @@ module RideShare
       new_trip_passenger.add_trip(new_trip)
       new_trip_driver.status = "UNAVAILABLE"
       @trips << new_trip
-      # connect_trips
+      connect_trips
       new_trip
     end
 
