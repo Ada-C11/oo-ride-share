@@ -1,6 +1,6 @@
 require_relative "spec_helper"
 
-xdescribe "Driver class" do
+describe "Driver class" do
   describe "Driver instantiation" do
     before do
       @driver = RideShare::Driver.new(
@@ -45,7 +45,7 @@ xdescribe "Driver class" do
     end
   end
 
-  describe "add_trip method" do
+  xdescribe "add_trip method" do
     before do
       pass = RideShare::Passenger.new(
         id: 1,
@@ -67,7 +67,7 @@ xdescribe "Driver class" do
       )
     end
 
-    it "adds the trip" do
+    xit "adds the trip" do
       expect(@driver.trips).wont_include @trip
       previous = @driver.trips.length
 
@@ -78,7 +78,7 @@ xdescribe "Driver class" do
     end
   end
 
-  describe "average_rating method" do
+  xdescribe "average_rating method" do
     before do
       @driver = RideShare::Driver.new(
         id: 54,
@@ -96,17 +96,17 @@ xdescribe "Driver class" do
       @driver.add_trip(trip)
     end
 
-    it "returns a float" do
+    xit "returns a float" do
       expect(@driver.average_rating).must_be_kind_of Float
     end
 
-    it "returns a float within range of 1.0 to 5.0" do
+    xit "returns a float within range of 1.0 to 5.0" do
       average = @driver.average_rating
       expect(average).must_be :>=, 1.0
       expect(average).must_be :<=, 5.0
     end
 
-    it "returns zero if no driven trips" do
+    xit "returns zero if no driven trips" do
       driver = RideShare::Driver.new(
         id: 54,
         name: "Rogers Bartell IV",
@@ -115,7 +115,7 @@ xdescribe "Driver class" do
       expect(driver.average_rating).must_equal 0
     end
 
-    it "correctly calculates the average rating" do
+    xit "correctly calculates the average rating" do
       trip2 = RideShare::Trip.new(
         id: 8,
         driver: @driver,
@@ -130,7 +130,7 @@ xdescribe "Driver class" do
     end
   end
 
-  describe "total_revenue" do
+  xdescribe "total_revenue" do
     # You add tests for the total_revenue method
   end
 end
