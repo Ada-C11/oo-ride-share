@@ -1,4 +1,4 @@
-require_relative 'csv_record'
+require_relative "csv_record"
 
 module RideShare
   class Driver < CsvRecord
@@ -25,12 +25,14 @@ module RideShare
       else
         average_rating = 0
         @trips.each do |trip|
-          average_rating += trip.rating
+          if trip.end_time != nil
+            average_rating += trip.rating
+          end
         end
-    end
+      end
 
       average_rating /= @trips.length
-    return average_rating.to_f.round(2)
+      return average_rating.to_f.round(2)
     end
 
     def total_revenue
@@ -39,12 +41,14 @@ module RideShare
       else
         total_revenue = 0
         @trips.each do |trip|
-          total_revenue += (trip.cost - 1.65)
+          unless trip.cost < 1.65
+            total_revenue += (trip.cost - 1.65)
+          end
         end
       end
 
       total_revenue *= 0.8
-    return total_revenue.to_f.round(2)
+      return total_revenue.to_f.round(2)
     end
 
     private
@@ -54,7 +58,7 @@ module RideShare
         id: record[:id],
         name: record[:name],
         vin: record[:vin],
-        status: record[:status]
+        status: record[:status],
       )
     end
   end
