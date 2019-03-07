@@ -136,5 +136,25 @@ describe "TripDispatcher class" do
 
       expect(dispatcher.length).must_equal trip_count
     end
+
+    it "finds an available driver" do
+      dispatcher = RideShare::TripDispatcher.new
+      new_trip = RideShare::TripDispatcher.request_trip(4)
+      available_driver = @dispatcher.drivers[0]
+      expect(new_trip.status).must_equal :AVAILABLE
+    end
+
+    # What happens if you try to request a trip when there
+    # are no AVAILABLE drivers?
+
+    before do
+      @dispatcher = build_test_dispatcher
+      @dispatcher.drivers[1].status == :UNAVAILABLE
+      @dispatcher.drivers[2].status == :UNAVAILABLE
+    end
+
+    it "raises an error if there are no available drivers" do
+      expect(RideShare::TripDispatcher.request_trip(4)).must_raise ArgumentError
+    end
   end
 end
