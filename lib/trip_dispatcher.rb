@@ -37,11 +37,22 @@ module RideShare
     def request_trip(passenger_id)
       new_trip_driver = nil
       @drivers.each do |driver|
-        if driver.status == :AVAILABLE
+        if driver.status == :AVAILABLE && driver.trips.empty?
           new_trip_driver = driver
+          break
+        elsif driver.status == :AVAILABLE 
+          time = Time.now.to_s
+          farthest_end_time = Time.parse(time)
+          driver.trips.each do |trip|
+            if trip.end_time < farthest_end_time
+              farthest_end_time = trip.end_time
+              new_trip_driver = driver
+            end
+          end
           break
         end
       end
+      
       if new_trip_driver == nil 
         return nil
       end
