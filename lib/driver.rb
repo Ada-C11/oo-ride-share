@@ -76,10 +76,10 @@ module RideShare
 #         driver_id: driver_id
 #         )
     
-    def accept_new_trip(trip)
+    def self.accept_new_trip(trip)
       trip = Rideshare::TripDispatcher.request_new_trip
-        add_trip(trip)
-        trip.driver.status = :UNAVAILABLE 
+        self.add_trip(trip)
+        self.status = :UNAVAILABLE 
     end
     
   end
