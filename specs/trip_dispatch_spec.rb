@@ -78,8 +78,7 @@ describe "TripDispatcher class" do
     end
   end
 
-  # TODO: un-skip for Wave 2
-  xdescribe "drivers" do
+  describe "drivers" do
     describe "find_driver method" do
       before do
         @dispatcher = build_test_dispatcher
@@ -120,6 +119,23 @@ describe "TripDispatcher class" do
           expect(trip.driver.trips).must_include trip
         end
       end
+    end
+  end
+
+  describe "Requesting a trip" do
+    before do
+      @passenger_id = 4 # why doesn't this work?
+      @dispatcher = build_test_dispatcher
+    end
+
+    it "creates an instance of trip" do
+      new_trip = @dispatcher.request_trip(@passenger_id)
+      expect(new_trip).must_be_kind_of RideShare::Trip
+    end
+
+    it "assigns a driver" do
+      new_trip = @dispatcher.request_trip(@passenger_id)
+      expect(new_trip.driver).must_be_kind_of RideShare::Driver
     end
   end
 end
