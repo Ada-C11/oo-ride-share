@@ -168,7 +168,7 @@ describe "Driver class" do
       @driver.add_trip(trip)
       @driver.add_trip(trip2)
 
-      expect(@driver.total_revenue).must_equal 36.70
+      expect(@driver.total_revenue).must_equal 37.36
     end
 
     it "will return 0 if no trips given" do
@@ -179,5 +179,4 @@ describe "Driver class" do
       )
       expect(@driver.total_revenue).must_equal 0
     end
-  end
 end

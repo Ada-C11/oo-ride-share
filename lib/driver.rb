@@ -40,10 +40,9 @@ module RideShare
     def total_revenue
       cost_per_trip = []
       @trips.each do |trip|
-        cost_per_trip << trip.cost
+        cost_per_trip << (trip.cost - 1.65) * 0.8
       end
-      deduction = (1.65 * cost_per_trip.length)
-      total_income = ((cost_per_trip.sum * 0.8) - deduction)
+      total_income = cost_per_trip.sum.round(2)
       return total_income
     end
 
