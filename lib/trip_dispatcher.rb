@@ -43,7 +43,7 @@ module RideShare
           return driver
         end
       end
-      return driver.trips.min_by { |trip| trip.end_time }.driver
+      return @trips.min_by { |trip| trip.end_time }.driver
     end
 
     def request_trip(passenger_id)
