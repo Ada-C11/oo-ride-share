@@ -121,4 +121,24 @@ describe "TripDispatcher class" do
       end
     end
   end
+
+  describe "requests trip and adds to passenger & driver instances" do
+    before do
+      @dispatcher = build_test_dispatcher
+    end
+    it "should return a new instance of trip" do
+      expect(@dispatcher.request_trip(1)).must_be_kind_of RideShare::Trip
+    end
+    it "should add trip to drivers trip collection" do
+      current_trip = @dispatcher.request_trip(1)
+      current_driver = find_driver(current_trip.driver_id)
+      expect(current_driver.trips).must_include current_trip
+    end
+    it "should set driver's status to :UNAVAILABLE" do
+    end
+    it "adds a trip to the passengers trip collection" do
+    end
+    it "adds the trip to the trip dispatchers trip collection" do
+    end
+  end
 end

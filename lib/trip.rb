@@ -24,7 +24,9 @@ module RideShare
 
       @driver_id = driver_id
       @start_time = Time.parse(start_time)
-      @end_time = Time.parse(end_time)
+      unless end_time.nil?
+        @end_time = Time.parse(end_time)
+      end
       @cost = cost
       @rating = rating
 
