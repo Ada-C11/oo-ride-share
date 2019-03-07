@@ -148,7 +148,7 @@ describe "Driver class" do
         name: "Rogers Bartell IV",
         vin: "1C9EVBRM0YBC564DZ",
       )
-      trip = RideShare::Trip.new(
+      trip1 = RideShare::Trip.new(
         id: 8,
         driver: @driver,
         passenger_id: 3,
@@ -157,7 +157,17 @@ describe "Driver class" do
         cost: 40,
         rating: 5,
       )
-      @driver.add_trip(trip)
+      trip2 = RideShare::Trip.new(
+        id: 12,
+        driver: @driver,
+        passenger_id: 7,
+        start_time: "2019-01-08",
+        end_time: nil,
+        cost: nil,
+        rating: nil
+      )
+      @driver.add_trip(trip1)
+      @driver.add_trip(trip2)
     end
 
     it "returns a float number" do
