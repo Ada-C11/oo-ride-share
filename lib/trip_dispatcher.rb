@@ -70,7 +70,8 @@ module RideShare
       end_time = nil
       cost = nil
       rating = nil
-      trip = Trip.new(driver: trip_driver, start_time: start_time, end_time: end_time, cost: cost, rating: rating)
+      passenger = find_passenger(passenger_id)
+      trip = Trip.new(id: 8, passenger_id: passenger_id, passenger: passenger, driver: trip_driver, start_time: start_time, end_time: end_time, cost: cost, rating: rating)
       trip_driver.start_trip(trip)
       passenger.add_trip(trip)
       add_trip(trip)

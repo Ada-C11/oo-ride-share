@@ -79,7 +79,13 @@ describe "TripDispatcher class" do
   end
 
   # TODO: un-skip for Wave 2
-  xdescribe "drivers" do
+  describe "drivers" do
+    def build_test_dispatcher
+      return RideShare::TripDispatcher.new(
+               directory: TEST_DATA_DIRECTORY,
+             )
+    end
+
     describe "find_driver method" do
       before do
         @dispatcher = build_test_dispatcher
@@ -123,14 +129,15 @@ describe "TripDispatcher class" do
     end
     describe "Request Trip" do
       before do
-        dispatcher = RideShare::TripDispatcher.new(("./support"))
-        @passengers = Passenger.load_all(directory: directory)
-        @trips = Trip.load_all(directory: directory)
-        @drivers = Driver.load_all(directory: directory)
+        # dispatcher = RideShare::TripDispatcher.new("./support")
+        @passengers = RideShare::Passenger.load_all(directory: TEST_DATA_DIRECTORY)
+        @trips = RideShare::Trip.load_all(directory: TEST_DATA_DIRECTORY)
+        @drivers = RideShare::Driver.load_all(directory: TEST_DATA_DIRECTORY)
+        @dispatcher = build_test_dispatcher
       end
       it "Returns trip" do
-        trip = dispatcher.request_new_trip(1)
-        expect(trip).must_be_kind_of Trip
+        trip = @dispatcher.request_trip(1)
+        expect(trip).must_be_instance_of RideShare::Trip
       end
 
       # it "Finds available driver" do
@@ -142,29 +149,29 @@ describe "TripDispatcher class" do
         @drivers.each do |driver|
           driver.status = :UNAVAILABLE
         end
-        expect { trip = dispatcher.request_new_trip(1) }.must_raise ArgumentError
+        expect { trip = @dispatcher.request_trip(1) }.must_raise ArgumentError
       end
 
       it "Adds a trip to passenger trip array" do
-        passenger = find_passenger(2)
+        passenger = @dispatcher.find_passenger(1)
         count = passenger.trips.count
-        trip = dispatcher.request_new_trip(1)
+        trip = @dispatcher.request_trip(1)
         expect(passenger.trips.count).must_equal count + 1
       end
 
       it "Adds a trip to dispatch trip array" do
-        count = dispatcher.trips.count
-        trip = dispatcher.request_new_trip(1)
-        expect(dispatcher.trips.count).must_equal count + 1
+        count = @dispatcher.trips.count
+        trip = @dispatcher.request_trip(1)
+        expect(@dispatcher.trips.count).must_equal count + 1
       end
 
       xit "available driver with no trips" do
-        trip = dispatcher.request_new_trip(1)
+        trip = @dispatcher.request_trip(1)
         expect(trip.driver.id).must_equal 3
       end
 
       it "longest time since last trip driver" do
-        trip = dispatcher.request_new_trip(1)
+        trip = @dispatcher.request_trip(1)
         expect(trip.driver.id).must_equal 4
       end
     end
