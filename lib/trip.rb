@@ -66,6 +66,10 @@ module RideShare
     end
 
     def trip_duration
+      # test when end time is nil
+      if @end_time.nil?
+        raise ArgumentError.new("End time is nil")
+      end
       return (@end_time - @start_time).to_i
     end
 

@@ -66,6 +66,10 @@ module RideShare
         if !trip.cost.nil?
           sum_costs += trip.cost
         end
+
+        if trip.cost <= 1.65
+          total_fees += 1.65
+        end
       end
 
       return (sum_costs - total_fees) * 0.80

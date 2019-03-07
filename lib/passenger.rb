@@ -16,6 +16,7 @@ module RideShare
       @trips << trip
     end
 
+    # take into account incomplete trips
     def net_expenditures
       return 0 if @trips.nil?
       return @trips.sum { |trip| trip.cost }
