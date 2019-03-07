@@ -37,10 +37,14 @@ module RideShare
     end
 
     # calculates driver's total revenue across all trips. each driver gets 80% of trip cost after a fee of 1.65 is deducted
-    def total_revenue
+    def total_revenue # need to somehow figure out how to indicate length of array
       cost_per_trip = []
       @trips.each do |trip|
-        cost_per_trip << (trip.cost - 1.65) * 0.8
+        if trip.cost < 1.65
+          cost_per_trip << 0
+        else
+          cost_per_trip << (trip.cost - 1.65) * 0.8
+        end
       end
       total_income = cost_per_trip.sum.round(2)
       return total_income
