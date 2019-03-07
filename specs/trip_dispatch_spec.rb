@@ -124,11 +124,11 @@ describe "TripDispatcher class" do
 
   describe "Requesting a trip" do
     before do
-      @passenger_id = 4 
+      @passenger_id = 4
       @dispatcher = build_test_dispatcher
     end
 
-    it "creates an instance of trip" do
+    it "creates an instance of trip and returns that trip" do
       new_trip = @dispatcher.request_trip(@passenger_id)
       expect(new_trip).must_be_kind_of RideShare::Trip
     end
@@ -138,12 +138,12 @@ describe "TripDispatcher class" do
       expect(new_trip.driver).must_be_kind_of RideShare::Driver
     end
 
-    it "Assigns :AVAILABLE driver" do 
+    it "Assigns :AVAILABLE driver" do
       new_trip = @dispatcher.request_trip(@passenger_id)
       expect(new_trip.driver.status).must_equal :AVAILABLE
     end
 
-    it "Uses time for the start time" do 
+    it "Uses time for the start time" do
       new_trip = @dispatcher.request_trip(@passenger_id)
       expect(new_trip.start_time).must_be_kind_of Time
     end
@@ -153,6 +153,17 @@ describe "TripDispatcher class" do
       expect(new_trip.end_time).must_equal nil
       expect(new_trip.cost).must_equal nil
       expect(new_trip.rating).must_equal nil
+    end
+
+    # THIS DOESN'T WORK
+    it "adds Trip to Passenger's list of Trips" do
+      original_trip_list = @dispatcher.passengers[@passenger_id - 1].trips
+      new_trip = @dispatcher.request_trip(@passenger_id)
+      new_trip_list = @dispatcher.passengers[@passenger_id - 1].trips
+      expect(new_trip_list.length - original_trip_list.length).must_equal 1
+    end
+
+    it "adds the new trip to the collection of all Trips in TripDispatcher" do
     end
   end
 end

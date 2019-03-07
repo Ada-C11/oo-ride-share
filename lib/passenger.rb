@@ -2,7 +2,8 @@ require_relative "csv_record"
 
 module RideShare
   class Passenger < CsvRecord
-    attr_reader :name, :phone_number, :trips
+    attr_reader :name, :phone_number
+    attr_accessor :trips # MODIFIED THIS FOR TRIP_DISPATCHER#REQUEST_TRIP... DID I NEED TO?
 
     def initialize(id:, name:, phone_number:, trips: nil)
       super(id)
