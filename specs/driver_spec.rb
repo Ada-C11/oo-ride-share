@@ -152,6 +152,19 @@ describe "Driver class" do
     it "should return a floating point number" do
       expect(@driver.total_revenue).must_be_instance_of Float
     end
+
+    it "should return the correct revenue" do
+      expect(@driver.total_revenue).must_equal 22.96
+    end
+
+    it "should return 0 if there are no trips" do
+      @driver = RideShare::Driver.new(
+        id: 54,
+        name: "Rogers Bartell IV",
+        vin: "1C9EVBRM0YBC564DZ",
+      )
+      expect(@driver.total_revenue).must_equal 0
+    end
   end
 
   describe "net_expenditures" do

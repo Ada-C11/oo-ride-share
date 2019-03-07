@@ -13,7 +13,10 @@ describe "Trip class" do
       end_time: end_time.to_s,
       cost: 23.45,
       rating: 3,
-      driver_id: 3
+      driver_id: 3,
+      driver: RideShare::Driver.new(id: 54,
+                                    name: "Rogers Bartell IV",
+                                    vin: "1C9EVBRM0YBC564DZ"),
     }
     @trip = RideShare::Trip.new(@trip_data)
   end
@@ -27,7 +30,7 @@ describe "Trip class" do
     end
 
     it "stores an instance of driver" do
-      skip # Unskip after wave 2
+      # Unskip after wave 2
       expect(@trip.driver).must_be_kind_of RideShare::Driver
     end
 
@@ -52,7 +55,7 @@ describe "Trip class" do
         end_time: end_time.to_s,
         cost: 23.45,
         rating: 3,
-        driver_id: 3
+        driver_id: 3,
       }
 
       expect { RideShare::Trip.new(@trip_data) }.must_raise ArgumentError
@@ -94,7 +97,7 @@ describe "Trip class" do
         end_time: end_time.to_s,
         cost: 23.45,
         rating: 3,
-        driver_id: 3
+        driver_id: 3,
       }
       trip_over_midnight = RideShare::Trip.new(@trip_data)
       expect(trip_over_midnight.duration).must_equal 1200
@@ -112,7 +115,7 @@ describe "Trip class" do
         end_time: end_time.to_s,
         cost: 23.45,
         rating: 3,
-        driver_id: 3
+        driver_id: 3,
       }
       trip_time_equal = RideShare::Trip.new(@trip_data)
       expect(trip_time_equal.duration).must_equal 0
