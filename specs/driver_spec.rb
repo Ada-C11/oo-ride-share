@@ -210,7 +210,7 @@ describe "Driver class" do
       starting_length = @driver.trips.length
       puts "starting length", starting_length
 
-      trip2 = RideShare::Trip.new(
+      trip = RideShare::Trip.new(
         id: 8,
         driver: @driver,
         passenger_id: 3,
@@ -218,7 +218,7 @@ describe "Driver class" do
         end_time: "2016-08-09",
         rating: 1,
       )
-      @driver.add_trip(trip2)
+      @driver.add_trip(trip)
       ending_length = @driver.trips.length
       puts "ending length", ending_length
 
@@ -228,6 +228,5 @@ describe "Driver class" do
     it "changes status of driver when trip added" do
       expect(@driver.change_status(trip)).must_equal :UNAVAILABLE
     end
-
   end
 end

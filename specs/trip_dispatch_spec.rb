@@ -136,11 +136,21 @@ describe "TripDispatcher class" do
       expect(ending_length).must_equal starting_length + 1
     end
 
-    # it "sets the driver's status to :UNAVAILABLE" do
-    #   dispatcher = build_test_dispatcher
-    #   puts unavailable_status = dispatcher.drivers.status
+    it "sets the driver's status to :UNAVAILABLE" do
+      trip = RideShare::Trip.new(
+        id: 8,
+        driver: @driver,
+        passenger_id: 3,
+        driver_id: 7,
+        start_time: "2016-08-08",
+        end_time: "2016-08-08",
+        cost: 1.60,
+        rating: 5,
+      )
+      dispatcher = build_test_dispatcher
+      puts @driver.change_status(trip)
 
-    #   expect(unavailable_status).must_equal :UNAVAILABLE
-    # end
+      expect(@driver.change_status(trip)).must_equal :UNAVAILABLE
+    end
   end
 end

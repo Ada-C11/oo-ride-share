@@ -43,7 +43,7 @@ module RideShare
         trip.id
       end
       new_id = ids.max + 1
-      @trips << Trip.new(
+      trips << Trip.new(
         id: new_id,
         passenger_id: passenger_id,
         start_time: Time.now.to_s,
@@ -62,7 +62,6 @@ module RideShare
 
       return trip
     end
-
 
     private
 
