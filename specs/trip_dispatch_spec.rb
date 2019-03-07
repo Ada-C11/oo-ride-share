@@ -113,8 +113,8 @@ describe "TripDispatcher class" do
         expect(first_driver.name).must_equal "Driver 1 (unavailable)"
         expect(first_driver.id).must_equal 1
         expect(first_driver.status).must_equal :UNAVAILABLE
-        expect(last_driver.name).must_equal "Driver 3 (no trips)"
-        expect(last_driver.id).must_equal 3
+        expect(last_driver.name).must_equal "Driver 4"
+        expect(last_driver.id).must_equal 4
         expect(last_driver.status).must_equal :AVAILABLE
       end
 
@@ -149,6 +149,7 @@ describe "TripDispatcher class" do
         @drivers.each do |driver|
           driver.status = :UNAVAILABLE
         end
+        @dispatcher.drivers = @drivers
         expect { trip = @dispatcher.request_trip(1) }.must_raise ArgumentError
       end
 
@@ -165,13 +166,14 @@ describe "TripDispatcher class" do
         expect(@dispatcher.trips.count).must_equal count + 1
       end
 
-      xit "available driver with no trips" do
+      it "available driver with no trips" do
         trip = @dispatcher.request_trip(1)
         expect(trip.driver.id).must_equal 3
       end
 
       it "longest time since last trip driver" do
         trip = @dispatcher.request_trip(1)
+        @dispatcher.drivers = @drivers
         expect(trip.driver.id).must_equal 4
       end
     end

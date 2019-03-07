@@ -7,7 +7,8 @@ require_relative "driver"
 
 module RideShare
   class TripDispatcher
-    attr_reader :drivers, :passengers, :trips
+    attr_reader :passengers, :trips
+    attr_accessor :drivers
 
     def initialize(directory: "./support")
       @passengers = Passenger.load_all(directory: directory)
@@ -47,7 +48,8 @@ module RideShare
           available_drivers << driver
         end
       end
-      if available_drivers == []
+
+      if available_drivers.count == 0
         raise ArgumentError, "No available drivers"
       end
 
