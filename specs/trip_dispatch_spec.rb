@@ -206,7 +206,6 @@ describe "TripDispatcher class" do
       it "calculates average rating of Driver with unfinished trip" do
         test_dispatcher = build_test_dispatcher
         assigned_driver = test_dispatcher.intelligent_dispatch
-        binding.pry
         before = assigned_driver.average_rating
         new_trip = test_dispatcher.request_trip(1)
         after = new_trip.driver.average_rating
