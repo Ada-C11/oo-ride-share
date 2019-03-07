@@ -38,6 +38,17 @@ module RideShare
       return total / trips.length
     end
 
+    def total_revenue
+      total = 0.0
+      if trips.length == 0
+        return 0
+      end
+      trips.each do |trip|
+        total += trip.cost
+      end
+      return total
+    end
+
     private
 
     def self.from_csv(record)

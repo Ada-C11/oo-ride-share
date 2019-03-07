@@ -85,12 +85,14 @@ describe "Passenger class" do
       end
     end
 
-    it "returns the total amount of money that passenger has spent on their trips" do
-      expect(@passenger.net_expenditures).must_equal 35
-    end
+    describe "net_expenditures" do
+      it "returns the total amount of money that passenger has spent on their trips" do
+        expect(@passenger.net_expenditures).must_equal 35
+      end
 
-    it "returns the total amount of time that passenger has spent on their trips" do
-      expect(@passenger.total_time_spent).must_equal 180
+      it "returns the total amount of time that passenger has spent on their trips" do
+        expect(@passenger.total_time_spent).must_equal 180
+      end
     end
   end
 end
