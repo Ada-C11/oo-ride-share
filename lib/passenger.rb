@@ -25,9 +25,12 @@ module RideShare
     end
 
     def total_time_spent
-
+      all_trip_durations = @trips.map { |trip| trip.duration }
+      # duration method returns trip_duration as an integer in seconds
+      total_time_on_trips = all_trip_durations.sum
+      return total_time_on_trips
     end
-    
+
     private
 
     def self.from_csv(record)

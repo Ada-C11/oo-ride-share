@@ -123,13 +123,17 @@ describe "Passenger class" do
       @passenger.add_trip(@trip_3)
     end
 
+    describe "net_expenditures" do
+      # You add tests for the net_expenditures method
+    end
+    
     it "calculate total amount spent on all trips taken by one passenger" do
       # trip_prices_array = []
       # @passenger.trips.each do |trip|
       #   trip_price = trip.cost
       #   trip_prices_array << trip_price
       # end
-        # # ^^ this is the long way to write the map method below
+      # # ^^ this is the long way to write the map method below
       # trip_prices_array = @passenger.trips.map { |trip| trip.cost }
 
       amt_spent_total = @passenger.net_expenditures
@@ -140,5 +144,7 @@ describe "Passenger class" do
       total_time = @passenger.total_time_spent
       expect(total_time).must_equal 2400
     end
+
+
   end
 end
