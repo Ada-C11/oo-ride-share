@@ -157,7 +157,7 @@ describe "TripDispatcher class" do
 
       it "returns an error when there are no available drivers" do
         dispatcher2 = build_test_dispatcher
-        available_driver = nil
+        
         expect{(dispatcher2.request_trip(9))}.must_raise ArgumentError
       end
 

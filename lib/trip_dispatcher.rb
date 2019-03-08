@@ -35,7 +35,6 @@ module RideShare
     end
 
     def request_trip(passenger_id)
-      puts "*********************"
       available_driver = @drivers.select {|driver| driver.status == :AVAILABLE}.first
 
       if available_driver == nil
