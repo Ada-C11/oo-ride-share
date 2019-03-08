@@ -49,6 +49,11 @@ module RideShare
       return total
     end
 
+    def assign_trip(new_trip)
+      new_trip.driver.status = :UNAVAILABLE
+      new_trip.driver.add_trip(new_trip)
+    end
+
     private
 
     def self.from_csv(record)

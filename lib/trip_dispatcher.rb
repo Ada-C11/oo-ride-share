@@ -57,8 +57,9 @@ module RideShare
                                      driver_id: trip_driver.id,
                                      driver: trip_driver)
 
-      new_trip.driver.status = :UNAVAILABLE
-      new_trip.driver.add_trip(new_trip)
+      # new_trip.driver.status = :UNAVAILABLE
+      # new_trip.driver.add_trip(new_trip)
+      new_trip.driver.assign_trip(new_trip)
       new_trip.passenger.add_trip(new_trip)
 
       @trips << new_trip

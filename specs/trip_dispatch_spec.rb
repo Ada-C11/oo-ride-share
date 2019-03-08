@@ -167,5 +167,12 @@ describe "TripDispatcher class" do
       new_trip = @dispatcher.request_trip(@passenger_id)
       expect(@dispatcher.trips.length).must_equal original_trip_list + 1
     end
+
+    it "adds Trip to Driver's list of Trips" do
+      original_trip_list = @dispatcher.find_driver(2).trips.length
+      new_trip = @dispatcher.request_trip(@passenger_id)
+      new_trip_list = new_trip.driver.trips
+      expect(new_trip_list.length).must_equal original_trip_list + 1
+    end
   end
 end
