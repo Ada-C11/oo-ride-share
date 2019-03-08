@@ -67,7 +67,7 @@ describe "Driver class" do
       )
     end
 
-    xit "adds the trip" do
+    it "adds the trip" do
       expect(@driver.trips).wont_include @trip
       previous = @driver.trips.length
 
@@ -78,7 +78,7 @@ describe "Driver class" do
     end
   end
 
-  xdescribe "average_rating method" do
+  describe "average_rating method" do
     before do
       @driver = RideShare::Driver.new(
         id: 54,

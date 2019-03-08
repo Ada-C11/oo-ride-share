@@ -1,6 +1,6 @@
-require 'csv'
-require 'pry'
-require_relative 'csv_record'
+require "csv"
+require "pry"
+require_relative "csv_record"
 
 module RideShare
   class Driver < CsvRecord
@@ -26,6 +26,9 @@ module RideShare
       end
     end
 
+    def add_trip(trip)
+      @trips << trip
+    end
 
     private
 
@@ -37,7 +40,5 @@ module RideShare
                status: record[:status].to_sym,
              )
     end
-
-
   end # Class end
 end # Module end
