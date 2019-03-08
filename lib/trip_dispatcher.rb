@@ -34,6 +34,23 @@ module RideShare
               #{passengers.count} passengers>"
     end
 
+    def request_trip(passenger_id)
+      @drivers.each do |driver|
+        if driver.status == :AVAILABLE
+          return driver
+        end
+      end
+
+      # choose driver with status :AVAILABLE
+      # use current time
+      # end time, cost, and rating == nil; don't calculate trip in any other instances
+      # when nil, ignore (skip)
+      # add to the driver's log
+      # set driver to :UNAVAILABLE
+      # add to passenger's log
+      # add the trip to collection of all Trips in TripDispatcher
+    end
+
     private
 
     def connect_trips
