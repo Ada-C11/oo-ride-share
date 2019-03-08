@@ -32,12 +32,16 @@ module RideShare
       # Modify Trip#initialize to turn start_time and end_time into Time instances before saving them
       # 2018-08-05 08:58:00 -0700  example
       @start_time = Time.parse(start_time)
-      @end_time = Time.parse(end_time)
-      raise ArgumentError, "end time is before start time" if @end_time < @start_time
+      if end_time != nil
+        @end_time = Time.parse(end_time)
+        raise ArgumentError, "end time is before start time" if @end_time < @start_time
+      else
+        @end_time = end_time
+      end
       @cost = cost
       @rating = rating
 
-      if @rating > 5 || @rating < 1
+      if @rating != nil && (@rating > 5 || @rating < 1)
         raise ArgumentError.new("Invalid rating #{@rating}")
       end
     end

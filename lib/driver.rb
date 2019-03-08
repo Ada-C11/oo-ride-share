@@ -3,7 +3,8 @@ require_relative "csv_record"
 
 module RideShare
   class Driver < CsvRecord
-    attr_reader :name, :vin, :status, :trips
+    attr_reader :name, :vin, :trips
+    attr_accessor :status
 
     def initialize(id:, name:, vin:, status: :AVAILABLE, trips: nil)
       super(id)
@@ -17,13 +18,14 @@ module RideShare
       @trips = trips || []
     end
 
-    # will revisit
     def add_trip(trip)
       @trips << trip
     end
 
-    # Add a trip to the driver's list of trips
-    # Try adding a trip
+    def accept_trip(trip)
+      add_trip(trip)
+      @status = :UNAVAILABLE
+    end
 
     def average_rating
       return 0 if @trips.length == 0
@@ -33,10 +35,6 @@ module RideShare
       end
       return sum / @trips.length
     end
-
-    # What is this driver's average rating?	What if there are no trips?
-
-    # Does it handle floating point division correctly? For example the average of 2 and 3 should be 2.5, not 2.
 
     def total_revenue
       sum = 0.0
@@ -51,12 +49,6 @@ module RideShare
         return (sum * 0.8).round(2)
       end
     end
-
-    # This method calculates that driver's total revenue across all their trips.
-    # Each driver gets 80% of the trip cost after a fee of $1.65 per trip is subtracted.
-    # What if there are no trips?
-
-    # What if the cost of a trip was less that $1.65?
 
     private
 

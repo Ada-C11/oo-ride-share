@@ -3,6 +3,7 @@ require "time"
 
 require_relative "passenger"
 require_relative "trip"
+require_relative "driver"
 
 module RideShare
   class TripDispatcher
@@ -15,6 +16,24 @@ module RideShare
       connect_trips
     end
 
+    def request_trip(passenger_id)
+      trip_num = @trips.length + 1
+      driver = @drivers.find { |driver| driver.status == :AVAILABLE }
+      raise ArgumentError, "no available drivers" if driver == nil
+      new_trip = Trip.new(
+        id: trip_num,
+        driver: driver,
+        passenger_id: passenger_id,
+        start_time: Time.now.to_s,
+        end_time: nil,
+        cost: nil,
+        rating: nil,
+      )
+      find_passenger(passenger_id).add_trip(new_trip)
+      @trips << new_trip
+      return new_trip
+    end
+
     def find_passenger(id)
       Passenger.validate_id(id)
       return @passengers.find { |passenger| passenger.id == id }
@@ -23,9 +42,6 @@ module RideShare
     def find_driver(id)
       Driver.validate_id(id)
       return @drivers.find { |driver| driver.id == id }
-    end
-
-    def request_trip(passenger_id)
     end
 
     def inspect
