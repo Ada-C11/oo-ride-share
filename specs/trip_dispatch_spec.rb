@@ -126,12 +126,6 @@ describe "TripDispatcher class" do
     describe "Request trip method" do
       before do
         @dispatcher = build_test_dispatcher
-        #   @passenger = RideShare::Passenger.new(
-        #     id: 9,
-        #     name: "Merl Glover III",
-        #     phone_number: "1-602-620-2330 x3723",
-        #     trips: [],
-        #   )
       end
 
       it "New trip should be instance of trip" do
@@ -159,7 +153,6 @@ describe "TripDispatcher class" do
         expect(trip.driver).must_equal @dispatcher.drivers[1]
       end
 
-      # this test is failing, update code to make it work
       it "Changes driver status to unavailable" do
         trip = @dispatcher.request_trip(1)
 
@@ -167,26 +160,30 @@ describe "TripDispatcher class" do
       end
 
       it "Adds new trip to driver @trips array" do
-        # added a line of code to request_trip method to make this work
         trip = @dispatcher.request_trip(1)
 
         expect(trip.driver.trips).must_include trip
       end
 
       it "Adds new trip to passenger @trips array" do
-        # test is failing, add functionality to code
         trip = @dispatcher.request_trip(1)
         passenger = @dispatcher.find_passenger(1)
 
         expect(trip.passenger.trips).must_include trip
       end
+
+      it "Adds new trip to dispatcher @trips array" do
+        trip = @dispatcher.request_trip(1)
+        expect(@dispatcher.trips).must_include trip
+      end
+
       it "Raises an ArgumentError if there are no available drivers" do
         expect {
           3.times do
             @dispatcher.find_next_available_driver
           end
         }.must_raise ArgumentError
-      end
+     end
     end
   end
 end
