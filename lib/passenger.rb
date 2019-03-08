@@ -1,7 +1,6 @@
 require_relative "csv_record"
 require_relative 'trip'
 
-# Parent CsvRecord to Passenger class
 module RideShare
   class Passenger < CsvRecord
     attr_reader :name, :phone_number, :trips
@@ -18,8 +17,6 @@ module RideShare
       @trips << trip
     end
 
-    #will return the total amount of money
-    # that passenger has spent on their trips
     def net_expenditures
       total_cost = 0
       @trips.each do |trip|

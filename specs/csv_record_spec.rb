@@ -33,7 +33,6 @@ describe RideShare::CsvRecord do
 
   describe 'validate_id' do
     it 'accepts natural numbers' do
-      # Should not raise
       [1, 10, 9999].each do |id|
         RideShare::CsvRecord.validate_id(id)
       end

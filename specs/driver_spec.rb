@@ -200,44 +200,4 @@ describe "Driver class" do
       expect(@driver.total_revenue).must_equal (10 - (2 * 1.65)) * 0.80
     end
   end
-
-  # describe "net_expenditures" do
-  #   before do
-  #   @passenger = RideShare::Passenger.new(
-  #     id: 54,
-  #     name: "Rogers Bartell IV",
-  #     phone: "353-533-5334",
-  #     )
-  #   @driver = RideShare::Driver.new(
-  #     id: 54,
-  #     name: "Rogers Bartell IV",
-  #     vin: "1C9EVBRM0YBC564DZ",
-  #     )
-  #   trip1 = RideShare::Trip.new(
-  #     id: 8,
-  #     driver: @driver,
-  #     passenger: nil,
-  #     start_time: Time.parse("2016-08-08"),
-  #     end_time: Time.parse("2016-08-08"),
-  #     cost: 4,
-  #     rating: 5
-  #     )
-  #   @driver.add_driven_trip(trip)
-  #   trip2 = RideShare::Trip.new(
-  #     id: 8,
-  #     driver: 5,
-  #     passenger: @driver,
-  #     start_time: Time.parse("2016-08-08"),
-  #     end_time: Time.parse("2016-08-08"),
-  #     cost: 10,
-  #     rating: 5
-  #     )
-
-  #   @passenger.add_trip(trip)
-  #   it 'checks if driver.net_expenditures overrides passenger.net_expenditures' do
-  #   difference = @driver.net_expenditures
-  #   expect(difference).must_equal 10 - ((4 - 1.65) * 0.80)
-  #   end
-  # end
-
 end

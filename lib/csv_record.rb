@@ -1,7 +1,5 @@
 require "csv"
 
-#got rid of all require relatives
-
 module RideShare
   class CsvRecord
     attr_reader :id
@@ -11,13 +9,9 @@ module RideShare
       @id = id
     end
 
-    # Takes either full_path or directory and optional file_name
-    # Default file name matches class name
-    # Loads either full path or optional file name
     def self.load_all(full_path: nil, directory: nil, file_name: nil)
       full_path ||= build_path(directory, file_name)
 
-      # Return any csv to an array
       return CSV.read(
                full_path,
                headers: true,
@@ -33,10 +27,6 @@ module RideShare
     end
 
     private
-
-    # Tells Ruby that all methods defined from now on, are supposed to be private.
-    # They can be called from within the object (from other methods that the class defines),
-    # but not from outside.
 
     def self.from_csv(record)
       raise NotImplementedError, "Implement me in a child class!"
