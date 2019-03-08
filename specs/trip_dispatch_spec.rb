@@ -155,15 +155,17 @@ describe "TripDispatcher class" do
       expect(new_trip.rating).must_equal nil
     end
 
-    # THIS DOESN'T WORK
     it "adds Trip to Passenger's list of Trips" do
-      original_trip_list = @dispatcher.find_passenger(@passenger_id).trips
+      original_trip_list = @dispatcher.find_passenger(@passenger_id).trips.length
       new_trip = @dispatcher.request_trip(@passenger_id)
       new_trip_list = @dispatcher.find_passenger(@passenger_id).trips
-      expect(new_trip_list.length - original_trip_list.length).must_equal 1
+      expect(new_trip_list.length).must_equal original_trip_list + 1
     end
 
     it "adds the new trip to the collection of all Trips in TripDispatcher" do
+      original_trip_list = @dispatcher.trips.length
+      new_trip = @dispatcher.request_trip(@passenger_id)
+      expect(@dispatcher.trips.length).must_equal original_trip_list + 1
     end
   end
 end

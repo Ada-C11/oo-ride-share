@@ -43,7 +43,19 @@ module RideShare
         end
       end
 
-      new_trip = RideShare::Trip.new(id: @trips.last.id + 1, passenger: find_passenger(passenger_id), passenger_id: passenger_id, start_time: Time.new.to_s, end_time: nil, cost: nil, rating: nil, driver_id: trip_driver.id, driver: trip_driver)
+      id = trips.map do |trip|
+        trip.id
+      end
+
+      new_trip = RideShare::Trip.new(id: id.max + 1,
+                                     passenger: find_passenger(passenger_id),
+                                     passenger_id: passenger_id,
+                                     start_time: Time.new.to_s,
+                                     end_time: nil,
+                                     cost: nil,
+                                     rating: nil,
+                                     driver_id: trip_driver.id,
+                                     driver: trip_driver)
 
       new_trip.driver.status = :UNAVAILABLE
       new_trip.driver.add_trip(new_trip)
