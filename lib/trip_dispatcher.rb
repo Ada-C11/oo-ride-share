@@ -37,11 +37,7 @@ module RideShare
 
     def request_trip(passenger_id)
       trip_driver = ""
-      # drivers.each do |driver|
-      #   until driver.status == :AVAILABLE
-      #     trip_driver = driver
-      #   end
-      # end
+
       available_drivers = []
       drivers.each do |driver|
         if driver.status == :AVAILABLE
@@ -65,9 +61,7 @@ module RideShare
           memo = (Time.now - driver.end_time) > (Time.now - memo.end_time) ? driver : memo
         end
       end
-      # if trip_driver == ""
-      #   raise ArgumentError, "No Available Drivers"
-      # end
+
       start_time = Time.now
       end_time = nil
       cost = nil
