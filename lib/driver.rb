@@ -8,7 +8,7 @@ module RideShare
   PERCENT = 0.8
 
   class Driver < CsvRecord
-    attr_reader :name, :vin, :status, :trips
+    attr_reader :name, :vin, :trips
     attr_accessor :status
 
     def initialize(id:, name:, vin:, status: :AVAILABLE)

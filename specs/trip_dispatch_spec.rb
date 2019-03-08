@@ -181,24 +181,9 @@ describe "TripDispatcher class" do
         expect(trip.passenger.trips).must_include trip
       end
       it "Raises an ArgumentError if there are no available drivers" do
-        # @driver = RideShare::Driver.new(
-        #   id: 54,
-        #   name: "Test Driver",
-        #   vin: "12345678901234567",
-        #   status: :UNAVAILABLE,
-        # )
-        # drivers_array = []
-        # drivers_array << @driver
-        # drivers_array = @dispatcher.drivers
-        # drivers_array.each do |driver|
-        #   status = :UNAVAILABLE
-        # end
-
-        # new_driver = @dispatcher.find_next_available_driver
-
         expect {
-          35.times do
-            puts @dispatcher.find_next_available_driver
+          3.times do
+            @dispatcher.find_next_available_driver
           end
         }.must_raise ArgumentError
       end
