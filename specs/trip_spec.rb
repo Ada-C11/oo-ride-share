@@ -17,8 +17,8 @@ describe "Trip class" do
         driver: RideShare::Driver.new(
           id: 1,
           name: "Lovelace",
-          vin: "12345678987658456"
-        )
+          vin: "12345678987658456",
+        ),
       }
       @trip = RideShare::Trip.new(@trip_data)
     end
@@ -69,17 +69,19 @@ describe "Trip class" do
         # test_trip_1.start_time = existing_end_time + 25 * 60
       }.must_raise ArgumentError
     end
+
     # TEST 6
-  #   it "raises an error if start time is the same as end time" do
-  #     @trip_data[:end_time] > @trip_data[:start_time]
-  #     expect do
-  #       RideShare::Trip.new(@trip_data)
-  #     end.must_raise ArgumentError
-  #   end
-  # WE REMOVED THIS TEST AFTER DECIDING TO ALLOW 0 SEC DURATION TRIPS
+    #   it "raises an error if start time is the same as end time" do
+    #     @trip_data[:end_time] > @trip_data[:start_time]
+    #     expect do
+    #       RideShare::Trip.new(@trip_data)
+    #     end.must_raise ArgumentError
+    #   end
+    # WE REMOVED THIS TEST AFTER DECIDING TO ALLOW 0 SEC DURATION TRIPS
+
   end
   # TEST 7
-  describe "duration method" do    
+  describe "duration method" do
     it "returns an integer for trip duration" do
       # start_time = Time.parse(@trip_data[:start_time])
       # end_time = Time.parse(@trip_data[:end_time])

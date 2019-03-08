@@ -81,7 +81,7 @@ describe "TripDispatcher class" do
   end
 
   # TODO: un-skip for Wave 2
-  xdescribe "drivers" do
+  describe "drivers" do
     describe "find_driver method" do
       before do
         @dispatcher = build_test_dispatcher
@@ -121,6 +121,37 @@ describe "TripDispatcher class" do
           expect(trip.driver.id).must_equal trip.driver_id
           expect(trip.driver.trips).must_include trip
         end
+      end
+    end
+  end
+
+  describe "Requesting a Trip" do
+    describe "new trip request functionality" do
+      it "creates an instance of trip" do
+      end
+
+      it "sets the start_time of the trip to Time.now" do
+      end
+
+      it "sets the end_time, cost and rating of the trip appropriately" do
+        # expect(@trip.end_time).must_equal nil
+        # expect (@trip.cost).must_equal 0.0
+        # expect (@trip.rating).must_equal 0.0
+      end
+
+      it "adds the trip to the driver's trips array" do
+      end
+
+      it "adds the trip to the passenger's trips array" do
+      end
+
+      it "adds the trip to the collection of all trips in TripDispatcher" do
+      end
+
+      it "changes the driver's status from available to unavailable" do
+      end
+
+      it "returns a helpful message when there are no available drivers" do
       end
     end
   end
