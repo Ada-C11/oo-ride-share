@@ -1,5 +1,6 @@
 require "csv"
 require "time"
+require "pry"
 
 require_relative "passenger"
 require_relative "trip"
@@ -64,18 +65,6 @@ module RideShare
       driver.assign_new_trip(new_trip)
       return new_trip
     end
-
-    # Assigns first driver who's :AVAILABLE  <-- DONE
-    # Uses current time for start time <-- DONE
-    # End date, cost and rating = nil  <-- DONE
-
-    # Create a new instance of Trip <-- DONE
-    # Modify the selected driver using a new HELPER METHOD in Driver <-- HELPS DRIVER
-    #   - Add new trip to collection of trips for that Driver  <--- DONE
-    #   - Set the driver's status to :UNAVAILABLE <--- HELPS DRIVER
-    # Add the Trip to the Passenger's list of Trips <--- DONE
-    # Add the new trip to the collection of all Trips in TripDispatcher <--- HELPS TRIPDISPATCHER
-    # Return the newly-created trip
 
     private
 

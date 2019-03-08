@@ -129,6 +129,32 @@ describe "TripDispatcher class" do
 
         expect(new_trip).must_be_kind_of RideShare::Trip
       end
+
+      it "updates the trip list for the passenger" do
+        passenger = @dispatcher.find_passenger(1)
+        number_of_passenger_trips = passenger.trips.count
+
+        new_trip = @dispatcher.request_trip(1)
+        puts new_trip.driver.name
+
+        expect(passenger.trips.count).must_equal(number_of_passenger_trips + 1)
+      end
+
+      it "updates the trip list for the driver" do
+        driver = @dispatcher.drivers[1]
+        number_of_driver_trips = driver.trips.count
+
+        new_trip = @dispatcher.request_trip(1)
+
+        expect(driver.id).must_equal(new_trip.driver.id)
+        expect(driver.trips.count).must_equal(number_of_driver_trips + 1)
+      end
+
+      it "returns a message if there are no available drivers" do
+      end
+
+      it "the selected driver is available" do
+      end
     end
   end
 end
