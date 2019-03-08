@@ -27,11 +27,9 @@ module RideShare
       self.status = :UNAVAILABLE 
     end
 
-
     def add_trip(trip)
       @trips << trip
     end
-    
     
     def average_rating
       if @trips.count == 0
@@ -39,8 +37,7 @@ module RideShare
       end
       return (@trips.map{|trip| trip.rating}.sum).to_f/@trips.count
     end
-    
-
+  
     def total_revenue
       if @trips.length == 0 
         raise ArgumentError, "Driver has no trips."
@@ -53,7 +50,6 @@ module RideShare
         return revenue
       end
     end
-
 
     def self.from_csv(record)
       return new(

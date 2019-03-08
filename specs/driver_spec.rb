@@ -74,9 +74,7 @@ describe "Driver class" do
     it "adds the trip" do
       expect(@driver.trips).wont_include @trip
       previous = @driver.trips.length
-
       @driver.add_trip(@trip)
-
       expect(@driver.trips).must_include @trip
       expect(@driver.trips.length).must_equal previous + 1
     end
@@ -135,13 +133,11 @@ describe "Driver class" do
         driver_id: 54
       )
       @driver.add_trip(trip2)
-
       expect(@driver.average_rating).must_be_close_to (5.0 + 1.0) / 2.0, 0.01
     end
 
     it "calculates total_revenue" do
       expect(@driver.total_revenue).must_be_close_to 78.68
     end
-
   end
 end

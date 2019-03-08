@@ -21,7 +21,7 @@ module RideShare
         raise ArgumentError, "Passenger has no trips."
       end
       
-      total_minutes = (@trips.map{|trip| trip.duration}).sum
+      total_minutes = (@trips.map{ |trip| trip.duration }).sum
         return "#{total_minutes} minutes"
     end
 
@@ -29,10 +29,10 @@ module RideShare
       if @trips.length == 0
         raise ArgumentError, "Passenger has no trips."
       else
-        return @trips.map{|trip| 
+        return @trips.map{ |trip| 
           unless trip.end_time == nil # ignore in-progress trips
             trip.cost
-          end}.sum
+          end }.sum
       end
     end
 
