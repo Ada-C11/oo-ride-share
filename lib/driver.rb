@@ -31,12 +31,9 @@ module RideShare
     end
 
     def average_rating
+      return 0 if trips.length == 0
       average = @trips.sum { |trip| trip.rating }
-      if @trips.length == 0
-        return 0
-      else
-        return average / @trips.length.to_f
-      end
+      return (average / @trips.length.to_f)
     end
 
     def total_revenue
@@ -52,8 +49,5 @@ module RideShare
       @status == :AVAILABLE ? @status = :UNAVAILABLE : @status = :AVAILABLE
       add_trip(trip)
     end
-   
-  
-
   end
 end

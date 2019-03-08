@@ -18,12 +18,12 @@ module RideShare
 
     def find_passenger(id)
       Passenger.validate_id(id)
-      return @passengers.find { |passenger| passenger.id == id }
+      return passengers.find { |passenger| passenger.id == id }
     end
 
     def find_driver(id)
       Driver.validate_id(id)
-      return @drivers.find { |driver| driver.id == id }
+      return drivers.find { |driver| driver.id == id }
     end
 
     def inspect
@@ -35,15 +35,17 @@ module RideShare
     end
 
     def request_trip(passenger_id)
-      assigned_driver = @drivers.detect { |driver| driver.status == :AVAILABLE }
+      assigned_driver = drivers.detect { |driver| driver.status == :AVAILABLE }
       raise ArgumentError, "no available drivers" if assigned_driver == nil
-      ids = @trips.map { |trip| trip.id }
-      new_trip = Trip.new(id: ids.max + 1,
-                          passenger: nil, passenger_id: passenger_id,
-                          start_time: Time.now.to_s, end_time: nil, cost: nil, rating: nil, driver_id: assigned_driver.id, driver: assigned_driver)
+      assigned_passenger = find_passenger(passenger_id)
+
+      max_id = trips.max_by { |trip| trip.id }.id
+      new_trip = Trip.new(id: max_id + 1,
+                          passenger: assigned_passenger, passenger_id: passenger_id,
+                          start_time: Time.now.to_s, driver_id: assigned_driver.id, driver: assigned_driver)
+
       @trips.push(new_trip)
       assigned_driver.start_trip(new_trip)
-      assigned_passenger = find_passenger(passenger_id)
       assigned_passenger.add_trip(new_trip)
       return new_trip
     end
@@ -51,7 +53,7 @@ module RideShare
     private
 
     def connect_trips
-      @trips.each do |trip|
+      trips.each do |trip|
         passenger = find_passenger(trip.passenger_id)
         driver = find_driver(trip.driver_id)
         trip.driver = driver

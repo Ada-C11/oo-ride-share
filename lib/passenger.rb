@@ -17,12 +17,12 @@ module RideShare
     end
 
     def net_expenditures
-      total_paid = @trips.sum { |trip| trip.cost }
+      total_paid = trips.sum { |trip| trip.cost }
       return total_paid.round(2)
     end
 
     def total_time_spent
-      total_time = @trips.sum { |trip| trip.duration }
+      total_time = trips.sum { |trip| trip.duration }
       return total_time
     end
 
