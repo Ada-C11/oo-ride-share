@@ -123,44 +123,23 @@ describe "TripDispatcher class" do
   end
 
   describe "request_trip method" do
+    before do
+      @dispatcher = build_test_dispatcher
+    end
     it "creates a new instance of a trip" do
-      dispatcher = build_test_dispatcher
-      starting_length = dispatcher.trips.length
-      puts "starting length", starting_length
-      test_passenger = dispatcher.passengers[3]
+      starting_length = @dispatcher.trips.length
+      test_passenger = @dispatcher.passengers[3]
       test_passenger_id = test_passenger.id
-      dispatcher.request_trip(test_passenger_id)
-      ending_length = dispatcher.trips.length
-      puts "ending lenth", ending_length
+      @dispatcher.request_trip(test_passenger_id)
+      ending_length = @dispatcher.trips.length
       expect(ending_length).must_equal starting_length + 1
     end
 
     it "sets the driver's status to :UNAVAILABLE and adds to driver class" do
-      @driver = RideShare::Driver.new(
-        id: 54,
-        name: "Rogers Bartell IV",
-        vin: "1C9EVBRM0YBC564DZ",
-        status: :AVAILABLE,
-      )
-      trip = RideShare::Trip.new(
-        id: 8,
-        driver: @driver,
-        passenger_id: 3,
-        driver_id: 7,
-        start_time: "2016-08-08",
-        end_time: "2016-08-08",
-        cost: 1.60,
-        rating: 5,
-      )
-      dispatcher = build_test_dispatcher
-      trip = dispatcher.request_trip(5)
+      trip = @dispatcher.request_trip(5)
       expect(trip.driver.status).must_equal :UNAVAILABLE
     end
-  end
-  describe "Raise ArgumentErrors" do
-    before do
-      @dispatcher = build_test_dispatcher
-    end
+
     it "raises ArgumentError if trip already in-progress." do
       @dispatcher.drivers[1].status = :UNAVAILABLE
       @dispatcher.drivers[2].status = :UNAVAILABLE
@@ -168,5 +147,21 @@ describe "TripDispatcher class" do
         @dispatcher.request_trip(3)
       }.must_raise ArgumentError
     end
+
+    it "adds trip to driver trips" do
+      trip = @dispatcher.request_trip(4)
+      expect(trip.driver.trips).must_include trip
+    end
+
+    it "adds trip to passenger" do
+      trip = @dispatcher.request_trip(4)
+      expect(trip.passenger_id.trips).must_include trip
+    end
+
+    it "adds trip to trip dispatcher" do
+      trip = @dispatcher.request_trip(4)
+      expect(@dispatcher.trips).must_include trip
+    end
   end
+
 end

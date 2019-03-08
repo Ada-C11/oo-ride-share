@@ -61,6 +61,8 @@ module RideShare
       first_available_driver[0].status = :UNAVAILABLE
       passenger = find_passenger(passenger_id)
       passenger.add_trip(new_trip)
+      driver = first_available_driver[0]
+      driver.add_trip(new_trip)
 
       return new_trip
     end
