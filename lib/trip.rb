@@ -65,6 +65,7 @@ module RideShare
     end
 
     def duration
+      return nil if !@end_time
       second = @end_time - @start_time
       return second.to_i
     end

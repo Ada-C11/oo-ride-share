@@ -133,5 +133,20 @@ describe "Passenger class" do
       )
       expect(@passenger.total_time_spent).must_equal 0
     end
+
+    it "excludes in-progress trip" do
+      trip = RideShare::Trip.new(
+        id: 8,
+        cost: nil,
+        passenger: @passenger,
+        start_time: Time.new().to_s,
+        end_time: nil,
+        rating: nil,
+        driver_id: 3,
+      )
+
+      @passenger.add_trip(trip)
+      expect(@passenger.total_time_spent).must_equal 4500
+    end
   end
 end
