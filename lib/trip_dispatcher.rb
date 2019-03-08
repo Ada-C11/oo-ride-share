@@ -31,6 +31,20 @@ module RideShare
       available_driver = @drivers.select { |driver| driver.status == :AVAILABLE }.first
     end
 
+    def find_passenger(id)
+      Passenger.validate_id(id)
+      return @passengers.find { |passenger| passenger.id == id }
+    end
+    
+    def find_driver(id)
+      Driver.validate_id(id)
+      return @drivers.find { |driver| driver.id == id }
+    end
+    
+    def request_trip(passenger_id)
+      available_driver = @drivers.select {|driver| driver.status == :AVAILABLE}.first
+    end
+      
     def inspect
       return "#<#{self.class.name}:0x#{object_id.to_s(16)} \
               #{trips.count} trips, \
@@ -58,7 +72,7 @@ module RideShare
         rating: nil,
         driver: available_driver, 
         driver_id: driver_id
-        )
+      )
         
       in_progress_trip.connect(passenger, available_driver)
       available_driver.accept_new_trip(in_progress_trip)
