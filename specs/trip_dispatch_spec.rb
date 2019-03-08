@@ -142,21 +142,29 @@ describe "TripDispatcher class" do
     # @trip = RideShare::Trip.new(@trip_data)
     before do
       @dispatcher = build_test_dispatcher
+      passenger_id_new_trip = 1
+      @request_new_trip = @dispatcher.request_trip(passenger_id_new_trip)
     end
 
     it "will return instance of trip" do
-      # dispatcher = build_test_dispatcher
-      last_trip_driver = @dispatcher.trips.last
-      passenger_id_new_trip = 1
-      request_new_trip = @dispatcher.request_trip(passenger_id_new_trip)
-      expect(request_new_trip).must_be_kind_of RideShare::Trip
-      expect(request_new_trip.id).must_equal 6
-      expect(request_new_trip.driver_id).must_equal 2
-      expect(request_new_trip.passenger_id).must_equal 1
-      expect(request_new_trip.start_time).must_be_kind_of Time
-      expect(request_new_trip.end_time).must_be_kind_of NilClass
-      expect(request_new_trip.rating).must_be_kind_of NilClass
-      puts "HEREEEEEEE #{request_new_trip.rating}"
+      expect(@request_new_trip).must_be_kind_of RideShare::Trip
+    end
+    it "new trip will have a correct new id" do
+      expect(@request_new_trip.id).must_equal 6
+    end
+    it "an available driver will be assigned to the new trip" do
+      expect(@request_new_trip.driver_id).must_equal 2
+    end
+    it "passenger id corresponds to the right passenger" do
+      expect(@request_new_trip.passenger_id).must_equal 1 # What if we wanted to use the name of the passenger??
+    end
+    it "the start time corresponds to current time" do
+      expect(@request_new_trip.start_time).must_be_kind_of Time
+    end
+    it "end_time, cost, and rating are nil for a trip in progress" do
+      expect(@request_new_trip.end_time).must_be_kind_of NilClass
+      expect(@request_new_trip.cost).must_be_kind_of NilClass
+      expect(@request_new_trip.rating).must_be_kind_of NilClass
 
       # expect(last_trip_driver.driver_id).must_equal 2 # This is checking the test_data folder and it's not saving new trip
       # puts "#{last_trip_driver.cost}"
