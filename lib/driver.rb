@@ -6,8 +6,10 @@ require_relative "csv_record"
 module RideShare
   FEE = 1.65
   PERCENT = 0.8
+
   class Driver < CsvRecord
     attr_reader :name, :vin, :status, :trips
+    attr_accessor :status
 
     def initialize(id:, name:, vin:, status: :AVAILABLE)
       super(id)
@@ -45,11 +47,11 @@ module RideShare
 
     def total_revenue
       @revenue = []
-        @trips.each do |trip|
-          @revenue << trip.cost - FEE
-        end
-        total_revenue = (@revenue.sum) * PERCENT
-        total_revenue.to_f.round(2)
+      @trips.each do |trip|
+        @revenue << trip.cost - FEE
+      end
+      total_revenue = (@revenue.sum) * PERCENT
+      total_revenue.to_f.round(2)
     end
 
     private

@@ -9,6 +9,7 @@ require_relative "csv_record.rb"
 module RideShare
   class TripDispatcher
     attr_reader :drivers, :passengers, :trips
+    attr_accessor :status
 
     def initialize(directory: "./support")
       @passengers = Passenger.load_all(directory: directory)
@@ -46,6 +47,8 @@ module RideShare
       if new_driver == nil
         raise ArgumentError, "There is no available driver"
       else
+        # return new_driver.inspect
+        new_driver.status = :UNAVAILABLE
         return new_driver
       end
     end
@@ -58,8 +61,9 @@ module RideShare
       @trips << new_trip
       #new_trip.passenger.add_trip(new_trip) # this does not work yet
       new_trip.driver.add_trip(new_trip) # added this to the code & corresponding test passes
-      @status = :UNAVAILABLE # this isn't working, what is @status?
+      # @status = :UNAVAILABLE # this isn't working, what is @status?
       # new_trip.driver.status = :UNAVAILABLE
+      # did this in driver
 
       return new_trip
     end
