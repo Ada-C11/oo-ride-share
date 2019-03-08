@@ -35,7 +35,6 @@ describe "Passenger class" do
 
   describe "trips property" do
     before do
-      # TODO: you'll need to add a driver at some point here.
       @passenger = RideShare::Passenger.new(
         id: 9,
         name: "Merl Glover III",
@@ -78,13 +77,26 @@ describe "Passenger class" do
     end
 
     it "calculates the total each passenger has spent on trips" do
-      # return nil or raise error in edge case of no rides?
       expect(@passenger.net_expenditures).must_equal 25
     end
 
     it "calculates total time spent per passenger" do
-      # return nil or raise error in edge case of no rides?
       expect(@passenger.total_time_spent).must_equal 2 * 86400
     end
+  end
+end
+
+describe "Edge cases for passengers with no trip" do
+  before do
+    @passenger = RideShare::Passenger.new(
+      id: 9,
+      name: "Merl Glover III",
+      phone_number: "1-602-620-2330 x3723",
+      trips: [],
+    )
+  end
+  it "Raises ArgumentError for net_expenditures and total_time_spent if no trips" do
+    expect { @passenger.net_expenditures }.must_raise ArgumentError
+    expect { @passenger.total_time_spent }.must_raise ArgumentError
   end
 end

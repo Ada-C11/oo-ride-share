@@ -17,12 +17,24 @@ module RideShare
     end
 
     def net_expenditures
-      return @trips.reduce(0) do |total_cost, trip|
-               total_cost += trip.cost
-             end
+      if @trips.length == 0
+        raise ArgumentError, "This passenger doesn't have any trips"
+      end
+      total_cost = 0
+      @trips.each do |trip|
+        if trip.cost == nil
+          next
+        else
+          total_cost += trip.cost
+        end
+      end
+      return total_cost
     end
 
     def total_time_spent
+      if @trips.length == 0
+        raise ArgumentError, "This passenger doesn't have any trips"
+      end
       return @trips.reduce(0) do |total_time, trip|
                total_time += trip.trip_duration
              end

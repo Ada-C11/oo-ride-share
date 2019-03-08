@@ -1,5 +1,4 @@
 require_relative "spec_helper"
-require "pry"
 
 TEST_DATA_DIRECTORY = "specs/test_data"
 
@@ -150,6 +149,19 @@ describe "TripDispatcher class" do
     it "adds the trip to the trip dispatchers trip collection" do
       current_trip = @dispatcher.request_trip(1)
       expect(@dispatcher.trips).must_include current_trip
+    end
+  end
+
+  describe "Raise ArgumentErrors" do
+    before do
+      @dispatcher = build_test_dispatcher
+    end
+    it "raises ArgumentError if there are no available drivers." do
+      expect {
+        4.times do
+          @dispatcher.request_trip(1)
+        end
+      }.must_raise ArgumentError
     end
   end
 end
