@@ -53,9 +53,7 @@ module RideShare
 
     def find_available
       @drivers.each do |driver|
-        if driver.status == :AVAILABLE
-          return driver.id
-        end
+        return driver.id if driver.status == :AVAILABLE
       end
       raise ArgumentError, "There are no available drivers."
     end
@@ -77,4 +75,3 @@ module RideShare
     end
   end
 end
-
