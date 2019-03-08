@@ -41,9 +41,6 @@ module RideShare
       return @drivers.find { |driver| driver.id == id }
     end
     
-    def request_trip(passenger_id)
-      available_driver = @drivers.select {|driver| driver.status == :AVAILABLE}.first
-    end
       
     def inspect
       return "#<#{self.class.name}:0x#{object_id.to_s(16)} \
