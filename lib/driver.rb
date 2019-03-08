@@ -6,6 +6,7 @@ require_relative "csv_record"
 module RideShare
   class Driver < CsvRecord
     attr_reader :id, :name, :vin, :status, :trips
+    attr_accessor :driver
 
     def initialize(id:, name:, vin:, status: :AVAILABLE, trips: nil)
       super(id)
@@ -56,7 +57,17 @@ module RideShare
       return driver_take_home.to_f
     end
 
-    def change_status(current_driver_id)
+    def change_status(new_trip)
+
+      # driver = find_driver(current_driver_id)
+
+      if new_trip.driver_id == self.id
+        self.add_trip(new_trip)
+        @status = :UNAVAILABLE
+      end
+
+
+
       # current_driver = TripDispatcher.find_driver(driver.id)
 
       # add_trip(request_trip(passenger_id))

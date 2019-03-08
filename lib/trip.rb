@@ -25,6 +25,8 @@ module RideShare
       @start_time = Time.parse(start_time)
       if end_time != nil
         @end_time = Time.parse(end_time)
+      else 
+        @end_time = end_time
       end
       @cost = cost
       @rating = rating

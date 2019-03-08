@@ -132,7 +132,18 @@ describe "TripDispatcher class" do
     end
 
     it "should select driver with status AVAILABLE" do
-      new_trip = @dispatcher.request_trip(1)
+      new_trip = RideShare::Trip.new({
+        driver_id: 2,
+      id: 8,
+      passenger: RideShare::Passenger.new(id: 1,
+                                          name: "Ada",
+                                          phone_number: "412-432-7640"),
+      start_time: Time.now.to_s,
+      end_time: nil,
+      cost: nil,
+      rating: nil,
+    })
+
       available_driver = @dispatcher.find_driver(new_trip.driver_id)
       expect(available_driver.status).must_equal :AVAILABLE
     end
@@ -145,15 +156,24 @@ describe "TripDispatcher class" do
     end
 
     it "adds a trip to the Driver's list of trips" do
+      puts "***********************************"
       new_trip = @dispatcher.request_trip(1)
       driver = @dispatcher.find_driver(new_trip.driver_id)
 
-      expect(driver.trips.last.id).must_equal new_trip.id
+      expect(driver.trips).must_include new_trip
+    end
+
+    it "adds the trip to the TripDispatcher's list of trips" do
+      new_trip = @dispatcher.request_trip(1)
+
+      expect(@dispatcher.trips.last.id).must_equal new_trip.id
     end
 
     it "changes driver status to :UNAVAILABLE" do
       new_trip = @dispatcher.request_trip(1)
       available_driver = @dispatcher.find_driver(new_trip.driver_id)
+
+      
 
       expect(available_driver.status).must_equal :UNAVAILABLE
     end
