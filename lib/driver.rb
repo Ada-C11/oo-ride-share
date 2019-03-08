@@ -33,6 +33,7 @@ module RideShare
         return 0
       end
       trips.each do |trip|
+        raise ArgumentError, "trip in progress" if trip.rating == nil
         total += trip.rating
       end
       return total / trips.length

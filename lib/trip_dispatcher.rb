@@ -43,6 +43,10 @@ module RideShare
         end
       end
 
+      unless trip_driver 
+        raise ArgumentError, "No drivers are available"
+      end
+
       id = trips.map do |trip|
         trip.id
       end
@@ -57,13 +61,10 @@ module RideShare
                                      driver_id: trip_driver.id,
                                      driver: trip_driver)
 
-      # new_trip.driver.status = :UNAVAILABLE
-      # new_trip.driver.add_trip(new_trip)
       new_trip.driver.assign_trip(new_trip)
       new_trip.passenger.add_trip(new_trip)
 
       @trips << new_trip
-      # find_passenger(passenger_id).add_trip(new_trip) # THIS DOESN'T WORK
 
       return new_trip
     end
