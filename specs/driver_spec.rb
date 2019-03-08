@@ -193,14 +193,18 @@ describe "Driver class" do
   #     start_time: Time.parse("2016-08-08"),
   #     end_time: Time.parse("2016-08-08"), 
   #     cost: 4, 
-  #     rating: 5)
+  #     rating: 5
+  #     )
   #   @driver.add_driven_trip(trip)
   #   trip2 = RideShare::Trip.new(
   #     id: 8, 
   #     driver: 5, 
   #     passenger: @driver,
   #     start_time: Time.parse("2016-08-08"),
-  #     end_time: Time.parse("2016-08-08"), cost: 10, rating: 5)
+  #     end_time: Time.parse("2016-08-08"), 
+  #     cost: 10, 
+  #     rating: 5
+  #     )
 
   #   @passenger.add_trip(trip)
   #   it 'checks if driver.net_expenditures overrides passenger.net_expenditures' do
