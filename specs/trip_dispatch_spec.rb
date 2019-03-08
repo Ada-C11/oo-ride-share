@@ -78,7 +78,6 @@ describe "TripDispatcher class" do
     end
   end
 
-  # TODO: un-skip for Wave 2
   describe "drivers" do
     describe "find_driver method" do
       before do
@@ -120,6 +119,19 @@ describe "TripDispatcher class" do
           expect(trip.driver.trips).must_include trip
         end
       end
+    end
+  end
+
+  describe "#request_trip" do
+    # 1,Paul Pollich,(358) 263-9381
+    # 2,El Greco,WBWC02Y311DDZGFLD,UNAVAILABLE
+    before do
+      @dispatcher = build_test_dispatcher
+    end
+    it "Is an instance of a trip" do
+      id = 3
+      dispatcher = @dispatcher.request_trip(id)
+      expect(dispatcher).must_be_kind_of RideShare::Trip
     end
   end
 end
