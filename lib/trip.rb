@@ -39,12 +39,13 @@ module RideShare
           raise ArgumentError, "Start time should start before end time"
         end
       end
-      @cost = cost
-      @rating = rating
 
-      if @rating && (@rating > 5 || @rating < 1)
-        raise ArgumentError.new("Invalid rating #{@rating}")
+      @cost = cost
+
+      if rating && (rating > 5 || rating < 1)
+        raise ArgumentError.new("Invalid rating #{rating}")
       end
+      @rating = rating
     end
 
     def inspect
