@@ -54,6 +54,9 @@ module RideShare
 
       passenger = find_passenger(passenger_id)
       passenger.add_trip(new_trip)
+
+      driver = first_available_driver
+      driver.assign_new_trip(new_trip, driver)
       return new_trip
     end
 
@@ -63,7 +66,7 @@ module RideShare
 
     # Create a new instance of Trip <-- DONE
     # Modify the selected driver using a new HELPER METHOD in Driver <-- HELPS DRIVER
-    #   - Add new trip to collection of trips for that Driver  <--- HELPS DRIVER
+    #   - Add new trip to collection of trips for that Driver  <--- DONE
     #   - Set the driver's status to :UNAVAILABLE <--- HELPS DRIVER
     # Add the Trip to the Passenger's list of Trips <--- DONE
     # Add the new trip to the collection of all Trips in TripDispatcher <--- HELPS TRIPDISPATCHER
