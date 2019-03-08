@@ -1,6 +1,6 @@
 require "csv"
 require "time"
-# require "pry"
+
 require_relative "csv_record"
 
 module RideShare
@@ -9,7 +9,7 @@ module RideShare
 
     def initialize(id:,
                    passenger: nil, passenger_id: nil,
-                   start_time:, end_time:, cost: nil, rating:,
+                   start_time: nil, end_time: nil, cost: nil, rating:,
                    driver: nil, driver_id: nil)
       super(id)
 
@@ -32,17 +32,21 @@ module RideShare
       end
 
       @start_time = Time.parse(start_time)
-      @end_time = Time.parse(end_time)
+      @end_time = end_time != nil ? Time.parse(end_time) : nil
 
-      if @start_time > @end_time
-        raise ArgumentError, "end time cannot be before start time"
+      if @end_time != nil
+        if @start_time > @end_time
+          raise ArgumentError, "end time cannot be before start time"
+        end
       end
 
       @cost = cost
       @rating = rating
 
-      if @rating > 5 || @rating < 1
-        raise ArgumentError.new("Invalid rating #{@rating}")
+      if @end_time != nil
+        if @rating > 5 || @rating < 1
+          raise ArgumentError.new("Invalid rating #{@rating}")
+        end
       end
     end
 
