@@ -150,10 +150,26 @@ describe "TripDispatcher class" do
         expect(driver.trips.count).must_equal(number_of_driver_trips + 1)
       end
 
-      it "returns a message if there are no available drivers" do
+      it "selects the first available driver" do
+        first_available_driver = ""
+        @dispatcher.drivers.each do |driver|
+          if driver.status == :AVAILABLE
+            first_available_driver = driver
+            break
+          end
+        end
+
+        new_trip = @dispatcher.request_trip(1)
+        expect(new_trip.driver.id).must_equal(first_available_driver.id)
       end
 
-      it "the selected driver is available" do
+      it "returns a message if there are no available drivers" do
+        100.times do
+          @dispatcher.request_trip(2)
+        end
+
+        new_trip = @dispatcher.request_trip(2)
+        expect(new_trip).must_equal("Sorry, no available drivers.  Try again later!")
       end
     end
   end
