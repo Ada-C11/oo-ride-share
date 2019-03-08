@@ -48,7 +48,6 @@ module RideShare
     def request_trip(passenger_id)
       driver = find_available_driver
       passenger = find_passenger(passenger_id)
-      driver.nil ? (return nil) : driver
 
       if passenger.id == driver.id
         raise ArgumentError.new
@@ -61,7 +60,7 @@ module RideShare
         end_time: nil,
         cost: nil,
         rating: nil,
-        driver: driver,
+        driver: driver
       }
       trip = Trip.new(input)
 

@@ -50,7 +50,6 @@ module RideShare
 
     def accept_trip(trip)
       driver.status == :UNAVAILABLE
-      @last_end_time = trip.end_time
     end
 
     # private

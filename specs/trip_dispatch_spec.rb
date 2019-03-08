@@ -98,27 +98,25 @@ describe "TripDispatcher class" do
 
   describe "select driver with no previous trips if possible" do
     before do   
-      @driver = RideShare::Driver.new(
-        id: 54,
-        name: "Test Driver",
-        vin: "12345678901234567",
-        status: :AVAILABLE,
-        trips: []
-      )
-      @driver = RideShare::Driver.new(
-        id: 55,
-        name: "Test Driver",
-        vin: "12345678501234567",
-        status: :AVAILABLE,
-        trips: [RideShare::Trip.new(
-          id: 8,
-          driver: @driver,
-          passenger_id: 3,
-          start_time: "2016-08-08",
-          end_time: "2018-12-01",
-          rating: 1
-        )]
-      )
+      driver1 = Driver.new
+      driver2 = Driver.new
+
+      array_of_drivers = []
+
+      array_of_drivers.push(driver1, driver2)
+
+      # select_driver = []
+
+      array_of_drivers.each do |driver|
+        if driver.trip = nil
+          break
+          return driver
+        
+
+        end
+        return driver
+      end
+
     end          
     it "selects the driver with no previous trips first from available drivers" do
       expect(@driver.id).must_equal 54
