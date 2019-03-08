@@ -110,6 +110,38 @@ describe "Passenger class" do
       )
       expect { @passenger.net_expenditures }.must_raise ArgumentError
     end
+
+    it "does not include in-progress tips when calculating net-expenditures" do
+      @passenger = RideShare::Passenger.new(
+        id: 9,
+        name: "Merl Glover III",
+        phone_number: "1-602-620-2330 x3723",
+        trips: [],
+      )
+      trip = RideShare::Trip.new(
+        id: 8,
+        driver_id: 1,
+        passenger: @passenger,
+        start_time: "2015-05-20 12:14:00+00:00",
+        end_time: "2015-05-20 12:16:10+00:00",
+        cost: 5,
+        rating: 5,
+      )
+      @passenger.add_trip(trip)
+
+      trip2 = RideShare::Trip.new(
+        id: 8,
+        driver_id: 1,
+        passenger: @passenger,
+        start_time: "2015-05-21 12:14:00+00:00",
+        end_time: nil,
+        cost: 4,
+        rating: 5,
+      )
+      @passenger.add_trip(trip2)
+
+      expect(@passenger.net_expenditures).must_equal 5
+    end
   end
 
   describe "total_time_spent" do
@@ -155,6 +187,38 @@ describe "Passenger class" do
         trips: [],
       )
       expect { @passenger.total_time_spent }.must_raise ArgumentError
+    end
+
+    it "doesn't include in-progress trip for total time spent" do
+      @passenger = RideShare::Passenger.new(
+        id: 9,
+        name: "Merl Glover III",
+        phone_number: "1-602-620-2330 x3723",
+        trips: [],
+      )
+      trip = RideShare::Trip.new(
+        id: 8,
+        driver_id: 1,
+        passenger: @passenger,
+        start_time: "2015-05-20 12:14:00+00:00",
+        end_time: "2015-05-20 12:16:10+00:00",
+        cost: 5,
+        rating: 5,
+      )
+      @passenger.add_trip(trip)
+
+      trip2 = RideShare::Trip.new(
+        id: 8,
+        driver_id: 1,
+        passenger: @passenger,
+        start_time: "2015-05-21 12:14:00+00:00",
+        end_time: nil,
+        cost: 4,
+        rating: 5,
+      )
+      @passenger.add_trip(trip2)
+
+      expect(@passenger.total_time_spent).must_equal 130.0
     end
   end
 end

@@ -18,8 +18,9 @@ module RideShare
 
     def net_expenditures
       raise ArgumentError, "Passenger has to trips!" if @trips == []
-      cost_array = @trips.map do |trip|
-        trip.cost
+      cost_array = []
+      @trips.each do |trip|
+        cost_array << trip.cost if trip.end_time != nil
       end
       return cost_array.sum
     end
