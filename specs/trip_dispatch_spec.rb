@@ -85,13 +85,14 @@ describe "TripDispatcher class" do
         @dispatcher = build_test_dispatcher
       end
 
-    it "throws an argument error for a bad ID" do
-      expect { @dispatcher.find_driver(0) }.must_raise ArgumentError
-    end
+      it "throws an argument error for a bad ID" do
+        expect { @dispatcher.find_driver(0) }.must_raise ArgumentError
+      end
 
-    it "finds a driver instance" do
-      driver = @dispatcher.find_driver(2)
-      expect(driver).must_be_kind_of RideShare::Driver
+      it "finds a driver instance" do
+        driver = @dispatcher.find_driver(2)
+        expect(driver).must_be_kind_of RideShare::Driver
+      end
     end
   end
 
@@ -113,8 +114,7 @@ describe "TripDispatcher class" do
         trips: [],
         last_end_time: "2018-12-01"
       )
-    end
-                  
+    end          
     it "selects the driver with no previous trips first from available drivers" do
     expect(driver.id).must_equal 54
     end
@@ -122,23 +122,24 @@ describe "TripDispatcher class" do
 
   describe "if no drivers with no trips are available, selects the driver with the oldest last end time" do
     before do
-    @driver = RideShare::Driver.new(
-      id: 55,
-      name: "Test Driver",
-      vin: "12345678901234567",
-      status: :AVAILABLE,
-      trips: [],
-      last_end_time: "2018-12-01"
-    )
-    @driver = RideShare::Driver.new(
-      id: 56,
-      name: "Test Driver",
-      vin: "12345678901234567",
-      status: :AVAILABLE,
-      trips: [],
-      last_end_time: "2018-11-30"
-    )
-
+      @driver = RideShare::Driver.new(
+        id: 55,
+        name: "Test Driver",
+        vin: "12345678901234567",
+        status: :AVAILABLE,
+        trips: [],
+        last_end_time: "2018-12-01"
+      )
+      @driver = RideShare::Driver.new(
+        id: 56,
+        name: "Test Driver",
+        vin: "12345678901234567",
+        status: :AVAILABLE,
+        trips: [],
+        last_end_time: "2018-11-30"
+      )
+    end
+    
     it "selects the driver with the oldest last end time" do
       expect(driver.id).must_equal 56
     end
@@ -171,4 +172,3 @@ describe "TripDispatcher class" do
     end
   end
 end
-
