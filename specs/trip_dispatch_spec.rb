@@ -148,17 +148,17 @@ describe "TripDispatcher class" do
 
       it "updates passenger trips when new trip is requested" do
         dispatcher2 = build_test_dispatcher
-        passenger = dispatcher2.passengers[9]
+        passenger = dispatcher2.passengers[1]
         count = passenger.trips.length
         
-        new_trip = dispatcher2.request_trip(9)
+        new_trip = dispatcher2.request_trip(2)
         expect(passenger.trips.length).must_equal (count + 1)
       end
 
       it "returns an error when there are no available drivers" do
         dispatcher2 = build_test_dispatcher
         available_driver = nil
-        expect{(dispatcher2.request_trip(9))}.must_raise ArgumentError
+        expect{(dispatcher2.request_trip(2))}.must_raise ArgumentError
       end
 
 

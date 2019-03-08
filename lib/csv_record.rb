@@ -29,11 +29,11 @@ module RideShare
     end
     
     
-    def self.accept_new_trip(trip)
-        self.add_trip(trip)
-          if self.class == Driver
-            status = :UNAVAILABLE 
-          end 
+    def accept_new_trip(trip)
+      add_trip(trip)
+        if self.class == Driver
+          status = :UNAVAILABLE 
+        end 
     end
 
     private
