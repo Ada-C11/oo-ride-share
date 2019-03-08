@@ -130,7 +130,53 @@ describe "Driver class" do
     end
   end
 
-  xdescribe "total_revenue" do
-    # You add tests for the total_revenue method
+  describe "total_revenue" do
+    # Inititiate a Driver instance
+    # driver_id = 16
+    # Inititiate 3 trip instances for driver 16
+    before do
+      @driver = RideShare::Driver.new(
+        id: 16,
+        name: "Rogers Bartell IV",
+        vin: "1C9EVBRM0YBC564DZ",
+        )
+        
+        trip1 = RideShare::Trip.new(
+          id: 8,
+          driver: @driver,
+          passenger_id: 6,
+          start_time: "2016-09-08",
+          end_time: "2016-09-08",
+          cost: 20.00, # 14.68
+          rating: 5,
+          )
+          @driver.add_trip(trip1)
+          
+        trip2 = RideShare::Trip.new(
+          id: 10,
+          driver: @driver,
+          passenger_id: 23,
+          start_time: "2016-08-08",
+          end_time: "2016-08-08",
+          cost: 10.00, # 6.68
+          rating: 5,
+          )
+          @driver.add_trip(trip2)
+            
+        trip3 = RideShare::Trip.new(
+          id: 9,
+          driver: @driver,
+          passenger_id: 3,
+          start_time: "2017-01-08",
+          end_time: "2017-01-08",
+          cost: 30.00, # 22.68
+          rating: 5,
+          )
+          @driver.add_trip(trip3)
+        end
+              
+          it "calculates total revenue of one driver" do
+            expect(@driver.total_revenue).must_equal 44.04
+          end
   end
 end

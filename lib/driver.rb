@@ -42,6 +42,21 @@ module RideShare
       end
     end
 
+#     This method calculates that driver's total revenue across all their trips. Each driver gets 80% of the trip cost after a fee of $1.65 per trip is subtracted.	What if there are no trips?
+
+# What if the cost of a trip was less that $1.65?
+    
+    def total_revenue
+      revenue = 0.0
+      @trips.each do |trip|
+        if trip.cost < 1.65
+          revenue += 0
+        else 
+          revenue += ((trip.cost - 1.65) * 0.8).round(2)
+        end
+      end
+      return revenue
+    end
 
     private
 

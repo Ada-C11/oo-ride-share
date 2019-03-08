@@ -73,7 +73,7 @@ module RideShare
                passenger_id: record[:passenger_id],
                start_time: record[:start_time],
                end_time: record[:end_time],
-               cost: record[:cost],
+               cost: record[:cost].to_f,
                rating: record[:rating],
              )
     end
