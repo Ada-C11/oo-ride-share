@@ -27,6 +27,14 @@ module RideShare
         raise ArgumentError, "ID cannot be blank or less than zero. ID was #{id}"
       end
     end
+    
+    
+    def self.accept_new_trip(trip)
+        self.add_trip(trip)
+          if self.class == Driver
+            status = :UNAVAILABLE 
+          end 
+    end
 
     private
     

@@ -59,29 +59,5 @@ module RideShare
         status: (record[:status]).to_sym
       )
     end
-
-#     Modify this selected driver using a new helper method in Driver:
-# Add the new trip to the collection of trips for that Driver
-# Set the driver's status to :UNAVAILABLE 
-# Add the Trip to the Passenger's list of Trips
-# Add the new trip to the collection of all Trips in TripDispatcher
-# Return the newly created trip
-# in_progress_trip = Trip.new(
-#         id: 7,
-#         passenger_id: passenger_id,
-#         start_time: time,
-#         end_time: nil, 
-#         cost: nil, 
-#         rating: nil,
-#         driver: available_driver, 
-#         driver_id: driver_id
-#         )
-    
-    def accept_new_trip(trip)
-        add_trip(trip)
-        status = :UNAVAILABLE 
-    end
-    
   end
-
 end
