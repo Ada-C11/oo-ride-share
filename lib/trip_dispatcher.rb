@@ -49,6 +49,8 @@ module RideShare
                           driver: assigned_driver)
 
       assigned_driver.add_trip(new_trip)
+      passenger.add_trip(new_trip)
+      @trips << new_trip
 
       return new_trip
     end
