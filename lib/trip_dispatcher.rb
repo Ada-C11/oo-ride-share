@@ -30,6 +30,7 @@ module RideShare
         rating: nil,
       )
       find_passenger(passenger_id).add_trip(new_trip)
+      find_driver(driver.id).accept_trip(new_trip)
       @trips << new_trip
       return new_trip
     end
