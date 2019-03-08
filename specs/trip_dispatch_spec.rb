@@ -109,14 +109,21 @@ describe "TripDispatcher class" do
       @driver = RideShare::Driver.new(
         id: 55,
         name: "Test Driver",
-        vin: "12345678901234567",
+        vin: "12345678501234567",
         status: :AVAILABLE,
-        trips: [],
-        last_end_time: "2018-12-01"
+        last_end_time: "2018-12-01",
+        trips: RideShare::Trip.new(
+          id: 8,
+          driver: @driver,
+          passenger_id: 3,
+          start_time: "2016-08-08",
+          end_time: "2018-12-01",
+          rating: 1
+        )
       )
     end          
     it "selects the driver with no previous trips first from available drivers" do
-    expect(driver.id).must_equal 54
+      expect(@driver.id).must_equal 54
     end
   end
 
@@ -127,7 +134,7 @@ describe "TripDispatcher class" do
         name: "Test Driver",
         vin: "12345678901234567",
         status: :AVAILABLE,
-        trips: [],
+        trips: nil,
         last_end_time: "2018-12-01"
       )
       @driver = RideShare::Driver.new(
@@ -135,13 +142,13 @@ describe "TripDispatcher class" do
         name: "Test Driver",
         vin: "12345678901234567",
         status: :AVAILABLE,
-        trips: [],
+        trips: nil,
         last_end_time: "2018-11-30"
       )
     end
-    
+
     it "selects the driver with the oldest last end time" do
-      expect(driver.id).must_equal 56
+      expect(@driver.id).must_equal 56
     end
   end
 

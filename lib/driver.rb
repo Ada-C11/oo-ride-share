@@ -10,7 +10,7 @@ module RideShare
 
     DRIVE_STATUS = [:AVAILABLE, :UNAVAILABLE]
 
-    def initialize(id:, name:, vin:, status: :AVAILABLE, trips: nil)
+    def initialize(id:, name:, vin:, status: :AVAILABLE, trips: nil, last_end_time: nil)
       super(id)
       @name = name
       @last_end_time = nil
