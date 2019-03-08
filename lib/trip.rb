@@ -73,11 +73,7 @@ module RideShare
       passenger.add_trip(self)
       driver.add_trip(self)
     end
-    
-    # def connect(driver)
-    #   @driver = driver
-    #   driver.add_trip(self)
-    # end
+
 
     private
     
