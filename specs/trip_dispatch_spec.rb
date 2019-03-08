@@ -148,7 +148,7 @@ describe "TripDispatcher class" do
       it "updates passenger trips when new trip is requested" do
         passenger = @dispatcher.find_passenger(1)
         passenger_count = passenger.trips.length
-        # new_trip = @dispatcher.request_trip(1)
+        new_trip = @dispatcher.request_trip(1)
         expect(passenger.trips.length).must_equal passenger_count + 1
       end
 
@@ -156,7 +156,7 @@ describe "TripDispatcher class" do
         @dispatcher.trips.each do |trip|
           trip.driver.status = :UNAVAILABLE
         end
-        expect(@dispatcher.request_trip(2)).must_raise ArgumentError
+        expect{(@dispatcher.request_trip(2))}.must_raise ArgumentError
       end
     end
  
