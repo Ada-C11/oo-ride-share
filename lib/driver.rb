@@ -29,9 +29,6 @@ module RideShare
     end
 
     def total_revenue
-      # if @trips.length == 0
-      #   return 0
-      # else
       driver_revenue = @trips.map do |trip|
         if trip.cost > 1.65
           trip.cost - 1.65
@@ -39,7 +36,6 @@ module RideShare
           trip.cost
         end
       end
-      # end
 
       return (driver_revenue.sum * 0.8).round(2)
     end
