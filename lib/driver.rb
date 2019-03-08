@@ -24,6 +24,9 @@ module RideShare
     end
 
     def average_rating
+      if self.trips.length == 0
+        return 0
+      end
       total = 0.0
       completed_trips = 0
       self.trips.each do |trip|
@@ -32,11 +35,7 @@ module RideShare
           completed_trips += 1
         end
       end
-      if self.trips.length == 0
-        return 0
-      else
-        return total / completed_trips
-      end
+      return total / completed_trips
     end
 
     def total_revenue
