@@ -93,6 +93,14 @@ describe "Driver class" do
         end_time: "2016-08-08",
         rating: 5,
       )
+      @trip2 = RideShare::Trip.new(
+        id: 8,
+        driver: @driver,
+        passenger_id: 3,
+        start_time: "2016-08-08",
+        end_time: "2016-08-09",
+        rating: 1,
+      )
       @driver.add_trip(trip)
     end
 
@@ -116,30 +124,13 @@ describe "Driver class" do
     end
 
     it "correctly calculates the average rating" do
-      trip2 = RideShare::Trip.new(
-        id: 8,
-        driver: @driver,
-        passenger_id: 3,
-        start_time: "2016-08-08",
-        end_time: "2016-08-09",
-        rating: 1,
-      )
-      @driver.add_trip(trip2)
+      @driver.add_trip(@trip2)
 
       expect(@driver.average_rating).must_be_close_to (5.0 + 1.0) / 2.0, 0.01
     end
 
     it "doesn't include the rating of an in-progress trip" do
-      trip2 = RideShare::Trip.new(
-        id: 8,
-        driver: @driver,
-        passenger_id: 3,
-        start_time: "2016-08-08",
-        end_time: "2016-08-09",
-        rating: 1,
-      )
-
-      @driver.add_trip(trip2)
+      @driver.add_trip(@trip2)
 
       trip3 = RideShare::Trip.new(
         id: 8,
@@ -158,16 +149,19 @@ describe "Driver class" do
   end
 
   describe "total_revenue" do
-    it "accurately calculates a driver's revenue" do
-      driver = RideShare::Driver.new(
+    before do
+      @driver = RideShare::Driver.new(
         id: 54,
         name: "Rogers Bartell IV",
         vin: "1C9EVBRM0YBC564DZ",
         status: :AVAILABLE,
       )
+    end
+
+    it "accurately calculates a driver's revenue" do
       trip1 = RideShare::Trip.new(
         id: 8,
-        driver: driver,
+        driver: @driver,
         passenger_id: 3,
         start_time: "2016-08-08",
         end_time: "2016-08-08",
@@ -177,7 +171,7 @@ describe "Driver class" do
 
       trip2 = RideShare::Trip.new(
         id: 10,
-        driver: driver,
+        driver: @driver,
         passenger_id: 5,
         start_time: "2019-01-01",
         end_time: "2019-01-02",
@@ -185,36 +179,23 @@ describe "Driver class" do
         rating: 5,
       )
 
-      driver.add_trip(trip1)
-      driver.add_trip(trip2)
+      @driver.add_trip(trip1)
+      @driver.add_trip(trip2)
 
-      revenue = driver.total_revenue
+      revenue = @driver.total_revenue
       expect(revenue).must_equal 9.56
     end
 
     it "returns 0 if the driver has not driven any trips" do
-      driver = RideShare::Driver.new(
-        id: 54,
-        name: "Rogers Bartell IV",
-        vin: "1C9EVBRM0YBC564DZ",
-        status: :AVAILABLE,
-      )
-
-      revenue = driver.total_revenue
+      revenue = @driver.total_revenue
 
       expect(revenue).must_equal 0
     end
 
     it "a trip that costs less than 1.65 does not get added to revenue" do
-      driver = RideShare::Driver.new(
-        id: 54,
-        name: "Rogers Bartell IV",
-        vin: "1C9EVBRM0YBC564DZ",
-        status: :AVAILABLE,
-      )
       trip1 = RideShare::Trip.new(
         id: 8,
-        driver: driver,
+        driver: @driver,
         passenger_id: 3,
         start_time: "2016-08-08",
         end_time: "2016-08-08",
@@ -224,7 +205,7 @@ describe "Driver class" do
 
       trip2 = RideShare::Trip.new(
         id: 10,
-        driver: driver,
+        driver: @driver,
         passenger_id: 5,
         start_time: "2019-01-01",
         end_time: "2019-01-02",
@@ -232,10 +213,10 @@ describe "Driver class" do
         rating: 5,
       )
 
-      driver.add_trip(trip1)
-      driver.add_trip(trip2)
+      @driver.add_trip(trip1)
+      @driver.add_trip(trip2)
 
-      revenue = driver.total_revenue
+      revenue = @driver.total_revenue
       expect(revenue).must_equal 7.08
     end
   end

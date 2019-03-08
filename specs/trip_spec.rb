@@ -77,7 +77,7 @@ describe "Trip class" do
     it "calculates the duration of a trip in seconds" do
       start_time = Time.parse("2015-05-20T12:14:00+00:00")
       end_time = start_time + 25 * 60 # 25 minutes
-      @trip_data = {
+      trip_data = {
         id: 8,
         driver: RideShare::Driver.new(
           id: 6,
@@ -93,15 +93,15 @@ describe "Trip class" do
         cost: 23.45,
         rating: 3,
       }
-      @trip = RideShare::Trip.new(@trip_data)
-      result = @trip.trip_duration_seconds
+      trip = RideShare::Trip.new(trip_data)
+      result = trip.trip_duration_seconds
       expect(result).must_equal 1500
     end
 
     it "calculates the duration of a trip that starts before midnight and ends after midnight" do
       start_time = Time.parse("2015-05-20T23:54:00+00:00")
       end_time = start_time + 25 * 60 # 25 minutes
-      @trip_data = {
+      trip_data = {
         id: 8,
         driver: RideShare::Driver.new(
           id: 6,
@@ -118,15 +118,15 @@ describe "Trip class" do
         rating: 3,
       }
 
-      @trip = RideShare::Trip.new(@trip_data)
-      result = @trip.trip_duration_seconds
+      trip = RideShare::Trip.new(trip_data)
+      result = trip.trip_duration_seconds
       expect(result).must_equal 1500
     end
 
     it "returns a value of 0 if start and end time are the same" do
       start_time = Time.parse("2015-05-20T23:54:00+00:00")
       end_time = start_time
-      @trip_data = {
+      trip_data = {
         id: 8,
         driver: RideShare::Driver.new(
           id: 6,
@@ -143,8 +143,8 @@ describe "Trip class" do
         rating: 3,
       }
 
-      @trip = RideShare::Trip.new(@trip_data)
-      result = @trip.trip_duration_seconds
+      trip = RideShare::Trip.new(trip_data)
+      result = trip.trip_duration_seconds
       expect(result).must_equal 0
     end
   end
