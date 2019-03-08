@@ -1,5 +1,4 @@
 require_relative "spec_helper"
-# require "pry"
 
 describe "Trip class" do
   before do
@@ -7,7 +6,6 @@ describe "Trip class" do
     end_time = start_time + 25 * 60 # 25 minutes
     @trip_data = {
       id: 8,
-      driver_id: 4,
       passenger: RideShare::Passenger.new(id: 1,
                                           name: "Ada",
                                           phone_number: "412-432-7640"),
@@ -15,6 +13,11 @@ describe "Trip class" do
       end_time: end_time.to_s,
       cost: 23.45,
       rating: 3,
+      driver: RideShare::Driver.new(id: 80,
+                                    name: "Hana",
+                                    vin: "12345678901234567",
+                                    status: :AVAILABLE,
+                                    trips: []),
     }
     @trip = RideShare::Trip.new(@trip_data)
   end

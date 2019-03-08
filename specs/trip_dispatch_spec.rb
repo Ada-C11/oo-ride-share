@@ -129,32 +129,32 @@ describe "TripDispatcher class" do
 
     it "instantiates a trip" do
       new_trip = @dispatcher.request_trip(1)
-      expect(new_trip).must_be_kind_of RideShare::Trip
+      expect(new_trip).must_be_instance_of RideShare::Trip
     end
 
-    # it "updates the trip lists for driver and passenger" do
-    #   trip_count = %x{wc -l 'support/trips.csv'}.split(" ").first.to_i
+    it "updates the trip lists for driver and passenger" do
+      trip_count = %x{wc -l 'support/trips.csv'}.split(" ").first.to_i
 
-    #   dispatcher = RideShare::TripDispatcher.request_trip(4)
+      dispatcher = RideShare::TripDispatcher.request_trip(4)
 
-    #   expect(dispatcher.length).must_equal trip_count
-    # end
+      expect(dispatcher.length).must_equal trip_count
+    end
 
-    # it "finds an available driver" do
-    #   dispatcher = RideShare::TripDispatcher.new
-    #   new_trip = RideShare::TripDispatcher.request_trip(4)
-    #   available_driver = @dispatcher.drivers[0]
-    #   expect(new_trip.status).must_equal :AVAILABLE
-    # end
+    it "finds an available driver" do
+      dispatcher = RideShare::TripDispatcher.new
+      new_trip = RideShare::TripDispatcher.request_trip(4)
+      available_driver = @dispatcher.drivers[0]
+      expect(new_trip.status).must_equal :AVAILABLE
+    end
 
-    # before do
-    #   @dispatcher = build_test_dispatcher
-    #   @dispatcher.drivers[1].status == :UNAVAILABLE
-    #   @dispatcher.drivers[2].status == :UNAVAILABLE
-    # end
+    before do
+      @dispatcher = build_test_dispatcher
+      @dispatcher.drivers[1].status == :UNAVAILABLE
+      @dispatcher.drivers[2].status == :UNAVAILABLE
+    end
 
-    # it "raises an error if there are no available drivers" do
-    #   expect(RideShare::TripDispatcher.request_trip(4)).must_raise ArgumentError
-    # end
+    it "raises an error if there are no available drivers" do
+      expect(RideShare::TripDispatcher.request_trip(4)).must_raise ArgumentError
+    end
   end
 end
