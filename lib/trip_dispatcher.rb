@@ -37,7 +37,7 @@ module RideShare
     def request_trip(passenger_id)
       first_available_driver = ""
       @drivers.each do |driver|
-        if driver.status == "AVAILABLE"
+        if driver.status == :AVAILABLE
           first_available_driver = driver
           break
         end

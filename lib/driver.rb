@@ -9,7 +9,7 @@ module RideShare
 
       @name = name
       @vin = vin
-      @status = status
+      @status = status.to_sym
       @trips = trips || []
 
       raise ArgumentError, "Invalid VIN: #{vin}" unless @vin.length == 17
@@ -54,8 +54,8 @@ module RideShare
     end
 
     def assign_new_trip(new_trip)
-    add_trip(new_trip)
-    @status = "UNAVAILABLE"
+      add_trip(new_trip)
+      @status = :UNAVAILABLE
     end
 
     private
