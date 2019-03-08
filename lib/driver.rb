@@ -35,8 +35,8 @@ module RideShare
              end
     end
 
-    def total_revenue
-      return @trips.sum do |trip|
+    def total_revenue(completed_trips = non_inprogress_trips)
+      return completed_trips.sum do |trip|
                (trip.cost - 1.65) * 0.80
              end
     end
