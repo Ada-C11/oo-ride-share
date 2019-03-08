@@ -133,11 +133,9 @@ describe "TripDispatcher class" do
     end
 
     it "updates the trip lists for driver and passenger" do
-      trip_count = %x{wc -l 'support/trips.csv'}.split(" ").first.to_i
-
-      dispatcher = RideShare::TripDispatcher.request_trip(4)
-
-      expect(dispatcher.length).must_equal trip_count
+      trip_count = @dispatcher.trips.count
+      new_trip = @dispatcher.request_trip(1)
+      expect(@dispatcher.trips.count).must_equal trip_count + 1
     end
 
     it "finds an available driver" do
@@ -154,7 +152,9 @@ describe "TripDispatcher class" do
     end
 
     it "raises an error if there are no available drivers" do
-      expect(RideShare::TripDispatcher.request_trip(4)).must_raise ArgumentError
+      expect do
+        @dispatcher.request_trip(4)
+      end.must_raise ArgumentError
     end
   end
 end

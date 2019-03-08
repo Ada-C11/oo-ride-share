@@ -13,7 +13,7 @@ describe "Trip class" do
       end_time: end_time.to_s,
       cost: 23.45,
       rating: 3,
-      driver: RideShare::Driver.new(id: 80,
+      driver: RideShare::Driver.new(id: 4,
                                     name: "Hana",
                                     vin: "12345678901234567",
                                     status: :AVAILABLE,
