@@ -52,6 +52,14 @@ module RideShare
       driver.status == :UNAVAILABLE
     end
 
+    def last_trip_end_time
+      eligible_driver_list = @drivers.select { |driver| driver.status == :AVAILABLE }
+      eligible_driver_list.sort_by! do |driver|
+        driver.trips.max_by { |trip| trip.end_time }
+      end
+      return eligible_driver_list.first
+    end
+
     # private
 
     def self.from_csv(record)
