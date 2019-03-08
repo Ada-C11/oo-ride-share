@@ -127,10 +127,36 @@ describe "TripDispatcher class" do
 
   describe "Requesting a Trip" do
     describe "new trip request functionality" do
-      it "creates an instance of trip" do
+      before do
+        # Creates an instance of TripDispatcher
+        # dispatcher = build_test_dispatcher
+
+        # start_time = Time.parse("2015-05-20T12:14:00+00:00")
+        start_time = Time.now
+        end_time = start_time + 25 * 60 # 25 minutes
+        @trip_data = {
+          id: 8,
+          passenger: RideShare::Passenger.new(id: 1,
+                                              name: "Ada",
+                                              phone_number: "412-432-7640"),
+          start_time: start_time.to_s,
+          end_time: end_time.to_s,
+          cost: 23.45,
+          rating: 3,
+          driver: RideShare::Driver.new(
+            id: 1,
+            name: "Lovelace",
+            vin: "12345678987658456",
+          ),
+        }
+        @trip = RideShare::Trip.new(@trip_data)
+      end
+      it "creates an instance of Trip" do
+        # expect(@trip).must_be_kind_of RideShare::Trip # PASSES 
       end
 
       it "sets the start_time of the trip to Time.now" do
+        # expect(@trip.start_time).must_equal Time.now  => FAILS
       end
 
       it "sets the end_time, cost and rating of the trip appropriately" do
@@ -140,6 +166,17 @@ describe "TripDispatcher class" do
       end
 
       it "adds the trip to the driver's trips array" do
+        # # Creates an instance of TripDispatcher class
+        dispatcher = build_test_dispatcher
+        
+        requesting_passenger = dispatcher.find_passenger(1)
+        # dipatcher sends request to first available driver
+        available_driver = dispatcher.find_available_driver
+        # expect(available_driver.trips).wont_include new_trip
+
+        new_trip = dispatcher.request_trip(requesting_passenger.id)
+
+        expect(available_driver.trips).must_include new_trip
       end
 
       it "adds the trip to the passenger's trips array" do

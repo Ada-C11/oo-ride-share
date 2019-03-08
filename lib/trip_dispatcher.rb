@@ -27,6 +27,22 @@ module RideShare
       return @drivers.find { |driver| driver.id == id }
     end
 
+    def find_available_driver
+      @drivers.each do |available_driver|
+        if available_driver.status == :AVAILABLE
+          new_trip_driver = available_driver
+          new_trip_driver.status = :UNAVAILABLE
+          return new_trip_driver
+        end
+      end
+      return nil
+    end
+
+    def request_trip(passenger_id)
+      
+      # available_driver.add_trip(new_trip) 
+    end
+
     def inspect
       # Make puts output more useful
       return "#<#{self.class.name}:0x#{object_id.to_s(16)} \
