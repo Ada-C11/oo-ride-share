@@ -133,6 +133,30 @@ describe "Driver class" do
 
       expect(@driver.average_rating).must_be_close_to (5.0 + 1.0) / 2.0, 0.01
     end
+
+    it "excludes in-progress trip" do
+      trip2 = RideShare::Trip.new(
+        id: 8,
+        driver: @driver,
+        passenger_id: 3,
+        start_time: "2016-08-08",
+        end_time: "2016-08-09",
+        rating: 1,
+      )
+      @driver.add_trip(trip2)
+
+      trip3 = RideShare::Trip.new(
+        id: 8,
+        driver: @driver,
+        passenger_id: 3,
+        start_time: "2016-08-08",
+        end_time: nil,
+        rating: nil,
+      )
+      @driver.add_trip(trip3)
+
+      expect(@driver.average_rating).must_be_close_to (5.0 + 1.0) / 2.0, 0.01
+    end
   end
 
   describe "total_revenue" do
@@ -165,9 +189,5 @@ describe "Driver class" do
       )
       expect(@driver.total_revenue).must_equal 0
     end
-  end
-
-  describe "net_expenditures" do
-    # You add tests for the net_expenditures method
   end
 end
