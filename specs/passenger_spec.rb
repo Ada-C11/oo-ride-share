@@ -40,7 +40,7 @@ describe "Passenger class" do
         id: 9,
         name: "Merl Glover III",
         phone_number: "1-602-620-2330 x3723",
-        trips: [],
+        trips: []
       )
       trip = RideShare::Trip.new(
         id: 8,
@@ -52,6 +52,7 @@ describe "Passenger class" do
       )
 
       @passenger.add_trip(trip)
+
     end
 
     it "each item in array is a Trip instance" do
@@ -65,44 +66,44 @@ describe "Passenger class" do
         expect(trip.passenger.id).must_equal 9
       end
     end
+  end
 
-    describe "net_expenditures method" do
-      before do
-        @passenger = RideShare::Passenger.new(
-          id: 9,
-          name: "Merl Glover III",
-          phone_number: "1-602-620-2330 x3723",
-          trips: [],
-        )
-        trip1 = RideShare::Trip.new(
-          id: 8,
-          passenger: @passenger,
-          start_time: "2016-08-08 15:12:00",
-          end_time: "2016-08-08 15:13:00",
-          rating: 5,
-          cost: 1,
-          driver_id: 1
-        )
-        trip2 = RideShare::Trip.new(
-          id: 8,
-          passenger: @passenger,
-          start_time: "2016-08-08 15:12:00",
-          end_time: "2016-08-08 15:13:00",
-          rating: 5,
-          cost: 1,
-          driver_id: 1
-        )
-        @passenger.add_trip(trip1)
-        @passenger.add_trip(trip2)
-      end
+  describe "net_expenditures method" do
+    before do
+      @passenger = RideShare::Passenger.new(
+        id: 9,
+        name: "Merl Glover III",
+        phone_number: "1-602-620-2330 x3723",
+        trips: [],
+      )
+      trip1 = RideShare::Trip.new(
+        id: 8,
+        passenger: @passenger,
+        start_time: "2016-08-08 15:12:00",
+        end_time: "2016-08-08 15:13:00",
+        rating: 5,
+        cost: 1,
+        driver_id: 1
+      )
+      trip2 = RideShare::Trip.new(
+        id: 8,
+        passenger: @passenger,
+        start_time: "2016-08-08 15:12:00",
+        end_time: "2016-08-08 15:13:00",
+        rating: 5,
+        cost: 1,
+        driver_id: 1
+      )
+      @passenger.add_trip(trip1)
+      @passenger.add_trip(trip2)
+    end
 
-      it "returns the total amount of money that passenger has spent on their trips" do
-        expect(@passenger.net_expenditures).must_equal 2
-      end
+    it "returns the total amount of money that passenger has spent on their trips" do
+      expect(@passenger.net_expenditures).must_equal 2
+    end
 
-      it "returns the total elapsed time that passenger has spent on their trips" do
-        expect(@passenger.total_time_spent).must_equal 120
-      end
+    it "returns the total elapsed time that passenger has spent on their trips" do
+      expect(@passenger.total_time_spent).must_equal 120
     end
   end
 end

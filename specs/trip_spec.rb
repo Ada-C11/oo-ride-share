@@ -56,10 +56,6 @@ describe "Trip class" do
     end
   end
 
-  ## mapping out possible test for time duration
-  ## maybe not as dry as it could be but breaking this out seems good for now
-  ## can we test incomplete trips??
-
   describe "duration" do
     before do
       start_time = Time.parse("2015-05-20T12:14:00+00:00")

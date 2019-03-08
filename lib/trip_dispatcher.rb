@@ -2,7 +2,7 @@ require "csv"
 require "time"
 
 require_relative "driver"
-require_relative "passenger"
+# require_relative "passenger"
 require_relative "trip"
 
 module RideShare
