@@ -1,12 +1,12 @@
-require_relative 'spec_helper'
+require_relative "spec_helper"
 
-TEST_DATA_DIRECTORY = 'specs/test_data'
+TEST_DATA_DIRECTORY = "specs/test_data"
 
 describe "TripDispatcher class" do
   def build_test_dispatcher
     return RideShare::TripDispatcher.new(
-      directory: TEST_DATA_DIRECTORY
-    )
+             directory: TEST_DATA_DIRECTORY,
+           )
   end
 
   describe "Initializer" do
@@ -23,15 +23,15 @@ describe "TripDispatcher class" do
 
       expect(dispatcher.trips).must_be_kind_of Array
       expect(dispatcher.passengers).must_be_kind_of Array
-      # expect(dispatcher.drivers).must_be_kind_of Array
+      expect(dispatcher.drivers).must_be_kind_of Array
     end
 
     it "loads the development data by default" do
       # Count lines in the file, subtract 1 for headers
-      trip_count = %x{wc -l 'support/trips.csv'}.split(' ').first.to_i - 1
+      trip_count = %x{wc -l 'support/trips.csv'}.split(" ").first.to_i - 1
 
       dispatcher = RideShare::TripDispatcher.new
-      
+
       expect(dispatcher.trips.length).must_equal trip_count
     end
   end
@@ -43,7 +43,7 @@ describe "TripDispatcher class" do
       end
 
       it "throws an argument error for a bad ID" do
-        expect{ @dispatcher.find_passenger(0) }.must_raise ArgumentError
+        expect { @dispatcher.find_passenger(0) }.must_raise ArgumentError
       end
 
       it "finds a passenger instance" do
@@ -78,17 +78,17 @@ describe "TripDispatcher class" do
     end
   end
 
-  # TODO: un-skip for Wave 2
-  xdescribe "drivers" do
+  # Wave 2
+  describe "drivers" do
     describe "find_driver method" do
       before do
         @dispatcher = build_test_dispatcher
       end
-    
+
       it "throws an argument error for a bad ID" do
         expect { @dispatcher.find_driver(0) }.must_raise ArgumentError
       end
-    
+
       it "finds a driver instance" do
         driver = @dispatcher.find_driver(2)
         expect(driver).must_be_kind_of RideShare::Driver
@@ -104,11 +104,11 @@ describe "TripDispatcher class" do
         first_driver = @dispatcher.drivers.first
         last_driver = @dispatcher.drivers.last
 
-        expect(first_driver.name).must_equal "Driver2"
-        expect(first_driver.id).must_equal 2
+        expect(first_driver.name).must_equal "Driver 1 (unavailable)"
+        expect(first_driver.id).must_equal 1
         expect(first_driver.status).must_equal :UNAVAILABLE
-        expect(last_driver.name).must_equal "Driver8"
-        expect(last_driver.id).must_equal 8
+        expect(last_driver.name).must_equal "Driver 3 (no trips)"
+        expect(last_driver.id).must_equal 3
         expect(last_driver.status).must_equal :AVAILABLE
       end
 
@@ -120,6 +120,66 @@ describe "TripDispatcher class" do
           expect(trip.driver.trips).must_include trip
         end
       end
+    end
+  end
+
+  describe "In progress trip" do
+    before do
+      @dispatcher = build_test_dispatcher
+    end
+    it "Adds an in progress trip correctly" do
+      trip = @dispatcher.request_trip(2)
+      expect(trip).must_be_instance_of RideShare::Trip
+      expect(trip.id).must_equal @dispatcher.trips.length
+      expect(trip.end_time).must_be_nil
+      expect(trip.rating).must_be_nil
+      expect(trip.cost).must_be_nil
+      expect(trip.driver).must_be_instance_of RideShare::Driver
+      expect(trip.passenger).must_be_kind_of RideShare::Passenger
+      expect(trip.driver.status).must_equal :UNAVAILABLE
+    end
+
+    it "Checks driver in progress trip" do
+      trip = @dispatcher.request_trip(2)
+      driver = @dispatcher.trips.last.driver
+      expect(driver.trips.last).must_equal trip
+    end
+
+    it "Checks passenger in-progress trip" do
+      trip = @dispatcher.request_trip(2)
+      passenger = @dispatcher.trips.last.passenger
+      expect(passenger.trips.last).must_equal trip
+    end
+
+    it "Checks to find the driver who has gone longest without trip" do
+      expect (@dispatcher.available_driver.id).must_equal 3
+      expect (@dispatcher.available_driver.status).must_equal :AVAILABLE
+      expect (@dispatcher.available_driver).must_be_instance_of RideShare::Driver
+    end
+
+    it "Checks passenger not assigned as driver" do
+      trip = @dispatcher.request_trip(8)
+      expect(trip.driver.id).wont_equal 8
+    end
+
+    it "Check driver status is available" do
+      driver = @dispatcher.available_driver
+      expect(driver.status).must_equal :AVAILABLE
+    end
+
+    it "returns nil if all drivers are unavailable -" do
+      @dispatcher.drivers[1].status = :UNAVAILABLE
+      @dispatcher.drivers[2].status = :UNAVAILABLE
+      assert_nil(@dispatcher.available_driver)
+    end
+
+    it "returns the driver who has their most recent trip ended at the oldest time" do
+      dispatcher = RideShare::TripDispatcher.new(directory: TEST_DATA_DIRECTORY)
+      dispatcher.drivers[0].status = :AVAILABLE
+      dispatcher.drivers[2].status = :UNAVAILABLE
+      new_ride = dispatcher.request_trip(6)
+
+      expect (new_ride.driver_id).must_equal 1
     end
   end
 end
