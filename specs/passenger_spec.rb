@@ -114,6 +114,20 @@ describe "Passenger class" do
       )
       expect(@passenger.net_expenditures).must_equal 0
     end
+    it "excludes in-progress trip" do
+      trip = RideShare::Trip.new(
+        id: 8,
+        cost: nil,
+        passenger: @passenger,
+        start_time: Time.new().to_s,
+        end_time: nil,
+        rating: nil,
+        driver_id: 3,
+      )
+
+      @passenger.add_trip(trip)
+      expect(@passenger.net_expenditures).must_equal 90
+    end
   end
   describe "Wave-1: Test Passenger#total_time_spent method" do
     it "should return interger" do
