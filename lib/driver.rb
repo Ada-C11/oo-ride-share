@@ -2,7 +2,7 @@ require "csv"
 require "time"
 
 require_relative "csv_record"
-require_relative 'trip'
+require_relative "trip"
 
 module RideShare
   class Driver < CsvRecord
@@ -50,6 +50,7 @@ module RideShare
     end
 
     def accept_trip(trip)
+      driver.status == :UNAVAILABLE
       @last_end_time = trip.end_time
     end
 
