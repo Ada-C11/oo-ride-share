@@ -56,7 +56,7 @@ module RideShare
       passenger.add_trip(new_trip)
 
       driver = first_available_driver
-      driver.assign_new_trip(new_trip, driver)
+      driver.assign_new_trip(new_trip)
       return new_trip
     end
 

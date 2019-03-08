@@ -55,6 +55,7 @@ module RideShare
 
     def assign_new_trip(new_trip)
     add_trip(new_trip)
+    @status = "UNAVAILABLE"
     end
 
     private
