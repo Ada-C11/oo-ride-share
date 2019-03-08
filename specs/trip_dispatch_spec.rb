@@ -153,9 +153,7 @@ describe "TripDispatcher class" do
       end
 
       it "returns an error when there are no available drivers" do
-        dispatcher2 = build_test_dispatcher
-        
-        expect{(dispatcher2.request_trip(9))}.must_raise ArgumentError
+        expect{1000.times(@dispatcher.request_trip(1))}.must_raise ArgumentError
       end
     end
  

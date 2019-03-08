@@ -43,7 +43,7 @@ module RideShare
       def request_trip(passenger_id)
         available_driver = @drivers.select {|driver| driver.status == :AVAILABLE}.first
 
-          if available_driver == nil
+          if available_driver == []
             raise ArgumentError, "No drivers are available."
           end
         
@@ -62,8 +62,7 @@ module RideShare
           driver_id: driver_id
           )
         in_progress_trip.connect(passenger, available_driver)
-        # available_driver.accept_new_trip(in_progress_trip)
-        # passenger.accept_new_trip(in_progress_trip)
+        available_driver.accept_new_trip(in_progress_trip)
 
         return in_progress_trip
       end
