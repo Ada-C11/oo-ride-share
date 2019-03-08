@@ -35,7 +35,7 @@ module RideShare
       if trips.length == 0
         return 0
       end
-      
+
       nil_ratings = 0
       all_ratings_sum = 0
 
@@ -43,7 +43,7 @@ module RideShare
         if trip.rating == nil
           nil_ratings += 1
         else
-          all_ratings_sum += trip.rating
+          all_ratings_sum += trip.rating.to_f
         end
       end
       return (all_ratings_sum / (trips.length - nil_ratings)).to_f

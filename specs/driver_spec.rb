@@ -161,7 +161,7 @@ describe "Driver class" do
     end
   end
 
-  describe "total_revenue if trip cost was $1.65" do
+  describe "accounting for trips under $1.65 and current trips" do
     before do
       @driver = RideShare::Driver.new(
         id: 54,
@@ -172,8 +172,8 @@ describe "Driver class" do
         id: 8,
         driver_id: @driver.id,
         passenger_id: 3,
-        start_time: "2016-08-08",
-        end_time: "2016-08-08",
+        start_time: "2015-08-08",
+        end_time: "2015-08-08",
         cost: 1.60,
         rating: 5,
       )
@@ -182,17 +182,32 @@ describe "Driver class" do
         driver_id: @driver.id,
         passenger_id: 3,
         start_time: "2016-08-08",
-        end_time: "2016-08-08",
+        end_time: "2016-08-09",
         cost: 8,
-        rating: 5,
+        rating: 4,
+      )
+
+      trip3 = RideShare::Trip.new(
+        id: 8,
+        driver_id: @driver.id,
+        passenger_id: 3,
+        start_time: "2016-011-12",
+        end_time: nil,
+        cost: nil,
+        rating: nil,
       )
 
       @driver.add_trip(trip)
       @driver.add_trip(trip2)
+      @driver.add_trip(trip3)
     end
 
-    it "will not include the $1.65 fee" do
+    it "total_revenue will not include the $1.65 fee" do
       expect(@driver.total_revenue).must_be_close_to 6.36
+    end
+
+    it "average_rating will not include the nil rating of a trip in progress" do
+      expect(@driver.average_rating).must_be_close_to 4.5
     end
   end
 end
