@@ -121,14 +121,17 @@ describe "TripDispatcher class" do
       end
     end
   end
+
   describe "request trip" do
     before do
       @dispatcher = build_test_dispatcher
       @new_trip = @dispatcher.request_trip(1)
     end
+
     it "is an instance of Trip" do
       expect(@new_trip).must_be_instance_of RideShare::Trip
     end
+
     it "updates trip lists for driver and passenger" do
       expect(@new_trip.passenger.trips).must_include @new_trip
       expect(@new_trip.driver.trips).must_include @new_trip
@@ -177,11 +180,13 @@ describe "TripDispatcher class" do
       expect(available_drivers).must_include new_trip.driver
     end
   end
+
   describe "handles unfinished trips" do
     describe "passenger methods" do
       before do
         @dispatcher = build_test_dispatcher
       end
+
       it "calculates net expenditures for Passenger with unfinished trip" do
         before = @dispatcher.find_passenger(1).net_expenditures
         new_trip = @dispatcher.request_trip(1)
@@ -215,6 +220,7 @@ describe "TripDispatcher class" do
           )
           @passenger.add_trip(trip1)
         end
+
         it "calculates net expenditures if Passenger's only trip is unfinished" do
           expect(@passenger.net_expenditures).must_equal 0
         end
@@ -224,6 +230,7 @@ describe "TripDispatcher class" do
         end
       end
     end
+
     describe "driver methods" do
       before do
         @dispatcher = build_test_dispatcher
@@ -268,6 +275,7 @@ describe "TripDispatcher class" do
         end
       end
     end
+
     describe "trip methods" do
       it "returns nil if calculating duration of unfinished Trip" do
         test_dispatcher = build_test_dispatcher
@@ -282,9 +290,11 @@ describe "TripDispatcher class" do
       @test_dispatcher = build_test_dispatcher
       @assigned_driver = @test_dispatcher.intelligent_dispatch
     end
+
     it "will assign an available driver" do
       expect(@assigned_driver.status).must_equal :AVAILABLE
     end
+
     it "will assign a driver that does not have an unfinished trip" do
       if @assigned_driver.trips.length > 0
         expect(@assigned_driver.trips.last.end_time).wont_be_nil
@@ -292,6 +302,7 @@ describe "TripDispatcher class" do
         expect(@assigned_driver.trips.length).must_equal 0
       end
     end
+
     it "will prioritize assigning drivers with no previous trips" do
       @test_dispatcher.request_trip(1)
       expect(@assigned_driver.id).must_equal 3
