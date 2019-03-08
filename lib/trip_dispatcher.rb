@@ -18,14 +18,20 @@ module RideShare
 
     def find_passenger(id)
       passenger = @passengers.find { |passenger| passenger.id == id }
-      raise ArgumentError, "Passenger not found" if passenger == nil
+      raise ArgumentError, "Passenger not found" unless passenger
       return passenger
     end
 
     def find_driver(id)
       driver = @drivers.find { |driver| driver.id == id }
-      raise ArgumentError, "Passenger not found" if driver == nil
+      raise ArgumentError, "Passenger not found" unless driver
       return driver
+    end
+
+    def find_available_driver
+      available_driver = @drivers.find { |driver| driver.status == :AVAILABLE }
+      raise ArgumentError, "No available drivers" unless available_driver
+      return available_driver
     end
 
     def inspect
@@ -37,8 +43,7 @@ module RideShare
     end
 
     def request_trip(passenger_id)
-      @available_driver = @drivers.find { |driver| driver.status == :AVAILABLE }
-      raise ArgumentError, "No available drivers" if @available_driver == nil
+      @available_driver = find_available_driver
       trip = RideShare::Trip.new(
         id: @trips.count + 1,
         passenger_id: passenger_id,
@@ -74,7 +79,6 @@ module RideShare
         trip.connect(passenger: passenger)
         trip.connect(driver: driver)
       end
-
       return trips
     end
   end
