@@ -16,7 +16,7 @@ describe "Driver class" do
     end
 
     it "throws an argument error with a bad VIN" do
-      expect{ RideShare::Driver.new(id: 0, name: "George", vin: "33133313331333133") }.must_raise ArgumentError
+      expect { RideShare::Driver.new(id: 0, name: "George", vin: "33133313331333133") }.must_raise ArgumentError
     end
 
     it "throws an argument error with a bad VIN value" do
@@ -29,11 +29,11 @@ describe "Driver class" do
     end
 
     it "raises an error if status is not set to either :AVAILABLE or :UNAVAILABLE" do
-      expect{
+      expect {
         RideShare::Driver.new(id: 140, name: "Bill", vin: "12345678901234598", status: :XXX).status
-        }.must_raise ArgumentError
+      }.must_raise ArgumentError
     end
-  
+
     it "sets driven trips to an empty array if not provided" do
       expect(@driver.trips).must_be_kind_of Array
       expect(@driver.trips.length).must_equal 0
@@ -53,82 +53,82 @@ describe "Driver class" do
 
   describe "add_trip method" do
     before do
-    pass = RideShare::Passenger.new(
-      id: 1,
-      name: "Test Passenger",
-      phone_number: "412-432-7640",
+      pass = RideShare::Passenger.new(
+        id: 1,
+        name: "Test Passenger",
+        phone_number: "412-432-7640",
       )
-    @driver = RideShare::Driver.new(
-      id: 3,
-      name: "Test Driver",
-      vin: "12345678912345678",
+      @driver = RideShare::Driver.new(
+        id: 3,
+        name: "Test Driver",
+        vin: "12345678912345678",
       )
-    @trip = RideShare::Trip.new(
-      id: 8,
-      driver: @driver,
-      passenger: pass,
-      start_time: "2016-08-08",
-      end_time: "2018-08-09",
-      rating: 5,
+      @trip = RideShare::Trip.new(
+        id: 8,
+        driver: @driver,
+        passenger: pass,
+        start_time: "2016-08-08",
+        end_time: "2018-08-09",
+        rating: 5,
       )
     end
 
     it "adds the trip" do
-    expect(@driver.trips).wont_include @trip
-    previous = @driver.trips.length
+      expect(@driver.trips).wont_include @trip
+      previous = @driver.trips.length
 
-    @driver.add_trip(@trip)
+      @driver.add_trip(@trip)
 
-    expect(@driver.trips).must_include @trip
-    expect(@driver.trips.length).must_equal previous + 1
+      expect(@driver.trips).must_include @trip
+      expect(@driver.trips.length).must_equal previous + 1
     end
   end
 
   describe "average_rating method" do
     before do
-    @driver = RideShare::Driver.new(
-    id: 54,
-    name: "Rogers Bartell IV",
-    vin: "1C9EVBRM0YBC564DZ",
-    )
-    trip = RideShare::Trip.new(
-    id: 8,
-    driver: @driver,
-    passenger_id: 3,
-    start_time: "2016-08-08",
-    end_time: "2016-08-08",
-    rating: 5,
-    )
-    @driver.add_trip(trip)
+      @driver = RideShare::Driver.new(
+        id: 54,
+        name: "Rogers Bartell IV",
+        vin: "1C9EVBRM0YBC564DZ",
+      )
+      trip = RideShare::Trip.new(
+        id: 8,
+        driver: @driver,
+        passenger_id: 3,
+        start_time: "2016-08-08",
+        end_time: "2016-08-08",
+        rating: 5,
+      )
+      @driver.add_trip(trip)
     end
 
     it "returns a float" do
-    expect(@driver.average_rating).must_be_kind_of Float
+      expect(@driver.average_rating).must_be_kind_of Float
     end
 
     it "returns a float within range of 1.0 to 5.0" do
-    average = @driver.average_rating
-    expect(average).must_be :>=, 1.0
-    expect(average).must_be :<=, 5.0
+      average = @driver.average_rating
+      expect(average).must_be :>=, 1.0
+      expect(average).must_be :<=, 5.0
     end
 
     it "returns zero if no driven trips" do
-    driver = RideShare::Driver.new(
-    id: 54,
-    name: "Rogers Bartell IV",
-    vin: "1C9EVBRM0YBC564DZ",
-    )
-    expect(driver.average_rating).must_equal 0
+      driver = RideShare::Driver.new(
+        id: 54,
+        name: "Rogers Bartell IV",
+        vin: "1C9EVBRM0YBC564DZ",
+      )
+      expect(driver.average_rating).must_equal 0
     end
 
     it "correctly calculates the average rating" do
-    trip2 = RideShare::Trip.new(
-      id: 8,
-      driver: @driver,
-      passenger_id: 3,
-      start_time: "2016-08-08",
-      end_time: "2016-08-09",
-      rating: 1,
+      trip2 = RideShare::Trip.new(
+        id: 8,
+        driver: @driver,
+        passenger_id: 3,
+        start_time: "2016-08-08",
+        end_time: "2016-08-09",
+        rating: 1,
       )
       @driver.add_trip(trip2)
 
@@ -138,71 +138,71 @@ describe "Driver class" do
 
   describe "total_revenue" do
     before do
-    @driver = RideShare::Driver.new(
-    id: 54,
-    name: "Rogers Bartell IV",
-    vin: "1C9EVBRM0YBC564DZ",
-    )
-    trip1 = RideShare::Trip.new(
-    id: 8,
-    driver: @driver,
-    passenger_id: 3,
-    start_time: "2016-08-08",
-    end_time: "2016-08-08",
-    cost: 5 
-    rating: 5,
-    )
-    trip2 = RideShare::Trip.new(
-    id: 8,
-    driver: @driver,
-    passenger_id: 3,
-    start_time: "2016-08-08",
-    end_time: "2016-08-08",
-    cost: 5, 
-    rating: 5,
-    )
-    @driver.add_trip(trip1)
-    @driver.add_trip(trip2)
+      @driver = RideShare::Driver.new(
+        id: 54,
+        name: "Rogers Bartell IV",
+        vin: "1C9EVBRM0YBC564DZ",
+      )
+      trip1 = RideShare::Trip.new(
+        id: 8,
+        driver: @driver,
+        passenger_id: 3,
+        start_time: "2016-08-08",
+        end_time: "2016-08-08",
+        cost: 5,
+        rating: 5,
+      )
+      trip2 = RideShare::Trip.new(
+        id: 8,
+        driver: @driver,
+        passenger_id: 3,
+        start_time: "2016-08-08",
+        end_time: "2016-08-08",
+        cost: 5,
+        rating: 5,
+      )
+      @driver.add_trip(trip1)
+      @driver.add_trip(trip2)
     end
 
     it "returns a float number" do
       expect(@driver.total_revenue).must_be_kind_of Float
     end
-    
+
     it "returns total amount of money drivers made" do
-      expect(@driver.total_revenue).must_equal 10
+      expect(@driver.total_revenue).must_equal (10 - (2 * 1.65)) * 0.80
     end
   end
 
   # describe "net_expenditures" do
   #   before do
   #   @passenger = RideShare::Passenger.new(
-  #     id: 54, 
-  #     name: "Rogers Bartell IV", 
+  #     id: 54,
+  #     name: "Rogers Bartell IV",
   #     phone: "353-533-5334",
   #     )
   #   @driver = RideShare::Driver.new(
-  #     id: 54, 
+  #     id: 54,
   #     name: "Rogers Bartell IV",
   #     vin: "1C9EVBRM0YBC564DZ",
   #     )
   #   trip1 = RideShare::Trip.new(
-  #     id: 8, 
-  #     driver: @driver, 
+  #     id: 8,
+  #     driver: @driver,
   #     passenger: nil,
   #     start_time: Time.parse("2016-08-08"),
-  #     end_time: Time.parse("2016-08-08"), 
-  #     cost: 4, 
+  #     end_time: Time.parse("2016-08-08"),
+  #     cost: 4,
   #     rating: 5
   #     )
   #   @driver.add_driven_trip(trip)
   #   trip2 = RideShare::Trip.new(
-  #     id: 8, 
-  #     driver: 5, 
+  #     id: 8,
+  #     driver: 5,
   #     passenger: @driver,
   #     start_time: Time.parse("2016-08-08"),
-  #     end_time: Time.parse("2016-08-08"), 
-  #     cost: 10, 
+  #     end_time: Time.parse("2016-08-08"),
+  #     cost: 10,
   #     rating: 5
   #     )
 
