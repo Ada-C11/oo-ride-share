@@ -90,8 +90,6 @@ describe "Passenger class" do
 
   describe "Edge cases for trips still in progress" do
     before do
-    
-      
       @passenger = RideShare::Passenger.new(
         id: 9,
         name: "Merl Glover III",
@@ -99,6 +97,15 @@ describe "Passenger class" do
         trips: [],
       )
       trip1 = RideShare::Trip.new(
+        driver_id: 1,
+        id: 9,
+        passenger: @passenger,
+        start_time: "2016-08-05",
+        end_time: "2016-08-06",
+        rating: 5,
+        cost: 5,
+      )
+      trip2 = RideShare::Trip.new(
         driver_id: 2,
         id: 9,
         passenger: @passenger,
@@ -110,26 +117,8 @@ describe "Passenger class" do
       @passenger.add_trip(trip1)
     end
 
-      it "raises an error if we try to calculate a total while a trip is in progress" do
-        expect {@passenger.net_expenditures}.must_raise ArgumentError
-      end
+    it "will not include trip in progress for net_expenditures" do
+      expect (@passenger.net_expenditures).must_equal 5
+    end
   end
-
-end 
-
-# describe "Edge cases for trips still in progress" do
-#     before do
-    
-      
-#       @passenger = RideShare::Passenger.new(
-#         id: 9,
-#         name: "Merl Glover III",
-#         phone_number: "1-602-620-2330 x3723",
-#         trips: [],
-#       )
-#     end
-
-#       it "raises an error if we try to calculate a total while a trip is in progress" do
-#         expect {@passenger.net_expenditures}.must_raise ArgumentError
-#       end
-# end
+end

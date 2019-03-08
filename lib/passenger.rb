@@ -21,7 +21,6 @@ module RideShare
 
       @trips.each do |trip|
         if trip.cost == nil
-          raise ArgumentError, "Can't calculate total while trip is in progress"
           next
         else
         total += trip.cost

@@ -159,8 +159,4 @@ describe "Driver class" do
       expect(@driver.total_revenue).must_be_close_to 5.36
     end
   end
-
-  describe "net_expenditures" do
-    # You add tests for the net_expenditures method
-  end
 end

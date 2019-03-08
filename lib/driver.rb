@@ -31,19 +31,6 @@ module RideShare
       @trips << trip
     end
 
-
-    # if trips.length == 0
-    #   return 0
-    # else
-    #   trips.each do |trip|
-    #     if trip.rating == nil
-    #       raise ArgumentError, "Can't calculate rating while trip is in progress"
-    #       next
-    #     else
-    #     rating_sum = @trips.reduce(0) do |ratings, trip|
-    #     ratings += trip.rating
-    #   end
-    # end
     def average_rating
       if trips.length == 0
         return 0
@@ -72,28 +59,11 @@ module RideShare
 
     def change_status(new_trip)
 
-      # driver = find_driver(current_driver_id)
-
       if new_trip.driver_id == self.id
         self.add_trip(new_trip)
         self.status = :UNAVAILABLE
       end
 
-
-
-      # current_driver = TripDispatcher.find_driver(driver.id)
-
-      # add_trip(request_trip(passenger_id))
-      # driver.add_trip(Trip.new(
-      #   id: @trips.length + 1,
-      #   driver_id: driver.id,
-      #   passenger_id: find_passenger(passenger_id),
-      #   start_time: Time.now.to_s,
-      #   end_time: nil,
-      #   cost: nil,
-      #   rating: nil,
-      # ))
-      # find_driver(current_driver_id)
     end
 
     private

@@ -37,46 +37,30 @@ module RideShare
 
     def request_trip(passenger_id)
 
-      # @drivers.each do |driver|
-      #   all_statuses << driver.status
-
-      #   if all_statuses.all? { |status| status == :UNAVAILABLE }
-      #     raise ArgumentError, "There are no available drivers."
-      #   end
-      # end
-
-      
       current_driver = drivers.find { |driver| driver.status == :AVAILABLE}
       if current_driver == nil
         raise ArgumentError, "There are no available drivers."
       end
 
-        # all_statuses << driver.status
+      passenger = find_passenger(passenger_id)
 
-        # if all_statuses.all? { |status| status == :UNAVAILABLE }
-        #   raise ArgumentError, "There are no available drivers."
-        # end
-
-        # if driver.status == :AVAILABLE
-          passenger = find_passenger(passenger_id)
-
-          new_trip = RideShare::Trip.new(
-            id: @trips.length + 1,
-            driver_id: current_driver.id,
-            passenger_id: find_passenger(passenger_id),
-            start_time: Time.now.to_s,
-            end_time: nil,
-            cost: nil,
-            rating: nil,
+      new_trip = RideShare::Trip.new(
+        id: @trips.length + 1,
+        driver_id: current_driver.id,
+        passenger_id: find_passenger(passenger_id),
+        start_time: Time.now.to_s,
+        end_time: nil,
+        cost: nil,
+        rating: nil,
           )
 
-          passenger.add_trip(new_trip)
+      passenger.add_trip(new_trip)
 
-          current_driver.change_status(new_trip)
+      current_driver.change_status(new_trip)
 
-          @trips << new_trip
+      @trips << new_trip
 
-          return new_trip
+      return new_trip
     end
 
     private
