@@ -51,29 +51,29 @@ describe "TripDispatcher class" do
         expect(passenger).must_be_kind_of RideShare::Passenger
       end
     end
+  end
 
-    describe "Passenger & Trip loader methods" do
-      before do
-        @dispatcher = build_test_dispatcher
-      end
+  describe "Passenger & Trip loader methods" do
+    before do
+      @dispatcher = build_test_dispatcher
+    end
 
-      it "accurately loads passenger information into passengers array" do
-        first_passenger = @dispatcher.passengers.first
-        last_passenger = @dispatcher.passengers.last
+    it "accurately loads passenger information into passengers array" do
+      first_passenger = @dispatcher.passengers.first
+      last_passenger = @dispatcher.passengers.last
 
-        expect(first_passenger.name).must_equal "Passenger 1"
-        expect(first_passenger.id).must_equal 1
-        expect(last_passenger.name).must_equal "Passenger 8"
-        expect(last_passenger.id).must_equal 8
-      end
+      expect(first_passenger.name).must_equal "Passenger 1"
+      expect(first_passenger.id).must_equal 1
+      expect(last_passenger.name).must_equal "Passenger 8"
+      expect(last_passenger.id).must_equal 8
+    end
 
-      it "connects trips and passengers" do
-        dispatcher = build_test_dispatcher
-        dispatcher.trips.each do |trip|
-          expect(trip.passenger).wont_be_nil
-          expect(trip.passenger.id).must_equal trip.passenger_id
-          expect(trip.passenger.trips).must_include trip
-        end
+    it "connects trips and passengers" do
+      dispatcher = build_test_dispatcher
+      dispatcher.trips.each do |trip|
+        expect(trip.passenger).wont_be_nil
+        expect(trip.passenger.id).must_equal trip.passenger_id
+        expect(trip.passenger.trips).must_include trip
       end
     end
   end
@@ -85,41 +85,90 @@ describe "TripDispatcher class" do
         @dispatcher = build_test_dispatcher
       end
 
-      it "throws an argument error for a bad ID" do
-        expect { @dispatcher.find_driver(0) }.must_raise ArgumentError
-      end
-
-      it "finds a driver instance" do
-        driver = @dispatcher.find_driver(2)
-        expect(driver).must_be_kind_of RideShare::Driver
-      end
+    it "throws an argument error for a bad ID" do
+      expect { @dispatcher.find_driver(0) }.must_raise ArgumentError
     end
 
-    describe "Driver & Trip loader methods" do
-      before do
-        @dispatcher = build_test_dispatcher
-      end
+    it "finds a driver instance" do
+      driver = @dispatcher.find_driver(2)
+      expect(driver).must_be_kind_of RideShare::Driver
+    end
+  end
 
-      it "accurately loads driver information into drivers array" do
-        first_driver = @dispatcher.drivers.first
-        last_driver = @dispatcher.drivers.last
+  describe "select driver with no previous trips if possible" do
+    before do   
+      @driver = RideShare::Driver.new(
+        id: 54,
+        name: "Test Driver",
+        vin: "12345678901234567",
+        status: :AVAILABLE,
+        trips: [],
+        last_end_time: nil
+      )
+      @driver = RideShare::Driver.new(
+        id: 55,
+        name: "Test Driver",
+        vin: "12345678901234567",
+        status: :AVAILABLE,
+        trips: [],
+        last_end_time: "2018-12-01"
+      )
+    end
+                  
+    it "selects the driver with no previous trips first from available drivers" do
+    expect(driver.id).must_equal 54
+    end
+  end
 
-        expect(first_driver.name).must_equal "Driver 1 (unavailable)"
-        expect(first_driver.id).must_equal 1
-        expect(first_driver.status).must_equal :UNAVAILABLE
-        expect(last_driver.name).must_equal "Driver 3 (no trips)"
-        expect(last_driver.id).must_equal 3
-        expect(last_driver.status).must_equal :AVAILABLE
-      end
+  describe "if no drivers with no trips are available, selects the driver with the oldest last end time" do
+    before do
+    @driver = RideShare::Driver.new(
+      id: 55,
+      name: "Test Driver",
+      vin: "12345678901234567",
+      status: :AVAILABLE,
+      trips: [],
+      last_end_time: "2018-12-01"
+    )
+    @driver = RideShare::Driver.new(
+      id: 56,
+      name: "Test Driver",
+      vin: "12345678901234567",
+      status: :AVAILABLE,
+      trips: [],
+      last_end_time: "2018-11-30"
+    )
 
-      it "connects trips and drivers" do
-        dispatcher = build_test_dispatcher
-        dispatcher.trips.each do |trip|
-          expect(trip.driver).wont_be_nil
-          expect(trip.driver.id).must_equal trip.driver_id
-          expect(trip.driver.trips).must_include trip
-        end
+    it "selects the driver with the oldest last end time" do
+      expect(driver.id).must_equal 56
+    end
+  end
+
+  describe "Driver & Trip loader methods" do
+    before do
+      @dispatcher = build_test_dispatcher
+    end
+
+    it "accurately loads driver information into drivers array" do
+      first_driver = @dispatcher.drivers.first
+      last_driver = @dispatcher.drivers.last
+
+      expect(first_driver.name).must_equal "Driver 1 (unavailable)"
+      expect(first_driver.id).must_equal 1
+      expect(first_driver.status).must_equal :UNAVAILABLE
+      expect(last_driver.name).must_equal "Driver 3 (no trips)"
+      expect(last_driver.id).must_equal 3
+      expect(last_driver.status).must_equal :AVAILABLE
+    end
+
+    it "connects trips and drivers" do
+      dispatcher = build_test_dispatcher
+      dispatcher.trips.each do |trip|
+        expect(trip.driver).wont_be_nil
+        expect(trip.driver.id).must_equal trip.driver_id
+        expect(trip.driver.trips).must_include trip
       end
     end
   end
 end
+

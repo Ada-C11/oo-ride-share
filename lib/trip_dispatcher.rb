@@ -43,6 +43,7 @@ module RideShare
       return @drivers.min_by { |driver| driver.last_end_time }
     end
 
+    # method to create trips
     def request_trip(passenger_id)
       driver = find_available_driver
       passenger = find_passenger(passenger_id)
@@ -59,7 +60,7 @@ module RideShare
         end_time: nil,
         cost: nil,
         rating: nil,
-        driver: driver
+        driver: driver,
       }
       trip = Trip.new(input)
 
