@@ -15,7 +15,7 @@ describe "Trip class" do
         cost: 23.45,
         rating: 3,
         driver_id: 2,
-        driver: "George",
+        driver: RideShare::Driver.new(id: 2, name: "Brad", vin: "MB4UR6PEX6GHMKHH4"),
       }
       @trip = RideShare::Trip.new(@trip_data)
     end
@@ -29,7 +29,6 @@ describe "Trip class" do
     end
 
     it "stores an instance of driver" do
-      skip # Unskip after wave 2
       expect(@trip.driver).must_be_kind_of RideShare::Driver
     end
 
@@ -47,7 +46,7 @@ describe "Trip class" do
         cost: 23.45,
         rating: 3,
         driver_id: 2,
-        driver: "George",
+        driver: RideShare::Driver.new(id: 2, name: "Sally", vin: "MB4UR6PEX6GHMKHH4"),
       }
       # @trip = RideShare::Trip.new(@trip_data)
 
@@ -85,7 +84,7 @@ describe "Trip class" do
         cost: 23.45,
         rating: 3,
         driver_id: 2,
-        driver: "George",
+        driver: RideShare::Driver.new(id: 2, name: "Kurt", vin: "MB4UR6PEX6GHMKHH4"),
       }
 
       @test_ride = RideShare::Trip.new(@trip_data)

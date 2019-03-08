@@ -36,6 +36,9 @@ module RideShare
 
     def request_trip(passenger_id)
       assigned_driver = @drivers.find { |driver| driver.status == :AVAILABLE }
+      if assigned_driver == nil
+        return nil
+      end
       passenger = find_passenger(passenger_id)
       assigned_driver.status = :UNAVAILABLE
       # updated_assigned_driver = assigned_driver.dup

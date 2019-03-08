@@ -49,7 +49,7 @@ describe "Passenger class" do
         end_time: "2016-08-09",
         rating: 5,
         driver_id: 2,
-        driver: "George",
+        driver: RideShare::Driver.new(id: 2, name: "Molly", vin: "MB4UR6PEX6GHMKHH4"),
       )
 
       @passenger.add_trip(trip)
@@ -84,7 +84,7 @@ describe "Passenger class" do
         cost: 20,
         rating: 5,
         driver_id: 2,
-        driver: "George",
+        driver: RideShare::Driver.new(id: 2, name: "Grace", vin: "MB4UR6PEX6GHMKHH4"),
       )
       @trip_two = RideShare::Trip.new(
         id: 10,
@@ -94,7 +94,7 @@ describe "Passenger class" do
         cost: 30,
         rating: 5,
         driver_id: 2,
-        driver: "George",
+        driver: RideShare::Driver.new(id: 2, name: "Dee", vin: "MB4UR6PEX6GHMKHH4"),
       )
     end
 
@@ -125,7 +125,7 @@ describe "Passenger class" do
         cost: 20,
         rating: 5,
         driver_id: 2,
-        driver: "George",
+        driver: RideShare::Driver.new(id: 2, name: "Chris", vin: "MB4UR6PEX6GHMKHH4"),
       )
       @trip_two = RideShare::Trip.new(
         id: 10,
@@ -135,7 +135,7 @@ describe "Passenger class" do
         cost: 30,
         rating: 5,
         driver_id: 2,
-        driver: "George",
+        driver: RideShare::Driver.new(id: 2, name: "Kaida", vin: "MB4UR6PEX6GHMKHH4"),
       )
     end
     it "Totals time spent on all rides" do
