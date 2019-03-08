@@ -28,18 +28,20 @@ module RideShare
     end
 
     def average_rating
+      #check with the nil
       return 0 if @trips.length == 0
       sum = 0.0
       @trips.each do |trip|
-        sum += trip.rating
+        sum += trip.rating if trip.rating != nil
       end
       return sum / @trips.length
     end
 
     def total_revenue
+      #check with the nil
       sum = 0.0
       @trips.each do |trip|
-        if trip.cost > 1.65
+        if trip.cost > 1.65 && trip.cost != nil
           sum += (trip.cost - 1.65)
         end
       end
