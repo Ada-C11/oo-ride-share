@@ -1,4 +1,5 @@
 require_relative "spec_helper"
+require "time"
 
 TEST_DATA_DIRECTORY = "specs/test_data"
 
@@ -122,25 +123,24 @@ describe "TripDispatcher class" do
       end
     end
 
-    describe "Request trip method"
-    before do
-      start_time = Time.parse("2015-05-20T12:14:00+00:00")
-      end_time = start_time + 25 * 60 # 25 minutes
-      @trip_data = {
-        id: 8,
-        passenger: RideShare::Passenger.new(id: 1,
-                                            name: "Ada",
-                                            phone_number: "412-432-7640"),
-        start_time: start_time.to_s,
-        end_time: end_time.to_s,
-        cost: 23.45,
-        driver_id: 1,
-        rating: 3,
-      }
-      @trip = RideShare::Trip.new(@trip_data)
+    describe "Request trip method" do
+      before do
+        @dispatcher = build_test_dispatcher
+      #   @passenger = RideShare::Passenger.new(
+      #     id: 9,
+      #     name: "Merl Glover III",
+      #     phone_number: "1-602-620-2330 x3723",
+      #     trips: [],
+      #   )
+      end
+    it "New trips should have specific default values" do
+    trip = @dispatcher.request_trip(1)
+
+    # expect(trip.start_time).must_be_kind_of Time
+    expect(trip.end_time).must_be_nil
+    expect(trip.rating).must_be_nil
+
     end
-    it "Returns an instance of Trip" do
-      expect(@trip.request_trip).must_be_kind_of RideShare::Trip
     end
   end
 end

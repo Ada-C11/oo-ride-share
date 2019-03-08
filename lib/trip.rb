@@ -32,19 +32,22 @@ module RideShare
       end
 
       @start_time = Time.parse(start_time)
-      @end_time = Time.parse(end_time)
+      @end_time = end_time.nil? ? nil : Time.parse(end_time)
       @cost = cost
       @rating = rating
-      if @start_time > @end_time
+      if !end_time.nil? && @start_time > @end_time
         raise ArgumentError, "No! The start time cannot be after the end time."
       end
 
-      if @rating > 5 || @rating < 1
+      if !rating.nil? && (@rating > 5 || @rating < 1)
         raise ArgumentError.new("Invalid rating #{@rating}")
       end
     end
 
     def duration_in_seconds
+      if end_time.nil? 
+        raise ArgumentError, 'Trip in progress'
+      end
       length_of_trip = @end_time - @start_time
       return length_of_trip
     end
