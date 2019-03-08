@@ -30,6 +30,19 @@ module RideShare
       @trips << trip
     end
 
+    def average_rating
+      this_drivers_ratings = []
+      @trips.map { |trip| this_drivers_ratings << trip.rating.to_f}
+
+      begin
+        avg = this_drivers_ratings.sum / this_drivers_ratings.length
+        return avg
+      rescue ZeroDivisionError
+        avg = 0.0
+      end
+    end
+
+
     private
 
     def self.from_csv(record)

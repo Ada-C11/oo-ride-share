@@ -35,7 +35,7 @@ module RideShare
       @cost = cost
       @rating = rating
 
-      if start_time >= end_time
+      if start_time > end_time
         raise ArgumentError.new("Start Time must be earlier than (<) End Time.")
       end
 

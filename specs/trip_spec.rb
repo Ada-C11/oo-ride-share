@@ -70,12 +70,13 @@ describe "Trip class" do
       }.must_raise ArgumentError
     end
     # TEST 6
-    it "raises an error if start time is the same as end time" do
-      @trip_data[:end_time] = @trip_data[:start_time]
-      expect do
-        RideShare::Trip.new(@trip_data)
-      end.must_raise ArgumentError
-    end
+  #   it "raises an error if start time is the same as end time" do
+  #     @trip_data[:end_time] > @trip_data[:start_time]
+  #     expect do
+  #       RideShare::Trip.new(@trip_data)
+  #     end.must_raise ArgumentError
+  #   end
+  # WE REMOVED THIS TEST AFTER DECIDING TO ALLOW 0 SEC DURATION TRIPS
   end
   # TEST 7
   describe "duration method" do    
