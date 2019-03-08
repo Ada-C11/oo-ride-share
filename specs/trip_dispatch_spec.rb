@@ -132,10 +132,22 @@ describe "TripDispatcher class" do
       expect(new_trip).must_be_instance_of RideShare::Trip
     end
 
-    it "updates the trip lists for driver and passenger" do
+    it "updates the trip lists" do
       trip_count = @dispatcher.trips.count
       new_trip = @dispatcher.request_trip(1)
       expect(@dispatcher.trips.count).must_equal trip_count + 1
+    end
+
+    it "updates the trip list for driver" do
+      trip_count = @dispatcher.drivers[1].trips.count
+      new_trip = @dispatcher.request_trip(1)
+      expect(@dispatcher.drivers[1].trips.count).must_equal trip_count + 1
+    end
+
+    it "updates the trip list for passenger" do
+      trip_count = @dispatcher.passengers[0].trips.count
+      new_trip = @dispatcher.request_trip(1)
+      expect(@dispatcher.passengers[0].trips.count).must_equal trip_count + 1
     end
 
     it "finds an available driver" do
