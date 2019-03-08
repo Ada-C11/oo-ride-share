@@ -103,23 +103,21 @@ describe "TripDispatcher class" do
         name: "Test Driver",
         vin: "12345678901234567",
         status: :AVAILABLE,
-        trips: [],
-        last_end_time: nil
+        trips: []
       )
       @driver = RideShare::Driver.new(
         id: 55,
         name: "Test Driver",
         vin: "12345678501234567",
         status: :AVAILABLE,
-        last_end_time: "2018-12-01",
-        trips: RideShare::Trip.new(
+        trips: [RideShare::Trip.new(
           id: 8,
           driver: @driver,
           passenger_id: 3,
           start_time: "2016-08-08",
           end_time: "2018-12-01",
           rating: 1
-        )
+        )]
       )
     end          
     it "selects the driver with no previous trips first from available drivers" do
@@ -135,7 +133,6 @@ describe "TripDispatcher class" do
         vin: "12345678901234567",
         status: :AVAILABLE,
         trips: nil,
-        last_end_time: "2018-12-01"
       )
       @driver = RideShare::Driver.new(
         id: 56,
@@ -143,7 +140,6 @@ describe "TripDispatcher class" do
         vin: "12345678901234567",
         status: :AVAILABLE,
         trips: nil,
-        last_end_time: "2018-11-30"
       )
     end
 

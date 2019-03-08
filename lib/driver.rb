@@ -6,14 +6,13 @@ require_relative "trip"
 
 module RideShare
   class Driver < CsvRecord
-    attr_reader :name, :vin, :status, :trips, :last_end_time
+    attr_reader :name, :vin, :status, :trips
 
     DRIVE_STATUS = [:AVAILABLE, :UNAVAILABLE]
 
-    def initialize(id:, name:, vin:, status: :AVAILABLE, trips: nil, last_end_time: nil)
+    def initialize(id:, name:, vin:, status: :AVAILABLE, trips: nil)
       super(id)
       @name = name
-      @last_end_time = nil
       @vin = vin
       if vin.length != 17 || nil
         return raise ArgumentError, "Invalid VIN"
