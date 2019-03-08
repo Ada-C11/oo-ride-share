@@ -163,4 +163,60 @@ describe "Passenger class" do
       expect(@passenger.total_time_spent).must_equal 4500
     end
   end
+  describe "Passenger#non_inprogress_trips" do
+    before do
+      @passenger = RideShare::Passenger.new(
+        id: 3,
+        name: "Merl Glover III",
+        phone_number: "1-602-620-2330 x3723",
+        trips: [],
+      )
+    end
+    it "should return completed trips" do
+      trip = RideShare::Trip.new(
+        id: 8,
+        driver_id: 2,
+        passenger: @passenger,
+        start_time: "2016-08-08",
+        end_time: "2016-08-08",
+        rating: 5,
+        cost: 10,
+      )
+      @passenger.add_trip(trip)
+
+      trip = RideShare::Trip.new(
+        id: 9,
+        driver_id: 2,
+        passenger: @passenger,
+        start_time: "2016-08-08",
+        end_time: nil,
+        rating: nil,
+        cost: nil,
+      )
+      @passenger.add_trip(trip)
+      completed_trips = @passenger.non_inprogress_trips
+      completed_trips.each do |trip|
+        expect(trip.end_time).wont_be_nil
+      end
+    end
+    it "should return [] if no trips are completed" do
+      3.times do
+        trip = RideShare::Trip.new(
+          id: 9,
+          driver_id: 2,
+          passenger_id: @passenger,
+          start_time: "2016-08-08",
+          end_time: nil,
+          rating: nil,
+          cost: nil,
+        )
+        @passenger.add_trip(trip)
+      end
+      expect(@passenger.non_inprogress_trips).must_equal []
+    end
+
+    it "should return [] if a passenger has no trips" do
+      expect(@passenger.non_inprogress_trips).must_equal []
+    end
+  end
 end

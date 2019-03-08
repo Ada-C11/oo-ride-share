@@ -160,7 +160,6 @@ describe "Driver class" do
   end
 
   describe "total_revenue" do
-    # You add tests for the total_revenue method
     before do
       trip = RideShare::Trip.new(
         id: 8,
@@ -173,6 +172,7 @@ describe "Driver class" do
       )
       @driver.add_trip(trip)
     end
+    # You add tests for the total_revenue method
     it "should return a floating point number" do
       expect(@driver.total_revenue).must_be_instance_of Float
     end
@@ -202,6 +202,62 @@ describe "Driver class" do
       )
       @driver.add_trip(trip)
       expect(@driver.total_revenue).must_equal 22.96
+    end
+  end
+
+  describe "Driver#non_inprogress_trips" do
+    before do
+      @driver = RideShare::Driver.new(
+        id: 54,
+        name: "Rogers Bartell IV",
+        vin: "1C9EVBRM0YBC564DZ",
+      )
+    end
+    it "should return completed trips" do
+      trip = RideShare::Trip.new(
+        id: 8,
+        driver: @driver,
+        passenger_id: 3,
+        start_time: "2016-08-08",
+        end_time: "2016-08-08",
+        rating: 5,
+        cost: 10,
+      )
+      @driver.add_trip(trip)
+
+      trip = RideShare::Trip.new(
+        id: 9,
+        driver: @driver,
+        passenger_id: 3,
+        start_time: "2016-08-08",
+        end_time: nil,
+        rating: nil,
+        cost: nil,
+      )
+      @driver.add_trip(trip)
+      completed_trips = @driver.non_inprogress_trips
+      completed_trips.each do |trip|
+        expect(trip.end_time).wont_be_nil
+      end
+    end
+    it "should return [] if no trips are completed" do
+      3.times do
+        trip = RideShare::Trip.new(
+          id: 9,
+          driver: @driver,
+          passenger_id: 3,
+          start_time: "2016-08-08",
+          end_time: nil,
+          rating: nil,
+          cost: nil,
+        )
+        @driver.add_trip(trip)
+      end
+      expect(@driver.non_inprogress_trips).must_equal []
+    end
+
+    it "should return [] if a driver has no trips" do
+      expect(@driver.non_inprogress_trips).must_equal []
     end
   end
 end
