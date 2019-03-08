@@ -38,7 +38,7 @@ module RideShare
                 #{drivers.count} drivers, \
                 #{passengers.count} passengers>"
         end
-      
+      end
 
       def request_trip(passenger_id)
         available_driver = @drivers.select {|driver| driver.status == :AVAILABLE}.first

@@ -148,25 +148,14 @@ describe "TripDispatcher class" do
       it "updates passenger trips when new trip is requested" do
         passenger = @dispatcher.find_passenger(1)
         passenger_count = passenger.trips.length
-        # new_trip = @dispatcher.request_trip(1)
+        new_trip = @dispatcher.request_trip(1)
         expect(passenger.trips.length).must_equal passenger_count + 1
       end
 
       it "returns an error when there are no available drivers" do
-<<<<<<< HEAD
         dispatcher2 = build_test_dispatcher
         
         expect{(dispatcher2.request_trip(9))}.must_raise ArgumentError
-||||||| merged common ancestors
-        dispatcher2 = build_test_dispatcher
-        available_driver = nil
-        expect{(dispatcher2.request_trip(9))}.must_raise ArgumentError
-=======
-        @dispatcher.trips.each do |trip|
-          trip.driver.status = :UNAVAILABLE
-        end
-        expect(@dispatcher.request_trip(2)).must_raise ArgumentError
->>>>>>> 76f9c269b487b83723425dc7d47825dd0eae3eab
       end
     end
  
