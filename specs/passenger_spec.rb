@@ -35,7 +35,6 @@ describe "Passenger class" do
 
   describe "trips property" do
     before do
-      # TODO: you'll need to add a driver at some point here.
       @passenger = RideShare::Passenger.new(
         id: 9,
         name: "Merl Glover III",
@@ -113,6 +112,33 @@ describe "Passenger class" do
       expect(@passenger.net_expenditures(9)).must_equal 340
       expect { (@passenger.net_expenditures(10)) }.must_raise ArgumentError
     end
+
+    it "returns nil for net expenditures if trip is in progress" do
+      @passenger = RideShare::Passenger.new(
+        id: 9,
+        name: "Merl Glover III",
+        phone_number: "1-602-620-2330 x3723",
+        trips: [],
+      )
+      @driver = RideShare::Driver.new(
+        id: 1,
+        name: "Paul Klee",
+        vin: "WBS76FYD47DJF7206",
+        status: :AVAILABLE,
+      )
+      trip = RideShare::Trip.new(
+        id: 8,
+        passenger: @passenger,
+        start_time: "2016-08-08",
+        end_time: nil,
+        rating: nil,
+        cost: nil,
+        driver: @driver,
+      )
+      @passenger.add_trip(trip)
+
+      expect(@passenger.net_expenditures(9)).must_be_kind_of NilClass
+    end
   end
 
   describe "#total_time_spent" do
@@ -159,6 +185,33 @@ describe "Passenger class" do
       total_duration_trips = time_duration1 + time_duration2
       expect(@passenger.total_time_spent(9)).must_equal total_duration_trips
       expect { (@passenger.total_time_spent(10)) }.must_raise ArgumentError
+    end
+
+    it "returns nil for total time spent if trip is in progress" do
+      @passenger = RideShare::Passenger.new(
+        id: 9,
+        name: "Merl Glover III",
+        phone_number: "1-602-620-2330 x3723",
+        trips: [],
+      )
+      @driver = RideShare::Driver.new(
+        id: 1,
+        name: "Paul Klee",
+        vin: "WBS76FYD47DJF7206",
+        status: :AVAILABLE,
+      )
+      trip = RideShare::Trip.new(
+        id: 8,
+        passenger: @passenger,
+        start_time: "2016-08-08",
+        end_time: nil,
+        rating: nil,
+        cost: nil,
+        driver: @driver,
+      )
+      @passenger.add_trip(trip)
+
+      expect(@passenger.total_time_spent(9)).must_be_kind_of NilClass
     end
   end
 end

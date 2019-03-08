@@ -20,23 +20,28 @@ module RideShare
       cost = 0
       @trips.each do |trip|
         if trip.passenger_id == passenger
-          cost += trip.cost
+          if trip.cost == nil
+            return nil
+          else
+            cost += trip.cost
+          end
         else
           raise ArgumentError, "The passenger does not have any trips!"
         end
       end
+
       return cost
     end
 
     def total_time_spent(passenger)
-      #get to trip info
-      # subtract start time from end time
-      # returning amoung ot time spent
-
       time_passed = 0
       @trips.each do |trip|
         if trip.passenger_id == passenger
-          time_passed += trip.end_time - trip.start_time
+          if trip.end_time == nil
+            return nil
+          else
+            time_passed += trip.end_time - trip.start_time
+          end
         else
           raise ArgumentError, "The passenger does not have any trips!"
         end

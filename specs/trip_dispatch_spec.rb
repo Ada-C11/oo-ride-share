@@ -28,7 +28,6 @@ describe "TripDispatcher class" do
     end
 
     it "loads the development data by default" do
-      # Count lines in the file, subtract 1 for headers
       trip_count = %x{wc -l 'support/trips.csv'}.split(" ").first.to_i - 1
 
       dispatcher = RideShare::TripDispatcher.new
@@ -64,8 +63,8 @@ describe "TripDispatcher class" do
 
         expect(first_passenger.name).must_equal "Passenger 1"
         expect(first_passenger.id).must_equal 1
-        expect(last_passenger.name).must_equal "Passenger 8" #
-        expect(last_passenger.id).must_equal 8 #
+        expect(last_passenger.name).must_equal "Passenger 8"
+        expect(last_passenger.id).must_equal 8
       end
 
       it "connects trips and passengers" do
@@ -79,7 +78,6 @@ describe "TripDispatcher class" do
     end
   end
 
-  # TODO: un-skip for Wave 2
   describe "drivers" do
     describe "find_driver method" do
       before do
@@ -108,9 +106,9 @@ describe "TripDispatcher class" do
         expect(first_driver.name).must_equal "Driver 1 (unavailable)"
         expect(first_driver.id).must_equal 1
         expect(first_driver.status).must_equal :UNAVAILABLE
-        expect(last_driver.name).must_equal "Driver 3 (no trips)" #
-        expect(last_driver.id).must_equal 3 #
-        expect(last_driver.status).must_equal :AVAILABLE # THIS MIGHT FAIL WHEN A NEW TRIP GETS ADDED.. Because it will go to the last position of the array. I'm starting to think it will not fail
+        expect(last_driver.name).must_equal "Driver 3 (no trips)"
+        expect(last_driver.id).must_equal 3
+        expect(last_driver.status).must_equal :AVAILABLE
       end
 
       it "connects trips and drivers" do
@@ -123,83 +121,93 @@ describe "TripDispatcher class" do
       end
     end
   end
-  describe "request_trip" do
-    ## NOT SURE IF WE SHOULD ADD
-    # before do
-    #   start_time = Time.parse("2015-05-20T12:14:00+00:00")
-    #   end_time = start_time + 25 * 60 # 25 minutes
-    #   @trip_data = {
-    #     id: 8,
-    #     passenger: RideShare::Passenger.new(id: 1,
-    #                                         name: "Ada",
-    #                                         phone_number: "412-432-7640"),
-    #     start_time: start_time.to_s,
-    #     end_time: end_time.to_s,
-    #     cost: 23.45,
-    #     rating: 3,
-    #     driver: nil,
-    #   }
-    # @trip = RideShare::Trip.new(@trip_data)
-    before do
+  describe "request_trip -- access correct information" do
+    let (:trip) do
       @dispatcher = build_test_dispatcher
       passenger_id_new_trip = 1
-      @request_new_trip = @dispatcher.request_trip(passenger_id_new_trip)
+      request_new_trip = @dispatcher.request_trip(passenger_id_new_trip)
     end
-    # Was the trip created properly?
+
     it "will return instance of trip" do
-      expect(@request_new_trip).must_be_kind_of RideShare::Trip
+      puts trip.object_id
+      expect(trip).must_be_kind_of RideShare::Trip
     end
     it "new trip will have a correct new id" do
-      expect(@request_new_trip.id).must_equal 6
+      puts trip.object_id
+      expect(trip.id).must_equal 6
     end
     it "an available driver will be assigned to the new trip" do
-      # Was the driver who was selected AVAILABLE? --> I just checked the driver.csv file in the test_date folder ... should we have a test for this???
-      expect(@request_new_trip.driver_id).must_equal 2
+      expect(trip.driver_id).must_equal 2
     end
+
+    it "available driver status was changed to unavailable" do
+      dispatcher = build_test_dispatcher
+      before_dispatch_status = dispatcher.find_driver(2).status
+
+      dispatcher.request_trip(1)
+
+      after_dispatch_status = dispatcher.find_driver(2).status
+      expect(before_dispatch_status).must_equal :AVAILABLE
+      expect(after_dispatch_status).must_equal :UNAVAILABLE
+    end
+
     it "passenger id corresponds to the right passenger" do
-      expect(@request_new_trip.passenger_id).must_equal 1 # What if we wanted to use the name of the passenger??
+      expect(trip.passenger_id).must_equal 1
     end
     it "the start time corresponds to current time" do
-      expect(@request_new_trip.start_time).must_be_kind_of Time
+      expect(trip.start_time).must_be_kind_of Time
     end
     it "end_time, cost, and rating are nil for a trip in progress" do
-      expect(@request_new_trip.end_time).must_be_kind_of NilClass
-      expect(@request_new_trip.cost).must_be_kind_of NilClass
-      expect(@request_new_trip.rating).must_be_kind_of NilClass
+      expect(trip.end_time).must_be_kind_of NilClass
+      expect(trip.cost).must_be_kind_of NilClass
+      expect(trip.rating).must_be_kind_of NilClass
     end
-    it "get nil when there are not drivers available" do
 
-      # dispatcher = build_test_dispatcher
-      # dispatcher.request_trip(2)
-      # dispatcher.request_trip(3)
-      # dispatcher.request_trip(6)
+    describe "request_trip -- updates the collections for drivers, passengers, and trips" do
+      let (:dispatcher) do
+        build_test_dispatcher
+      end
 
-      # create a new trip in request_trip
-      #     instantiate Trip in TripDispatch ang pass the passenger id, OK
-      #     trip id which will be the lenght of the @trips array OK
-      #      start time Time.now (figure what format to give to the initialize as... I believe it should be string in .new) OK
+      it "changes length of driver's trips" do
+        drivers_length_before = dispatcher.find_driver(2).trips.length
+        expect(drivers_length_before).must_equal 3
 
-      # find passenger that is requesting the new trip using the id given --> I THINK WE DON'T NEED TO FIND THE PASSENGER WHEN CREATING THE TRIP (didn't do it)
-      # find a driver that's available from a list check status OK
-      # change driver status to unavailable -> by using the helper method OK added driver.find(driver_new_trip).status = :UNAVAILABLE in request_trip
+        dispatcher.request_trip(1)
 
-      # add a new trip instance to the collection in Passenger, Driver, and Tripdispatcher
-      #       trip added to collection of trips for driver OK
-      # return the newly created trip (instance of Trip)
+        drivers_length_after = dispatcher.find_driver(2).trips.length
+        expect(drivers_length_after).must_equal 4
+      end
 
-      ## NOT SURE IF WE SHOULD ADD
-      # @passenger = RideShare::Passenger.new(
-      #   id: 9,
-      #   name: "Merl Glover III",
-      #   phone_number: "1-602-620-2330 x3723",
-      #   trips: [],
-      # )
-      #
+      it "changes length of all trips" do
+        trips_length_before = dispatcher.trips.length
+        expect(trips_length_before).must_equal 5
 
+        dispatcher.request_trip(1)
+
+        trips_length_after = dispatcher.trips.length
+        expect(trips_length_after).must_equal 6
+      end
+
+      it "changes the length of passengers' trips" do
+        passengers_length_before = dispatcher.find_passenger(1).trips.length
+        expect(passengers_length_before).must_equal 1
+
+        dispatcher.request_trip(1)
+
+        passengers_length_after = dispatcher.find_passenger(1).trips.length
+        expect(passengers_length_after).must_equal 2
+      end
+
+      it "will return nil with no available drivers" do
+        dispatcher = build_test_dispatcher
+
+        dispatcher.change_status(2)
+        dispatcher.change_status(3)
+
+        puts "Driver's status: #{dispatcher.find_driver(3).status}"
+
+        expect(dispatcher.request_trip(1)).must_be_kind_of NilClass
+      end
     end
   end
 end
-
-# WORKING ON
-# Were the trip lists for the driver and passenger updated?
-# What happens if you try to request a trip when there are no AVAILABLE drivers?
