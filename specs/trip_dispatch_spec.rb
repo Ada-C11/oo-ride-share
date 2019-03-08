@@ -127,14 +127,56 @@ describe "TripDispatcher class" do
         @dispatcher = build_test_dispatcher
       end
 
-      it "assigns a driver instance" do
-        expect(@dispatcher.request_trip(2)).must_be_kind_of RideShare::Driver
+      it "returns a trip instance" do
+        expect(@dispatcher.request_trip(2)).must_be_kind_of RideShare::Trip
       end
 
-      # it "correctly assigns the first available passenger" do
-      #   first_avalable_driver = @dispatcher.request_trip(2)
-      #   expect(first_avalable_driver.status).must_equal :AVAILABLE
-      # end
+      it "correctly assigns the first available passenger" do
+        requested_trip = @dispatcher.request_trip(2)
+        # from the test data, driver 2 is the first AVAILABLE driver
+        expect(requested_trip.driver.id.to_i).must_equal 2
+      end
+
+      it "throws an ArgumentError if there's no available driver" do
+        def build_no_available_drivers
+          return RideShare::TripDispatcher.new(
+                   directory: "specs/test_data/unavailable_drivers.csv",
+                 )
+        end
+
+        na_dispatcher = build_no_available_drivers
+        expect { na_dispatcher.request_trip(2) }.must_raise ArgumentError
+      end
+
+      it "sets the driver's status to :UNAVAILABLE" do
+        requested_trip = @dispatcher.request_trip(2)
+        expect(requested_trip.driver.status).must_equal :UNAVAILABLE
+        expect(requested_trip.driver.id.to_i).must_equal 2
+      end
+
+      it "adds one trip to the collection of trips in the TripDispatcher" do
+        before_request = @dispatcher.trips.length
+        @dispatcher.request_trip(2)
+        after_request = @dispatcher.trips.length
+        expect(after_request - before_request).must_equal 1
+      end
+
+      it "adds one trip to the list of the driver's tips" do
+        # from the test data drivers.csv, we know that the id of the first available driver is 2
+        requested_driver_id = 2
+        driver_requested = @dispatcher.find_driver(2)
+        trips_before_request = driver_requested.trips.length
+        @dispatcher.request_trip(2) # requesting passenger_id is 2
+        trips_after_request = driver_requested.trips.length
+        expect(trips_after_request - trips_before_request).must_equal 1
+      end
+
+      it "adds one trip to the list of the passenger's tips" do
+        trips_before_request = @dispatcher.find_passenger(2).trips.length
+        @dispatcher.request_trip(2)
+        trips_after_request = @dispatcher.find_passenger(2).trips.length
+        expect(trips_after_request - trips_before_request).must_equal 1
+      end
     end
   end
 end
