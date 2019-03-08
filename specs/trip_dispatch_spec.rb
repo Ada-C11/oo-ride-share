@@ -137,6 +137,12 @@ describe "TripDispatcher class" do
     end
 
     it "sets the driver's status to :UNAVAILABLE" do
+      @driver = RideShare::Driver.new(
+        id: 54,
+        name: "Rogers Bartell IV",
+        vin: "1C9EVBRM0YBC564DZ",
+        status: :AVAILABLE,
+      )
       trip = RideShare::Trip.new(
         id: 8,
         driver: @driver,
@@ -148,7 +154,6 @@ describe "TripDispatcher class" do
         rating: 5,
       )
       dispatcher = build_test_dispatcher
-      puts @driver.change_status(trip)
 
       expect(@driver.change_status(trip)).must_equal :UNAVAILABLE
     end

@@ -226,7 +226,24 @@ describe "Driver class" do
     end
 
     it "changes status of driver when trip added" do
-      expect(@driver.change_status(trip)).must_equal :UNAVAILABLE
+      @driver = RideShare::Driver.new(
+        id: 54,
+        name: "Rogers Bartell IV",
+        vin: "1C9EVBRM0YBC564DZ",
+        status: :AVAILABLE,
+      )
+
+      trip = RideShare::Trip.new(
+        id: 8,
+        driver: @driver,
+        passenger_id: 3,
+        start_time: "2016-08-08",
+        end_time: "2016-08-09",
+        rating: 1,
+      )
+      @driver.change_status(trip)
+      # expect(@driver.change_status(trip)).must_equal :UNAVAILABLE
+      expect(@driver.status).must_equal :UNAVAILABLE
     end
   end
 end

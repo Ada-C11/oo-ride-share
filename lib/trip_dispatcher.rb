@@ -36,31 +36,31 @@ module RideShare
     end
 
     def request_trip(passenger_id)
-      driver_id = @drivers.find do |driver|
+      first_available_driver = @drivers.find do |driver|
         driver.status == :AVAILABLE
       end
       ids = @trips.map do |trip|
         trip.id
       end
       new_id = ids.max + 1
-      trips << Trip.new(
+      new_trip = Trip.new(
         id: new_id,
         passenger_id: passenger_id,
         start_time: Time.now.to_s,
         end_time: nil,
-        driver_id: driver_id.id,
+        driver_id: first_available_driver.id,
         cost: nil,
         rating: nil,
       )
-
+      @trips << new_trip
       # call helper method
-      @driver.change_status(trip)
+      first_available_driver.change_status(new_trip)
 
       # add trip to passenger list
       passenger = find_passenger(passenger_id)
-      passenger.add_trip(trip)
+      passenger.add_trip(new_trip)
 
-      return trip
+      return new_trip
     end
 
     private
