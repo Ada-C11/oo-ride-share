@@ -134,12 +134,23 @@ describe "TripDispatcher class" do
       expect(dispatcher).must_be_kind_of RideShare::Trip
     end
 
-    it "It returns the first available driver" do
+    it "It retrieves the first available driver" do
+      assigned_driver = @dispatcher.drivers.find { |driver| driver.status == :AVAILABLE }
+      copies_assigned_driver = assigned_driver.dup
       id = 5
       trip = @dispatcher.request_trip(id)
+
       expect(trip.driver.name).must_equal "Driver 2"
       expect(trip.driver.id).must_equal 2
-      expect(trip.driver.status).must_equal :AVAILABLE
+      expect(copies_assigned_driver.status).must_equal :AVAILABLE
+      expect(trip.driver.status).must_equal :UNAVAILABLE
     end
+
+    # it "Changes the status of the driver to :UNAVAILABLE" do
+    #   id = 4
+    #   trip = @dispatcher.request_trip(id)
+
+    #   expect(trip.driver.status).must_equal :UNAVAILABLE
+    # end
   end
 end

@@ -37,15 +37,16 @@ module RideShare
     def request_trip(passenger_id)
       assigned_driver = @drivers.find { |driver| driver.status == :AVAILABLE }
       passenger = find_passenger(passenger_id)
-      updated_assigned_driver = assigned_driver.dup
+      assigned_driver.status = :UNAVAILABLE
+      # updated_assigned_driver = assigned_driver.dup
 
-      updated_assigned_driver.status = :UNAVAILABLE
+      # updated_assigned_driver.status = :UNAVAILABLE
 
       new_trip = Trip.new(id: @trips.last.id + 1,
                           passenger: passenger,
                           start_time: Time.now.to_s,
                           driver_id: assigned_driver.id,
-                          driver: updated_assigned_driver)
+                          driver: assigned_driver)
 
       assigned_driver.add_trip(new_trip)
 
