@@ -87,4 +87,49 @@ describe "Passenger class" do
       expect(@passenger.total_time_spent).must_equal 2 * 86400
     end
   end
-end
+
+  describe "Edge cases for trips still in progress" do
+    before do
+    
+      
+      @passenger = RideShare::Passenger.new(
+        id: 9,
+        name: "Merl Glover III",
+        phone_number: "1-602-620-2330 x3723",
+        trips: [],
+      )
+      trip1 = RideShare::Trip.new(
+        driver_id: 2,
+        id: 9,
+        passenger: @passenger,
+        start_time: "2016-08-08",
+        end_time: nil,
+        rating: nil,
+        cost: nil,
+      )
+      @passenger.add_trip(trip1)
+    end
+
+      it "raises an error if we try to calculate a total while a trip is in progress" do
+        expect {@passenger.net_expenditures}.must_raise ArgumentError
+      end
+  end
+
+end 
+
+# describe "Edge cases for trips still in progress" do
+#     before do
+    
+      
+#       @passenger = RideShare::Passenger.new(
+#         id: 9,
+#         name: "Merl Glover III",
+#         phone_number: "1-602-620-2330 x3723",
+#         trips: [],
+#       )
+#     end
+
+#       it "raises an error if we try to calculate a total while a trip is in progress" do
+#         expect {@passenger.net_expenditures}.must_raise ArgumentError
+#       end
+# end

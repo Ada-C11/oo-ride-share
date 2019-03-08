@@ -18,17 +18,28 @@ module RideShare
 
     def net_expenditures
       total = 0
+
       @trips.each do |trip|
+        if trip.cost == nil
+          raise ArgumentError, "Can't calculate total while trip is in progress"
+          next
+        else
         total += trip.cost
       end
+    end
       return total
     end
 
     def total_time_spent
       total = 0
       @trips.each do |trip|
+        if trip.cost == nil
+          raise ArgumentError, "Can't calculate total while trip is in progress"
+          next
+        else
         total += trip.duration_in_seconds
       end
+    end
       return total
     end
 
