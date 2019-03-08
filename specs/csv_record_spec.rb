@@ -17,7 +17,7 @@ describe RideShare::CsvRecord do
   end
 
   describe 'load_all' do
-    it "raises an error if neither full_path nor directory is provided" do
+    it "raises an error for no full_path or directory" do
       expect {
         RideShare::CsvRecord.load_all
       }.must_raise ArgumentError

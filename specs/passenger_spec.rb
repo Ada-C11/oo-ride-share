@@ -84,13 +84,12 @@ describe "Passenger class" do
       end
     end
 
-    it "net_expenditure method returns the total amount of money that passenger has spent on their trips" do
+    it "net_expenditure method returns correct total" do
       total = @passenger.net_expenditures
       expect(total).must_equal 35
-      puts @trips
     end
 
-    it "returns the total amount of time that passenger has spent on their trips" do
+    it "returns the total time that passenger has passenged'" do
       time_total = @passenger.total_time_spent
       expect(time_total).must_equal "2700"
     end

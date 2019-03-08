@@ -41,7 +41,7 @@ module RideShare
       driver = find_next_available_driver
       id = @trips.length + 1
       new_trip = RideShare::Trip.new(id: id, passenger_id: passenger, driver: driver, start_time: Time.now.to_s, end_time: nil, rating: nil)
-      driver.status == :UNAVAILABLE
+      @status = :UNAVAILABLE
       @trips << new_trip
       return new_trip
 
