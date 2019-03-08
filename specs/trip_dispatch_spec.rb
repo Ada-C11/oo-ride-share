@@ -128,31 +128,26 @@ describe "TripDispatcher class" do
 
       it "requests a new trip with available driver" do
         dispatcher2 = build_test_dispatcher
-        ongoing_trip = dispatcher2.request_trip(9)
+        ongoing_trip = dispatcher2.request_trip(1)
         expect(ongoing_trip.driver.status == :AVAILABLE)
       end
-
-      it "updates passenger trips when new trip is requested" do
-
-      end
-
+      
       it "updates driver trips when new trip is requested" do
         dispatcher2 = build_test_dispatcher
         driver = dispatcher2.drivers[1]
         count = driver.trips.length
         
-        new_trip = dispatcher2.request_trip(9)
+        new_trip = dispatcher2.request_trip(1)
         expect(new_trip.driver).must_equal driver
         expect(driver.trips.length).must_equal (count + 1)
       end
 
       it "updates passenger trips when new trip is requested" do
         dispatcher2 = build_test_dispatcher
-        passenger = dispatcher2.passengers[1]
-        count = passenger.trips.length
-        
-        new_trip = dispatcher2.request_trip(2)
-        expect(passenger.trips.length).must_equal (count + 1)
+        passenger = dispatcher2.find_passenger(1)
+        passenger_count = passenger.trips.length
+        # new_trip = dispatcher2.request_trip(1)
+        expect(passenger.trips.count).must_equal (passenger_count + 1)
       end
 
       it "returns an error when there are no available drivers" do
@@ -160,12 +155,6 @@ describe "TripDispatcher class" do
         available_driver = nil
         expect{(dispatcher2.request_trip(2))}.must_raise ArgumentError
       end
-
-
-    # Was the trip created properly?
-    # Were the trip lists for the driver and passenger updated?
-    # Was the driver who was selected AVAILABLE?
-    # What happens if you try to request a trip when there are no AVAILABLE drivers?
     end
   end
 end
