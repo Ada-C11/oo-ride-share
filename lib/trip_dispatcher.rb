@@ -42,6 +42,11 @@ module RideShare
           break
         end
       end
+
+      if first_available_driver == ""
+        return "Sorry, no available drivers.  Try again later!"
+      end
+
       new_trip = RideShare::Trip.new(
         id: @trips.count + 1,
         driver: first_available_driver,
