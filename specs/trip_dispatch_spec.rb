@@ -146,7 +146,6 @@ describe "TripDispatcher class" do
     end
 
     it "raises an error if there are no available drivers" do
-      @dispatcher.drivers[0].status = :UNAVAILABLE
       @dispatcher.drivers[1].status = :UNAVAILABLE
       @dispatcher.drivers[2].status = :UNAVAILABLE
 
