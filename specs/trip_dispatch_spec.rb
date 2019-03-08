@@ -23,7 +23,7 @@ describe "TripDispatcher class" do
 
       expect(dispatcher.trips).must_be_kind_of Array
       expect(dispatcher.passengers).must_be_kind_of Array
-      # expect(dispatcher.drivers).must_be_kind_of Array
+      expect(dispatcher.drivers).must_be_kind_of Array
     end
 
     it "loads the development data by default" do
@@ -154,26 +154,26 @@ describe "TripDispatcher class" do
       expect(last2.end_time).must_equal nil
     end
 
-    it "only sums completed trips when calculating total revenue" do
+    it "only uses costs for completed trips when calculating driver's total revenue" do
       driver = @trip_requested.driver
       driver.driver_trip_status_after_trip_request(@trip_requested)
       expect(driver.total_revenue).must_equal (55 - 1.65 * 3) * 0.8
     end
 
-    it "only sums completed trips when calculating average rating" do
+    it "only uses ratings for completed trips when calculating driver's average rating" do
       driver = @trip_requested.driver
       driver.driver_trip_status_after_trip_request(@trip_requested)
       expect(driver.average_rating).must_equal 2
       p @trip_requested.duration_seconds
     end
 
-    it "only sums completed times when calculating total time" do
+    it "only uses completed times when calculating trip duration" do
       driver = @trip_requested.driver
       driver.driver_trip_status_after_trip_request(@trip_requested)
       expect(@trip_requested.duration_seconds).must_equal nil
     end
 
-    it "only sums completed trip costs when calculating net expenditures" do
+    it "only uses completed trip costs when calculating a passenger's net expenditures" do
       driver = @trip_requested.driver
       driver.driver_trip_status_after_trip_request(@trip_requested)
       passenger = @trip_requested.passenger
@@ -181,7 +181,7 @@ describe "TripDispatcher class" do
       expect(passenger.net_expenditures).must_equal 10
     end
 
-    it "only sums completed trip time spent when calculating total time" do
+    it "only uses completed trip when calculating passenger's total time spent in trips" do
       driver = @trip_requested.driver
       driver.driver_trip_status_after_trip_request(@trip_requested)
       passenger = @trip_requested.passenger
@@ -189,13 +189,14 @@ describe "TripDispatcher class" do
       expect(passenger.total_time_spent).must_equal 1940
     end
 
-    # it "tells the user to try again later if there are no available drivers" do
-    #   @dispatcher.drivers.each do |driver|
-    #     driver.status = :UNAVAILABLE
-    #     p driver.status
-    #   end
-
-    #   @trip_requested = @dispatcher.request_trip(@passenger_id)
-    # end
+    it "raises an ArgumentError if a trip is requested but there are no available drivers" do
+      trip_requested = @dispatcher.request_trip(1)
+      driver1 = trip_requested.driver
+      driver1.driver_trip_status_after_trip_request(trip_requested)
+      trip_requested = @dispatcher.request_trip(2)
+      driver2 = trip_requested.driver
+      driver2.driver_trip_status_after_trip_request(trip_requested)
+      expect { trip_requested = @dispatcher.request_trip(2) }.must_raise ArgumentError
+    end
   end
 end

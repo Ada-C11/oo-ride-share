@@ -1,7 +1,4 @@
 require_relative "csv_record"
-# require_relative "passenger"
-# require_relative "trip"
-# require_relative "trip_dispatcher"
 require "pry"
 
 module RideShare
@@ -14,7 +11,6 @@ module RideShare
       raise ArgumentError if vin.length != 17
       @vin = vin
       @status = status
-      #   binding.pry
       if status == :AVAILABLE
       elsif status == :UNAVAILABLE
       else

@@ -161,11 +161,6 @@ describe "Driver class" do
       it "sums the revenue" do
         expect(@driver.total_revenue).must_equal (10 - 1.65) * 0.8 + (5 - 1.65) * 0.8
       end
-
     end
-  end
-
-  describe "net_expenditures" do
-    # You add tests for the net_expenditures method
   end
 end

@@ -1,6 +1,6 @@
 require_relative "spec_helper"
 
-xdescribe "Passenger class" do
+describe "Passenger class" do
   describe "Passenger instantiation" do
     before do
       @passenger = RideShare::Passenger.new(id: 1, name: "Smithy", phone_number: "353-533-5334")
@@ -54,7 +54,6 @@ xdescribe "Passenger class" do
       )
 
       @passenger.add_trip(trip)
-      puts @passenger.trips[0].id
     end
     it "will return the total amount of money a passenger has spent on their trips" do
       # #arrange
@@ -77,6 +76,12 @@ xdescribe "Passenger class" do
     it "all Trips must have the same passenger's passenger id" do
       @passenger.trips.each do |trip|
         expect(trip.passenger.id).must_equal 9
+      end
+    end
+
+    describe "net_expenditures" do
+      it "correctly returns passenger's expenditures on trips" do
+        expect(@passenger.net_expenditures).must_equal 10
       end
     end
   end

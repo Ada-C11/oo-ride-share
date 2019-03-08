@@ -38,14 +38,12 @@ module RideShare
     def request_trip(passenger_id)
       passenger_id = passenger_id
       first_available_driver = @drivers.find { |driver| driver.status == :AVAILABLE }
-      p first_available_driver
-      if first_available_driver == nil
+      if first_available_driver.nil?
         puts "There are currently no available drivers. Please try again later."
-        return
+        raise ArgumentError
       end
       first_available_driver_id = first_available_driver.id
       current_time = Time.now.to_s
-      puts Time.parse(current_time)
       end_time = nil
       cost = nil
       rating = nil
