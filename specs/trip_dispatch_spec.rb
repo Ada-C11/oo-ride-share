@@ -156,6 +156,23 @@ describe "TripDispatcher class" do
       expect(@dispatcher.trips.length).must_equal 6
     end
 
+    it "Updates the trip list for the driver" do
+      number_of_trips = @dispatcher.drivers[1].trips.length
+
+      id = 3
+      @dispatcher.request_trip(id)
+
+      expect(@dispatcher.drivers[1].trips.length).must_equal number_of_trips + 1
+    end
+
+    it "Updates the trip list for the passenger" do
+      number_of_trips = @dispatcher.passengers[1].trips.length
+
+      id = 2
+      @dispatcher.request_trip(id)
+
+      expect(@dispatcher.passengers[1].trips.length).must_equal number_of_trips + 1
+    end
     # it "Changes the status of the driver to :UNAVAILABLE" do
     #   id = 4
     #   trip = @dispatcher.request_trip(id)
