@@ -16,8 +16,8 @@ module RideShare
       @trips << trip
     end
 
-    def net_expenditures
-      return @trips.sum do |trip|
+    def net_expenditures(completed_trips = non_inprogress_trips)
+      return completed_trips.sum do |trip|
                trip.cost
              end
     end

@@ -189,5 +189,19 @@ describe "Driver class" do
       )
       expect(@driver.total_revenue).must_equal 0
     end
+
+    it "excludes in-progress trip" do
+      trip = RideShare::Trip.new(
+        id: 9,
+        driver: @driver,
+        passenger_id: 3,
+        start_time: "2016-08-08",
+        end_time: nil,
+        rating: nil,
+        cost: nil,
+      )
+      @driver.add_trip(trip)
+      expect(@driver.total_revenue).must_equal 22.96
+    end
   end
 end
