@@ -145,13 +145,11 @@ describe "TripDispatcher class" do
       expect(new_trip.status).must_equal :AVAILABLE
     end
 
-    before do
-      @dispatcher = build_test_dispatcher
-      @dispatcher.drivers[1].status == :UNAVAILABLE
-      @dispatcher.drivers[2].status == :UNAVAILABLE
-    end
-
     it "raises an error if there are no available drivers" do
+      @dispatcher.drivers[0].status = :UNAVAILABLE
+      @dispatcher.drivers[1].status = :UNAVAILABLE
+      @dispatcher.drivers[2].status = :UNAVAILABLE
+
       expect do
         @dispatcher.request_trip(4)
       end.must_raise ArgumentError

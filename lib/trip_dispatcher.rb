@@ -28,10 +28,11 @@ module RideShare
 
     def request_trip(passenger_id)
       avail_driver = @drivers.select do |driver|
+        puts "#{driver.id} #{driver.status}"
         driver.status == :AVAILABLE
       end.first
 
-      if avail_driver == []
+      if avail_driver == nil
         raise ArgumentError, "no available drivers"
       end
 
