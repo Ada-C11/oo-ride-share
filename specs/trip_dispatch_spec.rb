@@ -124,21 +124,28 @@ describe "TripDispatcher class" do
       @driver = RideShare::Driver.new(
         id: 55,
         name: "Test Driver",
-        vin: "12345678901234567",
+        vin: "12345678501234567",
         status: :AVAILABLE,
-        trips: nil,
+        trips: !nil
       )
       @driver = RideShare::Driver.new(
-        id: 56,
+        id: 54,
         name: "Test Driver",
         vin: "12345678901234567",
         status: :AVAILABLE,
-        trips: nil,
+        trips: nil
       )
+
+     @driver = Driver.new
+     @driver = Driver.new
+
+     eligible_driver = []
+
+     eligible_driver.push(driver1, driver2)
     end
 
     it "selects the driver with the oldest last end time" do
-      expect(@driver.id).must_equal 56
+      expect(eligible_driver.last_trip_end_time).must_equal eligible_driver.first
     end
   end
 
