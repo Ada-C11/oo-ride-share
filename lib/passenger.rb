@@ -17,19 +17,17 @@ module RideShare
     end
 
     def net_expenditures
-      #check with the nil
       raise ArgumentError, "Passenger has to trips!" if @trips == []
-      cost_array = @trips.select do |trip|
-        trip.cost if trip.cost != nil
+      cost_array = @trips.map do |trip|
+        trip.cost
       end
       return cost_array.sum
     end
 
     def total_time_spent
-      #check with the nil
       raise ArgumentError, "Passenger has to trips!" if @trips == []
-      total_time_array = @trips.select do |trip|
-        trip.duration if trip.end_time != nil
+      total_time_array = @trips.map do |trip|
+        trip.duration
       end
       return total_time_array.sum
     end
