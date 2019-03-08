@@ -21,8 +21,7 @@ module RideShare
       @trips << trip
     end
 
-    def average_rating
-      completed_trips = non_inprogress_trips
+    def average_rating(completed_trips = non_inprogress_trips)
       average_rating = completed_trips.sum do |trip|
         trip.rating
       end

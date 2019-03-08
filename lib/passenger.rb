@@ -22,9 +22,15 @@ module RideShare
              end
     end
 
-    def total_time_spent
-      return @trips.sum do |trip|
+    def total_time_spent(completed_trips = non_inprogress_trips)
+      return completed_trips.sum do |trip|
                trip.duration
+             end
+    end
+
+    def non_inprogress_trips
+      return trips.select do |trip|
+               trip.end_time
              end
     end
 
