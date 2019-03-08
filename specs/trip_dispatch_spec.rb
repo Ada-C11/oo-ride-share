@@ -172,5 +172,14 @@ describe "TripDispatcher class" do
       @dispatcher.drivers[2].status = :UNAVAILABLE
       assert_nil(@dispatcher.available_driver)
     end
+
+    it "returns the driver who has their most recent trip ended at the oldest time" do
+      dispatcher = RideShare::TripDispatcher.new(directory: TEST_DATA_DIRECTORY)
+      dispatcher.drivers[0].status = :AVAILABLE
+      dispatcher.drivers[2].status = :UNAVAILABLE
+      new_ride = dispatcher.request_trip(6)
+
+      expect (new_ride.driver_id).must_equal 1
+    end
   end
 end

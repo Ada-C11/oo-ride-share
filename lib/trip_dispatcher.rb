@@ -45,7 +45,7 @@ module RideShare
       end
       
       available_drivers.sort_by! do |driver|
-        driver.trips.max_by { |trip| trip.end_time }
+        driver.trips.max_by { |trip| trip.end_time }.end_time
       end
 
       return available_drivers.first
