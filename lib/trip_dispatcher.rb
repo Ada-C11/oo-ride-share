@@ -16,20 +16,6 @@ module RideShare
       @trips = Trip.load_all(directory: directory)
       connect_trips
     end
-    
-    def find_passenger(id)
-      Passenger.validate_id(id)
-      return @passengers.find { |passenger| passenger.id == id }
-    end
-    
-    def find_driver(id)
-      Driver.validate_id(id)
-      return @drivers.find { |driver| driver.id == id }
-    end
-    
-    def request_trip(passenger_id)
-      available_driver = @drivers.select { |driver| driver.status == :AVAILABLE }.first
-    end
 
     def find_passenger(id)
       Passenger.validate_id(id)
@@ -41,7 +27,6 @@ module RideShare
       return @drivers.find { |driver| driver.id == id }
     end
     
-      
     def inspect
       return "#<#{self.class.name}:0x#{object_id.to_s(16)} \
               #{trips.count} trips, \
@@ -52,9 +37,9 @@ module RideShare
     def request_trip(passenger_id)
       available_driver = @drivers.select {|driver| driver.status == :AVAILABLE}.first
 
-        if available_driver == []
-          raise ArgumentError, "No drivers are available."
-        end
+      if available_driver == []
+        raise ArgumentError, "No drivers are available."
+      end
       
       passenger = find_passenger(passenger_id)
       driver_id = available_driver.id
