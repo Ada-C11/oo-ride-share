@@ -122,10 +122,13 @@ describe "TripDispatcher class" do
           expect(trip.driver.trips).must_include trip
         end
       end
+    end
 
-      it "request a new trips" do
-        ongoing_trip = @dispatcher.request_trip(9)
+    describe "Request new trip" do
 
+      it "requests a new trip with available driver" do
+        dispatcher2 = build_test_dispatcher
+        ongoing_trip = dispatcher2.request_trip(9)
         expect(ongoing_trip.driver.status == :AVAILABLE)
       end
 
@@ -133,10 +136,29 @@ describe "TripDispatcher class" do
 
       end
 
+      it "updates driver trips when new trip is requested" do
+        dispatcher2 = build_test_dispatcher
+        driver = dispatcher2.drivers[1]
+        count = driver.trips.length
+        
+        new_trip = dispatcher2.request_trip(9)
+        expect(new_trip.driver).must_equal driver
+        expect(driver.trips.length).must_equal (count + 1)
+      end
+
+      it "updates passenger trips when new trip is requested" do
+        dispatcher2 = build_test_dispatcher
+        passenger = dispatcher2.passengers[9]
+        count = passenger.trips.length
+        
+        new_trip = dispatcher2.request_trip(9)
+        expect(passenger.trips.length).must_equal (count + 1)
+      end
+
       it "returns an error when there are no available drivers" do
+        dispatcher2 = build_test_dispatcher
         available_driver = nil
-        expect(ongoing_trip = @dispatcher.request_trip(9))
-        expect(ongoing_trip).must_raise ArgumentError
+        expect{(dispatcher2.request_trip(9))}.must_raise ArgumentError
       end
 
 
