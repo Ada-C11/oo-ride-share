@@ -67,7 +67,7 @@ module RideShare
     def change_status(new_trip)
       if new_trip.driver_id == self.id
         self.add_trip(new_trip)
-        self.status = :UNAVAILABLE
+        @status = :UNAVAILABLE
       end
     end
 
