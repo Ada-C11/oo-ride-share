@@ -33,13 +33,13 @@ module RideShare
       if @trips.length == 0
         0
       else
-        @trips.sum { |trip| trip.rating.to_f } / @trips.length
+        @trips.sum { |trip| trip.rating ? trip.rating.to_f : 0 } / @trips.length
       end
     end
 
     #total revenue method
     def total_revenue
-      @trips.sum { |trip| 0.8 * (trip.cost - 1.65) }
+      trips.sum { |trip| trip.cost ? 0.8 * (trip.cost - 1.65) : 0 }
     end
 
     def self.from_csv(record)

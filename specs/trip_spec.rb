@@ -34,6 +34,19 @@ describe "Trip class" do
       expect(@trip.calculate_trip_time).must_equal @duration
     end
 
+    it "returns 0 as duration for trip in progress" do
+      trip = RideShare::Trip.new(
+        id: 8,
+        driver_id: 3,
+        passenger_id: 3,
+        start_time: "2016-08-08",
+        end_time: nil,
+        rating: nil,
+        cost: nil,
+      )
+      expect(trip.calculate_trip_time).must_equal 0
+    end
+
     it "is an instance of Trip" do
       expect(@trip).must_be_kind_of RideShare::Trip
     end

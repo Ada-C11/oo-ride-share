@@ -48,16 +48,16 @@ describe "Passenger class" do
         start_time: "2016-08-08",
         end_time: "2016-08-09",
         rating: 5,
-        cost: 10, #added cost
+        cost: 10,
         driver_id: 3,
-      ) #created trip_2
+      )
       trip_2 = RideShare::Trip.new(
         id: 11,
         passenger: @passenger,
         start_time: "2016-08-22",
         end_time: "2016-08-25",
         rating: 2,
-        cost: 15, #added cost
+        cost: 15,
         driver_id: 3,
       )
       @passenger.add_trip(trip)
@@ -68,13 +68,38 @@ describe "Passenger class" do
       @total_time_spent = trip.calculate_trip_time + trip_2.calculate_trip_time
     end
 
-    # test net_expenditures
     it "will return the total amount of money spent on trips" do
       expect(@passenger.net_expenditures).must_equal @net_expenditures
     end
 
-    # test total_time_spent
+    it "ignores trips in progress for total expenditures" do
+      trip = RideShare::Trip.new(
+        id: 12,
+        passenger: @passenger,
+        start_time: "2016-08-22",
+        end_time: nil,
+        rating: nil,
+        cost: nil,
+        driver_id: 4,
+      )
+      @passenger.add_trip(trip)
+      expect(@passenger.net_expenditures).must_equal @net_expenditures
+    end
+
     it "will return the total time spent" do
+      expect(@passenger.total_time_spent).must_equal @total_time_spent
+    end
+
+    it "will ignore trips in progress for total time spent" do
+      trip = RideShare::Trip.new(
+        id: 12,
+        passenger: @passenger,
+        start_time: "2016-08-22",
+        end_time: nil,
+        rating: nil,
+        cost: nil,
+        driver_id: 4,
+      )
       expect(@passenger.total_time_spent).must_equal @total_time_spent
     end
 

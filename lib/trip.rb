@@ -44,6 +44,7 @@ module RideShare
     end
 
     def calculate_trip_time
+      return 0 unless @end_time
       return @end_time - @start_time
     end
 
