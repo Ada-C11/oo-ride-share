@@ -4,6 +4,7 @@ require_relative "csv_record"
 module RideShare
   class Driver < CsvRecord
     attr_reader :id, :name, :vin, :status, :trips
+    attr_writer :status
 
     def initialize(id:, name:, vin:, status: :AVAILABLE, trips: nil)
       super(id)
@@ -32,22 +33,22 @@ module RideShare
       if @trips.length == 0
         0
       else
-        @trips.sum{ |trip| trip.rating.to_f } / @trips.length
+        @trips.sum { |trip| trip.rating.to_f } / @trips.length
       end
     end
 
     #total revenue method
     def total_revenue
-      @trips.sum{ |trip| 0.8 * (trip.cost - 1.65) }
+      @trips.sum { |trip| 0.8 * (trip.cost - 1.65) }
     end
 
     def self.from_csv(record)
       return self.new(
-        id: record[:id],
-        name: record[:name],
-        vin: record[:vin],
-        status: record[:status].to_sym,
-      )
+               id: record[:id],
+               name: record[:name],
+               vin: record[:vin],
+               status: record[:status].to_sym,
+             )
     end
   end
 end

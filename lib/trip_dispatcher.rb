@@ -7,7 +7,7 @@ require_relative "driver"
 
 module RideShare
   class TripDispatcher
-    attr_reader :drivers, :passengers, :trips
+    attr_reader :drivers, :passengers, :trips, :hi
 
     def initialize(directory: "./support")
       @passengers = Passenger.load_all(directory: directory)
@@ -36,28 +36,33 @@ module RideShare
               #{passengers.count} passengers>"
     end
 
-
     def request_trip(passenger_id)
-      available_driver = @drivers.find { |driver| driver.status == :AVAILABLE }
+      @available_driver = @drivers.find { |driver| driver.status == :AVAILABLE }
+      raise ArgumentError, "No available drivers" if @available_driver == nil
       trip = RideShare::Trip.new(
-        id: 100,
+        id: @trips.count + 1,
         passenger_id: passenger_id,
         start_time: Time.now.to_s, ###
         end_time: nil,
         cost: nil,
         rating: nil,
-        driver: available_driver)
+        driver: @available_driver,
+      )
+      return trip
+    end
+
+    def trip_in_progress(passenger_id)
+      trip = request_trip(passenger_id)
       # Driver needs to accept trip.
-      available_driver.accept_trip(trip)
+      @available_driver.accept_trip(trip)
       # Add the Trip to the Passenger's list of Trips
       #WARNING: possible the passenger id has no associated passenger object!
       find_passenger(passenger_id).add_trip(trip)
       # Add the new trip to the collection of all Trips in TripDispatcher
       @trips << trip
+      connect_trips
       return trip
     end
-
-
 
     private
 

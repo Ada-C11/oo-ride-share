@@ -9,7 +9,7 @@ module RideShare
 
     def initialize(id:,
                    passenger: nil, passenger_id: nil,
-                   start_time:, end_time:, cost: nil, rating:,
+                   start_time:, end_time: nil, cost: nil, rating: nil,
                    driver: nil, driver_id: nil)
       super(id)
 
@@ -30,18 +30,15 @@ module RideShare
       else
         raise ArgumentError, "driver or driver_id is required"
       end
-     #how do i make time nil???
+      #how do i make time nil???
       @start_time = Time.parse(start_time)
-      unless end_time.nil?
-        @end_time = Time.parse(end_time)
-      else
-        @end_time = nil
-      end
-      raise ArgumentError if @start_time > @end_time
+      end_time ? @end_time = Time.parse(end_time) : @end_time = nil
+      raise ArgumentError, "Invalid end time" if @end_time && @start_time > @end_time
+
       @cost = cost
       @rating = rating
 
-      if @rating > 5 || @rating < 1
+      if @rating && (@rating > 5 || @rating < 1)
         raise ArgumentError.new("Invalid rating #{@rating}")
       end
     end

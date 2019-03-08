@@ -1,4 +1,5 @@
 require_relative "spec_helper"
+require "pry"
 
 TEST_DATA_DIRECTORY = "specs/test_data"
 
@@ -41,7 +42,6 @@ describe "TripDispatcher class" do
       before do
         @dispatcher = build_test_dispatcher
       end
-
 
       it "throws an argument error for a bad ID" do
         expect { @dispatcher.find_passenger(0) }.must_raise ArgumentError
@@ -128,34 +128,37 @@ describe "TripDispatcher class" do
     before do
       @passenger_id = 8
       @trip_dispatcher = build_test_dispatcher() #csv
-      @trip = @trip_dispatcher.request_trip(@passenger_id)
+      @requested_trip = @trip_dispatcher.request_trip(@passenger_id)
     end
 
-##
+    ##
     it "trip was created properly" do
-      expect(@trip.driver).wont_be_nil
-      expect(@trip.passenger_id).must_equal(@passenger_id)
-      expect(@trip.start_time).wont_be_nil
-      expect(@trip.end_time).must_be_nil
-      expect(@trip.cost).must_be_nil
-      expect(@trip.rating).must_be_nil
+      expect(@requested_trip.driver).wont_be_nil
+      expect(@requested_trip.passenger_id).must_equal(@passenger_id)
+      expect(@requested_trip.start_time).wont_be_nil
+      expect(@requested_trip.end_time).must_be_nil
+      expect(@requested_trip.cost).must_be_nil
+      expect(@requested_trip.rating).must_be_nil
+    end
+
+    it "selected driver is available" do
+      expect(@requested_trip.driver.status).must_equal :AVAILABLE
     end
 
     # Remember that -1 means last instance/trip
     it "trip lists for driver and passenger were updated" do
-      expect(@trip.driver.trips[-1]).must_equal(@trip)
-      expect(@trip.passenger.trips[-1]).must_equal(@trip)
-    end
-
-    it "selected driver is available" do
-      expect(@trip.driver.status).must_equal :AVAILABLE
+      trip_in_progress = @trip_dispatcher.trip_in_progress(@passenger_id)
+      passenger = trip_in_progress.passenger
+      driver = trip_in_progress.driver
+      expect(passenger.trips[-1]).must_equal(trip_in_progress)
+      expect(driver.trips[-1]).must_equal(trip_in_progress)
     end
 
     it "exception is raised if no drivers are available" do
       @trip_dispatcher.drivers.each do |driver|
         driver.status = :UNAVAILABLE
       end
-      expect(@trip_dispatcher.request_trip(@passenger_id)).must_raise ArgumentError
+      expect { @trip_dispatcher.request_trip(@passenger_id) }.must_raise ArgumentError
     end
   end
 end
