@@ -202,7 +202,8 @@ describe "Driver class" do
       @driver.add_trip(trip3)
     end
 
-    it "total_revenue will not include the $1.65 fee" do
+    it "total_revenue will not include the $1.65 fee for a trip under $1.65 \
+    NOR the cost of a trip in progress" do
       expect(@driver.total_revenue).must_be_close_to 6.36
     end
 
