@@ -16,21 +16,48 @@ describe "Driver class" do
     end
 
     it "throws an argument error with a bad VIN" do
-      expect { RideShare::Driver.new(id: 0, name: "George", vin: "33133313331333133") }.must_raise ArgumentError
+      expect {
+        RideShare::Driver.new(
+          id: 0,
+          name: "George",
+          vin: "33133313331333133",
+        )
+      }.must_raise ArgumentError
     end
 
     it "throws an argument error with a bad VIN value" do
-      expect { RideShare::Driver.new(id: 100, name: "George", vin: "") }.must_raise ArgumentError
-      expect { RideShare::Driver.new(id: 100, name: "George", vin: "33133313331333133extranums") }.must_raise ArgumentError
+      expect {
+        RideShare::Driver.new(
+          id: 100,
+          name: "George",
+          vin: "",
+        )
+      }.must_raise ArgumentError
+      expect {
+        RideShare::Driver.new(
+          id: 100,
+          name: "George",
+          vin: "33133313331333133extranums",
+        )
+      }.must_raise ArgumentError
     end
 
     it "has a default status of :AVAILABLE" do
-      expect(RideShare::Driver.new(id: 100, name: "George", vin: "12345678901234567").status).must_equal :AVAILABLE
+      expect(RideShare::Driver.new(
+        id: 100,
+        name: "George",
+        vin: "12345678901234567",
+      ).status).must_equal :AVAILABLE
     end
 
     it "raises an error if status is not set to either :AVAILABLE or :UNAVAILABLE" do
       expect {
-        RideShare::Driver.new(id: 140, name: "Bill", vin: "12345678901234598", status: :XXX).status
+        RideShare::Driver.new(
+          id: 140,
+          name: "Bill",
+          vin: "12345678901234598",
+          status: :XXX,
+        ).status
       }.must_raise ArgumentError
     end
 
