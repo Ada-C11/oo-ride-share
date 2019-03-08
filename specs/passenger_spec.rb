@@ -1,7 +1,6 @@
-require_relative 'spec_helper'
+require_relative "spec_helper"
 
 describe "Passenger class" do
-
   describe "Passenger instantiation" do
     before do
       @passenger = RideShare::Passenger.new(id: 1, name: "Smithy", phone_number: "353-533-5334")
@@ -34,24 +33,39 @@ describe "Passenger class" do
     end
   end
 
-
-  describe "trips property" do
+  describe "trips properly" do
     before do
       # TODO: you'll need to add a driver at some point here.
       @passenger = RideShare::Passenger.new(
         id: 9,
         name: "Merl Glover III",
         phone_number: "1-602-620-2330 x3723",
-        trips: []
-        )
+        trips: [],
+      )
       trip = RideShare::Trip.new(
         id: 8,
         passenger: @passenger,
-        start_time: "2016-08-08",
-        end_time: "2016-08-09",
-        rating: 5
-        )
+        start_time: "2018-08-05 09:00:00 -07008",
+        end_time: "2018-08-05 09:30:00 -0700",
+        cost: 23.45,
+        rating: 5,
+      )
+      trip2 = RideShare::Trip.new(
+        id: 8,
+        passenger: @passenger,
+        start_time: "2018-05-25 11:50:00 -0700",
+        end_time: "2018-05-25 12:25:00 -0700",
+        cost: 35.67,
+        rating: 5,
+      )
 
+      @passenger_two = RideShare::Passenger.new(
+        id: 9,
+        name: "Mudkip",
+        phone_number: "1-602-620-3346 x3723",
+        trips: [],
+      )
+      @passenger.add_trip(trip2)
       @passenger.add_trip(trip)
     end
 
@@ -65,6 +79,17 @@ describe "Passenger class" do
       @passenger.trips.each do |trip|
         expect(trip.passenger.id).must_equal 9
       end
+    end
+    it "Returns the correct total amount that customer has spent" do
+
+      # total_paid = @passenger.trips.sum { |trip| trip.cost }
+      expect(@passenger.net_expenditures).must_equal 59.12
+      expect(@passenger_two.net_expenditures).must_equal 0
+    end
+
+    it "Returns the total amount of time the passenger has spent on trips" do
+      expect(@passenger_two.total_time_spent).must_equal 0
+      expect(@passenger.total_time_spent).must_equal 3900
     end
   end
 

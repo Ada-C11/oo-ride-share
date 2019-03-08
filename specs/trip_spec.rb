@@ -1,9 +1,9 @@
-require_relative 'spec_helper'
+require_relative "spec_helper"
 
 describe "Trip class" do
   describe "initialize" do
     before do
-      start_time = Time.parse('2015-05-20T12:14:00+00:00')
+      start_time = Time.parse("2015-05-20T12:14:00+00:00")
       end_time = start_time + 25 * 60 # 25 minutes
       @trip_data = {
         id: 8,
@@ -13,7 +13,8 @@ describe "Trip class" do
         start_time: start_time.to_s,
         end_time: end_time.to_s,
         cost: 23.45,
-        rating: 3
+        rating: 3,
+        driver_id: 1,
       }
       @trip = RideShare::Trip.new(@trip_data)
     end
@@ -26,8 +27,13 @@ describe "Trip class" do
       expect(@trip.passenger).must_be_kind_of RideShare::Passenger
     end
 
-    it "stores an instance of driver" do
-      skip # Unskip after wave 2
+    it "stores an instance of driver" do # Unskip after wave 2
+      new_driver = RideShare::Driver.new(
+        id: 3,
+        name: "Test Driver",
+        vin: "12345678912345678",
+      )
+      @trip.driver = new_driver
       expect(@trip.driver).must_be_kind_of RideShare::Driver
     end
 
@@ -38,6 +44,23 @@ describe "Trip class" do
           RideShare::Trip.new(@trip_data)
         end.must_raise ArgumentError
       end
+    end
+
+    it "ensures start time is an instance of Time" do
+      expect(@trip.start_time).must_be_kind_of Time
+    end
+
+    it "ensures end time is an instance of Time" do
+      expect(@trip.end_time).must_be_kind_of Time
+    end
+
+    it "calculates the duration of the trip in seconds" do
+      expect(@trip.duration).must_equal 1500
+    end
+
+    it "ensures start time is after end time" do
+      @trip_data[:start_time], @trip_data[:end_time] = @trip_data[:end_time], @trip_data[:start_time]
+      expect { RideShare::Trip.new(@trip_data) }.must_raise ArgumentError
     end
   end
 end

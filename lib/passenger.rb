@@ -1,4 +1,4 @@
-require_relative 'csv_record'
+require_relative "csv_record"
 
 module RideShare
   class Passenger < CsvRecord
@@ -16,14 +16,24 @@ module RideShare
       @trips << trip
     end
 
+    def net_expenditures
+      total_paid = trips.sum { |trip| trip.cost }
+      return total_paid.round(2)
+    end
+
+    def total_time_spent
+      total_time = trips.sum { |trip| trip.duration }
+      return total_time
+    end
+
     private
 
     def self.from_csv(record)
       return new(
-        id: record[:id],
-        name: record[:name],
-        phone_number: record[:phone_num]
-      )
+               id: record[:id],
+               name: record[:name],
+               phone_number: record[:phone_num],
+             )
     end
   end
 end
