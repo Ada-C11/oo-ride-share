@@ -149,9 +149,11 @@ describe "TripDispatcher class" do
     end
 
     it "should raise an error if there are no available drivers" do
-      expect { 4.times do 
-                @dispatcher.request_trip(1)
-                end }.must_raise ArgumentError
+      expect {
+        4.times do
+          @dispatcher.request_trip(1)
+        end
+      }.must_raise ArgumentError
     end
 
     it "adds a trip to the Passenger's list of trips" do

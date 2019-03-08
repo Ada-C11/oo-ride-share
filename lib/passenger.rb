@@ -19,6 +19,10 @@ module RideShare
     def net_expenditures
       total = 0
 
+      if @trips.length == 0
+        raise ArgumentError, "This passenger has not taken any trips."
+      end
+
       @trips.each do |trip|
         if trip.cost == nil
           next
@@ -31,6 +35,11 @@ module RideShare
 
     def total_time_spent
       total = 0
+
+      if @trips.length == 0
+        raise ArgumentError, "This passenger has not taken any trips."
+      end
+
       @trips.each do |trip|
         if trip.cost == nil
           next

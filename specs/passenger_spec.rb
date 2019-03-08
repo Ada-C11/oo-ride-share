@@ -88,6 +88,23 @@ describe "Passenger class" do
     end
   end
 
+  describe "When passenger has no trips" do
+    before do
+      @passenger = RideShare::Passenger.new(
+        id: 9,
+        name: "Merl Glover III",
+        phone_number: "1-602-620-2330 x3723",
+        trips: [],
+      )
+    end
+    it "raises an ArgumentError in net_expenditures if there are no trips" do
+      expect { @passenger.net_expenditures }.must_raise ArgumentError
+    end
+
+    it "raises an ArgumentError in total_time_spent if there are no trips" do
+      expect { @passenger.total_time_spent }.must_raise ArgumentError
+    end
+  end
   describe "Edge cases for trips still in progress" do
     before do
       @passenger = RideShare::Passenger.new(
