@@ -23,9 +23,9 @@ module RideShare
         if trip.cost == nil
           next
         else
-        total += trip.cost
+          total += trip.cost
+        end
       end
-    end
       return total
     end
 
@@ -33,12 +33,11 @@ module RideShare
       total = 0
       @trips.each do |trip|
         if trip.cost == nil
-          raise ArgumentError, "Can't calculate total while trip is in progress"
           next
         else
-        total += trip.duration_in_seconds
+          total += trip.duration_in_seconds
+        end
       end
-    end
       return total
     end
 

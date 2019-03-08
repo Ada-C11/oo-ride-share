@@ -117,8 +117,12 @@ describe "Passenger class" do
       @passenger.add_trip(trip1)
     end
 
-    it "will not include trip in progress for net_expenditures" do
+    it "will not include trip-in-progress for net_expenditures" do
       expect (@passenger.net_expenditures).must_equal 5
+    end
+
+    it "will not include trip-in-progress for total_time_spent" do
+      expect (@passenger.total_time_spent).must_equal 86400
     end
   end
 end
