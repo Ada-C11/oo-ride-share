@@ -120,5 +120,20 @@ describe "Trip class" do
       trip_time_equal = RideShare::Trip.new(@trip_data)
       expect(trip_time_equal.duration).must_equal 0
     end
+
+    it "will raise an execption when calculating duration of inprogress trip" do
+      @trip_data = {
+        id: 8,
+        passenger: RideShare::Passenger.new(id: 1,
+                                            name: "Ada",
+                                            phone_number: "412-432-7640"),
+        start_time: Time.new().to_s,
+        end_time: nil,
+        cost: nil,
+        rating: nil,
+        driver_id: 3,
+      }
+      expect(RideShare::Trip.new(@trip_data).duration).must_be_nil
+    end
   end
 end
