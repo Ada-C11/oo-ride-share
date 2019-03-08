@@ -139,9 +139,10 @@ describe "TripDispatcher class" do
     end
 
     it "finds an available driver" do
-      new_trip = @dispatcher.request_trip(4)
-      available_driver = @dispatcher.drivers[0]
+      available_driver = @dispatcher.drivers[1]
       expect(available_driver.status).must_equal :AVAILABLE
+      new_trip = @dispatcher.request_trip(4)
+      expect(available_driver.status).must_equal :UNAVAILABLE
     end
 
     it "raises an error if there are no available drivers" do
