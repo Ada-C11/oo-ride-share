@@ -203,7 +203,7 @@ describe "Driver class" do
   #     end_time: Time.parse("2016-08-08"), cost: 10, rating: 5)
 
   #   @passenger.add_trip(trip)
-  #   it 'checks if driver.net_expenditures overrides user.net_expenditures' do
+  #   it 'checks if driver.net_expenditures overrides passenger.net_expenditures' do
   #   difference = @driver.net_expenditures
   #   expect(difference).must_equal 10 - ((4 - 1.65) * 0.80)
   #   end
