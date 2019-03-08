@@ -35,7 +35,7 @@ module RideShare
     def available_driver
       available_drivers = @drivers.find_all { |driver| driver.status == :AVAILABLE }
       if available_drivers == []
-        raise ArgumentError.new("Sorry, there are no available drivers near you.")
+        return
       end
 
       available_drivers.each do |driver|
@@ -43,7 +43,12 @@ module RideShare
           return driver
         end
       end
-      return @trips.min_by { |trip| trip.end_time }.driver
+      
+      available_drivers.sort_by! do |driver|
+        driver.trips.max_by { |trip| trip.end_time }
+      end
+
+      return available_drivers.first
     end
 
     def request_trip(passenger_id)

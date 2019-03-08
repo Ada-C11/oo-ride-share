@@ -167,10 +167,10 @@ describe "TripDispatcher class" do
       expect(driver.status).must_equal :AVAILABLE
     end
 
-    it "Raise ArgumentError if all drivers are unavailable -" do
+    it "returns nil if all drivers are unavailable -" do
       @dispatcher.drivers[1].status = :UNAVAILABLE
       @dispatcher.drivers[2].status = :UNAVAILABLE
-      expect { @dispatcher.available_driver }.must_raise ArgumentError
+      assert_nil(@dispatcher.available_driver)
     end
   end
 end
