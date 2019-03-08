@@ -22,11 +22,18 @@ module RideShare
     end
 
     def average_rating
-      average_rating = @trips.sum do |trip|
+      completed_trips = non_inprogress_trips
+      average_rating = completed_trips.sum do |trip|
         trip.rating
       end
-      average_rating /= @trips.length.to_f if @trips.length > 0
+      average_rating /= completed_trips.length.to_f if completed_trips.length > 0
       return average_rating
+    end
+
+    def non_inprogress_trips
+      return trips.select do |trip|
+               trip.end_time
+             end
     end
 
     def total_revenue
