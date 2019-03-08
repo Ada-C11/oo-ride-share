@@ -56,9 +56,7 @@ describe "Passenger class" do
       @passenger.add_trip(trip)
     end
     it "will return the total amount of money a passenger has spent on their trips" do
-      # #arrange
       net_expenditures = @passenger.net_expenditures
-      # #assert
       expect(net_expenditures).must_equal 10
     end
 

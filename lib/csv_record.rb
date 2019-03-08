@@ -14,7 +14,7 @@ module RideShare
     def self.load_all(full_path: nil, directory: nil, file_name: nil)
       full_path ||= build_path(directory, file_name)
 
-      return CSV.read( #array of hashes, array of CSVrows
+      return CSV.read(
                full_path,
                headers: true,
                header_converters: :symbol,

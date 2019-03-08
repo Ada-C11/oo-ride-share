@@ -77,12 +77,3 @@ module RideShare
     end
   end
 end
-
-# def build_test_dispatcher
-#   return RideShare::TripDispatcher.new(
-#            directory: TEST_DATA_DIRECTORY,
-#          )
-# end
-
-# @dispatcher = build_test_dispatcher\
-# drivers = @dispatcher.drivers

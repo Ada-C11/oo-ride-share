@@ -1,5 +1,4 @@
 require_relative "csv_record"
-require "pry"
 
 module RideShare
   class Driver < CsvRecord
