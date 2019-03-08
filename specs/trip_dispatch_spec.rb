@@ -149,20 +149,22 @@ describe "TripDispatcher class" do
     end
 
     it "should raise an error if there are no available drivers" do
-      driver_one = RideShare::Driver.new(
-        id: 54,
-        name: "Test Driver",
-        vin: "12345678901234567",
-        status: :UNAVAILABLE,
-      )
+      # driver_one = RideShare::Driver.new(
+      #   id: 54,
+      #   name: "Test Driver",
+      #   vin: "12345678901234567",
+      #   status: :UNAVAILABLE,
+      # )
 
-      driver_two = RideShare::Driver.new(
-        id: 1,
-        name: "Test Driver",
-        vin: "12345678901237812",
-        status: :UNAVAILABLE,
-      )
-      expect { @dispatcher.request_trip(1) }.must_raise ArgumentError
+      # driver_two = RideShare::Driver.new(
+      #   id: 1,
+      #   name: "Test Driver",
+      #   vin: "12345678901237812",
+      #   status: :UNAVAILABLE,
+      # )
+      expect { 4.times do 
+                @dispatcher.request_trip(1)
+                end }.must_raise ArgumentError
     end
 
     it "adds a trip to the Passenger's list of trips" do
