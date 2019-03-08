@@ -46,35 +46,33 @@ describe "Driver class" do
   end
 
   describe "add_trip method" do
-    before do
+    it "adds the trip" do
+
       pass = RideShare::Passenger.new(
         id: 1,
         name: "Test Passenger",
         phone_number: "412-432-7640",
       )
-      @driver = RideShare::Driver.new(
+      driver = RideShare::Driver.new(
         id: 3,
         name: "Test Driver",
         vin: "12345678912345678",
       )
-      @trip = RideShare::Trip.new(
+      trip = RideShare::Trip.new(
         id: 8,
-        driver: @driver,
+        driver: driver,
         passenger: pass,
         start_time: "2016-08-08",
         end_time: "2018-08-09",
         rating: 5,
       )
-    end
+      expect(driver.trips).wont_include trip
+      previous = driver.trips.length
 
-    it "adds the trip" do
-      expect(@driver.trips).wont_include @trip
-      previous = @driver.trips.length
+      driver.add_trip(trip)
 
-      @driver.add_trip(@trip)
-
-      expect(@driver.trips).must_include @trip
-      expect(@driver.trips.length).must_equal previous + 1
+      expect(driver.trips).must_include trip
+      expect(driver.trips.length).must_equal previous + 1
     end
   end
 
@@ -156,10 +154,8 @@ describe "Driver class" do
         vin: "1C9EVBRM0YBC564DZ",
         status: :AVAILABLE,
       )
-    end
 
-    it "accurately calculates a driver's revenue" do
-      trip1 = RideShare::Trip.new(
+      @trip1 = RideShare::Trip.new(
         id: 8,
         driver: @driver,
         passenger_id: 3,
@@ -168,6 +164,9 @@ describe "Driver class" do
         cost: 10.5,
         rating: 5,
       )
+    end
+
+    it "accurately calculates a driver's revenue" do
 
       trip2 = RideShare::Trip.new(
         id: 10,
@@ -179,7 +178,7 @@ describe "Driver class" do
         rating: 5,
       )
 
-      @driver.add_trip(trip1)
+      @driver.add_trip(@trip1)
       @driver.add_trip(trip2)
 
       revenue = @driver.total_revenue
@@ -193,15 +192,6 @@ describe "Driver class" do
     end
 
     it "a trip that costs less than 1.65 does not get added to revenue" do
-      trip1 = RideShare::Trip.new(
-        id: 8,
-        driver: @driver,
-        passenger_id: 3,
-        start_time: "2016-08-08",
-        end_time: "2016-08-08",
-        cost: 10.5,
-        rating: 5,
-      )
 
       trip2 = RideShare::Trip.new(
         id: 10,
@@ -213,7 +203,7 @@ describe "Driver class" do
         rating: 5,
       )
 
-      @driver.add_trip(trip1)
+      @driver.add_trip(@trip1)
       @driver.add_trip(trip2)
 
       revenue = @driver.total_revenue
