@@ -36,8 +36,8 @@ describe "Trip class" do
     end
 
     it "stores an instance of driver" do
-      if !@trip_driver.nil?
-      expect(@trip.driver).must_be_kind_of RideShare::Driver
+      if !@trip.driver.nil?
+        expect(@trip.driver).must_be_kind_of RideShare::Driver
       end
     end
 
