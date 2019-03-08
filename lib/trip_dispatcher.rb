@@ -35,21 +35,31 @@ module RideShare
               #{passengers.count} passengers>"
     end
 
-    def request_trip(passenger_id)
+    def find_next_available_driver
+      new_driver = @drivers.find { |driver| driver.status == :AVAILABLE }
+      return new_driver
+    end
 
+    # Option for adding argument error for no driver
+    # def find_next_available_driver
+    #   new_driver = @drivers.find { |driver| driver.status == :AVAILABLE }
+    #   if new_driver == nil
+    #     raise ArgumentError, "There is no available driver"
+    #   else
+    #     return new_driver
+    #   end
+    # end
+
+    def request_trip(passenger_id)
       passenger = find_passenger(passenger_id).id
       driver = find_next_available_driver
       id = @trips.length + 1
       new_trip = RideShare::Trip.new(id: id, passenger_id: passenger, driver: driver, start_time: Time.now.to_s, end_time: nil, rating: nil)
-      @status = :UNAVAILABLE
       @trips << new_trip
+      # new_trip.passenger.add_trip(new_trip) # this does not work yet
+      new_trip.driver.add_trip(new_trip) # added this to the code & corresponding test passes
+      @status = :UNAVAILABLE
       return new_trip
-
-    end
-
-    def find_next_available_driver
-      new_driver = @drivers.find { |driver| driver.status == :AVAILABLE }
-      return new_driver
     end
 
     private

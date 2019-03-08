@@ -126,21 +126,67 @@ describe "TripDispatcher class" do
     describe "Request trip method" do
       before do
         @dispatcher = build_test_dispatcher
-      #   @passenger = RideShare::Passenger.new(
-      #     id: 9,
-      #     name: "Merl Glover III",
-      #     phone_number: "1-602-620-2330 x3723",
-      #     trips: [],
-      #   )
+        #   @passenger = RideShare::Passenger.new(
+        #     id: 9,
+        #     name: "Merl Glover III",
+        #     phone_number: "1-602-620-2330 x3723",
+        #     trips: [],
+        #   )
       end
-    it "New trips should have specific default values" do
-    trip = @dispatcher.request_trip(1)
 
-    # expect(trip.start_time).must_be_kind_of Time
-    expect(trip.end_time).must_be_nil
-    expect(trip.rating).must_be_nil
+      it "New trip should be instance of trip" do
+        trip = @dispatcher.request_trip(1)
 
-    end
+        expect(trip).must_be_kind_of RideShare::Trip
+      end
+
+      it "New trips should have nil end_time and rating values" do
+        trip = @dispatcher.request_trip(1)
+
+        expect(trip.end_time).must_be_nil
+        expect(trip.rating).must_be_nil
+      end
+
+      it "New trips should have an instance of Time as start time" do
+        trip = @dispatcher.request_trip(1)
+
+        expect(trip.start_time).must_be_instance_of Time
+      end
+
+      it "Finds first available driver" do
+        trip = @dispatcher.request_trip(1)
+
+        expect(trip.driver).must_equal @dispatcher.drivers[1]
+      end
+
+      # this does not work, but we need to test this
+      it "Changes driver status to unavailable" do
+        trip = @dispatcher.request_trip(1)
+
+        expect(trip.driver.status).must_equal :UNAVAILABLE
+      end
+
+      it "Adds new trip to driver @trips array" do
+        # added a line of code to request_trip method to make this work
+        trip = @dispatcher.request_trip(1)
+
+        expect(trip.driver.trips).must_include trip
+      end
+
+      it "Adds new trip to passenger @trips array" do
+        # test is failing, add functionality to code
+        trip = @dispatcher.request_trip(1)
+        passenger = @dispatcher.find_passenger(1)
+
+        expect(trip.passenger.trips).must_include trip
+      end
+
+      it "Raises an ArgumentError if there are no available drivers" do
+        # write code here
+        # make some new test data?
+        #expect { obj1.do_something }.must_raise ArgumentError  # syntax example
+
+      end
     end
   end
 end
