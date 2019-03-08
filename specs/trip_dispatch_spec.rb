@@ -139,10 +139,9 @@ describe "TripDispatcher class" do
     end
 
     it "finds an available driver" do
-      dispatcher = RideShare::TripDispatcher.new
-      new_trip = RideShare::TripDispatcher.request_trip(4)
+      new_trip = @dispatcher.request_trip(4)
       available_driver = @dispatcher.drivers[0]
-      expect(new_trip.status).must_equal :AVAILABLE
+      expect(available_driver.status).must_equal :AVAILABLE
     end
 
     it "raises an error if there are no available drivers" do
