@@ -59,6 +59,24 @@ describe "Passenger class" do
       )
 
       @passenger.add_trip(trip)
+
+      driver = RideShare::Driver.new(
+        id: 5,
+        name: "John",
+        vin: "12345678912349999",
+        status: :AVAILABLE,
+      )
+
+      trip = RideShare::Trip.new(
+        id: 9,
+        driver: driver,
+        passenger: @passenger,
+        start_time: "2016-09-08",
+        end_time: "2016-09-09",
+        rating: 1,
+      )
+
+      @passenger.add_trip(trip)
     end
 
     it "each item in array is a Trip instance" do
@@ -216,14 +234,14 @@ describe "Passenger class" do
     end
 
     it "returns 0 if a passenger has not taken any trips" do
-      @passenger = RideShare::Passenger.new(
+      passenger = RideShare::Passenger.new(
         id: 9,
         name: "Merl Glover III",
         phone_number: "1-602-620-2330 x3723",
         trips: [],
       )
 
-      duration = @passenger.total_time_spent
+      duration = passenger.total_time_spent
       expect(duration).must_equal 0
     end
   end
