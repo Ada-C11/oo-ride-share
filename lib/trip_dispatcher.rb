@@ -50,7 +50,9 @@ module RideShare
         start_time: Time.now.to_s,
         driver_id: driver_new_trip,
       )
+      # Return the newly created trip
       return trip
+      # Set the driver's status to :UNAVAILABLE
       driver.find(driver_new_trip).status = :UNAVAILABLE
       # Add the new trip to the collection of trips for that Driver
       driver(driver_new_trip).add_trip(self)
@@ -59,6 +61,7 @@ module RideShare
       # Add the new trip to the collection of all Trips in TripDispatcher
       # I believe this happens with driver.add_trip and passenger.add_trip
       # @trips << trip # I don't think we need to do this
+
     end
 
     private

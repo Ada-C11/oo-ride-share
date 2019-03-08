@@ -24,7 +24,7 @@ module RideShare
 
       @start_time = Time.parse(start_time)
       if end_time == nil #conditional added for request_trip test --> end_time should be nil
-        puts "Trip in progress"
+        puts "^^^^^^Trip in progress - end_time pending, current #{end_time.class}"
       else
         @end_time = Time.parse(end_time)
       end
@@ -41,13 +41,13 @@ module RideShare
       end
 
       if end_time == nil # Conditional added for request_trip
-        puts "Trip in progress"
+        puts "^^^^^^Trip in progress - duration of trip calculation pending, current #{end_time.class}"
       elsif end_time < start_time
         raise ArgumentError, "End time is before start time"
       end
 
       if @rating == nil # Conditional added for request_trip
-        puts "Rating set to nil because of a new trip"
+        puts "^^^^^^Trip in progress - rating pending, current #{@rating.class}"
       elsif @rating > 5 || @rating < 1
         raise ArgumentError.new("Invalid rating #{@rating}")
       end

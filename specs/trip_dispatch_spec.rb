@@ -145,7 +145,7 @@ describe "TripDispatcher class" do
       passenger_id_new_trip = 1
       @request_new_trip = @dispatcher.request_trip(passenger_id_new_trip)
     end
-
+    # Was the trip created properly?
     it "will return instance of trip" do
       expect(@request_new_trip).must_be_kind_of RideShare::Trip
     end
@@ -153,6 +153,7 @@ describe "TripDispatcher class" do
       expect(@request_new_trip.id).must_equal 6
     end
     it "an available driver will be assigned to the new trip" do
+      # Was the driver who was selected AVAILABLE? --> I just checked the driver.csv file in the test_date folder ... should we have a test for this???
       expect(@request_new_trip.driver_id).must_equal 2
     end
     it "passenger id corresponds to the right passenger" do
@@ -165,9 +166,14 @@ describe "TripDispatcher class" do
       expect(@request_new_trip.end_time).must_be_kind_of NilClass
       expect(@request_new_trip.cost).must_be_kind_of NilClass
       expect(@request_new_trip.rating).must_be_kind_of NilClass
+    end
+    it "get nil when there are not drivers available" do
 
-      # expect(last_trip_driver.driver_id).must_equal 2 # This is checking the test_data folder and it's not saving new trip
-      # puts "#{last_trip_driver.cost}"
+      # dispatcher = build_test_dispatcher
+      # dispatcher.request_trip(2)
+      # dispatcher.request_trip(3)
+      # dispatcher.request_trip(6)
+
       # create a new trip in request_trip
       #     instantiate Trip in TripDispatch ang pass the passenger id, OK
       #     trip id which will be the lenght of the @trips array OK
@@ -191,9 +197,9 @@ describe "TripDispatcher class" do
       #
 
     end
-
-    # it "returns the new trip created" do
-    #   last_trip_driver = @dispatcher.trips.last
-    # end
   end
 end
+
+# WORKING ON
+# Were the trip lists for the driver and passenger updated?
+# What happens if you try to request a trip when there are no AVAILABLE drivers?
