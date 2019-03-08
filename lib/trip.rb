@@ -30,9 +30,13 @@ module RideShare
       else
         raise ArgumentError, "driver or driver_id is required"
       end
-
+     #how do i make time nil???
       @start_time = Time.parse(start_time)
-      @end_time = Time.parse(end_time)
+      unless end_time.nil?
+        @end_time = Time.parse(end_time)
+      else
+        @end_time = nil
+      end
       raise ArgumentError if @start_time > @end_time
       @cost = cost
       @rating = rating

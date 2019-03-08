@@ -16,8 +16,11 @@ module RideShare
       @trips = trips || []
     end
 
-    def id
-      return @id
+    def accept_trip(trip)
+      # Add the new trip to the collection of trips for that Driver
+      add_trip(trip)
+      # Set the driver's status to :UNAVAILABLE
+      @status = :UNAVAILABLE
     end
 
     def add_trip(trip)
@@ -32,6 +35,7 @@ module RideShare
         @trips.sum{ |trip| trip.rating.to_f } / @trips.length
       end
     end
+
     #total revenue method
     def total_revenue
       @trips.sum{ |trip| 0.8 * (trip.cost - 1.65) }

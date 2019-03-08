@@ -1,0 +1,130 @@
+/Users/chantal/oo-ride-share/lib/trip_dispatcher.rb:20: warning: shadowing outer local variable - passenger
+/Users/chantal/oo-ride-share/lib/trip_dispatcher.rb:26: warning: shadowing outer local variable - driver
+Started with run options --seed 24241
+
+Driver class::average_rating method
+  test_0003_returns zero if no driven trips                      [32m PASS[0m (0.00s)
+  test_0001_returns a float                                      [32m PASS[0m (0.00s)
+  test_0002_returns a float within range of 1.0 to 5.0           [32m PASS[0m (0.00s)
+  test_0004_correctly calculates the average rating              [32m PASS[0m (0.00s)
+
+RideShare::CsvRecord::load_all
+  test_0002_raises an error if invoked directly (without subclassing)[32m PASS[0m (0.00s)
+  test_0001_raises an error if neither full_path nor directory is provided[32m PASS[0m (0.00s)
+
+Driver class::add_trip method
+  test_0001_adds the trip                                        [32m PASS[0m (0.00s)
+
+RideShare::CsvRecord::validate_id
+  test_0002_raises for negative numbers and 0                    [32m PASS[0m (0.00s)
+  test_0003_raises for nil                                       [32m PASS[0m (0.00s)
+  test_0001_accepts natural numbers                              [32m PASS[0m (0.00s)
+
+TripDispatcher class::passengers::Passenger & Trip loader methods
+  test_0001_accurately loads passenger information into passengers array[32m PASS[0m (0.00s)
+  test_0002_connects trips and passengers                        [32m PASS[0m (0.00s)
+
+TripDispatcher class::Initializer
+  test_0001_is an instance of TripDispatcher                     [32m PASS[0m (0.00s)
+  test_0002_establishes the base data structures when instantiated[32m PASS[0m (0.00s)
+  test_0003_loads the development data by default                [32m PASS[0m (0.09s)
+
+TripDispatcher class::drivers::find_driver method
+  test_0001_throws an argument error for a bad ID                [32m PASS[0m (0.00s)
+  test_0002_finds a driver instance                              [32m PASS[0m (0.00s)
+
+Driver class::Driver instantiation
+  test_0004_has a default status of :AVAILABLE                   [32m PASS[0m (0.00s)
+  test_0001_is an instance of Driver                             [32m PASS[0m (0.00s)
+  test_0003_throws an argument error with a bad VIN value        [32m PASS[0m (0.00s)
+  test_0006_is set up for specific attributes and data types     [32m PASS[0m (0.00s)
+  test_0002_throws an argument error with a bad VIN              [32m PASS[0m (0.00s)
+  test_0005_sets driven trips to an empty array if not provided  [32m PASS[0m (0.00s)
+
+TripDispatcher class::request trip
+  test_0003_selected driver is available                         [31mERROR[0m (0.00s)
+ArgumentError:         ArgumentError: comparison of Time with nil failed
+            /Users/chantal/oo-ride-share/lib/trip.rb:40:in `>'
+            /Users/chantal/oo-ride-share/lib/trip.rb:40:in `initialize'
+            /Users/chantal/oo-ride-share/lib/trip_dispatcher.rb:42:in `new'
+            /Users/chantal/oo-ride-share/lib/trip_dispatcher.rb:42:in `request_trip'
+            /Users/chantal/oo-ride-share/specs/trip_dispatch_spec.rb:131:in `block (3 levels) in <top (required)>'
+
+  test_0004_exception is raised if no drivers are available      [31mERROR[0m (0.00s)
+ArgumentError:         ArgumentError: comparison of Time with nil failed
+            /Users/chantal/oo-ride-share/lib/trip.rb:40:in `>'
+            /Users/chantal/oo-ride-share/lib/trip.rb:40:in `initialize'
+            /Users/chantal/oo-ride-share/lib/trip_dispatcher.rb:42:in `new'
+            /Users/chantal/oo-ride-share/lib/trip_dispatcher.rb:42:in `request_trip'
+            /Users/chantal/oo-ride-share/specs/trip_dispatch_spec.rb:131:in `block (3 levels) in <top (required)>'
+
+  test_0001_trip was created properly                            [31mERROR[0m (0.00s)
+ArgumentError:         ArgumentError: comparison of Time with nil failed
+            /Users/chantal/oo-ride-share/lib/trip.rb:40:in `>'
+            /Users/chantal/oo-ride-share/lib/trip.rb:40:in `initialize'
+            /Users/chantal/oo-ride-share/lib/trip_dispatcher.rb:42:in `new'
+            /Users/chantal/oo-ride-share/lib/trip_dispatcher.rb:42:in `request_trip'
+            /Users/chantal/oo-ride-share/specs/trip_dispatch_spec.rb:131:in `block (3 levels) in <top (required)>'
+
+  test_0002_trip lists for driver and passenger were updated     [31mERROR[0m (0.00s)
+ArgumentError:         ArgumentError: comparison of Time with nil failed
+            /Users/chantal/oo-ride-share/lib/trip.rb:40:in `>'
+            /Users/chantal/oo-ride-share/lib/trip.rb:40:in `initialize'
+            /Users/chantal/oo-ride-share/lib/trip_dispatcher.rb:42:in `new'
+            /Users/chantal/oo-ride-share/lib/trip_dispatcher.rb:42:in `request_trip'
+            /Users/chantal/oo-ride-share/specs/trip_dispatch_spec.rb:131:in `block (3 levels) in <top (required)>'
+
+
+TripDispatcher class::passengers::find_passenger method
+  test_0002_finds a passenger instance                           [32m PASS[0m (0.00s)
+  test_0001_throws an argument error for a bad ID                [32m PASS[0m (0.00s)
+
+TripDispatcher class::drivers::Driver & Trip loader methods
+  test_0001_accurately loads driver information into drivers array[32m PASS[0m (0.00s)
+  test_0002_connects trips and drivers                           [32m PASS[0m (0.00s)
+
+Driver class::total_revenue
+  test_0002_returns zero if no driven trips                      [32m PASS[0m (0.00s)
+  test_0003_correctly calculates the total revenue               [32m PASS[0m (0.00s)
+  test_0001_returns a float                                      [32m PASS[0m (0.00s)
+
+Passenger class::trips property
+  test_0003_will return 0 for total expediture and time spent for 0 rides[32m PASS[0m (0.00s)
+  test_0001_will return the total amount of money spent on trips [32m PASS[0m (0.00s)
+  test_0002_will return the total time spent                     [32m PASS[0m (0.00s)
+  test_0004_each item in array is a Trip instance                [32m PASS[0m (0.00s)
+  test_0005_all Trips must have the same passenger's passenger id[32m PASS[0m (0.00s)
+
+RideShare::CsvRecord::constructor
+  test_0001_takes and saves an id                                [32m PASS[0m (0.00s)
+  test_0002_validates the ID                                     [32m PASS[0m (0.00s)
+
+RideShare::CsvRecord::extension::load_all
+  test_0001_finds data given just a directory                    [32m PASS[0m (0.01s)
+  test_0003_finds data given a full path                         [32m PASS[0m (0.01s)
+  test_0004_calls `from_csv` for each record in the file         [32m PASS[0m (0.01s)
+  test_0002_finds data given a directory and filename            [32m PASS[0m (0.01s)
+
+Passenger class::Passenger instantiation
+  test_0002_throws an argument error with a bad ID value         [32m PASS[0m (0.00s)
+  test_0003_sets trips to an empty array if not provided         [32m PASS[0m (0.00s)
+  test_0004_is set up for specific attributes and data types     [32m PASS[0m (0.00s)
+  test_0001_is an instance of Passenger                          [32m PASS[0m (0.00s)
+
+Trip class::initialize
+  test_0003_is an instance of Trip                               [32m PASS[0m (0.00s)
+  test_0005_stores an instance of driver                         [33m SKIP[0m (0.00s)
+  test_0001_raises an error if start time is after end time      [32m PASS[0m (0.00s)
+  test_0002_calculates trip duration                             [32m PASS[0m (0.00s)
+  test_0004_stores an instance of passenger                      [32m PASS[0m (0.00s)
+  test_0006_raises an error for an invalid rating                [32m PASS[0m (0.00s)
+
+Finished in 0.16676s
+55 tests, 129 assertions, [31m0 failures, 4 errors, [0m[33m1 skips[0m
+rake aborted!
+Command failed with status (1)
+/Users/chantal/.rvm/gems/ruby-2.5.1/gems/rake-12.3.2/exe/rake:27:in `<top (required)>'
+/Users/chantal/.rvm/gems/ruby-2.5.1/bin/ruby_executable_hooks:24:in `eval'
+/Users/chantal/.rvm/gems/ruby-2.5.1/bin/ruby_executable_hooks:24:in `<main>'
+Tasks: TOP => default => test
+(See full trace by running task with --trace)

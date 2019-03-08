@@ -39,8 +39,22 @@ module RideShare
 
     def request_trip(passenger_id)
       available_driver = @drivers.find { |driver| driver.status == :AVAILABLE }
-      return trip.new(passenger_id: passenger_id,
-        start_time: Time.now, end_time: nil, driver: available_driver)
+      trip = RideShare::Trip.new(
+        id: 100,
+        passenger_id: passenger_id,
+        start_time: Time.now.to_s, ###
+        end_time: nil,
+        cost: nil,
+        rating: nil,
+        driver: available_driver)
+      # Driver needs to accept trip.
+      available_driver.accept_trip(trip)
+      # Add the Trip to the Passenger's list of Trips
+      #WARNING: possible the passenger id has no associated passenger object!
+      find_passenger(passenger_id).add_trip(trip)
+      # Add the new trip to the collection of all Trips in TripDispatcher
+      @trips << trip
+      return trip
     end
 
 

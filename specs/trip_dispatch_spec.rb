@@ -42,7 +42,7 @@ describe "TripDispatcher class" do
         @dispatcher = build_test_dispatcher
       end
 
-      #failure fix me
+
       it "throws an argument error for a bad ID" do
         expect { @dispatcher.find_passenger(0) }.must_raise ArgumentError
       end
@@ -85,7 +85,7 @@ describe "TripDispatcher class" do
       before do
         @dispatcher = build_test_dispatcher
       end
-      #failure fix me
+
       it "throws an argument error for a bad ID" do
         expect { @dispatcher.find_driver(0) }.must_raise ArgumentError
       end
@@ -121,6 +121,41 @@ describe "TripDispatcher class" do
           expect(trip.driver.trips).must_include trip
         end
       end
+    end
+  end
+
+  describe "request trip" do
+    before do
+      @passenger_id = 8
+      @trip_dispatcher = build_test_dispatcher() #csv
+      @trip = @trip_dispatcher.request_trip(@passenger_id)
+    end
+
+##
+    it "trip was created properly" do
+      expect(@trip.driver).wont_be_nil
+      expect(@trip.passenger_id).must_equal(@passenger_id)
+      expect(@trip.start_time).wont_be_nil
+      expect(@trip.end_time).must_be_nil
+      expect(@trip.cost).must_be_nil
+      expect(@trip.rating).must_be_nil
+    end
+
+    # Remember that -1 means last instance/trip
+    it "trip lists for driver and passenger were updated" do
+      expect(@trip.driver.trips[-1]).must_equal(@trip)
+      expect(@trip.passenger.trips[-1]).must_equal(@trip)
+    end
+
+    it "selected driver is available" do
+      expect(@trip.driver.status).must_equal :AVAILABLE
+    end
+
+    it "exception is raised if no drivers are available" do
+      @trip_dispatcher.drivers.each do |driver|
+        driver.status = :UNAVAILABLE
+      end
+      expect(@trip_dispatcher.request_trip(@passenger_id)).must_raise ArgumentError
     end
   end
 end
