@@ -128,6 +128,28 @@ describe "Driver class" do
 
       expect(@driver.average_rating).must_be_close_to (5.0 + 1.0) / 2.0, 0.01
     end
+
+    it "correctly calculates the average rating when trip in progress (rating = nil)" do
+      trip2 = RideShare::Trip.new(
+        id: 8,
+        driver: @driver,
+        passenger_id: 3,
+        start_time: "2016-08-08",
+        end_time: "2016-08-09",
+        rating: 1,
+      )
+      @driver.add_trip(trip2)
+      trip3 = RideShare::Trip.new(
+        id: 9,
+        driver: @driver,
+        passenger_id: 3,
+        start_time: "2016-08-08",
+        end_time: nil,
+        rating: nil,
+      )
+      @driver.add_trip(trip3)
+      expect(@driver.average_rating).must_be_close_to (5.0 + 1.0) / 2.0, 0.01
+    end
   end
 
   describe "total_revenue" do
@@ -184,6 +206,29 @@ describe "Driver class" do
         end_time: "2015-08-08",
         cost: 1,
         rating: 5,
+      )
+      @driver.add_trip(trip)
+      @driver.add_trip(trip2)
+      expect(@driver.total_revenue).must_be_close_to 2.68
+    end
+    it "it calculates total revenue correctly when a trip is in progress (cost is nil)" do
+      trip = RideShare::Trip.new(
+        id: 8,
+        driver: @driver,
+        passenger_id: 3,
+        start_time: "2016-08-08",
+        end_time: "2016-08-08",
+        cost: 5,
+        rating: 5,
+      )
+      trip2 = RideShare::Trip.new(
+        id: 9,
+        driver: @driver,
+        passenger_id: 3,
+        start_time: "2015-08-08",
+        end_time: nil,
+        cost: nil,
+        rating: nil,
       )
       @driver.add_trip(trip)
       @driver.add_trip(trip2)
