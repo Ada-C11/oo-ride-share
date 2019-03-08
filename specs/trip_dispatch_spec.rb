@@ -138,14 +138,11 @@ describe "TripDispatcher class" do
       end
 
       it "throws an ArgumentError if there's no available driver" do
-        def build_no_available_drivers
-          return RideShare::TripDispatcher.new(
-                   directory: "specs/test_data/unavailable_drivers.csv",
-                 )
+        drivers = @dispatcher.drivers
+        na_drivers = drivers.map do |driver|
+          driver.status = :UNAVAILABLE
         end
-
-        na_dispatcher = build_no_available_drivers
-        expect { na_dispatcher.request_trip(2) }.must_raise ArgumentError
+        expect { @dispatcher.request_trip(2) }.must_raise ArgumentError
       end
 
       it "sets the driver's status to :UNAVAILABLE" do
