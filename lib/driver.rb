@@ -23,6 +23,10 @@ module RideShare
       end  
     end
 
+    def accept_new_trip(trip)
+      self.status = :UNAVAILABLE 
+    end
+
 
     def add_trip(trip)
       @trips << trip

@@ -4,7 +4,11 @@ describe "Passenger class" do
 
   describe "Passenger instantiation" do
     before do
-      @passenger = RideShare::Passenger.new(id: 1, name: "Smithy", phone_number: "353-533-5334")
+      @passenger = RideShare::Passenger.new(
+        id: 1, 
+        name: "Smithy", 
+        phone_number: "353-533-5334"
+      )
     end
 
     it "is an instance of Passenger" do
@@ -24,8 +28,8 @@ describe "Passenger class" do
 
     it "is set up for specific attributes and data types" do
       [:id, :name, :phone_number, :trips].each do |prop|
-        expect(@passenger).must_respond_to prop
-      end
+      expect(@passenger).must_respond_to prop
+    end
 
       expect(@passenger.id).must_be_kind_of Integer
       expect(@passenger.name).must_be_kind_of String
@@ -37,18 +41,18 @@ describe "Passenger class" do
 
   describe "trips property" do
     before do
-      # TODO: you'll need to add a driver at some point here.
       @passenger = RideShare::Passenger.new(
         id: 9,
         name: "Merl Glover III",
         phone_number: "1-602-620-2330 x3723",
         trips: []
-        )
-      @driver = RideShare::Driver.new(id: 80,
-                                      name: "Amy",
-                                      vin: "12345678901234567",
-                                      status: :AVAILABLE,
-                                      trips: []
+      )
+      @driver = RideShare::Driver.new(
+        id: 80,
+        name: "Amy",
+        vin: "12345678901234567",
+        status: :AVAILABLE,
+        trips: []
       )
       trip1 = RideShare::Trip.new(
         id: 8,
@@ -58,8 +62,7 @@ describe "Passenger class" do
         rating: 5,
         cost: 20,
         driver_id: 80
-        )
-
+      )
       trip2 = RideShare::Trip.new(
         id: 10,
         passenger: @passenger,
@@ -95,14 +98,13 @@ describe "Passenger class" do
         name: "Merl Glover",
         phone_number: "1-602-620-2330 x3733",
         trips: nil
-        )
+      )
       expect{(@passenger.net_expenditures)}.must_raise ArgumentError
       expect{(@passenger.total_time_spent)}.must_raise ArgumentError  
     end
     
     it "calculates total time spent per passenger" do
-        expect(@passenger.total_time_spent).must_equal "86.0 minutes"
+      expect(@passenger.total_time_spent).must_equal "86.0 minutes"
     end
-
   end
 end

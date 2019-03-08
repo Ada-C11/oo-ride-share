@@ -9,8 +9,7 @@ module RideShare
       @id = id
     end
     
-    # Takes either full_path or directory and optional file_name
-    # Default file name matches class name
+    
     def self.load_all(full_path: nil, directory: nil, file_name: nil)
       full_path ||= build_path(directory, file_name)
 
@@ -22,6 +21,7 @@ module RideShare
       ).map { |record| from_csv(record) }
     end
 
+
     def self.validate_id(id)
       if id.nil? || id <= 0
         raise ArgumentError, "ID cannot be blank or less than zero. ID was #{id}"
@@ -29,18 +29,21 @@ module RideShare
     end
     
     
-    def self.accept_new_trip(trip)
-        self.add_trip(trip)
-          if self.class == Driver
-            status = :UNAVAILABLE 
-          end 
-    end
+    
+    # def accept_new_trip(trip)
+    #   add_trip(trip)
+    #     if self.class == Driver
+    #       self.status = :UNAVAILABLE 
+    #     end 
+    # end
+
 
     private
     
     def self.from_csv(record)
       raise NotImplementedError, 'Implement me in a child class!'
     end
+
 
     def self.build_path(directory, file_name)
       unless directory
