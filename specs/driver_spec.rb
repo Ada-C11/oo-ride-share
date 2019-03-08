@@ -125,6 +125,7 @@ describe "Driver class" do
       expect(@driver.average_rating).must_be_close_to (5.0 + 1.0) / 2.0, 0.01
     end
   end
+
   describe "total_revenue" do
     before do
       @driver = RideShare::Driver.new(
@@ -157,6 +158,41 @@ describe "Driver class" do
 
     it "returns total_revenue" do
       expect(@driver.total_revenue).must_be_close_to 5.36
+    end
+  end
+
+  describe "total_revenue if trip cost was $1.65" do
+    before do
+      @driver = RideShare::Driver.new(
+        id: 54,
+        name: "Rogers Bartell IV",
+        vin: "1C9EVBRM0YBC564DZ",
+      )
+      trip = RideShare::Trip.new(
+        id: 8,
+        driver_id: @driver.id,
+        passenger_id: 3,
+        start_time: "2016-08-08",
+        end_time: "2016-08-08",
+        cost: 1.60,
+        rating: 5,
+      )
+      trip2 = RideShare::Trip.new(
+        id: 8,
+        driver_id: @driver.id,
+        passenger_id: 3,
+        start_time: "2016-08-08",
+        end_time: "2016-08-08",
+        cost: 8,
+        rating: 5,
+      )
+
+      @driver.add_trip(trip)
+      @driver.add_trip(trip2)
+    end
+
+    it "will not include the $1.65 fee" do
+      expect(@driver.total_revenue).must_be_close_to 6.36
     end
   end
 end

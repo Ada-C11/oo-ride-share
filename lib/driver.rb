@@ -47,8 +47,15 @@ module RideShare
       cost_after_deduction = 0
       if trips.length == 0
         return 0
-      else
-        @trips.each do |trip|
+      end
+
+      @trips.each do |trip|
+        if trip.cost == nil
+          next
+        elsif trip.cost <= 1.65
+          cost_after_deduction = trip.cost
+          driver_take_home += cost_after_deduction
+        else
           cost_after_deduction = trip.cost - 1.65
           driver_take_home += cost_after_deduction
         end
