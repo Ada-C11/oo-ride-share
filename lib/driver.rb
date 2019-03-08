@@ -54,12 +54,6 @@ module RideShare
       return revenue.to_f
     end
 
-    def change_status(trip)
-      @status == :AVAILABLE ? @status = :UNAVAILABLE : @status = :AVAILABLE
-      add_trip(trip)
-      return @status
-    end
-
     private
 
     def self.from_csv(record)

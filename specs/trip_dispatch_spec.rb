@@ -78,7 +78,6 @@ describe "TripDispatcher class" do
     end
   end
 
-  # TODO: un-skip for Wave 2
   describe "drivers" do
     describe "find_driver method" do
       before do
@@ -136,7 +135,7 @@ describe "TripDispatcher class" do
       expect(ending_length).must_equal starting_length + 1
     end
 
-    it "sets the driver's status to :UNAVAILABLE" do
+    it "sets the driver's status to :UNAVAILABLE and adds to driver class" do
       @driver = RideShare::Driver.new(
         id: 54,
         name: "Rogers Bartell IV",
@@ -154,8 +153,20 @@ describe "TripDispatcher class" do
         rating: 5,
       )
       dispatcher = build_test_dispatcher
-
-      expect(@driver.change_status(trip)).must_equal :UNAVAILABLE
+      trip = dispatcher.request_trip(5)
+      expect(trip.driver.status).must_equal :UNAVAILABLE
+    end
+  end
+  describe "Raise ArgumentErrors" do
+    before do
+      @dispatcher = build_test_dispatcher
+    end
+    it "raises ArgumentError if trip already in-progress." do
+      @dispatcher.drivers[1].status = :UNAVAILABLE
+      @dispatcher.drivers[2].status = :UNAVAILABLE
+      expect {
+        @dispatcher.request_trip(3)
+      }.must_raise ArgumentError
     end
   end
 end
