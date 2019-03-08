@@ -159,7 +159,7 @@ describe "TripDispatcher class" do
         expect(trip.driver).must_equal @dispatcher.drivers[1]
       end
 
-      # this does not work, but we need to test this
+      # this test is failing, update code to make it work
       it "Changes driver status to unavailable" do
         trip = @dispatcher.request_trip(1)
 
