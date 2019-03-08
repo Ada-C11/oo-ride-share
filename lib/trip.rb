@@ -29,7 +29,6 @@ module RideShare
       @driver = driver
 
       if @end_time == nil
-        break
       elsif @end_time < @start_time
         raise ArgumentError, "End time must be a later time than start time"
       end
