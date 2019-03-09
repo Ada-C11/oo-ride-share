@@ -157,5 +157,19 @@ describe "TripDispatcher class" do
 
       expect(@dispatcher.request_trip(passenger_id).driver_id).must_equal 2
     end
+
+    it "will return current time for start time for new requested trip" do
+      passenger_id = 8
+
+      expect(@dispatcher.request_trip(passenger_id).start_time).must_equal Time.now
+    end
+
+    it "will look for nil values for end_time, cost, and rating" do
+      passenger_id = 8
+
+      expect(@dispatcher.request_trip(passenger_id).end_time).must_equal nil
+      expect(@dispatcher.request_trip(passenger_id).cost).must_equal nil
+      expect(@dispatcher.request_trip(passenger_id).rating).must_equal nil
+    end
   end
 end
