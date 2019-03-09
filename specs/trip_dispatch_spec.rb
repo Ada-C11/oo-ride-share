@@ -93,59 +93,20 @@ describe "TripDispatcher class" do
         driver = @dispatcher.find_driver(2)
         expect(driver).must_be_kind_of RideShare::Driver
       end
-    end
-  end
 
-  describe "select driver with no previous trips if possible" do
-    before do   
-      @driver = RideShare::Driver.new(
-        id: 55,
-        name: "Test Driver",
-        vin: "12345678501234567",
-        status: :AVAILABLE,
-        trips: !nil
-      )
-      @driver = RideShare::Driver.new(
-        id: 54,
-        name: "Test Driver",
-        vin: "12345678901234567",
-        status: :AVAILABLE,
-        trips: nil
-      )
+      it "selects the driver with no previous trips first from available drivers" do
+        driver = @dispatcher.find_available_driver
 
-    end          
-    it "selects the driver with no previous trips first from available drivers" do
-      expect(@driver.id).must_equal 54
-    end
-  end
+        expect(driver.id).must_equal 3
+      end
 
-  describe "if no drivers with no trips are available, selects the driver with the oldest last end time" do
-    before do
-      @driver = RideShare::Driver.new(
-        id: 55,
-        name: "Test Driver",
-        vin: "12345678501234567",
-        status: :AVAILABLE,
-        trips: !nil
-      )
-      @driver = RideShare::Driver.new(
-        id: 54,
-        name: "Test Driver",
-        vin: "12345678901234567",
-        status: :AVAILABLE,
-        trips: nil
-      )
+      it "select driver with furthest trip date if all drivers have driven" do
+        trip = @dispatcher.request_trip(2)
+        trip.end_trip(Time.now.to_s)
+        driver = @dispatcher.find_available_driver
 
-     @driver = Driver.new
-     @driver = Driver.new
-
-     eligible_driver = []
-
-     eligible_driver.push(driver1, driver2)
-    end
-
-    it "selects the driver with the oldest last end time" do
-      expect(eligible_driver.last_trip_end_time).must_equal eligible_driver.first
+        expect(driver.id).must_equal 2
+      end
     end
   end
 

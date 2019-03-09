@@ -2,7 +2,7 @@ require "csv"
 require "time"
 
 require_relative "driver"
-# require_relative "passenger"
+require_relative "passenger"
 require_relative "trip"
 
 module RideShare
@@ -38,11 +38,18 @@ module RideShare
     
     def find_available_driver
       eligible_driver_list = @drivers.select { |driver| driver.status == :AVAILABLE }
-      drivers_not_driven = eligible_driver_list.select { |driver| driver.trip = nil }
+      drivers_not_driven = eligible_driver_list.select { |driver| driver.trips.empty? }
       if drivers_not_driven.empty?
-        stale_driver = eligible_driver_list.min_by { |driver| driver.end_time }
+        stale_driver = eligible_driver_list.min_by do |driver| 
+          last_trip = driver.trips.max_by { |trip| trip.end_time }
+          puts driver.id
+          puts driver.trips
+          last_trip.end_time
+        end
+        return stale_driver
+      else
+        return drivers_not_driven.first
       end
-      return stale_driver
     end
 
     # method to create trips
@@ -57,7 +64,7 @@ module RideShare
       input = {
         id: @trips.length + 1,
         passenger: passenger,
-        start_time: Time.now,
+        start_time: Time.now.to_s,
         end_time: nil,
         cost: nil,
         rating: nil,
@@ -68,6 +75,7 @@ module RideShare
       driver.accept_trip(trip)
       find_passenger(passenger_id).add_trip(trip)
       @trips << trip
+      return trip
     end
 
     def inspect

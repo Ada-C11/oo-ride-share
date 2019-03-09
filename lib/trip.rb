@@ -4,7 +4,7 @@ require "time"
 require_relative "csv_record"
 
 module RideShare
-  class Trip < CsvRecord 
+  class Trip < CsvRecord
     attr_reader :id, :passenger, :passenger_id, :start_time, :end_time, :cost, :rating, :duration, :driver_id, :driver
 
     def initialize(id:,
@@ -35,17 +35,17 @@ module RideShare
       end
 
       @start_time = Time.parse(start_time)
-      @end_time = Time.parse(end_time)
+      @end_time = end_time.nil? ? nil : Time.parse(end_time)
       @cost = cost
       @rating = rating
-      @duration = duration_secs(start_time, end_time)
+      @duration = end_time.nil? ? nil : duration_secs(start_time, end_time)
 
-      if start_time > end_time
+      if !end_time.nil? && start_time > end_time
         raise ArgumentError.new("Invalid")
       end
 
       # Lazy eval?
-      if @rating > 5 || @rating < 1
+      if !rating.nil? && (@rating > 5 || @rating < 1)
         raise ArgumentError.new("Invalid rating #{@rating}")
       end
     end
@@ -68,6 +68,10 @@ module RideShare
     def duration_secs(start_time, end_time)
       duration = @end_time - @start_time
       duration.to_i.to_s
+    end
+
+    def end_trip(time)
+      @end_time = time
     end
 
     private
