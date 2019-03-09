@@ -48,6 +48,7 @@ module RideShare
       @rating = rating
 
       if @rating == nil
+        @rating = nil
       elsif @rating > 5 || @rating < 1
         raise ArgumentError.new("Invalid rating #{@rating}")
       end

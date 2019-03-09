@@ -49,6 +49,7 @@ module RideShare
             rating: nil,
           )
           passenger.add_trip(new_trip)
+          driver.change_status(new_trip)
           @trips << new_trip
           return new_trip
         end
