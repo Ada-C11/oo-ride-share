@@ -37,11 +37,9 @@ module RideShare
     private
 
     def self.from_csv(record)
-      return new(
-               id: record[:id],
-               name: record[:name],
-               phone_number: record[:phone_num],
-             )
+      return new(id: record[:id],
+                 name: record[:name],
+                 phone_number: record[:phone_num])
     end
   end
 end
