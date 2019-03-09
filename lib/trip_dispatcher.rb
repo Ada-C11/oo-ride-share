@@ -68,33 +68,6 @@ module RideShare
         return new_trip
     end
 
-    # NEW
-    # def request_trip(passenger_id)
-    #   first_available_driver = @drivers.find do |driver|
-    #     driver.status == :AVAILABLE
-    #   end
-    #   ids = @trips.map do |trip|
-    #     trip.id
-    #   end
-    #   new_id = ids.max + 1
-    #   new_trip = RideShare::Trip.new(
-    #     id: new_id,
-    #     passenger_id: passenger_id,
-    #     driver_id: first_available_driver.id,
-    #     start_time: Time.now.to_s,
-    #     end_time: nil,
-    #     cost: nil,
-    #     rating: nil,
-    #   )
-    #   @trips << new_trip
-    #   first_available_driver.change_status(new_trip)
-      
-    #   passenger = find_passenger(passenger_id)
-    #   passenger.add_trip(new_trip)
-
-    #   return new_trip
-    # end
-
     def change_status(driver_id)
       found_driver = find_available_driver
       found_driver.status = :UNAVAILABLE
