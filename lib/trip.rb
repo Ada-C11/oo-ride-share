@@ -31,22 +31,32 @@ module RideShare
       end
 
       @start_time = Time.parse(start_time)
-      @end_time = Time.parse(end_time)
+
+      if end_time != nil
+        @end_time = Time.parse(end_time)
+      end
+
       @cost = cost
       @rating = rating
 
-      if start_time > end_time
+      if end_time == nil
+      elsif start_time > end_time
         raise ArgumentError.new("Start Time must be earlier than (<) End Time.")
       end
 
-      if @rating > 5 || @rating < 1
+      if @rating == nil
+      elsif @rating > 5 || @rating < 1
         raise ArgumentError.new("Invalid rating #{@rating}")
       end
     end
 
+    # In seconds
     def duration
-      trip_duration = (@end_time - @start_time)
-      return trip_duration.to_i
+      if @end_time != nil
+        trip_duration = (@end_time - @start_time)
+        return trip_duration.to_i
+      end
+      return nil
     end
 
     def inspect

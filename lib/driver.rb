@@ -4,8 +4,8 @@ require_relative "csv_record"
 
 module RideShare
   class Driver < CsvRecord
-    attr_reader :id, :name, :vin, :trips
-    attr_accessor :status
+    attr_reader :id, :name, :vin
+    attr_accessor :status, :trips
 
     STATUS = [:AVAILABLE, :UNAVAILABLE]
 
@@ -49,7 +49,10 @@ module RideShare
     def total_revenue
       revenue = 0.0
       @trips.each do |trip|
-        if trip.cost < 1.65
+        if trip.cost == nil
+          revenue += 0
+        elsif
+          trip.cost < 1.65
           revenue += 0
         else 
           revenue += ((trip.cost - 1.65) * 0.8).round(2)

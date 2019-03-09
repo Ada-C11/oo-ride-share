@@ -2,7 +2,8 @@ require_relative "csv_record"
 
 module RideShare
   class Passenger < CsvRecord
-    attr_reader :name, :phone_number, :trips
+    attr_reader :name, :phone_number
+    attr_accessor :trips
 
     def initialize(id:, name:, phone_number:, trips: nil)
       super(id)
@@ -19,13 +20,17 @@ module RideShare
     def net_expenditures
       total_amount = 0.0
       @trips.each do |trip|
-        total_amount += trip.cost
+        if trip.cost != nil
+          total_amount += trip.cost
+        # else
+        #   return nil
+        end
       end
       return total_amount
     end
 
     def total_time_spent
-      all_trip_durations = @trips.map { |trip| trip.duration }
+      all_trip_durations = @trips.map { |trip| trip.duration.to_i }
       # duration method returns trip_duration as an integer in seconds
       total_time_on_trips = all_trip_durations.sum
       return total_time_on_trips
