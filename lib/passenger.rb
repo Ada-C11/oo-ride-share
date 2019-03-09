@@ -22,8 +22,8 @@ module RideShare
       @trips.each do |trip|
         if trip.cost != nil
           total_amount += trip.cost
-        # else
-        #   return nil
+        else
+          raise ArgumentError, "This passenger has no trips!"
         end
       end
       return total_amount

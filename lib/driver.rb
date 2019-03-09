@@ -41,18 +41,6 @@ module RideShare
         avg = 0.0
       end
     end
-
-    def change_status(driver_id)
-      puts "We're in conditional"
-      trips.each do |trip|
-        if driver_id == trip.driver_id
-        end
-      end
-    end
-
-#     This method calculates that driver's total revenue across all their trips. Each driver gets 80% of the trip cost after a fee of $1.65 per trip is subtracted.	What if there are no trips?
-
-# What if the cost of a trip was less that $1.65?
     
     def total_revenue
       revenue = 0.0

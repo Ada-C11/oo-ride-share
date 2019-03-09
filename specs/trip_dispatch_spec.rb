@@ -182,37 +182,35 @@ describe "TripDispatcher class" do
         # expect(available_driver.trips).must_include new_trip
       # end
 
-
-
-      it "Adds new trip to driver @trips array" do
+      it "adds the trip to the driver's trips array" do
         trip = @dispatcher.request_trip(1)
 
         expect(trip.driver.trips).must_include trip
       end
 
-      it "Adds new trip to passenger @trips array" do
+      it "adds the trip to the passenger's trips array" do
         trip = @dispatcher.request_trip(1)
         passenger = @dispatcher.find_passenger(1)
 
         expect(trip.passenger.trips).must_include trip
       end
 
-      it "Adds new trip to dispatcher @trips array" do
+      it "adds the trip to the collection of all trips in TripDispatcher" do
         trip = @dispatcher.request_trip(1)
         expect(@dispatcher.trips).must_include trip
       end
 
-
-      xit "adds the trip to the passenger's trips array" do
+      it "changes the driver's status from available to unavailable" do
+        trip = @dispatcher.request_trip(5)
+        expect(trip.driver.status).must_equal :UNAVAILABLE
       end
 
-      xit "adds the trip to the collection of all trips in TripDispatcher" do
-      end
-
-      xit "changes the driver's status from available to unavailable" do
-      end
-
-      xit "returns a helpful message when there are no available drivers" do
+      it "raises an ArgumentError when there are no available drivers" do
+        @dispatcher.drivers.status = :UNAVAILABLE
+        @dispatcher.drivers.status = :UNAVAILABLE
+        expect {
+          @dispatcher.request_trip(3)
+        }.must_raise ArgumentError
       end
     end
   end
