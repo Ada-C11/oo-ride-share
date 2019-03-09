@@ -127,23 +127,35 @@ describe "TripDispatcher class" do
       @dispatcher = build_test_dispatcher
     end
 
-      it "will pick the first available driver" do
-        # new_trip = RideShare::Trip.new({
-        #   driver_id: 2,
-        #   id: 8,
-        #   passenger: RideShare::Passenger.new(id: 1,
-        #                                       name: "Ada",
-        #                                       phone_number: "412-432-7640"),
-        #   start_time: Time.now.to_s,
-        #   end_time: nil,
-        #   cost: nil,
-        #   rating: nil,
-        # })
-  
-        # available_driver = @dispatcher.find_driver(new_trip.driver_id)
-        # expect(available_driver.status).must_equal :AVAILABLE
-        passenger_id = 8
-        expect(@dispatcher.request_trip(passenger_id).status).must_equal :AVAILABLE
-      end
+    it "will pick the first available driver" do
+      passenger_id = 8
+      driver = @dispatcher.find_driver(@dispatcher.request_trip(passenger_id).driver_id)
+      expect(driver.status).must_equal :AVAILABLE
+    end
+
+    it "will create a new trip" do
+      passenger_id = 8
+      selected_driver = @dispatcher.request_trip(passenger_id)
+
+      trip = RideShare::Trip.new({
+        driver_id: selected_driver.id,
+        id: 8,
+        passenger: RideShare::Passenger.new(id: 1,
+                                            name: "Ada",
+                                            phone_number: "412-432-7640"),
+        start_time: Time.now.to_s,
+        end_time: nil,
+        cost: nil,
+        rating: nil,
+      })
+
+      expect(trip).must_be_kind_of RideShare::Trip
+    end
+
+    it "assign driver to requested trip" do
+      passenger_id = 8
+
+      expect(@dispatcher.request_trip(passenger_id).driver_id).must_equal 2
+    end
   end
 end

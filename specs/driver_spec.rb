@@ -7,7 +7,7 @@ describe "Driver class" do
         id: 54,
         name: "Test Driver",
         vin: "12345678901234567",
-        status: :AVAILABLE
+        status: :AVAILABLE,
       }
 
       @driver = RideShare::Driver.new(@driver_data)
@@ -71,7 +71,7 @@ describe "Driver class" do
         start_time: "2016-08-08",
         end_time: "2018-08-09",
         rating: 5,
-        cost: 25
+        cost: 25,
       )
     end
 
@@ -100,7 +100,7 @@ describe "Driver class" do
         start_time: "2016-08-08",
         end_time: "2016-08-08",
         rating: 5,
-        cost: 25
+        cost: 25,
       )
 
       @driver.add_trip(trip)
@@ -154,7 +154,7 @@ describe "Driver class" do
         start_time: "2016-08-08",
         end_time: "2016-08-08",
         rating: 5,
-        cost: 25
+        cost: 25,
       )
       trip2 = RideShare::Trip.new(
         id: 9,
@@ -163,7 +163,7 @@ describe "Driver class" do
         start_time: "2016-08-08",
         end_time: "2016-08-09",
         rating: 1,
-        cost: 25
+        cost: 25,
       )
       @driver.add_trip(trip)
       @driver.add_trip(trip2)
@@ -193,7 +193,7 @@ describe "Driver class" do
         start_time: "2016-08-08",
         end_time: "2016-08-08",
         rating: 5,
-        cost: 25
+        cost: 25,
       )
       trip2 = RideShare::Trip.new(
         id: 9,
@@ -202,7 +202,7 @@ describe "Driver class" do
         start_time: "2016-08-08",
         end_time: "2016-08-09",
         rating: 1,
-        cost: 25
+        cost: 25,
       )
       trip3 = RideShare::Trip.new(
         id: 10,
@@ -211,12 +211,12 @@ describe "Driver class" do
         start_time: "2016-08-08",
         end_time: "2016-08-09",
         rating: 1,
-        cost: 1.50
+        cost: 1.50,
       )
       @driver.add_trip(trip)
       @driver.add_trip(trip2)
       @driver.add_trip(trip3)
-      
+
       expect(@driver.total_revenue).must_equal 38.56
     end
   end

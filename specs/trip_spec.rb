@@ -16,8 +16,7 @@ describe "Trip class" do
         rating: 3,
         driver: RideShare::Driver.new(id: 2,
                                       name: "Bob",
-                                      vin: "12345678901234567",
-                                      )
+                                      vin: "12345678901234567"),
       }
       @trip = RideShare::Trip.new(@trip_data)
     end
@@ -66,8 +65,7 @@ describe "Trip class" do
         rating: 3,
         driver: RideShare::Driver.new(id: 2,
                                       name: "Bob",
-                                      vin: "12345678901234567",
-                                      )
+                                      vin: "12345678901234567"),
       }
       @trip = RideShare::Trip.new(@trip_data)
 
