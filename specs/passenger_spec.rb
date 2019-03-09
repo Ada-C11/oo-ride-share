@@ -34,7 +34,6 @@ describe "Passenger class" do
   end
 
   before do
-    # TODO: you'll need to add a driver at some point here.
     @passenger = RideShare::Passenger.new(
       id: 9,
       name: "Merl Glover III",

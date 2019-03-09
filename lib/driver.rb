@@ -14,7 +14,6 @@ module RideShare
         raise ArgumentError, "VIN must be 17 digits."
       end
       @status = status.to_sym
-      # REMEMBER: raise an error if not AVAILABLE, UNAVAILABLE
       @trips = trips || []
     end
 
