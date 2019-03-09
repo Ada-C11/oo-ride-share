@@ -20,8 +20,7 @@ module RideShare
 
     def net_expenditures
       array = []
-      trips.each do |trip|
-        raise ArgumentError, "Trip in progress" if trip.end_time == nil
+      finished_trips.each do |trip|
         array << trip.cost
       end
       total = array.reduce(:+)
@@ -38,6 +37,10 @@ module RideShare
     end
 
     private
+
+    def finished_trips
+      trips.select { |trip| trip.end_time != nil }
+    end
 
     def self.from_csv(record)
       return new(

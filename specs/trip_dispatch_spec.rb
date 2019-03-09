@@ -174,6 +174,14 @@ describe "TripDispatcher class" do
       new_trip_list = new_trip.driver.trips
       expect(new_trip_list.length).must_equal original_trip_list + 1
     end
+    
+    it "raises ArgumentError if you pass nil into request_trip" do
+      err = expect {
+        @dispatcher.request_trip(nil)
+      }.must_raise ArgumentError
+
+      expect(err.message).must_equal 'ID cannot be blank or less than zero.'
+    end
 
     it "raises ArgumentError if no drivers are available" do
       @dispatcher.drivers.each do |driver|
@@ -186,12 +194,12 @@ describe "TripDispatcher class" do
 
     it "raises ArgumentError if it tries to calculate total expenditures for passenger with in-progress trip" do
       new_trip = @dispatcher.request_trip(@passenger_id)
-      expect {new_trip.passenger.net_expenditures}.must_raise ArgumentError
+      expect(new_trip.passenger.net_expenditures).must_equal 15
     end
 
     it "raises ArgumentError if it tries to calculate average rating for driver with in-progress trip" do
       new_trip = @dispatcher.request_trip(@passenger_id)
-      expect {new_trip.driver.average_rating}.must_raise ArgumentError
+      expect(new_trip.driver.average_rating).must_equal 2.0
     end
   end
 end

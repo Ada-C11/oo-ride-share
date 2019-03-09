@@ -10,3 +10,5 @@ gem 'csv'
 gem 'minitest'
 gem 'minitest-reporters'
 gem 'minitest-skip'
+
+gem 'pry-byebug'

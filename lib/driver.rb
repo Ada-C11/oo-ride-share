@@ -29,14 +29,13 @@ module RideShare
 
     def average_rating
       total = 0.0
-      if trips.length == 0
+      if finished_trips.length == 0
         return 0
       end
-      trips.each do |trip|
-        raise ArgumentError, "trip in progress" if trip.rating == nil
+      finished_trips.each do |trip|
         total += trip.rating
       end
-      return total / trips.length
+      return total / finished_trips.length
     end
 
     def total_revenue
@@ -56,6 +55,10 @@ module RideShare
     end
 
     private
+
+    def finished_trips
+      trips.select { |trip| trip.rating != nil }
+    end
 
     def self.from_csv(record)
       return new(
