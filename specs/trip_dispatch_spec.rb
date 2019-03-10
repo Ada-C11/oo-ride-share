@@ -194,13 +194,15 @@ describe "TripDispatcher class" do
       end
 
       # COULD NOT GET THIS TO WORK
-      # xit "raises an ArgumentError when there are no available drivers" do
-      #   @dispatcher.drivers.status = :UNAVAILABLE
-      #   @dispatcher.drivers.status = :UNAVAILABLE
-      #   expect {
-      #     @dispatcher.request_trip(3)
-      #   }.must_raise ArgumentError
-      # end
+      xit "driver's status for a new_trip must change to unavailable " do
+        # dispatcher requests trip
+        #driver's status is available
+        new_trip_driver = @dispatcher.request_trip(3)
+        expect(new_trip_driver.driver.status).must_equal :AVAILABLE
+        new_trip = @dispatcher.request_trip(3)
+        # driver's status is unavailable
+        expect(new_trip_driver.request_trip).must_equal :UNAVAILABLE
+      end
     end
   end
 end

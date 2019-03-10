@@ -68,11 +68,6 @@ module RideShare
         return new_trip
     end
 
-    def change_status(driver_id)
-      found_driver = find_available_driver
-      found_driver.status = :UNAVAILABLE
-    end
-
     def inspect
       # Make puts output more useful
       return "#<#{self.class.name}:0x#{object_id.to_s(16)} \
