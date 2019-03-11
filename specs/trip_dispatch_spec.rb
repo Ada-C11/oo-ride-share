@@ -157,6 +157,7 @@ describe "TripDispatcher class" do
       end
 
       # COULD NOT GET THIS TO WORK
+      # quite convinced it's very close!
       # xit "sets the start_time of the trip to Time.now" do
       #   time_diff = Time.now - @trip.start_time
       #   expect(time_diff).must_be_within_delta 1.0
@@ -193,15 +194,16 @@ describe "TripDispatcher class" do
         expect(trip.driver.status).must_equal :UNAVAILABLE
       end
 
-      # COULD NOT GET THIS TO WORK
-      xit "driver's status for a new_trip must change to unavailable " do
+      it "driver's status for a new_trip must change to unavailable " do
+
+        # driver's status is available
+        expect @dispatcher.drivers[1].status.must_equal :AVAILABLE
+
         # dispatcher requests trip
-        #driver's status is available
-        new_trip_driver = @dispatcher.request_trip(3)
-        expect(new_trip_driver.driver.status).must_equal :AVAILABLE
         new_trip = @dispatcher.request_trip(3)
+
         # driver's status is unavailable
-        expect(new_trip_driver.request_trip).must_equal :UNAVAILABLE
+        expect(new_trip.driver.status).must_equal :UNAVAILABLE
       end
     end
   end
