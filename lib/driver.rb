@@ -9,18 +9,13 @@ module RideShare
     attr_reader :name, :vin, :status, :trips
 
     DRIVE_STATUS = [:AVAILABLE, :UNAVAILABLE]
+    VIN_LENGTH = 17
 
     def initialize(id:, name:, vin:, status: :AVAILABLE, trips: nil)
       super(id)
       @name = name
-      @vin = vin
-      if vin.length != 17 || nil
-        return raise ArgumentError, "Invalid VIN"
-      end
-      @status = status.to_sym
-      if DRIVE_STATUS.include?(@status) == false
-        return raise ArgumentError, "Invalid Status"
-      end
+      (vin.length == VIN_LENGTH) ? (@vin = vin) : (raise ArgumentError, "VIN must 17 characters")
+      DRIVE_STATUS.include?(status) ? (@status = status) : (raise ArgumentError, "Invalid status")
       @trips = trips || []
     end
 
@@ -45,6 +40,9 @@ module RideShare
       @trips.each do |trip|
         revenue += trip.cost
       end
+      if @trips.length.zero?
+        return 0
+      else
       return driver_take_home = (revenue - (1.65 * @trips.length)) * 0.8
     end
 

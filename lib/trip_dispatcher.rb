@@ -35,8 +35,9 @@ module RideShare
     def find_available_driver
       eligible_driver_list = @drivers.select { |driver| driver.status == :AVAILABLE }
       drivers_not_driven = eligible_driver_list.select { |driver| driver.trips.empty? }
+      # if there are no drivers without trip, look for driver with oldest trip. consider renaming variables.
       if drivers_not_driven.empty?
-        stale_driver = eligible_driver_list.min_by do |driver| 
+        stale_driver = eligible_driver_list.min_by do |driver|
           last_trip = driver.trips.max_by { |trip| trip.end_time }
           last_trip.end_time
         end
@@ -62,7 +63,7 @@ module RideShare
         end_time: nil,
         cost: nil,
         rating: nil,
-        driver: driver
+        driver: driver,
       }
       trip = Trip.new(input)
 
