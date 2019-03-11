@@ -32,18 +32,12 @@ module RideShare
       return @drivers.find { |driver| driver.id == id }
     end
 
-    # Returns list of drivers who are available and have never taken a ride.
-    # Assigns to the first driver in that list
-    # Otherwise assign to driver who has the least recent endtime
-    
     def find_available_driver
       eligible_driver_list = @drivers.select { |driver| driver.status == :AVAILABLE }
       drivers_not_driven = eligible_driver_list.select { |driver| driver.trips.empty? }
       if drivers_not_driven.empty?
         stale_driver = eligible_driver_list.min_by do |driver| 
           last_trip = driver.trips.max_by { |trip| trip.end_time }
-          puts driver.id
-          puts driver.trips
           last_trip.end_time
         end
         return stale_driver
